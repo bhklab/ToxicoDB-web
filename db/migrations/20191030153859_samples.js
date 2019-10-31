@@ -1,21 +1,23 @@
+/* eslint-disable func-names */
+/* eslint-disable no-unused-vars */
 
-exports.up = function(knex, Promise) {
+exports.up = function (knex, Promise) {
     return knex.schema.createTable('samples', (table) => {
         table.increments('id')
-             .primary();
+            .primary();
         table.string('name')
-             .notNullable();
+            .notNullable();
         table.string('type')
-             .notNullable();
+            .notNullable();
         table.integer('tissue_id')
-             .notNullable()
-             .unsigned()
-             .references('id')
-             .inTable('tissues')
-             .index();
-    })
+            .notNullable()
+            .unsigned()
+            .references('id')
+            .inTable('tissues')
+            .index();
+    });
 };
 
-exports.down = function(knex, Promise) {
+exports.down = function (knex, Promise) {
     return knex.schema.dropTable('samples');
 };

@@ -4,6 +4,7 @@ const knex = require('../../db/knex');
 
 // get all the data from the datasets table.
 const getDatasets = function (request, response) {
+    response.json({ message: 'Ok' });
     knex.select()
         .from('datasets')
         .then((dataset) => response.status(200).json({
