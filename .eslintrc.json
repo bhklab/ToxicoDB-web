@@ -21,5 +21,8 @@
         "react"
     ],
     "rules": {
+        // Indent with 4 spaces
+        "indent": ["error", 4],
+        "import/newline-after-import": ["error", { "count": 1 }]
     }
 }
