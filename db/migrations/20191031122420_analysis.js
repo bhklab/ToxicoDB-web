@@ -17,9 +17,9 @@ exports.up = function (knex, Promise) {
             .references('id')
             .inTable('drugs')
             .index();
-        table.string('p_value')
+        table.float('p_value')
             .notNullable();
-        table.string('fdr')
+        table.float('fdr')
             .notNullable();
     });
 };

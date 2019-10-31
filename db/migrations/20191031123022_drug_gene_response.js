@@ -11,9 +11,9 @@ exports.up = function (knex, Promise) {
             .references('id')
             .inTable('experiments')
             .index();
-        table.string('time');
-        table.string('expression');
-        table.string('concentration');
+        table.integer('time');
+        table.float('expression');
+        table.float('concentration');
     });
 };
 

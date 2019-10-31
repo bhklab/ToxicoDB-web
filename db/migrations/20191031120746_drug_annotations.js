@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('drug_annotation', (table) => {
+    return knex.schema.createTable('drug_annotations', (table) => {
         table.integer('drug_id')
             .notNullable()
             .unsigned()
@@ -20,5 +20,5 @@ exports.up = function (knex, Promise) {
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTable('drug_annotation');
+    return knex.schema.dropTable('drug_annotations');
 };

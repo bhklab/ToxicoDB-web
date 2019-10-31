@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('drug_annotation', (table) => {
+    return knex.schema.createTable('gene_annotations', (table) => {
         table.integer('gene_id')
             .notNullable()
             .unsigned()
@@ -10,11 +10,11 @@ exports.up = function (knex, Promise) {
             .inTable('genes')
             .index();
         table.string('ensembl_id');
-        table.string('entnez_id');
-        table.string('hqnc_id');
+        table.string('entrez_id');
+        table.string('hgnc_id');
     });
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTable('drug_annotation');
+    return knex.schema.dropTable('gene_annotations');
 };
