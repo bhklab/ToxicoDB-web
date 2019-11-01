@@ -13,7 +13,7 @@ const dataObj = csv.toObject(file);
 
 
 exports.seed = function (knex, Promise) {
-    return knex('drugs').del()
+    return knex('drug_annotations').del()
         .then(function() {
             return knex('drug_annotations').insert(dataObj);
         });

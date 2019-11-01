@@ -15,7 +15,6 @@ const dataObj = csv.toObject(file);
 exports.seed = function (knex, Promise) {
     return knex('drugs').del()
         .then(function() {
-            console.log('hey');
             return knex('drugs').insert(dataObj);
         });
 };
