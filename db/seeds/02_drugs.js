@@ -6,7 +6,7 @@ const csv = require('csvjson');
 const fs = require('fs');
 const path = require('path');
 
-const fileLocation = path.join(__dirname, '../../dummy_data/drugs.csv');
+const fileLocation = path.join(__dirname, '../../data_table/drugs.csv');
 
 const file = fs.readFileSync(fileLocation, 'utf8');
 const dataObj = csv.toObject(file);
@@ -15,6 +15,7 @@ const dataObj = csv.toObject(file);
 exports.seed = function (knex, Promise) {
     return knex('drugs').del()
         .then(function() {
+            console.log('hey');
             return knex('drugs').insert(dataObj);
         });
 };
