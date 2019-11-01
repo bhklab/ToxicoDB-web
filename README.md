@@ -43,10 +43,10 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## Migrations
 
-- knex migrate: make (migration_name) - To create a new migration file.
-- knex migrate:latest - To run the lastest migrations and create corresponding tables.
+- `knex migrate: make (migration_name)` - To create a new migration file.
+- `knex migrate:latest` - To run the lastest migrations and create corresponding tables.
 
 ## Seeds (Seeding Files)
 
-- Create manually a file (touch file_name).
-- Run knex seed:run to run the seeding file(s) in order to seed the table(s) in the database.
+- Create manually a file (`touch file_name`).
+- Run `knex seed:run` to run the seeding file(s) in order to seed the table(s) in the database.
