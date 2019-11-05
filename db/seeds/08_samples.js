@@ -6,15 +6,15 @@ const csv = require('csvjson');
 const fs = require('fs');
 const path = require('path');
 
-const fileLocation = path.join(__dirname, '../../data_table/drugs.csv');
+const fileLocation = path.join(__dirname, '../../data_table/samples.csv');
 
 const file = fs.readFileSync(fileLocation, 'utf8');
 const dataObj = csv.toObject(file);
 
 
 exports.seed = function (knex, Promise) {
-    return knex('drugs').del()
+    return knex('samples').del()
         .then(function() {
-            return knex('drugs').insert(dataObj);
+            return knex('samples').insert(dataObj);
         });
 };

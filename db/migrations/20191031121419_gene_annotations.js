@@ -9,7 +9,6 @@ exports.up = function (knex, Promise) {
             .references('id')
             .inTable('genes')
             .index();
-        table.string('ensembl_id');
         table.string('entrez_id');
         table.string('hgnc_id');
     });
