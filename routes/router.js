@@ -15,7 +15,7 @@ const tissues = require('./api/tissues');
 router.get('/v1/datasets', datasets.getDatasets);
 
 // APIs related to dataset table.
-router.get('/v1/drugs', drugs.getdrugs);
+router.get('/v1/drug', drugs.getdrugs);
 
 
 // APIs related to dataset table.
