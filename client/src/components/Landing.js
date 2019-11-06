@@ -13,7 +13,6 @@ const StyledLanding = styled.div`
         color: ${colors.red_highlight};
         font-family: 'Raleway', sans-serif;
         font-size: calc(1em + 1vw);
-        margin-top:120px;
 
         &.title {
             text-align:center;
@@ -25,13 +24,13 @@ class Landing extends Component {
     render() {
         return (
             <StyledLanding>
-                <h1 className="title">Mine multiple toxicogenomic datasets.</h1>
+                <h1 style={{marginTop: "200px"}} className="title">Mine multiple toxicogenomic datasets.</h1>
                 <Search/>
 
-                <h1>About our database</h1>
+                <h1 style={{marginTop: "150px"}}>About our database</h1>
                 <About/>
 
-                <h1>Most frequent queries</h1>
+                <h1 style={{marginTop: "50px"}}>Most frequent queries</h1>
                 <FrequentQueries/>
             </StyledLanding>
         )
