@@ -72,7 +72,7 @@ class Genes extends Component {
     }];
 
     return (
-      <div>
+      <StyledWrapper>
         <h1>List of Genes</h1>
         { geneData ? (
           <ReactTable
@@ -83,7 +83,7 @@ class Genes extends Component {
           />
         ) : null}
 
-      </div>
+      </StyledWrapper>
     );
   }
 }

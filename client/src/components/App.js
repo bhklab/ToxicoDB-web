@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
+import { Normalize } from 'styled-normalize';
 import Landing from './Landing';
 import Genes from './Genes';
 import Datasets from './Datasets';
@@ -8,6 +9,7 @@ import Drugs from './Drugs';
 import HeaderNav from './HeaderNav';
 import FooterNav from './FooterNav';
 import Documentation from './Documentation';
+import GlobalStyles from '../styles/GlobalStyles';
 
 const StyledApp = styled.div`
   margin: 0 auto;
@@ -24,6 +26,8 @@ const StyledApp = styled.div`
 
 const App = () => (
   <>
+    <Normalize />
+    <GlobalStyles />
     <StyledApp className="app">
       <Switch>
         <Route exact path="/" component={Landing} />
