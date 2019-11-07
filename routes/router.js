@@ -15,23 +15,23 @@ const tissues = require('./api/tissues');
 router.get('/v1/datasets', datasets.getDatasets);
 
 // APIs related to dataset table.
-router.get('/v1/drug', drugs.getdrugs);
+router.get('/v1/drugs', drugs.getDrugs);
 
 
 // APIs related to dataset table.
-router.get('/v1/genes', genes.getgenes);
+router.get('/v1/genes', genes.getGenes);
 
 
 // APIs related to dataset table.
-router.get('/v1/pathways', pathways.getpathways);
+router.get('/v1/pathways', pathways.getPathways);
 
 
 // APIs related to dataset table.
-router.get('/v1/samples', samples.getsamples);
+router.get('/v1/samples', samples.getSamples);
 
 
 // APIs related to dataset table.
-router.get('/v1/tissues', tissues.gettissues);
+router.get('/v1/tissues', tissues.getTissues);
 
 
 module.exports = router;
