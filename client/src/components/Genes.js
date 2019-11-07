@@ -5,6 +5,8 @@ import ReactTable from 'react-table';
 import colors from '../styles/colors';
 import 'react-table/react-table.css';
 
+import LoadingComponent from './Utils/Loading';
+
 const StyledWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -33,7 +35,8 @@ class Genes extends Component {
   constructor() {
     super();
     this.state = {
-      geneData: null,
+      geneData: [],
+      loading: true,
     };
   }
 
@@ -42,14 +45,12 @@ class Genes extends Component {
       .then((response) => response.json())
       .then((res) => {
         const { data } = res;
-        console.log(data);
-        this.setState({ geneData: data });
+        this.setState({ geneData: data, loading: false });
       });
   }
 
   render() {
-    const { geneData } = this.state;
-    console.log(geneData);
+    const { loading, geneData } = this.state;
     const columns = [{
       Header: 'Name',
       accessor: 'hgnc_id',
@@ -70,14 +71,14 @@ class Genes extends Component {
       <StyledWrapper>
         <div className="wrapper">
           <h1>List of Genes</h1>
-          { geneData ? (
-            <ReactTable
-              data={geneData}
-              columns={columns}
-              className="-highlight"
-              defaultPageSize={25}
-            />
-          ) : null}
+          <ReactTable
+            data={geneData}
+            columns={columns}
+            className="-highlight"
+            defaultPageSize={25}
+            loading={loading}
+            LoadingComponent={LoadingComponent}
+          />
         </div>
       </StyledWrapper>
     );
