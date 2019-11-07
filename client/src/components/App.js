@@ -1,5 +1,5 @@
-import React, {Fragment} from 'react';
-import {Route, Switch } from 'react-router-dom'
+import React, { Fragment } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import Landing from './Landing';
 import Genes from './Genes';
@@ -22,22 +22,20 @@ const StyledApp = styled.div`
   z-index:1;
 `;
 
-const App = () => {
-  return (
-    <Fragment>
-      <StyledApp className="app"> 
-        <Switch>
-          <Route exact path="/" component={Landing} />
-          {/* <Route exact path="/genes/" component={Genes} />
-          <Route exact path="/drugs/" component={Drugs} />
+const App = () => (
+  <>
+    <StyledApp className="app">
+      <Switch>
+        <Route exact path="/" component={Landing} />
+        <Route exact path="/genes/" component={Genes} />
+        {/* <Route exact path="/drugs/" component={Drugs} />
           <Route exact path="/datasets/" component={Datasets} />
           <Route exact path="/documentation/" component={Documentation} /> */}
-        </Switch>
-      </StyledApp>
-      <HeaderNav/>
-      {/* <FooterNav/> */}
-    </Fragment>
-  );
-}
+      </Switch>
+    </StyledApp>
+    <HeaderNav />
+    {/* <FooterNav/> */}
+  </>
+);
 
 export default App;
