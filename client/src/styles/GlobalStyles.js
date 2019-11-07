@@ -3,12 +3,22 @@ import colors from './colors';
 
 
 const GlobalStyles = createGlobalStyle`
+    
+    a {
+        text-decoration: none;
+        color: black;
+        font-family: 'Raleway', sans-serif;
+
+        &:hover {
+        cursor: pointer !important;
+        }
+    }
+
     .ReactTable {
-        width: 100%;
         text-align: left;
-        margin: 10px 0;
-        color:blue;
-        font-family: Nunito Sans, sans-serif;
+        margin: 10px 20px;
+        color: ${colors.blue_header};
+        font-family: 'Raleway', sans-serif;
 
         .rt-thead.-header,
         .raw-names,
@@ -16,6 +26,10 @@ const GlobalStyles = createGlobalStyle`
             box-shadow:none !important;
             font-weight: 700;
             font-size: 18px;
+        }
+
+        .rt-tr-group:hover {
+            background-color: ${colors.lightred_bg}
         }
 
         .rt-thead.-header {
@@ -32,13 +46,13 @@ const GlobalStyles = createGlobalStyle`
         }
 
         .-previous, .-next, .-btn   {
-            background: blue;
+            background: ${colors.blue_header};
             color:white !important;
         }
 
         
         input {
-            background: blue !important;
+            background: ${colors.lightblue_bg} !important;
         }
     }
 `;
