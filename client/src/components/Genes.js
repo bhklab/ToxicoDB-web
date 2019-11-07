@@ -12,7 +12,18 @@ class Genes extends Component {
   }
 
   componentDidMount() {
-    this.setState({ geneData: [] });
+    fetch('/api/v1/genes')
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((res) => {
+        console.log(res);
+        //   const drugsData = data.map(item => ({ value: item.idDrug, label: item.name }));
+        //   this.setState({ drugsData1: [{ value: 'Any', label: 'Any Compound' }, ...drugsData] });
+        //   this.setState({ drugsData2: [{ value: 'Any', label: 'Any Compound' }, ...drugsData] });
+      });
+    // this.setState({ geneData: [] });
   }
 
   render() {
