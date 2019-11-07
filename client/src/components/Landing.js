@@ -27,7 +27,7 @@ class Landing extends Component {
                 <h1 style={{marginTop: "200px"}} className="title">Mine multiple toxicogenomic datasets.</h1>
                 <Search/>
 
-                <h1 style={{marginTop: "150px"}}>About our database</h1>
+                <h1 style={{marginTop: "150px", marginBottom: "0px"}}>About our database</h1>
                 <About/>
 
                 <h1 style={{marginTop: "50px"}}>Most frequent queries</h1>

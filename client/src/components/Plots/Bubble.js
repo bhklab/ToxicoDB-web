@@ -16,11 +16,11 @@ class Bubble extends React.Component {
 
 
     plotBubble(data, plotId) {
-        const width = 600;
+        const width = "100%";
         const height = 500;
         
         // location to centre the bubbles
-        const centre = { x: width/2, y: height/2 };
+        const centre = { x: 500/2, y: height/2 };
         
         // strength to apply to the position forces
         const forceStrength = 0.03;
@@ -99,6 +99,7 @@ class Bubble extends React.Component {
             .append('svg')
             .attr('width', width)
             .attr('height', height)
+            .attr("viewBox", "0 0 500 500")
 
         // bind nodes data to circle elements
         const elements = svg.selectAll('.bubble')

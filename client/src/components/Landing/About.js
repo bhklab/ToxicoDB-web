@@ -5,12 +5,11 @@ import { callbackify } from 'util';
 import Bubble from '../Plots/Bubble';
 
 const StyledAbout = styled.div`
-    margin-top:-50px;
     width:100%;
     display:flex;
     align-items: center;
     justify-content: center;
-    
+    margin: 0px;
     &:after {
         content: "";
         display: table;
@@ -22,7 +21,7 @@ const StyledDescription = styled.div`
     background: ${colors.lightblue_bg};
     color: ${colors.blue_text};
     font-family: 'Raleway', sans-serif;
-    font-size: calc(1em + 0.3vw);
+    font-size: calc(0.8em + 0.5vw);
     line-height:50px;
     padding:20px;
     border-radius:15px;
