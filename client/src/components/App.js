@@ -19,6 +19,7 @@ const StyledApp = styled.div`
   justify-content: space-around;
   align-items: center;
   flex-grow: 1;
+  font-family: 'Raleway', sans-serif;
   
   order:2;
   z-index:1;
