@@ -4,8 +4,9 @@
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('drug_annotations', (table) => {
         table.integer('drug_id')
-            .notNullable()
             .unsigned()
+            .unique()
+            .notNullable()
             .references('id')
             .inTable('drugs')
             .index();
@@ -16,6 +17,8 @@ exports.up = function (knex, Promise) {
         table.string('class');
         table.string('class_name');
         table.string('atc_code');
+        table.string('smiles');
+        table.string('inchikey');
     });
 };
 

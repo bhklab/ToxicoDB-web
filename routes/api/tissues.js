@@ -11,7 +11,7 @@ const getTissues = function (request, response) {
             data: tissue,
         }))
         .catch((error) => response.status(500).json({
-            status: 'could not find data from the tissues table, getTissues',
+            status: 'could not find data from tissues table, getTissues',
             data: error,
         }));
 };

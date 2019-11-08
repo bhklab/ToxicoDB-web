@@ -6,6 +6,9 @@ const bodyParser = require('body-parser');
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const knexLogger = require('knex-logger');
+const db = require('./db/knex');
+
 
 const app = express();
 
@@ -15,6 +18,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // Bodyparser Middleware
 app.use(bodyParser.json());
+app.use(knexLogger(db));
+
+
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 // setting the path of the router file to variable so that we can use all the routes from it.

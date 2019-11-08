@@ -11,16 +11,16 @@ exports.up = function (knex, Promise) {
             .references('id')
             .inTable('samples')
             .index();
-        table.integer('time');
-        table.float('concentration');
-        table.integer('replicate_id');
-        table.float('expression');
-        table.integer('experiment_id')
+        table.integer('gene_id')
             .notNullable()
             .unsigned()
             .references('id')
-            .inTable('experiments')
+            .inTable('genes')
             .index();
+        table.integer('time');
+        table.float('expression');
+        table.float('dose');
+        table.integer('replicate');
     });
 };
 

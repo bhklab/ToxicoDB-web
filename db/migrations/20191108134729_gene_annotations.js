@@ -4,13 +4,16 @@
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('gene_annotations', (table) => {
         table.integer('gene_id')
-            .notNullable()
             .unsigned()
+            .unique()
+            .notNullable()
             .references('id')
             .inTable('genes')
             .index();
-        table.string('entrez_id');
-        table.string('hgnc_id');
+        table.string('ensembl_gid');
+        table.string('entrez_gid');
+        table.string('transcript_name');
+        table.string('ensembl_tid');
     });
 };
 

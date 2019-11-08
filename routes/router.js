@@ -14,27 +14,32 @@ const experiments = require('./api/experiments');
 // APIs related to datasets table.
 router.get('/v1/datasets', datasets.getDatasets);
 
-// APIs related to drugtable.
-router.get('/v1/drug', drugs.getDrugs);
-
+// APIs related to dataset table.
+router.get('/v1/drugs', drugs.getDrugs);
 
 // APIs related to genes table.
 router.get('/v1/genes', genes.getGenes);
 
+// APIs related to dataset table.
+router.get('/v1/genes', genes.getGenes);
 
 // APIs related to pathways table.
 router.get('/v1/pathways', pathways.getPathways);
 
+// APIs related to dataset table.
+router.get('/v1/pathways', pathways.getPathways);
 
 // APIs related to samples table.
 router.get('/v1/samples', samples.getSamples);
 
+// APIs related to dataset table.
+router.get('/v1/samples', samples.getSamples);
 
 // APIs related to tissues table.
 router.get('/v1/tissues', tissues.getTissues);
 
-// APIs related to experiments
-router.get('/v1/experiments', experiments.getExperiments);
+// APIs related to dataset table.
+router.get('/v1/tissues', tissues.getTissues);
 
 
 module.exports = router;

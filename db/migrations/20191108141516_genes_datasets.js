@@ -1,25 +1,24 @@
+
 /* eslint-disable func-names */
 /* eslint-disable no-unused-vars */
 
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('experiments', (table) => {
-        table.increments('id')
-            .primary();
-        table.integer('drug_id')
-            .notNullable()
-            .unsigned()
-            .references('id')
-            .inTable('drugs')
-            .index();
+    return knex.schema.createTable('genes_datasets', (table) => {
         table.integer('gene_id')
             .notNullable()
             .unsigned()
             .references('id')
             .inTable('genes')
             .index();
+        table.integer('dataset_id')
+            .notNullable()
+            .unsigned()
+            .references('id')
+            .inTable('datasets')
+            .index();
     });
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTable('experiments');
+    return knex.schema.dropTable('genes_datasets');
 };

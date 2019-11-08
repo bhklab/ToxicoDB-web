@@ -3,9 +3,14 @@ const knex = require('../../db/knex');
 
 
 // get all the data from the drugs table.
-const getDrugs = function (request, response) {
-    knex.select()
+const getDrugs = (request, response) => {
+    knex.select('id', 'name', 'pubchem', 'chembl', 'drugbank', 'targets', 'class', 'class_name', 'atc_code')
         .from('drugs')
+        .leftJoin(
+            'drug_annotations',
+            'drugs.id',
+            'drug_annotations.drug_id',
+        )
         .then((drug) => response.status(200).json({
             status: 'success',
             data: drug,
