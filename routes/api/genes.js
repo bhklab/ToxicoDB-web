@@ -3,7 +3,7 @@ const knex = require('../../db/knex');
 
 
 // get all the data from the genes table.
-const getgenes = function (request, response) {
+const getGenes = function (request, response) {
     knex.select()
         .from('genes')
         .then((gene) => response.status(200).json({
@@ -11,12 +11,12 @@ const getgenes = function (request, response) {
             data: gene,
         }))
         .catch((error) => response.status(500).json({
-            status: 'could not find data from genes table, getgenes',
+            status: 'could not find data from the genes table, getGenes',
             data: error,
         }));
 };
 
 
 module.exports = {
-    getgenes,
+    getGenes,
 };

@@ -3,7 +3,7 @@ const knex = require('../../db/knex');
 
 
 // get all the data from the drugs table.
-const getdrugs = function (request, response) {
+const getDrugs = function (request, response) {
     knex.select()
         .from('drugs')
         .then((drug) => response.status(200).json({
@@ -11,12 +11,12 @@ const getdrugs = function (request, response) {
             data: drug,
         }))
         .catch((error) => response.status(500).json({
-            status: 'could not find data from drugs table, getdrugs',
+            status: 'could not find data from drugs table, getDrugs',
             data: error,
         }));
 };
 
 
 module.exports = {
-    getdrugs,
+    getDrugs,
 };
