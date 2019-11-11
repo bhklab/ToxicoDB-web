@@ -19,6 +19,12 @@ exports.up = function (knex, Promise) {
             .index();
         table.string('name')
             .notNullable();
+        table.string('dose')
+            .notNullable();
+        table.string('time')
+            .notNullable();
+        table.integer('replicate')
+            .notNullable();
     });
 };
 
