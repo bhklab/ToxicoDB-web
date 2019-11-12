@@ -10,11 +10,13 @@ const StyledAbout = styled.div`
     align-items: center;
     justify-content: center;
     margin: 0px;
+    padding:0px;
     &:after {
         content: "";
         display: table;
         clear: both;
     }
+    height:auto;
 `;
 
 const StyledDescription = styled.div`
@@ -28,6 +30,7 @@ const StyledDescription = styled.div`
     width:45%;
     float:left;
     margin-right:3%;
+    height:350px;
 `;
 
 const StyledChart = styled.div`

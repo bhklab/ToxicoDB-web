@@ -3,77 +3,85 @@ import styled from 'styled-components';
 import Select from 'react-select';
 import colors from '../../styles/colors';
 import MenuList from './MenuList';
+import { NONAME } from 'dns';
 
 const customStyles = {
   control: (provided) => ({
     ...provided,
-    background: 'rgb(0,0,0,0)',
-    border: `1px solid ${colors.nav_links}`,
-    margin: '5px 0px',
+    background: colors.lightred_bg,
+    borderRadius: '35px',
+    height:60,
+    fontFamily: `'Raleway', sans-serif`,
+    fontSize: `calc(0.5em + 0.8vw)`,
+    fontWeight:700,
+    color: colors.red_highlight,
+    marginTop: '80px',
+    padding:'0 20px',
+    border:'none',
     '&:hover': {
-      border: `1px solid ${colors.nav_links}`,
       cursor: 'text',
     },
+    "&:focus": {
+        outline:"none",
+        border:"none",
+        boxShadow: "none"
+    },
+  }),
+  input: (provided) => ({
+    ...provided,
+    padding:'0 0px',
+    color: colors.red_highlight,
   }),
   placeholder: (provided) => ({
     ...provided,
-    color: `${colors.nav_links}`,
+    color: `${colors.red_highlight}`,
   }),
   dropdownIndicator: (provided) => ({
     ...provided,
-    color: `${colors.nav_links}`,
+    color: `${colors.red_highlight}`,
     '&:hover': {
-      color: `${colors.nav_links}`,
+      color: `${colors.red_highlight}`,
       cursor: 'pointer',
     },
   }),
-
   indicatorSeparator: (provided) => ({
     ...provided,
-    background: `${colors.nav_links}`,
+    background: `${colors.red_highlight}`,
     '&:hover': {
-      background: `${colors.nav_links}`,
+      background: `${colors.red_highlight}`,
     },
   }),
   singleValue: (provided) => ({
     ...provided,
-    color: `${colors.nav_links}`,
+    color: `${colors.red_highlight}`,
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    color: `${colors.red_highlight}`,
+    background:'#fff',
+    marginRight:'10px',
+  }),
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: `${colors.red_highlight}`,
   }),
   option: (provided, state) => ({
     ...provided,
-    textAlign: state.isDisabled ? 'left' : 'center',
-    fontWeight: state.isDisabled ? '700' : state.isSelected ? '700' : '400',
-    background: state.isDisabled ? colors.summary_bg : 'white',
-    color: state.isSelected ? colors.color_main_2 : colors.nav_links,
+    textAlign: 'left',
+    fontWeight: '400',
+    background: 'white',
+    color: colors.red_highlight,
   }),
 };
 
+const customFilterOption = (option, rawInput) => {
+    const words = rawInput.split(' ');
+    return words.reduce(
+      (acc, cur) => acc && option.label.toLowerCase().includes(cur.toLowerCase()),
+      true,
+    );
+  };
 
-const StyledSearch = styled.div`
-    input {
-        margin-top:50px;
-        height:70px;
-        width:calc(100% - 60px);
-        background: ${colors.lightred_bg};
-        border: none;
-        color: ${colors.red_highlight};
-        border-radius:35px;
-        padding: 0px 30px;
-        font-size: calc(1em + 0.8vw);
-        font-family: 'Raleway', sans-serif;
-        font-weight:700;
-
-        &::placeholder {
-            color: ${colors.red_highlight};
-            font-weight:600;
-            opacity:0.7;
-        }
-
-        &:focus {
-            outline:none;
-        }
-    }
-`;
 
 class Search extends Component {
   constructor() {
@@ -124,14 +132,7 @@ class Search extends Component {
 
   render() {
     const { searchData } = this.state;
-    console.log(searchData);
-    const customFilterOption = (option, rawInput) => {
-      const words = rawInput.split(' ');
-      return words.reduce(
-        (acc, cur) => acc && option.label.toLowerCase().includes(cur.toLowerCase()),
-        true,
-      );
-    };
+    
     return (
     // <StyledSearch>
     //     <input type="text" className="input" placeholder="Search..." />
@@ -139,11 +140,11 @@ class Search extends Component {
       <>
         {searchData.length == 0 ? null : (
               <Select
-                        // isMulti
-                        // filterOption={customFilterOption}
+                    isMulti
+                    filterOption={customFilterOption}
                     options={searchData}
-                        // components={{ MenuList }}
-                    placeholder="Enter Cell Line or Tissue"
+                    components={{ MenuList }}
+                    placeholder="Enter a drug or gene..."
                     styles={customStyles}
                   />
             )}
