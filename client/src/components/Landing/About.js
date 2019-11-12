@@ -24,13 +24,13 @@ const StyledDescription = styled.div`
     color: ${colors.blue_text};
     font-family: 'Raleway', sans-serif;
     font-size: calc(0.8em + 0.5vw);
-    line-height:50px;
-    padding:20px;
+    line-height:calc(10px + 2.5vw);
+    padding:30px 50px 50px 30px;
     border-radius:15px;
     width:45%;
     float:left;
     margin-right:3%;
-    height:350px;
+    
 `;
 
 const StyledChart = styled.div`
