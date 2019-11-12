@@ -12,10 +12,6 @@ exports.up = function (knex, Promise) {
             .index();
         table.string('viability')
             .notNullable();
-        table.string('dose')
-            .notNullable();
-        table.string('time')
-            .notNullable();
     });
 };
 

@@ -3,17 +3,17 @@
 
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('species_tissues', (table) => {
-        table.integer('species_id')
-            .notNullable()
-            .unsigned()
-            .references('id')
-            .inTable('species')
-            .index();
         table.integer('tissue_id')
             .notNullable()
             .unsigned()
             .references('id')
             .inTable('tissues')
+            .index();
+        table.integer('species_id')
+            .notNullable()
+            .unsigned()
+            .references('id')
+            .inTable('species')
             .index();
     });
 };

@@ -17,10 +17,13 @@ exports.up = function (knex, Promise) {
             .references('id')
             .inTable('genes')
             .index();
-        table.integer('time');
+        table.integer('analysis_id')
+            .notNullable()
+            .unsigned()
+            .references('id')
+            .inTable('analysis')
+            .index();
         table.float('expression');
-        table.float('dose');
-        table.integer('replicate');
     });
 };
 
