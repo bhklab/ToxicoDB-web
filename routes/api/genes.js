@@ -5,7 +5,7 @@ const knex = require('../../db/knex');
 // get all the data from the genes table.
 
 const getGenes = function (request, response) {
-    knex.select('id', 'name', 'entrez_id', 'hgnc_id')
+    knex.select('id', 'name')
         .from('genes')
         .leftJoin(
             'gene_annotations',
