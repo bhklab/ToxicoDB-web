@@ -39,7 +39,7 @@ const App = () => (
       </Switch>
     </StyledApp>
     <HeaderNav />
-    {/* <FooterNav/> */}
+    <FooterNav/>
   </>
 );
 

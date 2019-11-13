@@ -10,10 +10,10 @@ const customStyles = {
     ...provided,
     background: colors.lightred_bg,
     borderRadius: '35px',
-    height:60,
+    height:80,
     fontFamily: `'Raleway', sans-serif`,
     fontSize: `calc(0.5em + 0.8vw)`,
-    fontWeight:700,
+    fontWeight:600,
     color: colors.red_highlight,
     marginTop: '80px',
     padding:'0 20px',
@@ -73,6 +73,7 @@ const customStyles = {
     color: colors.red_highlight,
   }),
 };
+
 
 const customFilterOption = (option, rawInput) => {
     const words = rawInput.split(' ');

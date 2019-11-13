@@ -6,6 +6,7 @@ import colors from '../styles/colors'
 import Search from './Landing/Search';
 import About from './Landing/About';
 import FrequentQueries from './Landing/FrequentQueries';
+import Collaboration from './Landing/Collaboration';
 
 const StyledLanding = styled.div`
     width: 80vw;
@@ -34,6 +35,8 @@ class Landing extends Component {
                 <FrequentQueries/>
 
                 <h1 style={{marginTop: "150px"}}>Explore our database</h1>
+
+                <Collaboration/>
             </StyledLanding>
         )
     }
