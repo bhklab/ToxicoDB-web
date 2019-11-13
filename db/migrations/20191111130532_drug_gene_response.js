@@ -17,13 +17,14 @@ exports.up = function (knex, Promise) {
             .references('id')
             .inTable('genes')
             .index();
-        table.integer('analysis_id')
-            .notNullable()
-            .unsigned()
-            .references('id')
-            .inTable('analysis')
-            .index();
-        table.float('expression');
+        table.integer('analysis_id');
+        // change this to reference to analysis table.
+        // .notNullable()
+        // .unsigned()
+        // .references('id')
+        // .inTable('analysis')
+        // .index();
+        table.float('expression', 8, 4);
     });
 };
 
