@@ -19,27 +19,11 @@ const getExperiments = function (request, response) {
     //         data: error,
     //     }));
 
-    // get the drug's dataset so i can make sure in the front-end 
-    // how to parse the concentration values
-    function getDatasetFromDrug() {
-        knex.select('dataset_id')
-            .from('drugs_datasets')
-            .where({drug_id: drugId});
-    }
-    // TODO: get the gene's dataset
-    function getDatasetFromGene() {}
-
-    // get experiment id
-    function getExperimentId() {
-        knex.select('id')
-            .from('experiment')
-            .where({ drug_id: drugId, gene_id: geneId });
-    }
-
     // get experiment information
-    knex.select('time', 'expression', 'concentration', 'replicate_id')
-        .from('drug_gene_response')
-        .where({ experiment_id: getExperimentId });
+    knex.select('time', 'expression', 'dose', 'replicate')
+        .from('drug_gene_response AS dgr')
+        .innerJoin("samples AS s", "s.id", "dgr.sample_id")
+        .where({ "s.drug_id": drugId, "dgr.gene_id":geneId });
 };
 
 
