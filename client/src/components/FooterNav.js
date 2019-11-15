@@ -75,8 +75,8 @@ class FooterNav extends Component {
                 <div className="support links">
                     <h3>Support</h3>
                     <Link to="/documentation">Documentation</Link>
-                    <Link to="https://github.com/bhklab">GitHub</Link>
-                    <Link to="https://bhklab.ca/">BHKLab</Link>
+                    <a href="https://github.com/bhklab">GitHub</a>
+                    <a href="https://bhklab.ca/">BHKLab</a>
                 </div>
                 <div className="contact">
                     <h3>BHKLab</h3>

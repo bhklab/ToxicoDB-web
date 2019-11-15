@@ -2,35 +2,27 @@ import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table';
-import colors from '../styles/colors';
+import colors from '../../styles/colors';
 import 'react-table/react-table.css';
 
-import LoadingComponent from './Utils/Loading';
+import LoadingComponent from '../Utils/Loading';
 
-const StyledWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  background:white;
-  padding:0px 30px;
-  width: 100%;
-  margin: 20px;
-
-  .wrapper {
-    max-width: 1024px;
-    width: 100%;
-    padding: 20px;
-  }
-  
-  a {
+const StyledGenes = styled.div`
+    width: 80vw;
+    max-width: 1200px;
+    padding:140px 0px;
+    h1 {
+        color: ${colors.red_highlight};
+        font-family: 'Raleway', sans-serif;
+        font-size: calc(1em + 1vw);
+        text-align:center;
+        margin-bottom:50px;
+    }
+    a {
       color: ${colors.blue_text}
-  }
-  h1 {
-    color: ${colors.blue_header}
-  }
+    }
 `;
+
 
 class Genes extends Component {
   constructor() {
@@ -54,7 +46,7 @@ class Genes extends Component {
     const { loading, geneData } = this.state;
     const columns = [{
       Header: 'Name',
-      accessor: 'hgnc_id',
+      accessor: 'name',
       sortable: true,
     }, {
       Header: 'Ensembl ID',
@@ -63,13 +55,13 @@ class Genes extends Component {
       Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`http://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${props.value}`}>{props.value}</a>,
     }, {
       Header: 'Entrez ID',
-      accessor: 'entrez_id',
+      accessor: 'entrez_gid',
       sortable: false,
       Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/gene/?term=${props.value}`}>{props.value}</a>,
     }];
 
     return (
-      <StyledWrapper>
+      <StyledGenes>
         <div className="wrapper">
           <h1>List of Genes</h1>
           <ReactTable
@@ -81,7 +73,7 @@ class Genes extends Component {
             LoadingComponent={LoadingComponent}
           />
         </div>
-      </StyledWrapper>
+      </StyledGenes>
     );
   }
 }

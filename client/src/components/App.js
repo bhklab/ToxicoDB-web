@@ -3,12 +3,14 @@ import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import { Normalize } from 'styled-normalize';
 import Landing from './Landing';
-import Genes from './Genes';
-import Datasets from './Datasets';
-import Drugs from './Drugs';
+import Genes from './SummaryPages/Genes';
+import Datasets from './SummaryPages/Datasets';
+import Drugs from './SummaryPages/Drugs';
 import HeaderNav from './HeaderNav';
 import FooterNav from './FooterNav';
-import Documentation from './Documentation';
+import Documentation from './SummaryPages/Documentation';
+import DrugCard from './IndivPages/DrugPage';
+import GeneCard from './IndivPages/GenePage';
 import GlobalStyles from '../styles/GlobalStyles';
 
 const StyledApp = styled.div`
@@ -33,9 +35,12 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route exact path="/genes/" component={Genes} />
-        {/* <Route exact path="/drugs/" component={Drugs} />
-          <Route exact path="/datasets/" component={Datasets} />
-          <Route exact path="/documentation/" component={Documentation} /> */}
+        <Route exact path="/drugs/" component={Drugs} />
+          {/* <Route exact path="/datasets/" component={Datasets} /> */}
+          {/* <Route exact path="/documentation/" component={Documentation} /> */}
+        <Route path="/drugs/:id" component={DrugCard} />      
+        <Route path="/genes/:id" component={GeneCard} />   
+        {/* <Route path="/expression" component={ExpressionPlot} */}
       </Switch>
     </StyledApp>
     <HeaderNav />
