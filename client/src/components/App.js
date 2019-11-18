@@ -11,6 +11,7 @@ import FooterNav from './FooterNav';
 import Documentation from './SummaryPages/Documentation';
 import DrugCard from './IndivPages/DrugPage';
 import GeneCard from './IndivPages/GenePage';
+import ExpressionPlot from './ExpressionPlot';
 import GlobalStyles from '../styles/GlobalStyles';
 
 const StyledApp = styled.div`
@@ -40,7 +41,7 @@ const App = () => (
           {/* <Route exact path="/documentation/" component={Documentation} /> */}
         <Route path="/drugs/:id" component={DrugCard} />      
         <Route path="/genes/:id" component={GeneCard} />   
-        {/* <Route path="/expression" component={ExpressionPlot} */}
+        <Route path="/expression" component={ExpressionPlot}/>
       </Switch>
     </StyledApp>
     <HeaderNav />

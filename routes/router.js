@@ -22,7 +22,7 @@ router.get('/v1/genes/:id', genes.getIndivGene);
 
 router.get('/v1/pathways', pathways.getPathways);
 
-router.get('/v1/pathways', pathways.getPathways);
+router.get('/v1/experiments', experiments.getExperiments);
 
 router.get('/v1/samples', samples.getSamples);
 
