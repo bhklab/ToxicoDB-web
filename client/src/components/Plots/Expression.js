@@ -11,7 +11,7 @@ class Expression extends React.Component {
         const {
         data, plotId, xRange, yRange, datasets
         } = this.props;
-        console.log(data)
+
         this.plotExpression(data, plotId, xRange, yRange, datasets);
     }
 
@@ -109,14 +109,15 @@ class Expression extends React.Component {
 
         let legend = svg.append("g")
 
+        // making the paths
         data.forEach((t,i) => {
             // make lines
             svg.append("path")
-                .attr("class", t.class)
+                .attr("class", `${t.class}-path`)
                 .attr("d", line(t.points))
                 .attr("fill", "none")
                 .attr("stroke", t.color)
-                .style("opacity", 1)
+                .attr("opacity", 1)
                 .attr("stroke-width", 4)
                 .attr("stroke-dasharray", () => {
                     if (t.mode == "solid") return "";
@@ -131,7 +132,8 @@ class Expression extends React.Component {
                 // add dots for those that are below 100 for response
                 dots.append("circle")
                     .attr("r", 4)
-                    .style("opacity", 1)
+                    .attr("class", `${t.class}-path`)
+                    .attr("opacity", 1)
                     .attr("fill", t.color)
                     .attr("cx", function(d) {return xrange(d.time);})
                     .attr("cy", function(d) {return yrange(d.exp);})
@@ -162,6 +164,57 @@ class Expression extends React.Component {
                 .text(t.label)
         })
 
+        // making the dataset selectors
+        let nest = d3.nest()
+            .key(function(d) {
+                return d;
+            })
+            .entries(datasets);
+
+        nest.forEach((d,i) => {
+            legend.append('rect')
+                .attr("x", width+10)
+                .attr("y", height - 80 + (i*20))
+                .attr("width", 13)
+                .attr("height", 13)
+                .style("fill", "black")
+                .style("cursor", "pointer")
+                .on("click", () => {
+                    let active   = d.active ? false : true
+        
+                     //to show that this dataset has been selected
+                    if (active) {
+                        d3.selectAll(`.${datasets[i]}-path`).attr("opacity", 0)
+                    } else {
+                        d3.selectAll(`.${datasets[i]}-path`).attr("opacity", 1)
+                    }
+                
+                    d.active = active;
+                })
+
+            legend.append("text")
+                .attr("class", `${datasets[i]} legDataset`)
+                .attr("fill", "black")
+                .style("font-size", 13)
+                .attr("font-family", "Arial")
+                .attr("x", width + 30)
+                .attr("y", height - 69 + (i*20))
+                .style("cursor", "pointer")
+                .on("click", () => {
+                    let active   = d.active ? false : true
+        
+                     //to show that this dataset has been selected
+                    if (active) {
+                        d3.selectAll(`.${datasets[i]}-path`).attr("opacity", 0)
+                    } else {
+                        d3.selectAll(`.${datasets[i]}-path`).attr("opacity", 1)
+                    }
+                
+                    d.active = active;
+                })
+                .text(datasets[i])
+        })
+        
         
         
 

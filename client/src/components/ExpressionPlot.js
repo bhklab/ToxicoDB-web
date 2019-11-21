@@ -5,6 +5,8 @@ import colors from '../styles/colors';
 import queryString from 'query-string';
 import Expression from './Plots/Expression';
 
+import Loading from './Utils/Loading';
+
 
 const StyledExpressionPlot = styled.div`
     width: 80vw;
@@ -33,7 +35,8 @@ class ExpressionPlot extends Component {
             yRange: [],
             drugName: "",
             geneName: "",
-            datasets: []
+            datasets: [],
+            loading:true,
         }
     }
 
@@ -105,7 +108,8 @@ class ExpressionPlot extends Component {
                     expressionData: expData, 
                     xRange: [Math.min(...times) - 1, Math.max(...times) + 1],
                     yRange: [Math.min(...exps) - 1, Math.max(...exps) + 1],
-                    datasets: datasets
+                    datasets: datasets,
+                    loading:false
                 });
             });
 
@@ -127,10 +131,14 @@ class ExpressionPlot extends Component {
     
 
     render() {
-        const {expressionData, drugName, geneName, xRange, yRange, datasets} = this.state;
+        const {expressionData, drugName, geneName, xRange, yRange, datasets, loading} = this.state;
         return (
         <StyledExpressionPlot>
-            {expressionData.length === 0 || drugName === "" || geneName === "" ? null : (
+            {expressionData.length === 0 || drugName === "" || geneName === "" ? (
+                <div className="loading-container">
+                <Loading type="bubbles" width={150} height={150} color={colors.color_main_2} />
+              </div>
+            ) : (
                 <Fragment>
                     <h1>Effects of {drugName} on {geneName}</h1>
                     <Expression
