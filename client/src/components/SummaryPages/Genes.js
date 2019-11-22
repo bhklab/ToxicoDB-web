@@ -50,7 +50,7 @@ class Genes extends Component {
       sortable: true,
     }, {
       Header: 'Ensembl ID',
-      accessor: 'name',
+      accessor: 'ensembl_gid',
       sortable: true,
       Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`http://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${props.value}`}>{props.value}</a>,
     }, {
