@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import colors from '../../styles/colors';
 
 
-const StyledQuery= styled.div`
+const StyledQuery = styled.div`
     text-align: center !important;
     font-family: 'Raleway', sans-serif;
 
@@ -24,34 +24,34 @@ const StyledQuery= styled.div`
 
 
 class Query extends Component {
-    constructor() {
-        super();
-        this.state = {
-            // queryName: this.props.queryName,
-            queryDesc: "",
-        }
-    }
+  constructor() {
+    super();
+    this.state = {
+      // queryName: this.props.queryName,
+      queryDesc: '',
+    };
+  }
 
-    componentDidMount() {
-        const {
-            queryName
-        } = this.props;
-        
-        // getting the description from pubchem
-    }
+  componentDidMount() {
+    const {
+      queryName,
+    } = this.props;
 
-    render() {
-        const {queryName, queryDesc} = this.props;
-        return (
-            <StyledQuery>
-                <h2>{queryName}</h2>
-                <div className="desc">
-                    A mitochondrial cytochrome P450 enzyme that catalyzes the 11-beta-hydroxylation of steroids 
+    // getting the description from pubchem
+  }
+
+  render() {
+    const { queryName, queryDesc } = this.props;
+    return (
+      <StyledQuery>
+        <h2>{queryName}</h2>
+        <div className="desc">
+                    A mitochondrial cytochrome P450 enzyme that catalyzes the 11-beta-hydroxylation of steroids
                     in the presence of molecular oxygen and NADPH-FERRIHEMOPROTEIN REDUCTASE.
-                </div>
-            </StyledQuery>
-        )
-    }
+        </div>
+      </StyledQuery>
+    );
+  }
 }
 
 export default Query;

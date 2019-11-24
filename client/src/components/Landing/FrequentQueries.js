@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import colors from '../../styles/colors';
 import Slider from 'react-slick';
+import colors from '../../styles/colors';
 
 import Query from './Query.js';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 
 const StyledQueries = styled.div`
@@ -60,49 +59,49 @@ const StyledQueries = styled.div`
 `;
 
 function NextArrow(props) {
-    const {onClick} =  props;
-    return (
-        <p className="slick-next" onClick={onClick}/>
-    );
+  const { onClick } = props;
+  return (
+    <p className="slick-next" onClick={onClick} />
+  );
 }
-  
+
 function PrevArrow(props) {
-    const {onClick} =  props;
-    return (
-        <p className="slick-prev" onClick={onClick}/>
-    );
+  const { onClick } = props;
+  return (
+    <p className="slick-prev" onClick={onClick} />
+  );
 }
 
 
 class FrequentQueries extends Component {
-    render() {
-        const prev = '<p className="slick-prev">Prev</p>'
-        const settings = {
-            dots: true,
-            arrows: true,
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            prevArrow: <PrevArrow/>,
-            nextArrow: <NextArrow/>,
-            swipe: false,
-            speed: 500,
-        };
-        
-        return (
-            <StyledQueries>
-                <Slider {...settings}>
-                    {/* https://www.fullstackreact.com/30-days-of-react/day-13/ to iterate over displaying components */}
-                    <Query queryName="CYP1A1"/>
-                    <Query queryName="paclitaxel"/>
-                    <Query queryName="carbon tetrachloride"/>
-                    <Query queryName="erbb1"/>
-                    <Query queryName="CYP1A1"/>
-                    <Query queryName="CYP1A1"/>
-    
-                </Slider>
-            </StyledQueries>
-        )
-    }
+  render() {
+    const prev = '<p className="slick-prev">Prev</p>';
+    const settings = {
+      dots: true,
+      arrows: true,
+      slidesToShow: 3,
+      slidesToScroll: 1,
+      prevArrow: <PrevArrow />,
+      nextArrow: <NextArrow />,
+      swipe: false,
+      speed: 500,
+    };
+
+    return (
+      <StyledQueries>
+        <Slider {...settings}>
+          {/* https://www.fullstackreact.com/30-days-of-react/day-13/ to iterate over displaying components */}
+          <Query queryName="CYP1A1" />
+          <Query queryName="paclitaxel" />
+          <Query queryName="carbon tetrachloride" />
+          <Query queryName="erbb1" />
+          <Query queryName="CYP1A1" />
+          <Query queryName="CYP1A1" />
+
+        </Slider>
+      </StyledQueries>
+    );
+  }
 }
 
 export default FrequentQueries;

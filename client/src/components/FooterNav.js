@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../images/toxicodb-logo.png';
-import colors from '../styles/colors'
+import colors from '../styles/colors';
 
 const StyledNav = styled.div`   
     width: 100%;
@@ -62,33 +62,36 @@ const StyledNav = styled.div`
 `;
 
 class FooterNav extends Component {
-    render() {
-      return (
-        <StyledNav className="footer-nav">
-            <div className="container">
-                <div className="database links">
-                    <h3>Database</h3>
-                    <Link to="/drugs">Drugs</Link>
-                    <Link to="/genes">Genes</Link>
-                    <Link to="/datasets">Datasets</Link>
-                </div>
-                <div className="support links">
-                    <h3>Support</h3>
-                    <Link to="/documentation">Documentation</Link>
-                    <a href="https://github.com/bhklab">GitHub</a>
-                    <a href="https://bhklab.ca/">BHKLab</a>
-                </div>
-                <div className="contact">
-                    <h3>BHKLab</h3>
-                    The MaRS center<br></br>
-                    101 College St, Toronto ON <br></br>
+  render() {
+    return (
+      <StyledNav className="footer-nav">
+        <div className="container">
+          <div className="database links">
+            <h3>Database</h3>
+            <Link to="/drugs">Drugs</Link>
+            <Link to="/genes">Genes</Link>
+            <Link to="/datasets">Datasets</Link>
+          </div>
+          <div className="support links">
+            <h3>Support</h3>
+            <Link to="/documentation">Documentation</Link>
+            <a href="https://github.com/bhklab">GitHub</a>
+            <a href="https://bhklab.ca/">BHKLab</a>
+          </div>
+          <div className="contact">
+            <h3>BHKLab</h3>
+                    The MaRS center
+            <br />
+                    101 College St, Toronto ON
+            {' '}
+            <br />
                     TMDT RM 11-310
-                </div>
-            </div>
-        </StyledNav>
-      );
-    }
+          </div>
+        </div>
+      </StyledNav>
+    );
   }
-  
-  
-  export default FooterNav;
+}
+
+
+export default FooterNav;

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../images/toxicodb-logo.png';
-import colors from '../styles/colors'
+import colors from '../styles/colors';
 
 const StyledNav = styled.div`   
   width: 100%;
@@ -55,22 +55,22 @@ const StyledLogo = styled.img`
 `;
 
 class HeaderNav extends Component {
-    render() {
-      return (
-        <StyledNav className="header-nav">
-            <Link to="/">
-              <StyledLogo src={logo} alt="logo" />
-            </Link>
-            <nav className="links">
-              <Link to="/documentation/">Documentation</Link>
-              <Link to="/drugs/">Drugs</Link>
-              <Link to="/genes/">Genes</Link>
-              <Link to="/datasets/">Datasets</Link>
-            </nav>
-        </StyledNav>
-      );
-    }
+  render() {
+    return (
+      <StyledNav className="header-nav">
+        <Link to="/">
+          <StyledLogo src={logo} alt="logo" />
+        </Link>
+        <nav className="links">
+          <Link to="/documentation/">Documentation</Link>
+          <Link to="/drugs/">Drugs</Link>
+          <Link to="/genes/">Genes</Link>
+          <Link to="/datasets/">Datasets</Link>
+        </nav>
+      </StyledNav>
+    );
   }
-  
-  
-  export default HeaderNav;
+}
+
+
+export default HeaderNav;

@@ -31,48 +31,48 @@ const StyledGenePage = styled.div`
 
 
 class GenePage extends Component {
-    constructor() {
-        super();
-        this.state = {
-            geneData: [],
-            annotationData: [],
-        }
-    }
+  constructor() {
+    super();
+    this.state = {
+      geneData: [],
+      annotationData: [],
+    };
+  }
 
-    componentDidMount() {
-        const { match: { params } } = this.props;
-        fetch(`/api/v1/genes/${params.id}`)
-            .then((response) => response.json())
-            .then((res) => {
-                const { data } = res;
-                let annotationData = [];
-                Object.keys(data[0]).forEach((x, i) => {
-                    if (x != "name") {
-                        let temp = {
-                            "name": x,
-                            "value": data[0][x],
-                        };
-                        annotationData.push(temp)
-                    }
-                })
-                this.setState({ geneData: data[0], annotationData: annotationData});
-            });
-    }
+  componentDidMount() {
+    const { match: { params } } = this.props;
+    fetch(`/api/v1/genes/${params.id}`)
+      .then((response) => response.json())
+      .then((res) => {
+        const { data } = res;
+        const annotationData = [];
+        Object.keys(data[0]).forEach((x, i) => {
+          if (x !== 'name') {
+            const temp = {
+              name: x,
+              value: data[0][x],
+            };
+            annotationData.push(temp);
+          }
+        });
+        this.setState({ geneData: data[0], annotationData });
+      });
+  }
 
-    render() {
-        const {geneData, annotationData} = this.state;
-        return (
-        <StyledGenePage>
-            {geneData.length == 0 ? null : (
-                <Fragment>
-                    <h1>{geneData.name}</h1>
-                    <h2>Annotations</h2>
-                    <AnnotationCard data={annotationData} />
-                </Fragment>
-            )} 
-        </StyledGenePage>
-        );
-    }
+  render() {
+    const { geneData, annotationData } = this.state;
+    return (
+      <StyledGenePage>
+        {geneData.length === 0 ? null : (
+          <div>
+            <h1>{geneData.name}</h1>
+            <h2>Annotations</h2>
+            <AnnotationCard data={annotationData} />
+          </div>
+        )}
+      </StyledGenePage>
+    );
+  }
 }
 
 

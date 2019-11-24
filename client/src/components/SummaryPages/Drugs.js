@@ -45,44 +45,44 @@ class Drugs extends Component {
   render() {
     const { loading, drugData } = this.state;
     const columns = [
-        {
-            Header: 'Name',
-            accessor: 'name',
-            sortable: true,
-            minWidth: 200,
-        }, {
-            Header: 'PubChem ID',
-            accessor: 'pubchem',
-            sortable: false,
-            Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`http://useast.ensembl.org/Homo_sapiens/drug/Summary?g=${props.value}`}>{props.value}</a>,
-        }, {
-            Header: 'Chembl ID',
-            accessor: 'chembl',
-            sortable: false,
-            Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/drug/?term=${props.value}`}>{props.value}</a>,
-        }, {
-            Header: 'DrugBank',
-            accessor: 'drugbank',
-            sortable: false,
-            Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/drug/?term=${props.value}`}>{props.value}</a>,
-        }, {
-            Header: 'Targets',
-            accessor: 'targets',
-            sortable: false,
-        },{
-            Header: 'Class',
-            accessor: 'class',
-            sortable: false,
-        },{
-            Header: 'Class name',
-            accessor: 'class_name',
-            sortable: false,
-        },{
-            Header: 'ATC Code',
-            accessor: 'atc_code',
-            sortable: false,
-            Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/drug/?term=${props.value}`}>{props.value}</a>,
-        }, 
+      {
+        Header: 'Name',
+        accessor: 'name',
+        sortable: true,
+        minWidth: 200,
+      }, {
+        Header: 'PubChem ID',
+        accessor: 'pubchem',
+        sortable: false,
+        Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`http://useast.ensembl.org/Homo_sapiens/drug/Summary?g=${props.value}`}>{props.value}</a>,
+      }, {
+        Header: 'Chembl ID',
+        accessor: 'chembl',
+        sortable: false,
+        Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/drug/?term=${props.value}`}>{props.value}</a>,
+      }, {
+        Header: 'DrugBank',
+        accessor: 'drugbank',
+        sortable: false,
+        Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/drug/?term=${props.value}`}>{props.value}</a>,
+      }, {
+        Header: 'Targets',
+        accessor: 'targets',
+        sortable: false,
+      }, {
+        Header: 'Class',
+        accessor: 'class',
+        sortable: false,
+      }, {
+        Header: 'Class name',
+        accessor: 'class_name',
+        sortable: false,
+      }, {
+        Header: 'ATC Code',
+        accessor: 'atc_code',
+        sortable: false,
+        Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/drug/?term=${props.value}`}>{props.value}</a>,
+      },
     ];
 
     return (
