@@ -3,7 +3,8 @@
 
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('analysis', (table) => {
-        table.increments('id')
+        table.integer('id')
+            .unsigned()
             .primary();
         table.float('fold_change', 16, 8)
             .notNullable();
