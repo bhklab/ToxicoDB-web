@@ -23,7 +23,7 @@ const getGenes = function (request, response) {
 };
 
 const getIndivGene = (request, response) => {
-    knex.select('name', 'ensembl_gid', 'ensembl_tid', 'entrez_gid', 'transcript_name')
+    knex.select('id','name', 'ensembl_gid', 'ensembl_tid', 'entrez_gid', 'transcript_name')
         .from('genes')
         .leftJoin(
             'gene_annotations',

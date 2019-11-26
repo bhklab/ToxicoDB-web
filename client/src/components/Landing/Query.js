@@ -17,6 +17,7 @@ const StyledQuery= styled.div`
         color: ${colors.blue_text};
         padding: 15px;
         line-height:30px;
+        min-height: 80px;
         border-radius:20px;
         margin: 0px 10px;
     }
@@ -27,27 +28,32 @@ class Query extends Component {
     constructor() {
         super();
         this.state = {
-            // queryName: this.props.queryName,
             queryDesc: "",
         }
     }
 
     componentDidMount() {
         const {
-            queryName
+            queryName, type
         } = this.props;
         
         // getting the description from pubchem
+        if (type == "pair") {
+            this.setState({queryDesc: "drug-gene pair"})
+        } else {
+            this.setState({queryDesc: ""})
+        }
     }
 
     render() {
-        const {queryName, queryDesc} = this.props;
+        const {queryName, type, desc} = this.props;
+        const {queryDesc} = this.state;
         return (
             <StyledQuery>
                 <h2>{queryName}</h2>
                 <div className="desc">
-                    A mitochondrial cytochrome P450 enzyme that catalyzes the 11-beta-hydroxylation of steroids 
-                    in the presence of molecular oxygen and NADPH-FERRIHEMOPROTEIN REDUCTASE.
+                    {/* {queryDesc} */}
+                    {desc}
                 </div>
             </StyledQuery>
         )

@@ -22,7 +22,7 @@ const getDrugs = (request, response) => {
 };
 
 const getIndivDrug = (request, response) => {
-    knex.select('name', 'pubchem', 'chembl', 'drugbank', 'targets', 'class', 'class_name', 'atc_code')
+    knex.select('id','name', 'pubchem', 'chembl', 'drugbank', 'targets', 'class', 'class_name', 'atc_code')
         .from('drugs')
         .leftJoin(
             'drug_annotations',

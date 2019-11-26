@@ -12,6 +12,7 @@ const tissues = require('./api/tissues');
 const experiments = require('./api/experiments');
 
 
+
 router.get('/v1/datasets', datasets.getDatasets);
 
 router.get('/v1/drugs', drugs.getDrugs);
@@ -23,6 +24,8 @@ router.get('/v1/genes/:id', genes.getIndivGene);
 router.get('/v1/pathways', pathways.getPathways);
 
 router.get('/v1/experiments', experiments.getExperiments);
+
+router.get('/v1/analysis', experiments.getAnalysis);
 
 router.get('/v1/samples', samples.getSamples);
 

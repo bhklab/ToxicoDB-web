@@ -54,7 +54,6 @@ class AnnotationCard extends Component {
 
     render() {
         const {data} = this.state;
-        console.log(data)
         return (
             <StyledAnnotationCard>  
                 {data.length == 0 ? null : 

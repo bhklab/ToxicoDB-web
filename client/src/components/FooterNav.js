@@ -70,7 +70,6 @@ class FooterNav extends Component {
                     <h3>Database</h3>
                     <Link to="/drugs">Drugs</Link>
                     <Link to="/genes">Genes</Link>
-                    <Link to="/datasets">Datasets</Link>
                 </div>
                 <div className="support links">
                     <h3>Support</h3>
