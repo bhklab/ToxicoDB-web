@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import colors from '../../styles/colors';
 import Slider from 'react-slick';
+import colors from '../../styles/colors';
 
 import Query from './Query.js';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 
 const StyledQueries = styled.div`
@@ -60,17 +59,17 @@ const StyledQueries = styled.div`
 `;
 
 function NextArrow(props) {
-    const {onClick} =  props;
-    return (
-        <p className="slick-next" onClick={onClick}/>
-    );
+  const { onClick } = props;
+  return (
+    <p className="slick-next" onClick={onClick} />
+  );
 }
-  
+
 function PrevArrow(props) {
-    const {onClick} =  props;
-    return (
-        <p className="slick-prev" onClick={onClick}/>
-    );
+  const { onClick } = props;
+  return (
+    <p className="slick-prev" onClick={onClick} />
+  );
 }
 
 

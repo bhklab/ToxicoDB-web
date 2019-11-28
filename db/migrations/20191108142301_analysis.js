@@ -3,15 +3,18 @@
 
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('analysis', (table) => {
-        table.increments('id')
+        table.integer('id')
+            .unsigned()
             .primary();
-        table.float('fold_change')
+        table.float('fold_change', 16, 8)
             .notNullable();
-        table.float('log_odds')
+        table.float('log_odds', 16, 8)
             .notNullable();
-        table.float('p_value')
+        table.string('p_value')
             .notNullable();
-        table.float('fdr')
+        table.string('fdr')
+            .notNullable();
+        table.float('avg_expr', 16, 8)
             .notNullable();
     });
 };

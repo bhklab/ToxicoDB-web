@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import colors from '../../styles/colors'
+import colors from '../../styles/colors';
 
 
 const StyledCollaboration = styled.div`
@@ -21,13 +21,17 @@ const StyledCollaboration = styled.div`
 `;
 
 class Collaboration extends Component {
-    render() {
-        return (
-            <StyledCollaboration>
-                The BHKLab is collaborating with <a href="https://openrisknet.org">OpenRiskNet</a> for the development of ToxicoDB.
-            </StyledCollaboration>
-        )
-    }
+  render() {
+    return (
+      <StyledCollaboration>
+                The BHKLab is collaborating with
+        {' '}
+        <a href="https://openrisknet.org">OpenRiskNet</a>
+        {' '}
+for the development of ToxicoDB.
+      </StyledCollaboration>
+    );
+  }
 }
 
 export default Collaboration;

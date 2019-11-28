@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../images/toxicodb-logo.png';
-import colors from '../styles/colors'
+import colors from '../styles/colors';
 
 const StyledNav = styled.div`   
     width: 100%;
@@ -82,12 +82,12 @@ class FooterNav extends Component {
                     The MaRS center<br></br>
                     101 College St, Toronto ON <br></br>
                     TMDT RM 11-310
-                </div>
-            </div>
-        </StyledNav>
-      );
-    }
+          </div>
+        </div>
+      </StyledNav>
+    );
   }
-  
-  
-  export default FooterNav;
+}
+
+
+export default FooterNav;

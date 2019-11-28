@@ -36,14 +36,14 @@ const App = () => (
         <Route exact path="/" component={Landing} />
         <Route exact path="/genes/" component={Genes} />
         <Route exact path="/drugs/" component={Drugs} />
-          <Route exact path="/documentation/" component={Documentation} />
+        <Route exact path="/documentation/" component={Documentation} />
         <Route path="/drugs/:id" component={DrugCard} />      
         <Route path="/genes/:id" component={GeneCard} />   
         <Route path="/expression" component={ExpressionPlot}/>
       </Switch>
     </StyledApp>
     <HeaderNav />
-    <FooterNav/>
+    <FooterNav />
   </>
 );
 

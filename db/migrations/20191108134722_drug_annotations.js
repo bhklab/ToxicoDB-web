@@ -14,7 +14,9 @@ exports.up = function (knex, Promise) {
         table.string('chembl');
         table.string('drugbank');
         table.string('targets');
-        table.string('class');
+        table.string('carcinogenicity');
+        table.string('class_in_vivo');
+        table.string('class_in_vitro');
         table.string('class_name');
         table.string('atc_code');
         table.string('smiles');

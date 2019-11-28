@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../images/toxicodb-logo.png';
-import colors from '../styles/colors'
+import colors from '../styles/colors';
 
 const StyledNav = styled.div`   
   width: 100%;
@@ -71,6 +71,7 @@ class HeaderNav extends Component {
       );
     }
   }
-  
-  
-  export default HeaderNav;
+}
+
+
+export default HeaderNav;

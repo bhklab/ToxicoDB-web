@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import colors from '../../styles/colors';
 
 
-const StyledQuery= styled.div`
+const StyledQuery = styled.div`
     text-align: center !important;
     font-family: 'Raleway', sans-serif;
 
