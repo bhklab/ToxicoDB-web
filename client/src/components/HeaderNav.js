@@ -56,22 +56,22 @@ const StyledLogo = styled.img`
 `;
 
 class HeaderNav extends Component {
-    render() {
-      return (
-        <StyledNav className="header-nav">
-            <Link to="/">
-              <StyledLogo src={logo} alt="logo" />
-            </Link>
-            <nav className="links">
-              <Link to="/documentation/">Documentation</Link>
-              <Link to="/drugs/">Drugs</Link>
-              <Link to="/genes/">Genes</Link>
-            </nav>
-        </StyledNav>
-      );
-    }
+  render() {
+    return (
+      <StyledNav className="header-nav">
+          <Link to="/">
+            <StyledLogo src={logo} alt="logo" />
+          </Link>
+          <nav className="links">
+            <Link to="/documentation/">Documentation</Link>
+            <Link to="/drugs/">Drugs</Link>
+            <Link to="/genes/">Genes</Link>
+          </nav>
+      </StyledNav>
+    );
   }
 }
+
 
 
 export default HeaderNav;

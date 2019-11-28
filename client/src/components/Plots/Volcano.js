@@ -121,13 +121,20 @@ class Volcano extends React.Component {
                 .attr("r", 4)
                     .attr("opacity", 1)
                     .attr("fill", (d) => {
-                        if (d.fold_change< -0.5 || d.fold_change > 0.5) {
-                            return colors.blue_header;
-                        } else if (d.fdr < 0.05) {  
-                            return colors.red_highlight;
-                        } else {
-                            return "#acacac";
+                        let color = "";
+                        if (d.fdr < 0.05 && Math.abs(d.fold_change) < 1) {  
+                            color = colors.red_highlight;
                         }
+                        if (d.fdr < 0.05 && Math.abs(d.fold_change) > 1) {
+                            color = "#5cc33c";
+                        } 
+                        if (d.fdr > 0.05 && Math.abs(d.fold_change) > 1 ) {
+                            color = colors.blue_header;
+                        } 
+                        if (d.fdr > 0.05 && Math.abs(d.fold_change) < 1) {
+                            color = "#acacac";
+                        }
+                        return color;
                     })
                     .attr("cx", function(d) {return xrange(d.fold_change);})
                     .attr("cy", function(d) {return yrange(d.p_value == 0 ? 0 : -Math.log10(d.p_value));})
@@ -150,7 +157,7 @@ class Volcano extends React.Component {
                 .attr("dx", width + 60)
                 .attr("y", 61)
                 .attr("fill", "black")
-                .text("-0.5 < fold change < 0.5")
+                .text("-1 < fold change < 1")
 
         legend.append("rect")
             .attr("x", width + 40)
@@ -163,26 +170,51 @@ class Volcano extends React.Component {
                 .attr("dx", width + 60)
                 .attr("y", 91)
                 .attr("fill", "black")
-                .text("fold change > 0.5,")
+                .text("fold change > -1,")
                 
             legend.append("text")
                 .attr("dx", width + 60)
                 .attr("y", 108)
                 .attr("fill", "black")
-                .text("fold change < 0.5")
+                .text("fold change < 1")
 
         legend.append("rect")
             .attr("x", width + 40)
-            .attr("y", 120)
+            .attr("y", 125)
             .attr("width", 12)
             .attr("height",12)
             .attr("fill", colors.red_highlight)
     
             legend.append("text")
                 .attr("dx", width + 60)
-                .attr("y", 131)
+                .attr("y", 136)
                 .attr("fill", "black")
                 .text("fdr < 0.05")
+
+        legend.append("rect")
+            .attr("x", width + 40)
+            .attr("y", 155)
+            .attr("width", 12)
+            .attr("height",12)
+            .attr("fill", "#5cc33c")
+        
+                legend.append("text")
+                    .attr("dx", width + 60)
+                    .attr("y", 166)
+                    .attr("fill", "black")
+                    .text("fdr < 0.05 and")
+
+                legend.append("text")
+                    .attr("dx", width + 60)
+                    .attr("y", 184)
+                    .attr("fill", "black")
+                    .text("fold change > -1,")
+
+                legend.append("text")
+                    .attr("dx", width + 60)
+                    .attr("y", 202)
+                    .attr("fill", "black")
+                    .text("fold change < 1")
 
     }
 
