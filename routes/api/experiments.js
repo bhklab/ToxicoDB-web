@@ -26,45 +26,45 @@ const getExperiments = function (request, response) {
         }));
 };
 
-const getAnalysis = function (request, response) {
-    let {
-        drugId, geneId,
-    } = request.query;
+// const getAnalysis = function (request, response) {
+//     let {
+//         drugId, geneId,
+//     } = request.query;
     
-    drugId = drugId && parseInt(drugId, 10);
-    geneId = geneId && parseInt(geneId, 10);
+//     drugId = drugId && parseInt(drugId, 10);
+//     geneId = geneId && parseInt(geneId, 10);
     
-    if (geneId != null) {
-        // get analysis information for drug
-        knex.select('fdr', 'p_value', 'fold_change')
-            .from('analysis')
-            .innerJoin("drug_gene_response AS dgr", "analysis.id", "dgr.analysis_id")
-            .where({ "gene_id": geneId})
-            .then((analysis) => response.status(200).json({
-                status: 'success',
-                data: analysis,
-            }))
-            .catch((error) => response.status(500).json({
-                status: 'could not find data from analysis table, getAnalysis',
-                data: error,
-            }));
-    } else if (drugId != null) {
-        // get analysis information for gene
-        knex.distinct('fdr', 'p_value', 'fold_change')
-            .from('analysis')
-            .innerJoin("drug_gene_response AS dgr", "analysis.id", "dgr.analysis_id")
-            .innerJoin("samples", "samples.id", "dgr.sample_id")
-            .where({ "drug_id": drugId})
-            .then((analysis) => response.status(200).json({
-                status: 'success',
-                data: analysis,
-            }))
-            .catch((error) => response.status(500).json({
-                status: 'could not find data from analysis table, getAnalysis',
-                data: error,
-            }));
+//     if (geneId != null) {
+//         // get analysis information for drug
+//         knex.select('fdr', 'p_value', 'fold_change')
+//             .from('analysis')
+//             .innerJoin("drug_gene_response AS dgr", "analysis.id", "dgr.analysis_id")
+//             .where({ "gene_id": geneId})
+//             .then((analysis) => response.status(200).json({
+//                 status: 'success',
+//                 data: analysis,
+//             }))
+//             .catch((error) => response.status(500).json({
+//                 status: 'could not find data from analysis table, getAnalysis',
+//                 data: error,
+//             }));
+//     } else if (drugId != null) {
+//         // get analysis information for gene
+//         knex.distinct('fdr', 'p_value', 'fold_change')
+//             .from('analysis')
+//             .innerJoin("drug_gene_response AS dgr", "analysis.id", "dgr.analysis_id")
+//             .innerJoin("samples", "samples.id", "dgr.sample_id")
+//             .where({ "drug_id": drugId})
+//             .then((analysis) => response.status(200).json({
+//                 status: 'success',
+//                 data: analysis,
+//             }))
+//             .catch((error) => response.status(500).json({
+//                 status: 'could not find data from analysis table, getAnalysis',
+//                 data: error,
+//             }));
 
-    }
+//     }
 
     
 };
