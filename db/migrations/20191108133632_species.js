@@ -3,8 +3,13 @@
 
 exports.up = function (knex, Promise) {
     return knex.schema.createTable('species', (table) => {
-        table.increments('id')
-            .primary();
+        table.integer('dataset_id')
+            .unsigned()
+            .unique()
+            .notNullable()
+            .references('id')
+            .inTable('datasets')
+            .index();
         table.string('name')
             .notNullable();
     });

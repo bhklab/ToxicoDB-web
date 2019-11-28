@@ -5,12 +5,6 @@ exports.up = function (knex, Promise) {
     return knex.schema.createTable('cells', (table) => {
         table.increments('id')
             .primary();
-        table.integer('species_id')
-            .notNullable()
-            .unsigned()
-            .references('id')
-            .inTable('species')
-            .index();
         table.integer('tissue_id')
             .notNullable()
             .unsigned()
