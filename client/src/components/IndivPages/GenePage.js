@@ -97,20 +97,20 @@ class GenePage extends Component {
                 this.setState({ geneData: data[0], annotationData: annotationData});
             });
 
-        // volcano plot
-        fetch(`/api/v1/analysis?geneId=${params.id}`)
-            .then((response) => response.json())
-            .then((res) => {
-                const {data} = res;
-                this.setState({volcanoData: data})
-            })
+        // // volcano plot
+        // fetch(`/api/v1/analysis?geneId=${params.id}`)
+        //     .then((response) => response.json())
+        //     .then((res) => {
+        //         const {data} = res;
+        //         this.setState({volcanoData: data})
+        //     })
 
         // analysis table
         fetch(`/api/v1/genes/${params.id}/analysis`)
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                this.setState({analysisData: data, loading: false})
+                this.setState({volcanoData: data, analysisData: data, loading: false})
             });
         
     }
@@ -167,6 +167,7 @@ class GenePage extends Component {
                     <Volcano 
                         data={volcanoData}
                         plotId="volcanoPlot"
+                        type="gene"
                     />
                 </div>
             )}

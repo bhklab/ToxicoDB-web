@@ -41,7 +41,7 @@ const getIndivDrug = (request, response) => {
 }
 
 const getDrugAnalysis = (request, response) => {
-    knex.distinct("p_value", "genes.id AS gene_id", "genes.name AS gene_name", "datasets.name AS dataset_name")
+    knex.distinct("fdr", "fold_change", "p_value", "genes.id AS gene_id", "genes.name AS gene_name", "datasets.name AS dataset_name")
         .from("analysis")
         .innerJoin("drug_gene_response AS dgr", "analysis.id", "dgr.analysis_id")
         .innerJoin("samples", "samples.id", "dgr.sample_id")

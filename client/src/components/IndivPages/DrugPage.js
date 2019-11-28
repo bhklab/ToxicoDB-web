@@ -99,20 +99,20 @@ class DrugPage extends Component {
                 this.setState({ drugData: data[0], annotationData: annotationData});
             });
 
-        // volcano plot
-        fetch(`/api/v1/analysis?drugId=${params.id}`)
-            .then((response) => response.json())
-            .then((res) => {
-                const {data} = res;
-                this.setState({volcanoData: data})
-            })
+        // // volcano plot
+        // fetch(`/api/v1/analysis?drugId=${params.id}`)
+        //     .then((response) => response.json())
+        //     .then((res) => {
+        //         const {data} = res;
+        //         this.setState({volcanoData: data})
+        //     })
 
         // analysis table
         fetch(`/api/v1/drugs/${params.id}/analysis`)
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                this.setState({analysisData: data, loading: false})
+                this.setState({analysisData: data, volcanoData: data, loading: false})
             });
     }
 
@@ -168,6 +168,7 @@ class DrugPage extends Component {
                     <Volcano 
                         data={volcanoData}
                         plotId="volcanoPlot"
+                        type="drug"
                     />
                 </div>
             )}

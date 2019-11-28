@@ -10,10 +10,10 @@ class Volcano extends React.Component {
 
     componentDidMount() {
         const {
-            data, plotId
+            data, plotId, type
         } = this.props;
         const formattedData = this.formatData(data);
-        this.plotVolcano(formattedData, plotId);
+        this.plotVolcano(formattedData, plotId, type);
     }
 
     formatData(data) {
@@ -26,7 +26,7 @@ class Volcano extends React.Component {
         return formattedData;
     }
 
-    plotVolcano(data, plotId) {
+    plotVolcano(data, plotId, type) {
         // positions and dimensions
         const margin = {
             top: 20,
@@ -120,6 +120,13 @@ class Volcano extends React.Component {
                 .append("circle")
                 .attr("r", 4)
                     .attr("opacity", 1)
+                    .attr("class", (d,i) => {
+                        if (type == "drug") {
+                            return d.gene_name.replace(" ", "") + "-dot" + i
+                        } else {
+                            return d.drug_name.replace(" ", "") + "-dot" + i
+                        }
+                    })
                     .attr("fill", (d) => {
                         let color = "";
                         if (d.fdr < 0.05 && Math.abs(d.fold_change) < 1) {  
@@ -138,9 +145,46 @@ class Volcano extends React.Component {
                     })
                     .attr("cx", function(d) {return xrange(d.fold_change);})
                     .attr("cy", function(d) {return yrange(d.p_value == 0 ? 0 : -Math.log10(d.p_value));})
-                    // .on("mouseover", (d) => {
-                    //     console.log(d.p_value)
-                    // })
+                    .style("cursor", "pointer")
+                    .on("mouseover", (d,i) => {
+                        if (type == "drug") {
+                            d3.select(`.${d.gene_name.replace(" ", "")}${i}`).style("opacity",1)
+                        } else {
+                            d3.select(`.${d.drug_name.replace(" ", "")}${i}`).style("opacity",1)
+                        }
+                    })
+                    .on("mouseout", (d,i) => {
+                        if (type == "drug") {
+                            d3.select(`.${d.gene_name.replace(" ", "")}${i}`).style("opacity",0)
+                        } else {
+                            d3.select(`.${d.drug_name.replace(" ", "")}${i}`).style("opacity",0)
+                        }
+
+                    })
+
+        let dotLabels = svg.append("g")
+            .selectAll("label")
+                .data(data.rawData)
+                .enter()
+            .append("text")
+                .attr("dx", width + 40)
+                .attr("y", height - 100)
+                .attr("fill", "black")
+                .style("opacity", 0)
+                .attr("class", (d,i) => {
+                    if (type == "drug") {
+                        return d.gene_name.replace(" ", "") + i
+                    } else {
+                        return d.drug_name.replace(" ", "") + i
+                    }
+                })
+                .text((d) => {
+                    if (type == "drug") {
+                        return d.gene_name
+                    } else{
+                        return d.drug_name
+                    }
+                })
 
 
         // legend
@@ -215,6 +259,8 @@ class Volcano extends React.Component {
                     .attr("y", 202)
                     .attr("fill", "black")
                     .text("fold change < 1")
+
+        
 
     }
 
