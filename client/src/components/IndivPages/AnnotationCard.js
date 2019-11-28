@@ -12,7 +12,7 @@ const StyledAnnotationCard = styled.div`
     }
     table {
         width:100%;
-        border-collapse: collapse;
+        
     }
 
     td {

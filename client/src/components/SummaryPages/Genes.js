@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table';
 import colors from '../../styles/colors';
@@ -69,6 +69,9 @@ class Genes extends Component {
       Header: 'Name',
       accessor: 'name',
       sortable: true,
+      Cell: (row) => {
+        return (<Link to={`/genes/${row.original.id}`}>{row.value}</Link>)
+      },
     }, {
       Header: 'Ensembl ID',
       accessor: 'ensembl_gid',

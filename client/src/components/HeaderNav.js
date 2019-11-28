@@ -37,6 +37,7 @@ const StyledNav = styled.div`
     float:left;
     margin-left:5vw;
     margin-top:10px;
+    cursor: pointer;
   }
 
   .links {

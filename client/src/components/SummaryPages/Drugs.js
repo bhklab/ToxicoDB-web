@@ -73,9 +73,8 @@ class Drugs extends Component {
             sortable: true,
             minWidth: 200,
             Cell: (row) => {
-              console.log(row)
                 return (<Link to={`/drugs/${row.original.id}`}>{row.value}</Link>)
-              },
+            },
         }, {
             Header: 'PubChem ID',
             accessor: 'pubchem',
@@ -92,18 +91,34 @@ class Drugs extends Component {
             sortable: true,
             Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.drugbank.ca/drugs/${props.value}`}>{props.value}</a>,
         }, {
-            Header: 'Targets',
-            accessor: 'targets',
+            Header: 'Carcinogenicity',
+            accessor: 'carcinogenicity',
             sortable: true,
         },{
-            Header: 'Class',
-            accessor: 'class',
+            Header: 'Class (in vitro)',
+            accessor: 'class_in_vitro',
             sortable: true,
         },{
-            Header: 'Class name',
-            accessor: 'class_name',
+            Header: 'Class (in vivo)',
+            accessor: 'class_in_vivo',
             sortable: true,
-        },{
+        },
+        // {
+        //     Header: 'Targets',
+        //     accessor: 'targets',
+        //     sortable: true,
+        // },
+        // {
+        //     Header: 'Class',
+        //     accessor: 'class',
+        //     sortable: true,
+        // },
+        // {
+        //     Header: 'Class name',
+        //     accessor: 'class_name',
+        //     sortable: true,
+        // },
+        {
             Header: 'ATC Code',
             accessor: 'atc_code',
             sortable: true,

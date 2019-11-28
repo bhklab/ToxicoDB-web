@@ -50,7 +50,7 @@ const getAnalysis = function (request, response) {
             }));
     } else if (drugId != null) {
         // get analysis information for gene
-        knex.select('fdr', 'p_value', 'fold_change')
+        knex.distinct('fdr', 'p_value', 'fold_change')
             .from('analysis')
             .innerJoin("drug_gene_response AS dgr", "analysis.id", "dgr.analysis_id")
             .innerJoin("samples", "samples.id", "dgr.sample_id")

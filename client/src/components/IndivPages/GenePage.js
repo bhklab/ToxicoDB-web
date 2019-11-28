@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import ReactTable from 'react-table';
 import AnnotationCard from './AnnotationCard';
 import Volcano from '../Plots/Volcano';
 import 'react-table/react-table.css';
+
+import LoadingComponent from '../Utils/Loading';
 
 const StyledGenePage = styled.div`
     width: 80vw;
@@ -14,7 +16,7 @@ const StyledGenePage = styled.div`
     color: ${colors.blue_text};
 
     .volcanoWrapper {
-        margin-top: 120px;
+        margin-top: 100px;
     }
 
     h1 {
@@ -34,8 +36,33 @@ const StyledGenePage = styled.div`
     a {
       color: ${colors.blue_text};
     }
+    
+    .table {
+        margin:60px 0px 30px 0px;
+    }
 `;
 
+const filterCaseInsensitive = (filter, row) => {
+    const id = filter.pivotId || filter.id;
+    switch (typeof row[id]) {
+      case 'object':
+        // checks for metastasis label
+        if (row[id] && row[id].origin) {
+          return String('metastasis').includes(filter.value.toLowerCase());
+        }
+        // checks for disease name (additional check is to filter out null values)
+        return row[id] && row[id].name
+          ? String(row[id].name.toLowerCase()).includes(filter.value.toLowerCase())
+          : false;
+      // handles age filtering
+      case 'number':
+        return row[id].toString().includes(filter.value);
+      case 'string':
+        return String(row[id].toLowerCase()).includes(filter.value.toLowerCase());
+      default:
+        return false;
+    }
+};
 
 class GenePage extends Component {
     constructor() {
@@ -43,7 +70,9 @@ class GenePage extends Component {
         this.state = {
             geneData: [],
             annotationData: [],
-            volcanoData: []
+            volcanoData: [],
+            analysisData: [],
+            loading: true,
         }
     }
 
@@ -57,7 +86,7 @@ class GenePage extends Component {
                 const { data } = res;
                 let annotationData = [];
                 Object.keys(data[0]).forEach((x, i) => {
-                    if (x != "name" && x != "id") {
+                    if (x != "name" && x != "id" && x != "ensembl_tid") {
                         let temp = {
                             "name": x,
                             "value": data[0][x],
@@ -75,11 +104,36 @@ class GenePage extends Component {
                 const {data} = res;
                 this.setState({volcanoData: data})
             })
+
+        // analysis table
+        fetch(`/api/v1/genes/${params.id}/analysis`)
+            .then((response) => response.json())
+            .then((res) => {
+                const { data } = res;
+                this.setState({analysisData: data, loading: false})
+            });
         
     }
 
     render() {
-        const {geneData, annotationData, volcanoData} = this.state;
+        const {geneData, annotationData, volcanoData, analysisData, loading} = this.state;
+        const columns = [{
+            Header: 'Drug',
+            accessor: 'drug_name',
+            sortable: true,
+            Cell: (row) => {
+                return (<Link to={`/drugs/${row.original.drug_id}`}>{row.value}</Link>)
+            },
+          }, {
+            Header: 'p-value',
+            accessor: 'p_value',
+            sortable: true,
+            sortMethod:function(a, b){return a-b},
+          }, {
+            Header: 'Dataset',
+            accessor: 'dataset_name',
+            sortable: true,
+          }];
         return (
         <StyledGenePage>
             {geneData.length == 0 ? null : (
@@ -89,9 +143,27 @@ class GenePage extends Component {
                     <AnnotationCard data={annotationData} />
                 </Fragment>
             )} 
+            {analysisData.length == 0 ? null : (
+                <ReactTable
+                    data={analysisData}
+                    columns={columns}
+                    filterable
+                    defaultFilterMethod={filterCaseInsensitive}
+                    className="table -highlight"
+                    defaultPageSize={10}
+                    defaultSorted={[
+                        {
+                          id: "p_value",
+                          desc: true
+                        }
+                    ]}
+                    loading={loading}
+                    LoadingComponent={LoadingComponent}
+              />
+            )}
             {volcanoData.length == 0 ? null : (
                 <div className="volcanoWrapper">
-                    <center><h2>Volcano Plot - {geneData.name}</h2></center>
+                    <center><h2>Analysis - {geneData.name}</h2></center>
                     <Volcano 
                         data={volcanoData}
                         plotId="volcanoPlot"
