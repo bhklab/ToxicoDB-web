@@ -12,7 +12,7 @@ const StyledAnnotationCard = styled.div`
     }
     table {
         width:100%;
-        border-collapse: collapse;
+        
     }
 
     td {
@@ -54,7 +54,6 @@ class AnnotationCard extends Component {
 
     render() {
         const {data} = this.state;
-        console.log(data)
         return (
             <StyledAnnotationCard>  
                 {data.length == 0 ? null : 

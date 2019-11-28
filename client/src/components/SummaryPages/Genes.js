@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table';
 import colors from '../../styles/colors';
@@ -23,6 +23,27 @@ const StyledGenes = styled.div`
     }
 `;
 
+const filterCaseInsensitive = (filter, row) => {
+  const id = filter.pivotId || filter.id;
+  switch (typeof row[id]) {
+    case 'object':
+      // checks for metastasis label
+      if (row[id] && row[id].origin) {
+        return String('metastasis').includes(filter.value.toLowerCase());
+      }
+      // checks for disease name (additional check is to filter out null values)
+      return row[id] && row[id].name
+        ? String(row[id].name.toLowerCase()).includes(filter.value.toLowerCase())
+        : false;
+    // handles age filtering
+    case 'number':
+      return row[id].toString().includes(filter.value);
+    case 'string':
+      return String(row[id].toLowerCase()).includes(filter.value.toLowerCase());
+    default:
+      return false;
+  }
+};
 
 class Genes extends Component {
   constructor() {
@@ -48,6 +69,9 @@ class Genes extends Component {
       Header: 'Name',
       accessor: 'name',
       sortable: true,
+      Cell: (row) => {
+        return (<Link to={`/genes/${row.original.id}`}>{row.value}</Link>)
+      },
     }, {
       Header: 'Ensembl ID',
       accessor: 'ensembl_gid',
@@ -56,7 +80,7 @@ class Genes extends Component {
     }, {
       Header: 'Entrez ID',
       accessor: 'entrez_gid',
-      sortable: false,
+      sortable: true,
       Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/gene/?term=${props.value}`}>{props.value}</a>,
     }];
 
@@ -67,6 +91,8 @@ class Genes extends Component {
           <ReactTable
             data={geneData}
             columns={columns}
+            filterable
+            defaultFilterMethod={filterCaseInsensitive}
             className="-highlight"
             defaultPageSize={25}
             loading={loading}

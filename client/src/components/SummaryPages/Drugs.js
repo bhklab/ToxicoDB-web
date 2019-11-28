@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import React, {  Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table';
 import colors from '../../styles/colors';
@@ -23,6 +23,27 @@ const StyledDrugs = styled.div`
     }
 `;
 
+const filterCaseInsensitive = (filter, row) => {
+  const id = filter.pivotId || filter.id;
+  switch (typeof row[id]) {
+    case 'object':
+      // checks for metastasis label
+      if (row[id] && row[id].origin) {
+        return String('metastasis').includes(filter.value.toLowerCase());
+      }
+      // checks for disease name (additional check is to filter out null values)
+      return row[id] && row[id].name
+        ? String(row[id].name.toLowerCase()).includes(filter.value.toLowerCase())
+        : false;
+    // handles age filtering
+    case 'number':
+      return row[id].toString().includes(filter.value);
+    case 'string':
+      return String(row[id].toLowerCase()).includes(filter.value.toLowerCase());
+    default:
+      return false;
+  }
+};
 
 class Drugs extends Component {
   constructor() {
@@ -44,45 +65,73 @@ class Drugs extends Component {
 
   render() {
     const { loading, drugData } = this.state;
+    console.log(drugData)
     const columns = [
-      {
-        Header: 'Name',
-        accessor: 'name',
-        sortable: true,
-        minWidth: 200,
-      }, {
-        Header: 'PubChem ID',
-        accessor: 'pubchem',
-        sortable: false,
-        Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`http://useast.ensembl.org/Homo_sapiens/drug/Summary?g=${props.value}`}>{props.value}</a>,
-      }, {
-        Header: 'Chembl ID',
-        accessor: 'chembl',
-        sortable: false,
-        Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/drug/?term=${props.value}`}>{props.value}</a>,
-      }, {
-        Header: 'DrugBank',
-        accessor: 'drugbank',
-        sortable: false,
-        Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/drug/?term=${props.value}`}>{props.value}</a>,
-      }, {
-        Header: 'Targets',
-        accessor: 'targets',
-        sortable: false,
-      }, {
-        Header: 'Class',
-        accessor: 'class',
-        sortable: false,
-      }, {
-        Header: 'Class name',
-        accessor: 'class_name',
-        sortable: false,
-      }, {
-        Header: 'ATC Code',
-        accessor: 'atc_code',
-        sortable: false,
-        Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/drug/?term=${props.value}`}>{props.value}</a>,
-      },
+        {
+            Header: 'Name',
+            accessor: "name",
+            sortable: true,
+            minWidth: 200,
+            Cell: (row) => {
+                return (<Link to={`/drugs/${row.original.id}`}>{row.value}</Link>)
+            },
+        }, {
+            Header: 'PubChem ID',
+            accessor: 'pubchem',
+            sortable: true,
+            Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`http://pubchem.ncbi.nlm.nih.gov/compound/${props.value}`}>{props.value}</a>,
+        }, {
+            Header: 'Chembl ID',
+            accessor: 'chembl',
+            sortable: true,
+            Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL${props.value}`}>{props.value}</a>,
+        }, {
+            Header: 'DrugBank',
+            accessor: 'drugbank',
+            sortable: true,
+            Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.drugbank.ca/drugs/${props.value}`}>{props.value}</a>,
+        }, {
+            Header: 'Carcinogenicity',
+            accessor: 'carcinogenicity',
+            sortable: true,
+        },{
+            Header: 'Class (in vitro)',
+            accessor: 'class_in_vitro',
+            sortable: true,
+        },{
+            Header: 'Class (in vivo)',
+            accessor: 'class_in_vivo',
+            sortable: true,
+        },
+        // {
+        //     Header: 'Targets',
+        //     accessor: 'targets',
+        //     sortable: true,
+        // },
+        // {
+        //     Header: 'Class',
+        //     accessor: 'class',
+        //     sortable: true,
+        // },
+        // {
+        //     Header: 'Class name',
+        //     accessor: 'class_name',
+        //     sortable: true,
+        // },
+        {
+            Header: 'ATC Code',
+            accessor: 'atc_code',
+            sortable: true,
+            Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.whocc.no/atc_ddd_index/?code=${props.value}`}>{props.value}</a>,
+        }, {
+            Header: 'Smiles',
+            accessor: 'smiles',
+            sortable: true,
+        }, {
+            Header: 'InchiKey',
+            accessor: 'inchikey',
+            sortable: true,
+        }, 
     ];
 
     return (
@@ -91,6 +140,8 @@ class Drugs extends Component {
           <h1>List of drugs</h1>
           <ReactTable
             data={drugData}
+            filterable
+            defaultFilterMethod={filterCaseInsensitive}
             columns={columns}
             className="-highlight"
             defaultPageSize={25}

@@ -37,6 +37,7 @@ const StyledNav = styled.div`
     float:left;
     margin-left:5vw;
     margin-top:10px;
+    cursor: pointer;
   }
 
   .links {
@@ -58,19 +59,19 @@ class HeaderNav extends Component {
   render() {
     return (
       <StyledNav className="header-nav">
-        <Link to="/">
-          <StyledLogo src={logo} alt="logo" />
-        </Link>
-        <nav className="links">
-          <Link to="/documentation/">Documentation</Link>
-          <Link to="/drugs/">Drugs</Link>
-          <Link to="/genes/">Genes</Link>
-          <Link to="/datasets/">Datasets</Link>
-        </nav>
+          <Link to="/">
+            <StyledLogo src={logo} alt="logo" />
+          </Link>
+          <nav className="links">
+            <Link to="/documentation/">Documentation</Link>
+            <Link to="/drugs/">Drugs</Link>
+            <Link to="/genes/">Genes</Link>
+          </nav>
       </StyledNav>
     );
   }
 }
+
 
 
 export default HeaderNav;
