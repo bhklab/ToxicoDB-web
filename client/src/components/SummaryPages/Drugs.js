@@ -81,16 +81,6 @@ class Drugs extends Component {
             sortable: true,
             Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`http://pubchem.ncbi.nlm.nih.gov/compound/${props.value}`}>{props.value}</a>,
         }, {
-            Header: 'Chembl ID',
-            accessor: 'chembl',
-            sortable: true,
-            Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ebi.ac.uk/chembl/compound_report_card/CHEMBL${props.value}`}>{props.value}</a>,
-        }, {
-            Header: 'DrugBank',
-            accessor: 'drugbank',
-            sortable: true,
-            Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.drugbank.ca/drugs/${props.value}`}>{props.value}</a>,
-        }, {
             Header: 'Carcinogenicity',
             accessor: 'carcinogenicity',
             sortable: true,

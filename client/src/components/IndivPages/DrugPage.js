@@ -123,7 +123,7 @@ class DrugPage extends Component {
             accessor: 'gene_name',
             sortable: true,
             Cell: (row) => {
-                return (<Link to={`/genes/${row.original.gene_id}`}>{row.value}</Link>)
+                return (<Link to={`/expression?drugId=${drugData.id}&geneId=${row.original.gene_id}`}>{row.value}</Link>)
             },
           }, {
             Header: 'p-value',
@@ -144,24 +144,22 @@ class DrugPage extends Component {
                     <AnnotationCard data={annotationData} />
                 </Fragment>
             )} 
-            {analysisData.length == 0 ? null : (
-                <ReactTable
-                    data={analysisData}
-                    columns={columns}
-                    filterable
-                    defaultFilterMethod={filterCaseInsensitive}
-                    className="table -highlight"
-                    defaultPageSize={10}
-                    defaultSorted={[
-                        {
-                          id: "p_value",
-                          desc: true
-                        }
-                    ]}
-                    loading={loading}
-                    LoadingComponent={LoadingComponent}
+            <ReactTable
+                data={analysisData}
+                columns={columns}
+                filterable
+                defaultFilterMethod={filterCaseInsensitive}
+                className="table -highlight"
+                defaultPageSize={10}
+                defaultSorted={[
+                    {
+                        id: "p_value",
+                        desc: true
+                    }
+                ]}
+                loading={loading}
+                LoadingComponent={LoadingComponent}
               />
-            )}
             {volcanoData.length == 0 ? null : (
                 <div className="volcanoWrapper">
                     <center><h2>Analysis - {drugData.name}</h2></center>

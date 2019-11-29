@@ -67,9 +67,9 @@ const getExperiments = function (request, response) {
 //     }
 
     
-};
+// };
 
 
 module.exports = {
-    getExperiments, getAnalysis
+    getExperiments
 };

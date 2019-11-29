@@ -1,6 +1,10 @@
 import * as d3 from 'd3';
 import React from 'react';
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
 
 class Expression extends React.Component {
     constructor(props) {
@@ -138,30 +142,34 @@ class Expression extends React.Component {
                     .attr("cx", function(d) {return xrange(d.time);})
                     .attr("cy", function(d) {return yrange(d.exp);})
 
-            // legend
-            legend.append("line")
-                .attr("class", `${t.class} legLine`)
-                .attr("x1", width + 10)
-                .attr("y1", 50 + (i*20))
-                .attr("x2", width + 45)
-                .attr("y2", 50 + (i*20))
-                .attr("fill", "none")
-                .attr("stroke", t.color)
-                .style("opacity", 1)
-                .attr("stroke-width", 4)
-                .attr("stroke-dasharray", () => {
-                    if (t.mode == "solid") return "";
-                    else return t.mode;
-                })
+            // to make sure it only puts a legend once
+            if (t.class == datasets[0].replaceAll(" ", "")) {
+                // legend
+                legend.append("line")
+                    .attr("class", `${t.class} legLine`)
+                    .attr("x1", width + 10)
+                    .attr("y1", 50 + (i*20))
+                    .attr("x2", width + 45)
+                    .attr("y2", 50 + (i*20))
+                    .attr("fill", "none")
+                    .attr("stroke", t.color)
+                    .style("opacity", 1)
+                    .attr("stroke-width", 4)
+                    .attr("stroke-dasharray", () => {
+                        if (t.mode == "solid") return "";
+                        else return t.mode;
+                    })
 
-            legend.append("text")
-                .attr("class", `${t.class} legLabel`)
-                .attr("fill", "black")
-                .style("font-size", 13)
-                .attr("font-family", "Arial")
-                .attr("x", width + 50)
-                .attr("y", 55 + (i*20))
-                .text(t.label)
+                legend.append("text")
+                    .attr("class", `${t.class} legLabel`)
+                    .attr("fill", "black")
+                    .style("font-size", 13)
+                    .attr("font-family", "Arial")
+                    .attr("x", width + 50)
+                    .attr("y", 55 + (i*21))
+                    .text(t.label)
+            }
+            
         })
 
         // making the dataset selectors
@@ -171,29 +179,36 @@ class Expression extends React.Component {
             })
             .entries(datasets);
 
+
+
         nest.forEach((d,i) => {
             legend.append('rect')
                 .attr("x", width+10)
                 .attr("y", height - 80 + (i*20))
+                .attr("class", `${datasets[i].replaceAll(" ", "")}-legRect`)
                 .attr("width", 13)
                 .attr("height", 13)
-                .style("fill", "black")
+                .attr("fill", "black")
+                .style("stroke", "black")
+                .style("stroke-width", 1)
                 .style("cursor", "pointer")
                 .on("click", () => {
                     let active   = d.active ? false : true
         
                      //to show that this dataset has been selected
                     if (active) {
-                        d3.selectAll(`.${datasets[i]}-path`).attr("opacity", 0)
+                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 0)
+                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "white")
                     } else {
-                        d3.selectAll(`.${datasets[i]}-path`).attr("opacity", 1)
+                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 1)
+                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "black")
                     }
                 
                     d.active = active;
                 })
 
             legend.append("text")
-                .attr("class", `${datasets[i]} legDataset`)
+                .attr("class", `${datasets[i]} legDsetLabel`)
                 .attr("fill", "black")
                 .style("font-size", 13)
                 .attr("font-family", "Arial")
@@ -203,11 +218,13 @@ class Expression extends React.Component {
                 .on("click", () => {
                     let active   = d.active ? false : true
         
-                     //to show that this dataset has been selected
-                    if (active) {
-                        d3.selectAll(`.${datasets[i]}-path`).attr("opacity", 0)
+                    //to show that this dataset has been selected
+                     if (active) {
+                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 0)
+                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "white")
                     } else {
-                        d3.selectAll(`.${datasets[i]}-path`).attr("opacity", 1)
+                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 1)
+                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "black")
                     }
                 
                     d.active = active;

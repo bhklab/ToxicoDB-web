@@ -27,7 +27,6 @@ router.get('/v1/pathways', pathways.getPathways);
 
 router.get('/v1/experiments', experiments.getExperiments);
 
-router.get('/v1/analysis', experiments.getAnalysis);
 
 router.get('/v1/samples', samples.getSamples);
 

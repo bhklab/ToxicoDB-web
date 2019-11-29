@@ -42,7 +42,6 @@ class ExpressionPlot extends Component {
 
     formatData = (expData) => {
         let data = [];
-
         // different colours for each dose, same colours for each replicate
         let colours = ["#18c61a", "#9817ff", "#d31911", "#24b7f1", "#fa82ce", "#736c31"]
 
@@ -53,34 +52,40 @@ class ExpressionPlot extends Component {
         // index for dose (colour), replicate (dash)
         let dInd = -1, rInd = -1;
         expData.forEach((item) => {
-            if (traces[item.dose] == undefined) {
-                traces[item.dose] = {}
+            let dsetName = item.name.replaceAll(" ", "")
+            if (traces[dsetName] == undefined) {
+                traces[dsetName] = {}
+                dInd = -1
+            }
+            if (traces[dsetName][item.dose] == undefined) { // if dose doesn't exist
+                traces[dsetName][item.dose] = {}
                 dInd++;
                 rInd = -1; // reset dash types
             }
-            if (traces[item.dose]["rep".concat(item.replicate)] == undefined) {
-                traces[item.dose]["rep".concat(item.replicate)] = {};
+            if (traces[dsetName][item.dose]["rep".concat(item.replicate)] == undefined) { // if dose exists, but the replicate doesn't
+                traces[dsetName][item.dose]["rep".concat(item.replicate)] = {};
                 rInd++;
             } 
-            if (Object.keys(traces[item.dose]["rep".concat(item.replicate)]).length == 0) {
-                traces[item.dose]["rep".concat(item.replicate)]["points"] = [{time:item.time, exp:item.expression}];
-                traces[item.dose]["rep".concat(item.replicate)]["mode"] = dashTypes[rInd]; // if solid, don't have dash-array
-                traces[item.dose]["rep".concat(item.replicate)]["label"] = `${item.dose} replicate ${item.replicate}`; // legend label
-                traces[item.dose]["rep".concat(item.replicate)]["color"] =   colours[dInd];
-                traces[item.dose]["rep".concat(item.replicate)]["class"] = `${item.name}` // has the dataset as class 
+            if (Object.keys(traces[dsetName][item.dose]["rep".concat(item.replicate)]).length == 0) { // add data to replicate
+                traces[dsetName][item.dose]["rep".concat(item.replicate)]["points"] = [{time:item.time, exp:item.expression}];
+                traces[dsetName][item.dose]["rep".concat(item.replicate)]["mode"] = dashTypes[rInd]; // if solid, don't have dash-array
+                traces[dsetName][item.dose]["rep".concat(item.replicate)]["label"] = `${item.dose} replicate ${item.replicate}`; // legend label
+                traces[dsetName][item.dose]["rep".concat(item.replicate)]["color"] =   colours[dInd];
+                traces[dsetName][item.dose]["rep".concat(item.replicate)]["class"] = `${item.name.replaceAll(" ", "")}` // has the dataset as class 
 
             } else {
-                traces[item.dose]["rep".concat(item.replicate)]["points"].push({time:item.time, exp:item.expression});
+                traces[dsetName][item.dose]["rep".concat(item.replicate)]["points"].push({time:item.time, exp:item.expression});
             }
         })
 
-        Object.keys(traces).forEach((dose) => {
-            Object.keys(traces[dose]).forEach((rep) => {
-                data.push(traces[dose][rep])
+        Object.keys(traces).forEach((c) => {
+            Object.keys(traces[c]).forEach((dose) => {
+                Object.keys(traces[c][dose]).forEach((rep) => {
+                    data.push(traces[c][dose][rep])
+                })
             })
         })
 
-        console.log(data)
         return data;
     }
 
@@ -88,7 +93,7 @@ class ExpressionPlot extends Component {
         const { location } = this.props;
         const requestParams = queryString.parse(location.search);
         const {
-        drugId, geneId
+            drugId, geneId
         } = requestParams;
 
         fetch(`/api/v1/experiments?drugId=${drugId}&geneId=${geneId}`)
@@ -102,7 +107,7 @@ class ExpressionPlot extends Component {
                 let exps = data.map((x) => x.expression);
 
                 // find datasets for the legend
-                let datasets = data.map((x) => x.name)
+                let datasets = [...new Set(data.map((x) => x.name))]
 
                 this.setState({ 
                     expressionData: expData, 
