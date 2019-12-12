@@ -107,11 +107,25 @@ class Bubble extends React.Component {
             .enter()
             .append('g')
 
-        bubbles = elements
+        bubbles = elements.append("a")
+            .attr("xlink:href", (d) => {
+                if (['Drugs', 'Genes', 'Datasets'].includes(d.text)) {
+                    return `/${d.text}`;
+                } else {
+                    return null;
+                }
+            })
             .append('circle')
             .classed('bubble', true)
             .attr('r', d => d.radius)
             .attr('fill', d => fillColour(d.groupid))
+            .attr('cursor', (d) => {
+                if (['Drugs', 'Genes', 'Datasets'].includes(d.text)) {
+                    return 'pointer';
+                } else {
+                    return 'default';
+                }
+            })
 
         // labels
         labels = elements
@@ -121,7 +135,6 @@ class Bubble extends React.Component {
             .attr("fill", "white")
             .style('text-anchor', 'middle')
             .style('font-size', 15)
-            // .style("font-family", "Courier New")
             .html(function (d) {
                 var t;
                 var tt;

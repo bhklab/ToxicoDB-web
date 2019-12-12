@@ -187,8 +187,24 @@ class Volcano extends React.Component {
                 })
 
 
+        // summary stats
+        let stats = svg.append('g')
+        
+        stats.append('text')
+            .attr('x', width)
+            .attr('y', 20)
+            .attr('fill', 'black')
+            .text('Last time point: 24 hrs')
+
+        stats.append('text')
+            .attr('x', width)
+            .attr('y', 40)
+            .attr('fill', 'black')
+            .text('Max dose: High')
+
         // legend
         let legend = svg.append("g")
+                .attr('transform', 'translate(0,30)')
 
         legend.append("rect")
             .attr("x", width + 40)

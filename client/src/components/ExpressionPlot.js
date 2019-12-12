@@ -51,6 +51,7 @@ class ExpressionPlot extends Component {
         let traces = {}
         // index for dose (colour), replicate (dash)
         let dInd = -1, rInd = -1;
+
         expData.forEach((item) => {
             let dsetName = item.name.replaceAll(" ", "")
             if (traces[dsetName] == undefined) {
@@ -102,7 +103,8 @@ class ExpressionPlot extends Component {
                 const { data } = res;
                 const expData = this.formatData(data)
 
-                // find [min,max] time and expression for the axes
+                // find [min,max] time and expression for the axes, and summary stats for dose
+                console.log(data)
                 let times = data.map((x) => x.time);
                 let exps = data.map((x) => x.expression);
 
@@ -136,7 +138,7 @@ class ExpressionPlot extends Component {
     
 
     render() {
-        const {expressionData, drugName, geneName, xRange, yRange, datasets, loading} = this.state;
+        const {expressionData, drugName, geneName, xRange, yRange, summaryStats, datasets, loading} = this.state;
         return (
         <StyledExpressionPlot>
             {expressionData.length === 0 || drugName === "" || geneName === "" ? (

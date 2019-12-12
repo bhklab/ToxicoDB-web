@@ -21,6 +21,7 @@ class Expression extends React.Component {
 
 
     plotExpression(data, plotId, xRange, yRange, datasets) {
+        console.log(data)
         // positions and dimensions
         const margin = {
         top: 20,
@@ -111,7 +112,9 @@ class Expression extends React.Component {
             .x(d => xrange(d.time))
             .y(d => yrange(d.exp));
 
+
         let legend = svg.append("g")
+            
 
         // making the paths
         data.forEach((t,i) => {
@@ -126,9 +129,8 @@ class Expression extends React.Component {
                 .attr("stroke-dasharray", () => {
                     if (t.mode == "solid") return "";
                     else return t.mode;
-                })
-
-            // make dots
+                });   
+        // make dots
             let dots = svg.selectAll("dot")
                 .data(t.points)
                 .enter();
@@ -188,23 +190,47 @@ class Expression extends React.Component {
                 .attr("class", `${datasets[i].replaceAll(" ", "")}-legRect`)
                 .attr("width", 13)
                 .attr("height", 13)
-                .attr("fill", "black")
+                .attr("fill", () => {
+                    if (datasets[i] != "TGGATES Human LDH") {
+                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 0)
+                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "white")
+                        return 'white';
+                    } else {
+                        return 'black';
+                    }
+                })
                 .style("stroke", "black")
                 .style("stroke-width", 1)
                 .style("cursor", "pointer")
                 .on("click", () => {
                     let active   = d.active ? false : true
-        
-                     //to show that this dataset has been selected
-                    if (active) {
-                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 0)
-                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "white")
+
+                    // only show tggates human first
+                    if (datasets[i] != "TGGATES Human LDH") {
+                        //to show that this dataset has been selected
+                        if (active) {
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 1)
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "black")
+                        } else {
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 0)
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "white")
+                        }
+                    
+                        d.active = active;
                     } else {
-                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 1)
-                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "black")
+                        //to show that this dataset has been selected
+                        if (active) {
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 0)
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "white")
+                        } else {
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 1)
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "black")
+                        }
+                    
+                        d.active = active;
                     }
-                
-                    d.active = active;
+        
+                     
                 })
 
             legend.append("text")
@@ -218,16 +244,30 @@ class Expression extends React.Component {
                 .on("click", () => {
                     let active   = d.active ? false : true
         
-                    //to show that this dataset has been selected
-                     if (active) {
-                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 0)
-                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "white")
+                    // only show tggates human first
+                    if (datasets[i] != "TGGATES Human LDH") {
+                        //to show that this dataset has been selected
+                        if (active) {
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 1)
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "black")
+                        } else {
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 0)
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "white")
+                        }
+                    
+                        d.active = active;
                     } else {
-                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 1)
-                        d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "black")
+                        //to show that this dataset has been selected
+                        if (active) {
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 0)
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "white")
+                        } else {
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-path`).attr("opacity", 1)
+                            d3.selectAll(`.${datasets[i].replaceAll(" ", "")}-legRect`).attr("fill", "black")
+                        }
+                    
+                        d.active = active;
                     }
-                
-                    d.active = active;
                 })
                 .text(datasets[i])
         })

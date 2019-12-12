@@ -66,6 +66,7 @@ class HeaderNav extends Component {
             <Link to="/documentation/">Documentation</Link>
             <Link to="/drugs/">Drugs</Link>
             <Link to="/genes/">Genes</Link>
+            <Link to="/datasets/">Datasets</Link>
           </nav>
       </StyledNav>
     );

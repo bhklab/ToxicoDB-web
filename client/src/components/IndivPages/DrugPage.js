@@ -129,7 +129,10 @@ class DrugPage extends Component {
             Header: 'p-value',
             accessor: 'p_value',
             sortable: true,
-            sortMethod:function(a, b){return a-b},
+            sortMethod:function(a, b){return b-a},
+            Cell: (row) => {
+                return parseFloat(row.value).toExponential(2);
+            }
           }, {
             Header: 'Dataset',
             accessor: 'dataset_name',
