@@ -116,8 +116,7 @@ class Drugs extends Component {
                 Header: 'Smiles',
                 accessor: 'smiles',
                 sortable: true,
-            },
-            {
+            }, {
                 Header: 'InchiKey',
                 accessor: 'inchikey',
                 sortable: true,
