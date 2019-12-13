@@ -65,7 +65,6 @@ class Drugs extends Component {
 
     render() {
         const { loading, drugData } = this.state;
-        console.log(drugData);
         const columns = [
             {
                 Header: 'Name',
