@@ -50,20 +50,25 @@ class AnnotationCard extends Component {
                 if (data[j].name === 'name') {
                     table.push(
                         <tr key={j}>
-                            <td className="name" key={data[j].name}>
-                                {data[j].name.replace('_', ' ')}
+                            <td className="name" key={data[j].name} style={{ fontWeight: '600' }}>
+                                Links
                             </td>
                             <td>
-                                <a href={`http://www.genecards.org/cgi-bin/carddisp.pl?gene=${data[j].value}`} target="_blank" className="value" key={data[j].value}>
-                                    {data[j].value}
-                                </a>
+                                <div>
+                                    <h4 style={{ display: 'inline' }}>
+                                   Gene Card:
+                                    </h4>
+                                    <a href={`http://www.genecards.org/cgi-bin/carddisp.pl?gene=${data[j].value}`} target="_blank" className="value" key={data[j].value} style={{ color: `${colors.red_highlight}` }}>
+                                        {` ${data[j].value}`}
+                                    </a>
+                                </div>
                             </td>
                         </tr>,
                     );
                 } else {
                     table.push(
                         <tr key={j}>
-                            <td className="name" key={data[j].name}>
+                            <td className="name" key={data[j].name} style={{ fontWeight: '600' }}>
                                 {data[j].name.replace('_', ' ')}
                             </td>
                             <td className="value" key={data[j].value}>
