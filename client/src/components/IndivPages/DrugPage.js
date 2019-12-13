@@ -162,7 +162,7 @@ class DrugPage extends Component {
                     <div className="volcanoWrapper">
                         <center>
                             <h2>
-Analysis -
+                                Analysis -
                                 {' '}
                                 {drugData.name}
                             </h2>

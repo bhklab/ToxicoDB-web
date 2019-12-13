@@ -28,26 +28,26 @@ class Query extends Component {
     constructor() {
         super();
         this.state = {
-            queryDesc: "",
-        }
+            queryDesc: '',
+        };
     }
 
     componentDidMount() {
         const {
-            queryName, type
+            queryName, type,
         } = this.props;
-        
+
         // getting the description from pubchem
-        if (type == "pair") {
-            this.setState({queryDesc: "drug-gene pair"})
+        if (type === 'pair') {
+            this.setState({ queryDesc: 'drug-gene pair' });
         } else {
-            this.setState({queryDesc: ""})
+            this.setState({ queryDesc: '' });
         }
     }
 
     render() {
-        const {queryName, type, desc} = this.props;
-        const {queryDesc} = this.state;
+        const { queryName, desc } = this.props;
+        // const { queryDesc } = this.state;
         return (
             <StyledQuery>
                 <h2>{queryName}</h2>
@@ -56,7 +56,7 @@ class Query extends Component {
                     {desc}
                 </div>
             </StyledQuery>
-        )
+        );
     }
 }
 

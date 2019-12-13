@@ -65,7 +65,6 @@ class Datasets extends Component {
 
     render() {
         const { loading, datasetData } = this.state;
-        console.log(datasetData);
         const columns = [
             {
                 Header: 'Name',

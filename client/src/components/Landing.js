@@ -22,24 +22,24 @@ const StyledLanding = styled.div`
 `;
 
 class Landing extends Component {
-  render() {
-    return (
-      <StyledLanding>
-        <h1 style={{ marginTop: '200px' }} className="title">Mine multiple toxicogenomic datasets.</h1>
-        <Search />
+    render() {
+        return (
+            <StyledLanding>
+                <h1 style={{ marginTop: '200px' }} className="title">Mine multiple toxicogenomic datasets.</h1>
+                <Search />
 
-        <h1 style={{ marginTop: '120px', marginBottom: '0px' }}>About our database</h1>
-        <About />
+                <h1 style={{ marginTop: '120px', marginBottom: '0px' }}>About our database</h1>
+                <About />
 
-        <h1 style={{ marginTop: '50px' }}>Most frequent queries</h1>
-        <FrequentQueries />
+                <h1 style={{ marginTop: '50px' }}>Most frequent queries</h1>
+                <FrequentQueries />
 
-        {/* <h1 style={{marginTop: "150px"}}>Explore our database</h1> */}
+                {/* <h1 style={{marginTop: "150px"}}>Explore our database</h1> */}
 
-        <Collaboration />
-      </StyledLanding>
-    );
-  }
+                <Collaboration />
+            </StyledLanding>
+        );
+    }
 }
 
 export default Landing;
