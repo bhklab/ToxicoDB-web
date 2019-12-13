@@ -37,12 +37,15 @@ class AnnotationCard extends Component {
     }
 
     createCard = () => {
+        console.log(this.props.data)
         const {data} = this.props;
         let table = [];
         let children = [];
 
         for (let j = 0; j < data.length; j++) {
-            table.push(<tr key={j}><td className="name" key={data[j].name}>{data[j].name.replace("_", " ")}</td><td className="value" key={data[j].value}>{data[j].value}</td></tr>);
+            if(data[j].value) {
+                table.push(<tr key={j}><td className="name" key={data[j].name}>{data[j].name.replace("_", " ")}</td><td className="value" key={data[j].value}>{data[j].value}</td></tr>);
+            }
         }
         return table;
     }
