@@ -6,7 +6,7 @@ const csv = require('csvjson');
 const fs = require('fs');
 const path = require('path');
 
-const fileLocation = path.join(__dirname, '../../data_table/drug_annotations2.csv');
+const fileLocation = path.join(__dirname, '../../data_table/drug_annotations.csv');
 
 const file = fs.readFileSync(fileLocation, 'utf8');
 const dataObj = csv.toObject(file);
