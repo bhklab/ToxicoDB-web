@@ -134,62 +134,62 @@ class GenePage extends Component {
             Header: 'Dataset',
             accessor: 'dataset_name',
             sortable: true,
-          }];
+        }];
         const headers = [
             { displayName: 'drug', id: 'drug_name' },
             { displayName: 'p-value', id: 'p_value' },
             { displayName: 'dataset', id: 'dataset_name' },
         ];
         return (
-        <StyledGenePage>
-            {geneData.length == 0 ? null : (
-                <Fragment>
-                    <h1>{geneData.name}</h1>
-                    <h2>Annotations</h2>
-                    <AnnotationCard data={annotationData} />
-                </Fragment>
-            )} 
-            <ReactTable
-                data={analysisData}
-                columns={columns}
-                filterable
-                defaultFilterMethod={filterCaseInsensitive}
-                className="table -highlight"
-                defaultPageSize={10}
-                defaultSorted={[
-                    {
-                        id: "p_value",
-                        desc: true
-                    }
-                ]}
-                loading={loading}
-                LoadingComponent={LoadingComponent}
-            />
-            <DownloadButton
-                data={analysisData}
-                filename={`${geneData.name}-drugsData`}
-                headers={headers}
-            />
+            <StyledGenePage>
+                {geneData.length == 0 ? null : (
+                    <>
+                        <h1>{geneData.name}</h1>
+                        <h2>Annotations</h2>
+                        <AnnotationCard data={annotationData} />
+                    </>
+                )}
+                <ReactTable
+                    data={analysisData}
+                    columns={columns}
+                    filterable
+                    defaultFilterMethod={filterCaseInsensitive}
+                    className="table -highlight"
+                    defaultPageSize={10}
+                    defaultSorted={[
+                        {
+                            id: 'p_value',
+                            desc: true,
+                        },
+                    ]}
+                    loading={loading}
+                    LoadingComponent={LoadingComponent}
+                />
+                <DownloadButton
+                    data={analysisData}
+                    filename={`${geneData.name}-drugsData`}
+                    headers={headers}
+                />
 
-            {volcanoData.length == 0 ? null : (
-                <div className="volcanoWrapper">
-                    <center>
-                        <h2>
+                {volcanoData.length == 0 ? null : (
+                    <div className="volcanoWrapper">
+                        <center>
+                            <h2>
                             Analysis -
-                            {' '}
-                            {geneData.name}
-                        </h2>
+                                {' '}
+                                {geneData.name}
+                            </h2>
 
-                    </center>
-                    <Volcano 
-                        data={volcanoData}
-                        plotId="volcanoPlot"
-                        type="gene"
-                    />
-                </div>
-            )}
-           
-        </StyledGenePage>
+                        </center>
+                        <Volcano
+                            data={volcanoData}
+                            plotId="volcanoPlot"
+                            type="gene"
+                        />
+                    </div>
+                )}
+
+            </StyledGenePage>
         );
     }
 }

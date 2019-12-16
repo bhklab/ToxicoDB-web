@@ -135,7 +135,7 @@ class DrugPage extends Component {
             Header: 'Dataset',
             accessor: 'dataset_name',
             sortable: true,
-          }];
+        }];
 
         const headers = [
             { displayName: 'gene', id: 'gene_name' },
@@ -143,52 +143,52 @@ class DrugPage extends Component {
             { displayName: 'dataset', id: 'dataset_name' },
         ];
         return (
-        <StyledDrugPage>
-            {drugData.length == 0 ? null : (
-                <Fragment>
-                    <h1>{drugData.name}</h1>
-                    <h2>Annotations</h2>
-                    <AnnotationCard data={annotationData} />
-                </Fragment>
-            )} 
-            <ReactTable
-                data={analysisData}
-                columns={columns}
-                filterable
-                defaultFilterMethod={filterCaseInsensitive}
-                className="table -highlight"
-                defaultPageSize={10}
-                defaultSorted={[
-                    {
-                        id: "p_value",
-                        desc: true
-                    }
-                ]}
-                loading={loading}
-                LoadingComponent={LoadingComponent}
-              />
-            <DownloadButton
-                data={analysisData}
-                filename={`${drugData.name}-drugsData`}
-                headers={headers}
-            />
-            {volcanoData.length == 0 ? null : (
-                <div className="volcanoWrapper">
-                    <center>
-                        <h2>
-                            Analysis - 
-                            {' '}
-                            {drugData.name}
-                        </h2>
-                    </center>
-                    <Volcano 
-                        data={volcanoData}
-                        plotId="volcanoPlot"
-                        type="drug"
-                    />
-                </div>
-            )}
-        </StyledDrugPage>
+            <StyledDrugPage>
+                {drugData.length === 0 ? null : (
+                    <div>
+                        <h1>{drugData.name}</h1>
+                        <h2>Annotations</h2>
+                        <AnnotationCard data={annotationData} />
+                    </div>
+                )}
+                <ReactTable
+                    data={analysisData}
+                    columns={columns}
+                    filterable
+                    defaultFilterMethod={filterCaseInsensitive}
+                    className="table -highlight"
+                    defaultPageSize={10}
+                    defaultSorted={[
+                        {
+                            id: 'p_value',
+                            desc: true,
+                        },
+                    ]}
+                    loading={loading}
+                    LoadingComponent={LoadingComponent}
+                />
+                <DownloadButton
+                    data={analysisData}
+                    filename={`${drugData.name}-drugsData`}
+                    headers={headers}
+                />
+                {volcanoData.length === 0 ? null : (
+                    <div className="volcanoWrapper">
+                        <center>
+                            <h2>
+                            Analysis -
+                                {' '}
+                                {drugData.name}
+                            </h2>
+                        </center>
+                        <Volcano
+                            data={volcanoData}
+                            plotId="volcanoPlot"
+                            type="drug"
+                        />
+                    </div>
+                )}
+            </StyledDrugPage>
         );
     }
 }
