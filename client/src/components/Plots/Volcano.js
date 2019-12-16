@@ -173,7 +173,7 @@ class Volcano extends React.Component {
                 .attr("dx", width + 40)
                 .attr("y", height - 100)
                 .attr("fill", "black")
-                .style('opacity', 0)
+                .attr('opacity', 0)
                 .attr("class", (d,i) => {
                     if (type == "drug") {
                         return d.gene_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'') + i
