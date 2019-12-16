@@ -25,14 +25,13 @@ const StyledDocumentation = styled.div`
 `;
 
 class Documentation extends Component {
-
-  render() {
-    return (
-      <StyledDocumentation>
+    render() {
+        return (
+            <StyledDocumentation>
         Documentation will be added soon.
-      </StyledDocumentation>
-    );
-  }
+            </StyledDocumentation>
+        );
+    }
 }
 
 

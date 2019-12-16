@@ -1,4 +1,5 @@
-import React, { Component, Fragment } from 'react';
+/* eslint-disable no-plusplus */
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 
@@ -14,7 +15,6 @@ const StyledAnnotationCard = styled.div`
         width:100%;
         
     }
-
     td {
         padding: 10px;
         border: 3px solid white;
@@ -32,39 +32,71 @@ class AnnotationCard extends Component {
     constructor() {
         super();
         this.state = {
-            data: []
-        }
-    }
-
-    createCard = () => {
-        const {data} = this.props;
-        let table = [];
-        let children = [];
-
-        for (let j = 0; j < data.length; j++) {
-            table.push(<tr key={j}><td className="name" key={data[j].name}>{data[j].name.replace("_", " ")}</td><td className="value" key={data[j].value}>{data[j].value}</td></tr>);
-        }
-        return table;
+            data: [],
+        };
     }
 
     componentDidMount() {
-       const {data} = this.props;
-       this.setState({data: data})
+        const { data } = this.props;
+        this.setState({ data });
+    }
+
+    createCard() {
+        const { data } = this.props;
+        const table = [];
+
+        for (let j = 0; j < data.length; j++) {
+            if (data[j].value) {
+                if (data[j].name === 'name') {
+                    table.push(
+                        <tr key={j}>
+                            <td className="name" key={data[j].name} style={{ fontWeight: '600' }}>
+                                Links
+                            </td>
+                            <td>
+                                <div>
+                                    <h4 style={{ display: 'inline' }}>
+                                   Gene Card:
+                                    </h4>
+                                    <a href={`http://www.genecards.org/cgi-bin/carddisp.pl?gene=${data[j].value}`} target="_blank" className="value" key={data[j].value} style={{ color: `${colors.red_highlight}` }}>
+                                        {` ${data[j].value}`}
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>,
+                    );
+                } else {
+                    table.push(
+                        <tr key={j}>
+                            <td className="name" key={data[j].name} style={{ fontWeight: '600' }}>
+                                {data[j].name.replace('_', ' ')}
+                            </td>
+                            <td className="value" key={data[j].value}>
+                                {data[j].value}
+                            </td>
+                        </tr>,
+                    );
+                }
+            }
+        }
+
+        return table;
     }
 
     render() {
-        const {data} = this.state;
+        const { data } = this.state;
         return (
-            <StyledAnnotationCard>  
-                {data.length == 0 ? null : 
-                    <table>
-                        <tbody>
-                            {this.createCard()} 
-                        </tbody>
-                    </table>
-                }
+            <StyledAnnotationCard>
+                {data.length === 0 ? null
+                    : (
+                        <table>
+                            <tbody>
+                                {this.createCard()}
+                            </tbody>
+                        </table>
+                    )}
             </StyledAnnotationCard>
-            
+
         );
     }
 }

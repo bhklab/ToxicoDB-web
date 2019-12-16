@@ -1,5 +1,4 @@
-import React, {  Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import ReactTable from 'react-table';
 import colors from '../../styles/colors';
@@ -24,75 +23,74 @@ const StyledDatasets = styled.div`
 `;
 
 const filterCaseInsensitive = (filter, row) => {
-  const id = filter.pivotId || filter.id;
-  switch (typeof row[id]) {
+    const id = filter.pivotId || filter.id;
+    switch (typeof row[id]) {
     case 'object':
-      // checks for metastasis label
-      if (row[id] && row[id].origin) {
-        return String('metastasis').includes(filter.value.toLowerCase());
-      }
-      // checks for disease name (additional check is to filter out null values)
-      return row[id] && row[id].name
-        ? String(row[id].name.toLowerCase()).includes(filter.value.toLowerCase())
-        : false;
+        // checks for metastasis label
+        if (row[id] && row[id].origin) {
+            return String('metastasis').includes(filter.value.toLowerCase());
+        }
+        // checks for disease name (additional check is to filter out null values)
+        return row[id] && row[id].name
+            ? String(row[id].name.toLowerCase()).includes(filter.value.toLowerCase())
+            : false;
     // handles age filtering
     case 'number':
-      return row[id].toString().includes(filter.value);
+        return row[id].toString().includes(filter.value);
     case 'string':
-      return String(row[id].toLowerCase()).includes(filter.value.toLowerCase());
+        return String(row[id].toLowerCase()).includes(filter.value.toLowerCase());
     default:
-      return false;
-  }
+        return false;
+    }
 };
 
 class Datasets extends Component {
-  constructor() {
-    super();
-    this.state = {
-      datasetData: [],
-      loading: true,
-    };
-  }
+    constructor() {
+        super();
+        this.state = {
+            datasetData: [],
+            loading: true,
+        };
+    }
 
-  componentDidMount() {
-    fetch('/api/v1/datasets')
-      .then((response) => response.json())
-      .then((res) => {
-        const { data } = res;
-        this.setState({ datasetData: data, loading: false });
-      });
-  }
+    componentDidMount() {
+        fetch('/api/v1/datasets')
+            .then((response) => response.json())
+            .then((res) => {
+                const { data } = res;
+                this.setState({ datasetData: data, loading: false });
+            });
+    }
 
-  render() {
-    const { loading, datasetData } = this.state;
-    console.log(datasetData)
-    const columns = [
-        {
-            Header: 'Name',
-            accessor: "name",
-            sortable: true,
-            minWidth: 200,
-        }
-    ];
+    render() {
+        const { loading, datasetData } = this.state;
+        const columns = [
+            {
+                Header: 'Name',
+                accessor: 'name',
+                sortable: true,
+                minWidth: 200,
+            },
+        ];
 
-    return (
-      <StyledDatasets>
-        <div className="wrapper">
-          <h1>List of Datasets</h1>
-          <ReactTable
-            data={datasetData}
-            filterable
-            defaultFilterMethod={filterCaseInsensitive}
-            columns={columns}
-            className="-highlight"
-            defaultPageSize={3}
-            loading={loading}
-            LoadingComponent={LoadingComponent}
-          />
-        </div>
-      </StyledDatasets>
-    );
-  }
+        return (
+            <StyledDatasets>
+                <div className="wrapper">
+                    <h1>List of Datasets</h1>
+                    <ReactTable
+                        data={datasetData}
+                        filterable
+                        defaultFilterMethod={filterCaseInsensitive}
+                        columns={columns}
+                        className="-highlight"
+                        defaultPageSize={3}
+                        loading={loading}
+                        LoadingComponent={LoadingComponent}
+                    />
+                </div>
+            </StyledDatasets>
+        );
+    }
 }
 
 

@@ -21,17 +21,17 @@ const StyledCollaboration = styled.div`
 `;
 
 class Collaboration extends Component {
-  render() {
-    return (
-      <StyledCollaboration>
+    render() {
+        return (
+            <StyledCollaboration>
                 The BHKLab is collaborating with
-        {' '}
-        <a href="https://openrisknet.org">OpenRiskNet</a>
-        {' '}
+                {' '}
+                <a href="https://openrisknet.org">OpenRiskNet</a>
+                {' '}
 for the development of ToxicoDB.
-      </StyledCollaboration>
-    );
-  }
+            </StyledCollaboration>
+        );
+    }
 }
 
 export default Collaboration;

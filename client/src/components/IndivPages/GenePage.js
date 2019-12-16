@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import colors from '../../styles/colors';
 import ReactTable from 'react-table';
+import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
 import Volcano from '../Plots/Volcano';
 import DownloadButton from '../Utils/DownloadButton';
@@ -46,21 +46,21 @@ const StyledGenePage = styled.div`
 const filterCaseInsensitive = (filter, row) => {
     const id = filter.pivotId || filter.id;
     switch (typeof row[id]) {
-      case 'object':
+    case 'object':
         // checks for metastasis label
         if (row[id] && row[id].origin) {
-          return String('metastasis').includes(filter.value.toLowerCase());
+            return String('metastasis').includes(filter.value.toLowerCase());
         }
         // checks for disease name (additional check is to filter out null values)
         return row[id] && row[id].name
-          ? String(row[id].name.toLowerCase()).includes(filter.value.toLowerCase())
-          : false;
-      // handles age filtering
-      case 'number':
+            ? String(row[id].name.toLowerCase()).includes(filter.value.toLowerCase())
+            : false;
+        // handles age filtering
+    case 'number':
         return row[id].toString().includes(filter.value);
-      case 'string':
+    case 'string':
         return String(row[id].toLowerCase()).includes(filter.value.toLowerCase());
-      default:
+    default:
         return false;
     }
 };
@@ -74,7 +74,7 @@ class GenePage extends Component {
             volcanoData: [],
             analysisData: [],
             loading: true,
-        }
+        };
     }
 
     componentDidMount() {
@@ -85,17 +85,17 @@ class GenePage extends Component {
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                let annotationData = [];
-                Object.keys(data[0]).forEach((x, i) => {
-                    if (x != "name" && x != "id" && x != "ensembl_tid") {
-                        let temp = {
-                            "name": x,
-                            "value": data[0][x],
+                const annotationData = [];
+                Object.keys(data[0]).forEach((x) => {
+                    if (x !== 'id' && x !== 'ensembl_tid') {
+                        const temp = {
+                            name: x,
+                            value: data[0][x],
                         };
-                        annotationData.push(temp)
+                        annotationData.push(temp);
                     }
-                })
-                this.setState({ geneData: data[0], annotationData: annotationData});
+                });
+                this.setState({ geneData: data[0], annotationData });
             });
 
         // // volcano plot
@@ -111,29 +111,26 @@ class GenePage extends Component {
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                this.setState({volcanoData: data, analysisData: data, loading: false})
+                this.setState({ volcanoData: data, analysisData: data, loading: false });
             });
-        
     }
 
     render() {
-        const {geneData, annotationData, volcanoData, analysisData, loading} = this.state;
+        const {
+            geneData, annotationData, volcanoData, analysisData, loading,
+        } = this.state;
         const columns = [{
             Header: 'Drug',
             accessor: 'drug_name',
             sortable: true,
-            Cell: (row) => {
-                return (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${geneData.id}`}>{row.value}</Link>)
-            },
-          }, {
+            Cell: (row) => (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${geneData.id}`}>{row.value}</Link>),
+        }, {
             Header: 'p-value',
             accessor: 'p_value',
             sortable: true,
-            sortMethod:function(a, b){return b-a},
-            Cell: (row) => {
-                return parseFloat(row.value).toExponential(2);
-            }
-          }, {
+            sortMethod(a, b) { return b - a; },
+            Cell: (row) => parseFloat(row.value).toExponential(2),
+        }, {
             Header: 'Dataset',
             accessor: 'dataset_name',
             sortable: true,
@@ -176,7 +173,14 @@ class GenePage extends Component {
 
             {volcanoData.length == 0 ? null : (
                 <div className="volcanoWrapper">
-                    <center><h2>Analysis - {geneData.name}</h2></center>
+                    <center>
+                        <h2>
+                            Analysis -
+                            {' '}
+                            {geneData.name}
+                        </h2>
+
+                    </center>
                     <Volcano 
                         data={volcanoData}
                         plotId="volcanoPlot"

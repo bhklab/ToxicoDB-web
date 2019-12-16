@@ -17,9 +17,9 @@ const getDatasets = (request, response) => {
 };
 
 const getIndivDataset = (request, response) => {
-    knex.select('id','name')
+    knex.select('id', 'name')
         .from('datasets')
-        .where({ "datasets.id": request.params.id })
+        .where({ 'datasets.id': request.params.id })
         .then((dataset) => response.status(200).json({
             status: 'success',
             data: dataset,
@@ -28,10 +28,9 @@ const getIndivDataset = (request, response) => {
             status: 'could not find data from datasets table, getIndivDataset',
             data: error,
         }));
-}
-
+};
 
 
 module.exports = {
-    getDatasets, getIndivDataset
+    getDatasets, getIndivDataset,
 };

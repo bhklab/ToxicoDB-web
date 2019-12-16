@@ -12,7 +12,6 @@ const tissues = require('./api/tissues');
 const experiments = require('./api/experiments');
 
 
-
 router.get('/v1/datasets', datasets.getDatasets);
 router.get('/v1/datasets/:id', datasets.getIndivDataset);
 router.get('/v1/drugs', drugs.getDrugs);
@@ -31,7 +30,6 @@ router.get('/v1/experiments', experiments.getExperiments);
 // router.get('/v1/samples', samples.getSamples);
 
 // router.get('/v1/tissues', tissues.getTissues);
-
 
 
 module.exports = router;

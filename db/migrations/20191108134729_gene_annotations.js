@@ -12,7 +12,7 @@ exports.up = function (knex, Promise) {
             .index();
         table.string('ensembl_gid');
         table.string('entrez_gid');
-        table.string('transcript_name');
+        table.string('Symbol');
         table.string('ensembl_tid');
     });
 };
