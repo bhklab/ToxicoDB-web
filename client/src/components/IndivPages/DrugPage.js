@@ -9,6 +9,8 @@ import Volcano from '../Plots/Volcano';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
+import DownloadButton from '../Utils/DownloadButton';
+
 import LoadingComponent from '../Utils/Loading';
 
 const StyledDrugPage = styled.div`
@@ -138,6 +140,12 @@ class DrugPage extends Component {
             accessor: 'dataset_name',
             sortable: true,
           }];
+
+        const headers = [
+            { displayName: 'gene', id: 'gene_name' },
+            { displayName: 'p-value', id: 'p_value' },
+            { displayName: 'dataset', id: 'dataset_name' },
+        ];
         return (
         <StyledDrugPage>
             {drugData.length == 0 ? null : (
@@ -163,6 +171,11 @@ class DrugPage extends Component {
                 loading={loading}
                 LoadingComponent={LoadingComponent}
               />
+            <DownloadButton
+                data={analysisData}
+                filename={`${drugData.name}-drugsData`}
+                headers={headers}
+            />
             {volcanoData.length == 0 ? null : (
                 <div className="volcanoWrapper">
                     <center><h2>Analysis - {drugData.name}</h2></center>

@@ -5,6 +5,7 @@ import colors from '../../styles/colors';
 import ReactTable from 'react-table';
 import AnnotationCard from './AnnotationCard';
 import Volcano from '../Plots/Volcano';
+import DownloadButton from '../Utils/DownloadButton';
 import 'react-table/react-table.css';
 
 import LoadingComponent from '../Utils/Loading';
@@ -137,6 +138,11 @@ class GenePage extends Component {
             accessor: 'dataset_name',
             sortable: true,
           }];
+        const headers = [
+            { displayName: 'drug', id: 'drug_name' },
+            { displayName: 'p-value', id: 'p_value' },
+            { displayName: 'dataset', id: 'dataset_name' },
+        ];
         return (
         <StyledGenePage>
             {geneData.length == 0 ? null : (
@@ -161,6 +167,11 @@ class GenePage extends Component {
                 ]}
                 loading={loading}
                 LoadingComponent={LoadingComponent}
+            />
+            <DownloadButton
+                data={analysisData}
+                filename={`${geneData.name}-drugsData`}
+                headers={headers}
             />
 
             {volcanoData.length == 0 ? null : (

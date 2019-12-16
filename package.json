@@ -36,7 +36,9 @@
     "mysql": "^2.17.1",
     "plotly": "^1.0.6",
     "plotly.js": "^1.51.1",
+    "prop-types": "^15.7.2",
     "query-string": "^6.9.0",
+    "react-csv-downloader": "^1.4.0",
     "react-plotly.js": "^2.4.0",
     "react-table": "^6.10.3"
   },
