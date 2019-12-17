@@ -1,7 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import styled from 'styled-components';
+import React, { Component } from 'react';
 import Select, { components } from 'react-select';
-import { NONAME } from 'dns';
 import { withRouter } from 'react-router-dom';
 import colors from '../../styles/colors';
 import MenuList from './MenuList';
@@ -164,23 +162,23 @@ class Search extends Component {
     handleChange(event) {
         const { searchData } = this.state;
         // no options selected (back to none when crossing out values)
-        if (event == null || event.length == 0) {
+        if (event === null || event.length === 0) {
             this.setState({ options: searchData });
         } else {
             // set number of options selected
             this.setState({ selected: event });
 
             // filter based on the opposite of the selected value's type
-            if (event.length == 1) {
+            if (event.length === 1) {
                 const newData = [];
                 searchData.forEach((x, i) => {
-                    if (x.type != event[0].type) {
+                    if (x.type !== event[0].type) {
                         newData.push(x);
                     }
                 });
 
                 this.setState({ options: newData });
-            } else if (event.length == 2) {
+            } else if (event.length === 2) {
                 // clear
                 this.setState({ options: [] });
             }
@@ -203,7 +201,7 @@ class Search extends Component {
                         queryParams = queryParams.concat(`genes/${selected[0].value}`);
                     }
                 } else { // two selected, then it's a gene drug pair
-                    if (selected[0].type == 'drug') {
+                    if (selected[0].type === 'drug') {
                         queryParams = queryParams.concat(`expression?drugId=${selected[0].value}&geneId=${selected[1].value}`);
                     } else {
                         queryParams = queryParams.concat(`expression?drugId=${selected[1].value}&geneId=${selected[0].value}`);

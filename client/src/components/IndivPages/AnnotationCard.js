@@ -1,6 +1,8 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { element } from 'prop-types';
 import colors from '../../styles/colors';
 
 const StyledAnnotationCard = styled.div`
@@ -42,6 +44,7 @@ class AnnotationCard extends Component {
     }
 
     createCard() {
+        console.log(this.props);
         const { data } = this.props;
         const table = [];
 
@@ -61,13 +64,16 @@ class AnnotationCard extends Component {
                                         {` ${data[j].value}`}
                                     </a>
                                 )
-                                : data[j].value }
+                                : (
+                                    typeof (data[j].value) === 'object' ? (
+                                        Object.keys(data[j].value).forEach((val) => (Object.keys(data[j].value).forEach((val) => <h1> Hey </h1>)))
+                                    ) : data[j].value
+                                ) }
                         </td>
                     </tr>,
                 );
             }
         }
-
         return table;
     }
 
@@ -84,7 +90,6 @@ class AnnotationCard extends Component {
                         </table>
                     )}
             </StyledAnnotationCard>
-
         );
     }
 }
