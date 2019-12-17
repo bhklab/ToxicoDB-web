@@ -6,11 +6,12 @@ const router = express.Router();
 const datasets = require('./api/datasets');
 const drugs = require('./api/drugs');
 const genes = require('./api/genes');
-const pathways = require('./api/pathways');
-const samples = require('./api/samples');
+// const pathways = require('./api/pathways');
+// const samples = require('./api/samples');
 const tissues = require('./api/tissues');
+const cells = require('./api/cells');
 const experiments = require('./api/experiments');
-
+const species = require('./api/species');
 
 router.get('/v1/datasets', datasets.getDatasets);
 router.get('/v1/datasets/:id', datasets.getIndivDataset);
@@ -23,13 +24,15 @@ router.get('/v1/genes/:id', genes.getIndivGene);
 router.get('/v1/genes/:id/analysis', genes.getGeneAnalysis);
 
 // router.get('/v1/pathways', pathways.getPathways);
+// router.get('/v1/samples', samples.getSamples);
 
 router.get('/v1/experiments', experiments.getExperiments);
 
+router.get('/v1/tissues', tissues.getTissues);
 
-// router.get('/v1/samples', samples.getSamples);
+router.get('/v1/cells', cells.getCells);
 
-// router.get('/v1/tissues', tissues.getTissues);
+router.get('/v1/species', species.getSpecies);
 
 
 module.exports = router;
