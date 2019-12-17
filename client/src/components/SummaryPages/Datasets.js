@@ -66,6 +66,12 @@ class Datasets extends Component {
         const { loading, datasetData } = this.state;
         const columns = [
             {
+                Header: 'Id',
+                accessor: 'id',
+                sortable: true,
+                minWidth: 200,
+            },
+            {
                 Header: 'Name',
                 accessor: 'name',
                 sortable: true,
@@ -79,10 +85,9 @@ class Datasets extends Component {
                     <h1>List of Datasets</h1>
                     <ReactTable
                         data={datasetData}
-                        filterable
-                        defaultFilterMethod={filterCaseInsensitive}
                         columns={columns}
                         className="-highlight"
+                        showPagination={false}
                         defaultPageSize={3}
                         loading={loading}
                         LoadingComponent={LoadingComponent}
