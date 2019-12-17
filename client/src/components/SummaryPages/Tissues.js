@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import ReactTable from 'react-table';
 import colors from '../../styles/colors';
 import 'react-table/react-table.css';
 
 import LoadingComponent from '../Utils/Loading';
 
-const StyledDatasets = styled.div`
+const Styledtissues = styled.div`
     width: 80vw;
     max-width: 1200px;
     padding:140px 0px;
@@ -23,54 +22,53 @@ const StyledDatasets = styled.div`
     }
 `;
 
-class Datasets extends Component {
+class Tissues extends Component {
     constructor() {
         super();
         this.state = {
-            datasetData: [],
+            tissueData: [],
             loading: true,
         };
     }
 
     componentDidMount() {
-        fetch('/api/v1/datasets')
+        fetch('/api/v1/tissues')
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                this.setState({ datasetData: data, loading: false });
+                this.setState({ tissueData: data, loading: false });
             });
     }
 
     render() {
-        const { loading, datasetData } = this.state;
+        const { loading, tissueData } = this.state;
         const columns = [
             {
                 Header: 'Name',
                 accessor: 'name',
                 sortable: true,
                 minWidth: 200,
-                Cell: (row) => (<Link to={`/datasets/${row.original.id}`}>{row.value}</Link>),
             },
         ];
 
         return (
-            <StyledDatasets>
+            <Styledtissues>
                 <div className="wrapper">
-                    <h1>List of Datasets</h1>
+                    <h1>List of tissues</h1>
                     <ReactTable
-                        data={datasetData}
+                        data={tissueData}
                         columns={columns}
                         className="-highlight"
                         showPagination={false}
-                        defaultPageSize={3}
+                        defaultPageSize={2}
                         loading={loading}
                         LoadingComponent={LoadingComponent}
                     />
                 </div>
-            </StyledDatasets>
+            </Styledtissues>
         );
     }
 }
 
 
-export default Datasets;
+export default Tissues;

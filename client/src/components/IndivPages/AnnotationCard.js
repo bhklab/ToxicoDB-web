@@ -54,7 +54,7 @@ class AnnotationCard extends Component {
                 Object.keys(val.value).forEach((id) => tablerow.push(
                     <div key={val.value[id]}>
                         <span style={{ fontWeight: '500' }}>
-                            {id}
+                            {id.replace(/_/g, ' ')}
                         </span>
                         <i>
                             {` : ${val.value[id]}`}
@@ -65,7 +65,7 @@ class AnnotationCard extends Component {
                 Object.keys(val.value).forEach((id) => tablerow.push(
                     <div key={val.value[id]}>
                         <a href={`${val.value[id]}`} target="_blank" className="value" style={{ color: `${colors.red_highlight}` }}>
-                            {id}
+                            {id.replace(/_/g, ' ')}
                         </a>
                     </div>,
                 ));
@@ -74,13 +74,13 @@ class AnnotationCard extends Component {
         };
 
         for (let j = 0; j < data.length; j++) {
-            if (data[j].value) {
+            if (data[j].value || data[j].name === 'class_in_vitro' || data[j].name === 'class_in_vivo' || data[j].name === 'carcinogenicity') {
                 table.push(
                     <tr key={j}>
                         <td className="name" key={data[j].name} style={{ fontWeight: '600' }}>
-                            { data[j].name.replace('_', ' ') === 'name' ? (
+                            { data[j].name.replace(/_/g, ' ') === 'name' ? (
                                 'Gene Cards'
-                            ) : data[j].name.replace('_', ' ') }
+                            ) : data[j].name.replace(/_/g, ' ') }
                         </td>
                         <td className="value" key={data[j].value}>
                             { data[j].name === 'name'

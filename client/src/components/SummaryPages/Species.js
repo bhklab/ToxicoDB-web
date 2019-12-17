@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import ReactTable from 'react-table';
 import colors from '../../styles/colors';
 import 'react-table/react-table.css';
 
 import LoadingComponent from '../Utils/Loading';
 
-const StyledDatasets = styled.div`
+const Styledspecies = styled.div`
     width: 80vw;
     max-width: 1200px;
     padding:140px 0px;
@@ -23,42 +22,41 @@ const StyledDatasets = styled.div`
     }
 `;
 
-class Datasets extends Component {
+class Species extends Component {
     constructor() {
         super();
         this.state = {
-            datasetData: [],
+            modelData: [],
             loading: true,
         };
     }
 
     componentDidMount() {
-        fetch('/api/v1/datasets')
+        fetch('/api/v1/species')
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                this.setState({ datasetData: data, loading: false });
+                this.setState({ modelData: data, loading: false });
             });
     }
 
     render() {
-        const { loading, datasetData } = this.state;
+        const { loading, modelData } = this.state;
         const columns = [
             {
                 Header: 'Name',
                 accessor: 'name',
                 sortable: true,
                 minWidth: 200,
-                Cell: (row) => (<Link to={`/datasets/${row.original.id}`}>{row.value}</Link>),
             },
         ];
 
         return (
-            <StyledDatasets>
+            <Styledspecies>
                 <div className="wrapper">
-                    <h1>List of Datasets</h1>
+                    <h1>List of species</h1>
                     <ReactTable
-                        data={datasetData}
+                        data={modelData}
                         columns={columns}
                         className="-highlight"
                         showPagination={false}
@@ -67,10 +65,10 @@ class Datasets extends Component {
                         LoadingComponent={LoadingComponent}
                     />
                 </div>
-            </StyledDatasets>
+            </Styledspecies>
         );
     }
 }
 
 
-export default Datasets;
+export default Species;

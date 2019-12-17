@@ -12,7 +12,7 @@ export const DatasetDescription = {
             Life_Science_Database_Archive: 'https://dbarchive.biosciencedbc.jp/en/open-tggates/desc.html',
         },
         Publications: {
-            'Open TG-GATEs: a large-scale toxicogenomics database.': 'https://www.ncbi.nlm.nih.gov/pubmed/25313160',
+            'Open TG-GATEs: a large-scale toxicogenomics database': 'https://www.ncbi.nlm.nih.gov/pubmed/25313160',
         },
         DataType: {
             Cell_Type: 'Primary human hepatocytes',
@@ -39,7 +39,7 @@ export const DatasetDescription = {
             Life_Science_Database_Archive: 'https://dbarchive.biosciencedbc.jp/en/open-tggates/desc.html',
         },
         Publications: {
-            'Open TG-GATEs: a large-scale toxicogenomics database.': 'https://www.ncbi.nlm.nih.gov/pubmed/25313160',
+            'Open TG-GATEs: a large-scale toxicogenomics database': 'https://www.ncbi.nlm.nih.gov/pubmed/25313160',
         },
         DataType: {
             Cell_Type: 'Primary rat hepatocytes',

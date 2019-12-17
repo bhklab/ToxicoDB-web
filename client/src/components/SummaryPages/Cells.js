@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import ReactTable from 'react-table';
 import colors from '../../styles/colors';
 import 'react-table/react-table.css';
 
 import LoadingComponent from '../Utils/Loading';
 
-const StyledDatasets = styled.div`
+const StyledCells = styled.div`
     width: 80vw;
     max-width: 1200px;
     padding:140px 0px;
@@ -21,56 +20,80 @@ const StyledDatasets = styled.div`
     a {
       color: ${colors.blue_text}
     }
+
+    .rt-td {
+            white-space: normal !important;
+    }
 `;
 
-class Datasets extends Component {
+const cellDescription = {
+    1: {
+        Name: 'Primary hepatocytes',
+        Description: `Primary hepatocytes, derived from isolated from liver tissue, 
+                        express typical hepatic functions and express drug metabolising enzymes. 
+                        Hence it serves as the closest model in vitro for toxicity studies.`,
+    },
+};
+
+
+class Cells extends Component {
     constructor() {
         super();
         this.state = {
-            datasetData: [],
+            cellData: [],
             loading: true,
         };
     }
 
     componentDidMount() {
-        fetch('/api/v1/datasets')
+        fetch('/api/v1/cells')
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                this.setState({ datasetData: data, loading: false });
+                // adding description to the object.
+                data.forEach((element, i) => {
+                    data[i].description = cellDescription[element.id].Description;
+                });
+                // setting the state.
+                this.setState({ cellData: data, loading: false });
             });
     }
 
     render() {
-        const { loading, datasetData } = this.state;
+        const { loading, cellData } = this.state;
         const columns = [
             {
                 Header: 'Name',
                 accessor: 'name',
                 sortable: true,
+                minWidth: 70,
+            },
+            {
+                Header: 'Description',
+                accessor: 'description',
+                sortable: true,
                 minWidth: 200,
-                Cell: (row) => (<Link to={`/datasets/${row.original.id}`}>{row.value}</Link>),
             },
         ];
 
         return (
-            <StyledDatasets>
+            <StyledCells>
                 <div className="wrapper">
-                    <h1>List of Datasets</h1>
+                    <h1>List of Cells</h1>
                     <ReactTable
-                        data={datasetData}
+                        data={cellData}
                         columns={columns}
                         className="-highlight"
                         showPagination={false}
-                        defaultPageSize={3}
+                        defaultPageSize={2}
                         loading={loading}
                         LoadingComponent={LoadingComponent}
                     />
                 </div>
-            </StyledDatasets>
+            </StyledCells>
         );
     }
 }
 
 
-export default Datasets;
+export default Cells;

@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import * as d3 from 'd3';
 import React from 'react';
 import colors from '../../styles/colors';
@@ -108,22 +109,12 @@ class Bubble extends React.Component {
             .append('g');
 
         bubbles = elements.append('a')
-            .attr('xlink:href', (d) => {
-                if (['Drugs', 'Genes', 'Datasets'].includes(d.text)) {
-                    return `/${d.text}`;
-                }
-                return null;
-            })
+            .attr('xlink:href', (d) => d.text.toLowerCase())
             .append('circle')
             .classed('bubble', true)
             .attr('r', (d) => d.radius)
             .attr('fill', (d) => fillColour(d.groupid))
-            .attr('cursor', (d) => {
-                if (['Drugs', 'Genes', 'Datasets'].includes(d.text)) {
-                    return 'pointer';
-                }
-                return 'default';
-            });
+            .attr('cursor', 'pointer');
 
         // labels
         labels = elements
@@ -136,13 +127,13 @@ class Bubble extends React.Component {
             .html((d) => {
                 let t;
                 let tt;
-                if (d.text == 'Drugs') {
+                if (d.text === 'Drugs') {
                     t = `<tspan text-anchor='middle' font-size=18 dx='0.5em' >${d.count}</tspan>`;
                     tt = `<tspan text-anchor='middle' dx='-2.1em' dy=20>${d.text}</tspan>`;
-                } else if (d.text == 'Genes') {
+                } else if (d.text === 'Genes') {
                     t = `<tspan text-anchor='middle' font-size=18 dx='0.5em' >${d.count}</tspan>`;
                     tt = `<tspan text-anchor='middle' dx='-2.5em' dy=20>${d.text}</tspan>`;
-                } else if (d.text == 'Tissue') {
+                } else if (d.text === 'Tissue') {
                     t = `<tspan text-anchor='middle' font-size=18 dx='0.6em' >${d.count}</tspan>`;
                     tt = `<tspan text-anchor='middle' dx='-1.6em' dy=20>${d.text}</tspan>`;
                 } else {

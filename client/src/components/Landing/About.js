@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import Bubble from '../Plots/Bubble';
@@ -45,48 +45,48 @@ const StyledChart = styled.div`
 `;
 
 
-class About extends Component {
-    render() {
-        const stats = [
-            {
-                text: 'Datasets', count: '2', size: 2, groupid: 1, id: 1,
-            },
-            {
-                text: 'Cell type', count: '1', size: 1, groupid: 2, id: 2,
-            },
-            {
-                text: 'Models', count: '2', size: 2, groupid: 3, id: 3,
-            },
-            {
-                text: 'Drugs', count: '152', size: 4, groupid: 4, id: 4,
-            },
-            {
-                text: 'Tissue', count: '1', size: 1, groupid: 5, id: 5,
-            },
-            {
-                text: 'Genes', count: '22K', size: 7, groupid: 6, id: 6,
-            },
-        ];
-        return (
-            <StyledAbout>
-                <StyledDescription>
-                    <span style={{ fontWeight: 600, color: colors.red_highlight }}>ToxicoDB</span>
-                    {' '}
+const About = () => {
+    const stats = [
+        {
+            text: 'Datasets', count: '2', size: 2, groupid: 1, id: 1,
+        },
+        {
+            text: 'Cells', count: '1', size: 1, groupid: 2, id: 2,
+        },
+        {
+            text: 'Species', count: '2', size: 2, groupid: 3, id: 3,
+        },
+        {
+            text: 'Drugs', count: '152', size: 4, groupid: 4, id: 4,
+        },
+        {
+            text: 'Tissues', count: '1', size: 1, groupid: 5, id: 5,
+        },
+        {
+            text: 'Genes', count: '22K', size: 7, groupid: 6, id: 6,
+        },
+    ];
+    return (
+        <StyledAbout>
+            <StyledDescription>
+                <span style={{ fontWeight: 600, color: colors.red_highlight }}>ToxicoDB</span>
+                {' '}
                 is a database of curated toxicogenomics datasets that provides convenient
-                data summary and visualization to mine these complex data. Users can find drug and gene annotations,
-                visualize gene expression within datasets as well as differential gene expression for
+                data summary and visualization to mine these complex data.
+                Users can find drug and gene annotations,
+                visualize gene expression within datasets as well
+                as differential gene expression for
                 drug of interest with the option to download the data.
-                </StyledDescription>
-                {/* put the plot here in a diff component */}
-                <StyledChart>
-                    <Bubble
-                        data={stats}
-                        plotId="bubbleChart"
-                    />
-                </StyledChart>
-            </StyledAbout>
-        );
-    }
-}
+            </StyledDescription>
+            {/* put the plot here in a diff component */}
+            <StyledChart>
+                <Bubble
+                    data={stats}
+                    plotId="bubbleChart"
+                />
+            </StyledChart>
+        </StyledAbout>
+    );
+};
 
 export default About;

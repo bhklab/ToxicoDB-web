@@ -126,7 +126,7 @@ class DrugPage extends Component {
             accessor: 'gene_name',
             sortable: true,
             Cell: (row) => (<Link to={`/expression?drugId=${drugData.id}&geneId=${row.original.gene_id}`}>{row.value}</Link>),
-        },{
+        }, {
             Header: 'p-value',
             accessor: 'p_value',
             sortable: true,
