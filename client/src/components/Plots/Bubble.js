@@ -109,7 +109,7 @@ class Bubble extends React.Component {
             .append('g');
 
         bubbles = elements.append('a')
-            .attr('xlink:href', (d) => d.text)
+            .attr('xlink:href', (d) => d.text.toLowerCase())
             .append('circle')
             .classed('bubble', true)
             .attr('r', (d) => d.radius)
