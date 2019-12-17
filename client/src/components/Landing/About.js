@@ -52,7 +52,7 @@ class About extends Component {
                 text: 'Datasets', count: '2', size: 2, groupid: 1, id: 1,
             },
             {
-                text: 'Cell type', count: '1', size: 1, groupid: 2, id: 2,
+                text: 'Cells', count: '1', size: 1, groupid: 2, id: 2,
             },
             {
                 text: 'Species', count: '2', size: 2, groupid: 3, id: 3,
@@ -61,7 +61,7 @@ class About extends Component {
                 text: 'Drugs', count: '152', size: 4, groupid: 4, id: 4,
             },
             {
-                text: 'Tissue', count: '1', size: 1, groupid: 5, id: 5,
+                text: 'Tissues', count: '1', size: 1, groupid: 5, id: 5,
             },
             {
                 text: 'Genes', count: '22K', size: 7, groupid: 6, id: 6,
