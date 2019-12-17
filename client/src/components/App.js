@@ -14,6 +14,10 @@ import GeneCard from './IndivPages/GenePage';
 import DatasetCard from './IndivPages/DatasetPage';
 import ExpressionPlot from './ExpressionPlot';
 import GlobalStyles from '../styles/GlobalStyles';
+import Species from './SummaryPages/Species';
+import Cells from './SummaryPages/Cells';
+import Tissues from './SummaryPages/Tissues';
+
 
 const StyledApp = styled.div`
   margin: 0 auto;
@@ -39,6 +43,10 @@ const App = () => (
                 <Route exact path="/genes/" component={Genes} />
                 <Route exact path="/drugs/" component={Drugs} />
                 <Route exact path="/datasets/" component={Datasets} />
+                <Route exact path="/species/" component={Species} />
+                <Route exact path="/cells/" component={Cells} />
+                <Route exact path="/species/" component={Species} />
+                <Route exact path="/tissues/" component={Tissues} />
                 <Route exact path="/documentation/" component={Documentation} />
                 <Route path="/drugs/:id" component={DrugCard} />
                 <Route path="/genes/:id" component={GeneCard} />
