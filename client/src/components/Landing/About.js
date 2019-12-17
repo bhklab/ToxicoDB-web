@@ -55,7 +55,7 @@ class About extends Component {
                 text: 'Cell type', count: '1', size: 1, groupid: 2, id: 2,
             },
             {
-                text: 'Models', count: '2', size: 2, groupid: 3, id: 3,
+                text: 'Species', count: '2', size: 2, groupid: 3, id: 3,
             },
             {
                 text: 'Drugs', count: '152', size: 4, groupid: 4, id: 4,
