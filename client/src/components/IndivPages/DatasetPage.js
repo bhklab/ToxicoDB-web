@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import ReactTable from 'react-table';
 import { DatasetDescription } from './DatasetDescription';
 import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
-import DownloadButton from '../Utils/DownloadButton';
 import 'react-table/react-table.css';
-
-import LoadingComponent from '../Utils/Loading';
 
 const StyledDatasetPage = styled.div`
     width: 80vw;
@@ -43,37 +38,12 @@ const StyledDatasetPage = styled.div`
     }
 `;
 
-const filterCaseInsensitive = (filter, row) => {
-    const id = filter.pivotId || filter.id;
-    switch (typeof row[id]) {
-    case 'object':
-        // checks for metastasis label
-        if (row[id] && row[id].origin) {
-            return String('metastasis').includes(filter.value.toLowerCase());
-        }
-        // checks for disease name (additional check is to filter out null values)
-        return row[id] && row[id].name
-            ? String(row[id].name.toLowerCase()).includes(filter.value.toLowerCase())
-            : false;
-        // handles age filtering
-    case 'number':
-        return row[id].toString().includes(filter.value);
-    case 'string':
-        return String(row[id].toLowerCase()).includes(filter.value.toLowerCase());
-    default:
-        return false;
-    }
-};
-
 class DatasetPage extends Component {
     constructor() {
         super();
         this.state = {
             datasetName: '',
-            datasetData: [],
             annotationData: [],
-            analysisData: [],
-            loading: true,
         };
     }
 
@@ -82,12 +52,12 @@ class DatasetPage extends Component {
 
         // grabbing the data according to the param id.
         const data = DatasetDescription[params.id];
-        console.log(data);
+
         // annotations
         const annotationData = [];
         let datasetName = '';
         Object.keys(data).forEach((element) => {
-            if (!(element === 'DataType' || element === 'Dataset')) {
+            if (!(element === 'Dataset')) {
                 const temp = {
                     name: element,
                     value: data[element],
@@ -98,41 +68,12 @@ class DatasetPage extends Component {
             }
         });
         this.setState({ annotationData, datasetName });
-
-        // analysis table
-        fetch(`/api/v1/genes/${params.id}/analysis`)
-            .then((response) => response.json())
-            .then((res) => {
-                const { data } = res;
-                this.setState({ analysisData: data, loading: false });
-            });
     }
 
     render() {
         const {
-            datasetName, datasetData, annotationData, analysisData, loading,
+            datasetName, annotationData,
         } = this.state;
-        const columns = [{
-            Header: 'Drug',
-            accessor: 'drug_name',
-            sortable: true,
-            Cell: (row) => (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${datasetData.id}`}>{row.value}</Link>),
-        }, {
-            Header: 'p-value',
-            accessor: 'p_value',
-            sortable: true,
-            sortMethod(a, b) { return b - a; },
-            Cell: (row) => parseFloat(row.value).toExponential(2),
-        }, {
-            Header: 'Dataset',
-            accessor: 'dataset_name',
-            sortable: true,
-        }];
-        const headers = [
-            { displayName: 'drug', id: 'drug_name' },
-            { displayName: 'p-value', id: 'p_value' },
-            { displayName: 'dataset', id: 'dataset_name' },
-        ];
         return (
             <StyledDatasetPage>
                 {annotationData.length === 0 ? null : (
@@ -141,28 +82,6 @@ class DatasetPage extends Component {
                         <AnnotationCard data={annotationData} />
                     </div>
                 )}
-                {/* <ReactTable
-                    data={analysisData}
-                    columns={columns}
-                    filterable
-                    defaultFilterMethod={filterCaseInsensitive}
-                    className="table -highlight"
-                    defaultPageSize={10}
-                    defaultSorted={[
-                        {
-                            id: 'p_value',
-                            desc: true,
-                        },
-                    ]}
-                    loading={loading}
-                    LoadingComponent={LoadingComponent}
-                /> */}
-                {/* <DownloadButton
-                    data={analysisData}
-                    filename={`${datasetData.name}-drugsData`}
-                    headers={headers}
-                /> */}
-
             </StyledDatasetPage>
         );
     }
