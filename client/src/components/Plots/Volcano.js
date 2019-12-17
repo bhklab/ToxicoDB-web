@@ -23,10 +23,13 @@ class Volcano extends React.Component {
         formattedData.fchanges = data.map((x) => x.fold_change);
         formattedData.fdr = data.map((x) => x.fdr);
         formattedData.rawData = data;
+        formattedData.datasets = [...new Set(data.map((x) => x.dataset_name))];
         return formattedData;
     }
 
     plotVolcano(data, plotId, type) {
+        console.log(data)
+        const datasets = data.datasets;
         // positions and dimensions
         const margin = {
             top: 20,
@@ -120,11 +123,11 @@ class Volcano extends React.Component {
                 .append("circle")
                 .attr("r", 4)
                     .attr("opacity", 1)
-                    .attr("class", (d,i) => {
+                    .attr('class', (d,i) => {
                         if (type == "drug") {
-                            return d.gene_name.replace(" ", "") + "-dot" + i
+                            return d.gene_name.replace(/[^A-Za-z][^A-Za-z/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'') + "-dot" + i  + ` ${d.dataset_name.replaceAll(' ','')}-dot`
                         } else {
-                            return d.drug_name.replace(" ", "") + "-dot" + i
+                            return d.drug_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'') + "-dot" + i  + ` ${d.dataset_name.replaceAll(' ','')}-dot`
                         }
                     })
                     .attr("fill", (d) => {
@@ -148,16 +151,16 @@ class Volcano extends React.Component {
                     .style("cursor", "pointer")
                     .on("mouseover", (d,i) => {
                         if (type == "drug") {
-                            d3.select(`.${d.gene_name.replace(" ", "")}${i}`).style("opacity",1)
+                            d3.select(`.${d.gene_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}${i}`).attr('opacity',1)
                         } else {
-                            d3.select(`.${d.drug_name.replace(" ", "")}${i}`).style("opacity",1)
+                            d3.select(`.${d.drug_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}${i}`).attr('opacity',1)
                         }
                     })
                     .on("mouseout", (d,i) => {
                         if (type == "drug") {
-                            d3.select(`.${d.gene_name.replace(" ", "")}${i}`).style("opacity",0)
+                            d3.select(`.${d.gene_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}${i}`).attr('opacity',0)
                         } else {
-                            d3.select(`.${d.drug_name.replace(" ", "")}${i}`).style("opacity",0)
+                            d3.select(`.${d.drug_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}${i}`).attr('opacity',0)
                         }
 
                     })
@@ -170,12 +173,12 @@ class Volcano extends React.Component {
                 .attr("dx", width + 40)
                 .attr("y", height - 100)
                 .attr("fill", "black")
-                .style("opacity", 0)
+                .attr('opacity', 0)
                 .attr("class", (d,i) => {
                     if (type == "drug") {
-                        return d.gene_name.replace(" ", "") + i
+                        return d.gene_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'') + i
                     } else {
-                        return d.drug_name.replace(" ", "") + i
+                        return d.drug_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'') + i 
                     }
                 })
                 .text((d) => {
@@ -191,13 +194,13 @@ class Volcano extends React.Component {
         let stats = svg.append('g')
         
         stats.append('text')
-            .attr('x', width)
+            .attr('x', width + 20)
             .attr('y', 20)
             .attr('fill', 'black')
             .text('Last time point: 24 hrs')
 
         stats.append('text')
-            .attr('x', width)
+            .attr('x', width + 20)
             .attr('y', 40)
             .attr('fill', 'black')
             .text('Max dose: High')
@@ -276,7 +279,104 @@ class Volcano extends React.Component {
                     .attr("fill", "black")
                     .text("fold change < 1")
 
+        // making the dataset selectors
+        let nest = d3.nest()
+            .key(function(d) {
+                return d;
+            })
+            .entries(datasets);
+
+
+
+        nest.forEach((d,i) => {
+            legend.append('rect')
+                .attr("x", width+10)
+                .attr("y", height - 80 + (i*20))
+                .attr("class", `${datasets[i].replaceAll(' ','')}-legRect`)
+                .attr("width", 13)
+                .attr("height", 13)
+                .attr("fill", () => {
+                    if (datasets[i] != "TGGATES Human LDH") {
+                        d3.selectAll(`.${datasets[i].replaceAll(' ','')}-dot`).attr("opacity", 0)
+                        return 'white';
+                    } else {
+                        return 'black';
+                    }
+                })
+                .style("stroke", "black")
+                .style("stroke-width", 1)
+                .style("cursor", "pointer")
+                .on("click", () => {
+                    let active   = d.active ? false : true
+
+                   // only show tggates human first
+                   if (datasets[i] != "TGGATES Human LDH") {
+                    //to show that this dataset has been selected
+                    if (active) {
+                        d3.selectAll(`.${datasets[i].replaceAll(' ','')}-dot`).attr("opacity", 1)
+                        d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "black")
+                    } else {
+                        d3.selectAll(`.${datasets[i].replaceAll(' ','')}-dot`).attr("opacity", 0)
+                        d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "white")
+                    }
+                
+                    d.active = active;
+                } else {
+                    //to show that this dataset has been selected
+                    if (active) {
+                        d3.selectAll(`.${datasets[i].replaceAll(' ','')}-dot`).attr("opacity", 0)
+                        d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "white")
+                    } else {
+                        d3.selectAll(`.${datasets[i].replaceAll(' ','')}-dot`).attr("opacity", 1)
+                        d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "black")
+                    }
+                
+                    d.active = active;
+                }
         
+                     
+                })
+
+            legend.append("text")
+                .attr("class", `${datasets[i]}-legDsetLabel`)
+                .attr("fill", "black")
+                .style("font-size", 13)
+                .attr("font-family", "Arial")
+                .attr("x", width + 30)
+                .attr("y", height - 69 + (i*20))
+                .style("cursor", "pointer")
+                .on("click", () => {
+                    let active   = d.active ? false : true
+
+                    // only show tggates human first
+                    if (datasets[i] != "TGGATES Human LDH") {
+                        //to show that this dataset has been selected
+                        if (active) {
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-dot`).attr("opacity", 1)
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "black")
+                        } else {
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-dot`).attr("opacity", 0)
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "white")
+                        }
+                    
+                        d.active = active;
+                    } else {
+                        //to show that this dataset has been selected
+                        if (active) {
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-dot`).attr("opacity", 0)
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "white")
+                        } else {
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-dot`).attr("opacity", 1)
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "black")
+                        }
+                    
+                        d.active = active;
+                    }
+                })
+                .text(datasets[i])
+        })
+
+            
 
     }
 
