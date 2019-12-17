@@ -102,9 +102,10 @@ class FrequentQueries extends Component {
                     <Query desc={desc4} queryUrl={`/genes/14459`} queryName="PPARA" type="gene" />
                     <Query desc={desc5} queryUrl={`/expression?drugId=32&geneId=14459`} queryName="valproic acid - PPARA" type="pair" />
 
-            </Slider>
-        </StyledQueries>
-    );
-};
+                </Slider>
+            </StyledQueries>
+        );
+    };
+}
 
 export default FrequentQueries;
