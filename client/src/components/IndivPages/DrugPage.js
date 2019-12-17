@@ -120,14 +120,21 @@ class DrugPage extends Component {
         const {
             drugData, annotationData, volcanoData, analysisData, loading,
         } = this.state;
+        const { match: { params } } = this.props;
         const columns = [{
             Header: 'Gene',
             accessor: 'gene_name',
             sortable: true,
             Cell: (row) => (<Link to={`/expression?drugId=${drugData.id}&geneId=${row.original.gene_id}`}>{row.value}</Link>),
-        }, {
+        },{
             Header: 'p-value',
             accessor: 'p_value',
+            sortable: true,
+            sortMethod(a, b) { return b - a; },
+            Cell: (row) => parseFloat(row.value).toExponential(2),
+        }, {
+            Header: 'fold-change',
+            accessor: 'fold_change',
             sortable: true,
             sortMethod(a, b) { return b - a; },
             Cell: (row) => parseFloat(row.value).toExponential(2),
@@ -140,6 +147,7 @@ class DrugPage extends Component {
         const headers = [
             { displayName: 'gene', id: 'gene_name' },
             { displayName: 'p-value', id: 'p_value' },
+            { displayName: 'fold-change', id: 'fold_change' },
             { displayName: 'dataset', id: 'dataset_name' },
         ];
         return (
@@ -183,6 +191,7 @@ class DrugPage extends Component {
                         </center>
                         <Volcano
                             data={volcanoData}
+                            queryId={params.id}
                             plotId="volcanoPlot"
                             type="drug"
                         />
