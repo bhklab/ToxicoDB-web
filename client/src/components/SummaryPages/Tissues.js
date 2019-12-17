@@ -60,7 +60,7 @@ class Tissues extends Component {
                         columns={columns}
                         className="-highlight"
                         showPagination={false}
-                        defaultPageSize={3}
+                        defaultPageSize={2}
                         loading={loading}
                         LoadingComponent={LoadingComponent}
                     />
