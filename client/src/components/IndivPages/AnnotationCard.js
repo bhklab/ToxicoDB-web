@@ -74,13 +74,13 @@ class AnnotationCard extends Component {
         };
 
         for (let j = 0; j < data.length; j++) {
-            if (data[j].value) {
+            if (data[j].value || data[j].name === 'class_in_vitro' || data[j].name === 'class_in_vivo' || data[j].name === 'carcinogenicity') {
                 table.push(
                     <tr key={j}>
                         <td className="name" key={data[j].name} style={{ fontWeight: '600' }}>
-                            { data[j].name.replace('_', ' ') === 'name' ? (
+                            { data[j].name.replace(/_/g, ' ') === 'name' ? (
                                 'Gene Cards'
-                            ) : data[j].name.replace('_', ' ') }
+                            ) : data[j].name.replace(/_/g, ' ') }
                         </td>
                         <td className="value" key={data[j].value}>
                             { data[j].name === 'name'
