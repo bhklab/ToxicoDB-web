@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import ReactTable from 'react-table';
 import colors from '../../styles/colors';
 import 'react-table/react-table.css';
@@ -21,28 +22,6 @@ const StyledDatasets = styled.div`
       color: ${colors.blue_text}
     }
 `;
-
-const filterCaseInsensitive = (filter, row) => {
-    const id = filter.pivotId || filter.id;
-    switch (typeof row[id]) {
-    case 'object':
-        // checks for metastasis label
-        if (row[id] && row[id].origin) {
-            return String('metastasis').includes(filter.value.toLowerCase());
-        }
-        // checks for disease name (additional check is to filter out null values)
-        return row[id] && row[id].name
-            ? String(row[id].name.toLowerCase()).includes(filter.value.toLowerCase())
-            : false;
-    // handles age filtering
-    case 'number':
-        return row[id].toString().includes(filter.value);
-    case 'string':
-        return String(row[id].toLowerCase()).includes(filter.value.toLowerCase());
-    default:
-        return false;
-    }
-};
 
 class Datasets extends Component {
     constructor() {
@@ -70,12 +49,14 @@ class Datasets extends Component {
                 accessor: 'id',
                 sortable: true,
                 minWidth: 200,
+                Cell: (row) => (<Link to={`/datasets/${row.original.id}`}>{row.value}</Link>),
             },
             {
                 Header: 'Name',
                 accessor: 'name',
                 sortable: true,
                 minWidth: 200,
+                Cell: (row) => (<Link to={`/datasets/${row.original.id}`}>{row.value}</Link>),
             },
         ];
 
