@@ -119,6 +119,7 @@ class GenePage extends Component {
         const {
             geneData, annotationData, volcanoData, analysisData, loading,
         } = this.state;
+        const { match: { params } } = this.props;
         const columns = [{
             Header: 'Drug',
             accessor: 'drug_name',
@@ -131,6 +132,12 @@ class GenePage extends Component {
             sortMethod(a, b) { return b - a; },
             Cell: (row) => parseFloat(row.value).toExponential(2),
         }, {
+            Header: 'fold-change',
+            accessor: 'fold_change',
+            sortable: true,
+            sortMethod(a, b) { return b - a; },
+            Cell: (row) => parseFloat(row.value).toExponential(2),
+        }, {
             Header: 'Dataset',
             accessor: 'dataset_name',
             sortable: true,
@@ -138,6 +145,7 @@ class GenePage extends Component {
         const headers = [
             { displayName: 'drug', id: 'drug_name' },
             { displayName: 'p-value', id: 'p_value' },
+            { displayName: 'fold-change', id: 'fold_change' },
             { displayName: 'dataset', id: 'dataset_name' },
         ];
         return (
@@ -183,6 +191,7 @@ class GenePage extends Component {
                         </center>
                         <Volcano
                             data={volcanoData}
+                            queryId={params.id}
                             plotId="volcanoPlot"
                             type="gene"
                         />
