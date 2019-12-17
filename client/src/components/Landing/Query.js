@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 
@@ -7,9 +8,11 @@ const StyledQuery = styled.div`
     text-align: center !important;
     font-family: 'Raleway', sans-serif;
 
-    h2 {
+    h2, a {
         color: ${colors.blue_header};
-        
+        &:hover {
+            color: ${colors.red_highlight}
+        }
     }
     .desc {
         background:${colors.lightblue_bg};
@@ -46,11 +49,11 @@ class Query extends Component {
     }
 
     render() {
-        const { queryName, desc } = this.props;
+        const { queryName, queryUrl, desc } = this.props;
         // const { queryDesc } = this.state;
         return (
             <StyledQuery>
-                <h2>{queryName}</h2>
+                <h2><Link to={`${queryUrl}`}>{queryName}</Link></h2>
                 <div className="desc">
                     {/* {queryDesc} */}
                     {desc}

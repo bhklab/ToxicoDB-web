@@ -145,14 +145,14 @@ class Expression extends React.Component {
                     .attr("cy", function(d) {return yrange(d.exp);})
 
             // to make sure it only puts a legend once
-            if (t.class == datasets[0].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')) {
+            if (t.class == datasets[0].replaceAll(' ','')) {
                 // legend
                 legend.append("line")
                     .attr("class", `${t.class} legLine`)
                     .attr("x1", width + 10)
-                    .attr("y1", 50 + (i*20))
+                    .attr("y1", 50 + (i*21))
                     .attr("x2", width + 45)
-                    .attr("y2", 50 + (i*20))
+                    .attr("y2", 50 + (i*21))
                     .attr("fill", "none")
                     .attr("stroke", t.color)
                     .style("opacity", 1)
@@ -187,13 +187,13 @@ class Expression extends React.Component {
             legend.append('rect')
                 .attr("x", width+10)
                 .attr("y", height - 80 + (i*20))
-                .attr("class", `${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-legRect`)
+                .attr("class", `${datasets[i].replaceAll(' ','')}-legRect`)
                 .attr("width", 13)
                 .attr("height", 13)
                 .attr("fill", () => {
                     if (datasets[i] != "TGGATES Human LDH") {
-                        d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-path`).attr("opacity", 0)
-                        d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-legRect`).attr("fill", "white")
+                        d3.selectAll(`.${datasets[i].replaceAll(' ','')}-path`).attr("opacity", 0)
+                        d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "white")
                         return 'white';
                     } else {
                         return 'black';
@@ -209,22 +209,22 @@ class Expression extends React.Component {
                     if (datasets[i] != "TGGATES Human LDH") {
                         //to show that this dataset has been selected
                         if (active) {
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-path`).attr("opacity", 1)
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-legRect`).attr("fill", "black")
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-path`).attr("opacity", 1)
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "black")
                         } else {
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-path`).attr("opacity", 0)
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-legRect`).attr("fill", "white")
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-path`).attr("opacity", 0)
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "white")
                         }
                     
                         d.active = active;
                     } else {
                         //to show that this dataset has been selected
                         if (active) {
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-path`).attr("opacity", 0)
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-legRect`).attr("fill", "white")
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-path`).attr("opacity", 0)
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "white")
                         } else {
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-path`).attr("opacity", 1)
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-legRect`).attr("fill", "black")
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-path`).attr("opacity", 1)
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "black")
                         }
                     
                         d.active = active;
@@ -248,22 +248,22 @@ class Expression extends React.Component {
                     if (datasets[i] != "TGGATES Human LDH") {
                         //to show that this dataset has been selected
                         if (active) {
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-path`).attr("opacity", 1)
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-legRect`).attr("fill", "black")
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-path`).attr("opacity", 1)
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "black")
                         } else {
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-path`).attr("opacity", 0)
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-legRect`).attr("fill", "white")
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-path`).attr("opacity", 0)
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "white")
                         }
                     
                         d.active = active;
                     } else {
                         //to show that this dataset has been selected
                         if (active) {
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-path`).attr("opacity", 0)
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-legRect`).attr("fill", "white")
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-path`).attr("opacity", 0)
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "white")
                         } else {
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-path`).attr("opacity", 1)
-                            d3.selectAll(`.${datasets[i].replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}-legRect`).attr("fill", "black")
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-path`).attr("opacity", 1)
+                            d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "black")
                         }
                     
                         d.active = active;

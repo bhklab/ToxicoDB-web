@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 import queryString from 'query-string';
@@ -14,14 +14,14 @@ const StyledExpressionPlot = styled.div`
     padding:140px 0px;
     color: ${colors.blue_text};
     h1 {
-        color: ${colors.red_highlight};
+        color: ${colors.blue_header};
         font-family: 'Raleway', sans-serif;
         font-size: calc(1.5em + 1vw);
         text-align:center;
         margin:50px 0 40px 0;
     }
     a {
-      color: ${colors.blue_text};
+      color: ${colors.red_highlight};
     }
 `;
 
@@ -34,6 +34,8 @@ class ExpressionPlot extends Component {
             xRange: [],
             yRange: [],
             drugName: "",
+            drugId:0,
+            geneId:0,
             geneName: "",
             datasets: [],
             loading:true,
@@ -96,7 +98,7 @@ class ExpressionPlot extends Component {
         const {
             drugId, geneId
         } = requestParams;
-
+        this.setState({drugId: drugId, geneId: geneId});
         fetch(`/api/v1/experiments?drugId=${drugId}&geneId=${geneId}`)
             .then((response) => response.json())
             .then((res) => {
@@ -138,7 +140,7 @@ class ExpressionPlot extends Component {
     
 
     render() {
-        const {expressionData, drugName, geneName, xRange, yRange, summaryStats, datasets, loading} = this.state;
+        const {expressionData, drugName, geneName, drugId, geneId, xRange, yRange, summaryStats, datasets, loading} = this.state;
         return (
         <StyledExpressionPlot>
             {expressionData.length === 0 || drugName === "" || geneName === "" ? (
@@ -147,7 +149,7 @@ class ExpressionPlot extends Component {
               </div>
             ) : (
                 <Fragment>
-                    <h1>Effects of {drugName} on {geneName}</h1>
+                    <h1>Effects of <Link to={`/drugs/${drugId}`}>{drugName}</Link> on <Link to={`/genes/${geneId}`}>{geneName}</Link></h1>
                     <Expression
                         data={expressionData}
                         plotId="expPlot"

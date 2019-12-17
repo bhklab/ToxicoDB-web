@@ -122,29 +122,27 @@ class Volcano extends React.Component {
             .data(data.rawData)
             .enter()
                 // .filter((d,i) => d.fdr !== "0" && !fdr.includes(d.fdr) && d.fold_change !== 0 && !fold_change.includes(d.fold_change) && d.p_value !== "0" && !p_value.includes(d.p_value))
-                .filter((d,i) => d.fdr !== "0" && d.fold_change !== 0  && d.p_value !== "0")
+                // .filter((d,i) => d.fdr !== "0" && d.fold_change !== 0  && d.p_value !== "0")
+                .filter((d,i) => {
+                    const result = !fdr.includes(d.fdr) && !fold_change.includes(d.fold_change) && !p_value.includes(d.p_value);
+                    fdr.push(d.fdr);
+                    fold_change.push(d.fold_change);
+                    p_value.push(d.p_value);
+                    return result;
+                })
                 .append("a")
                     .attr("xlink:href", (d) => {
                         if (type == 'drug') {
-                            return `/expression?drugId=${queryId}&geneId=${d.gene_id}` + d.link_id
+                            return `/expression?drugId=${queryId}&geneId=${d.gene_id}`
                         } else {
-                            return `/expression?drugId=${d.drug_id}&geneId=${queryId}` + d.link_id
+                            return `/expression?drugId=${d.drug_id}&geneId=${queryId}`
                         }
                     })
                 .append("circle")
                 .attr("r", 4)
                     .attr("opacity", 1)
                     .attr('class', (d,i) => {
-                        // fdr.push(d.fdr);
-                        // fold_change.push(d.fold_change);
-                        // p_value.push(d.p_value);
-                        // console.log(i)
-                        if (type == "drug") {
-                            return d.gene_name.replace(/[^A-Za-z][^A-Za-z/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'') + "-dot" + i  + ` ${d.dataset_name.replaceAll(' ','')}-dot`
-                        } else {
-                            return d.drug_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'') + "-dot" + i  + ` ${d.dataset_name.replaceAll(' ','')}-dot`
-                        }
-
+                        return `.dot${i} ${d.dataset_name.replaceAll(' ','')}-dot`
                     })
                     .attr("fill", (d) => {
                         let color = "";
@@ -166,40 +164,35 @@ class Volcano extends React.Component {
                     .attr("cy", function(d) {return yrange(d.p_value == 0 ? 0 : -Math.log10(d.p_value));})
                     .style("cursor", "pointer")
                     .on("mouseover", (d,i) => {
-                        if (type == "drug") {
-                            d3.select(`.${d.gene_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}${i}`).attr('opacity',1)
-                        } else {
-                            d3.select(`.${d.drug_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}${i}`).attr('opacity',1)
-                        }
+                        return d3.select(`.label${i}`).attr('opacity',1)
                     })
                     .on("mouseout", (d,i) => {
-                        if (type == "drug") {
-                            d3.select(`.${d.gene_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}${i}`).attr('opacity',0)
-                        } else {
-                            d3.select(`.${d.drug_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'')}${i}`).attr('opacity',0)
-                        }
-
+                        return d3.select(`.label${i}`).attr('opacity',0)
                     })
-
+                    
+        fdr = [];
+        fold_change = [];
+        p_value = [];
         let dotLabels = svg.append("g")
             .selectAll("label")
                 .data(data.rawData)
                 .enter()
-                .filter((d,i) => d.fdr !== "0" && d.fold_change !== 0 && d.p_value !== "0")
+                .filter((d,i) => {
+                    const result = !fdr.includes(d.fdr) && !fold_change.includes(d.fold_change) && !p_value.includes(d.p_value);
+                    fdr.push(d.fdr);
+                    fold_change.push(d.fold_change);
+                    p_value.push(d.p_value);
+                    return result;
+                })
             .append("text")
-                .attr("dx", width + 40)
-                .attr("y", height - 100)
+                .attr('dx', width + 40)
+                .attr('y', height - 100)
                 .attr("fill", "black")
                 .attr('opacity', 0)
-                .attr("class", (d,i) => {
-                    
-                    if (type == "drug") {
-                        return d.gene_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'') + i
-                    } else {
-                        return d.drug_name.replace(/[^A-Za-z]/,'').replaceAll(/[ ~!@$%^&*()+=,./';:"?><{}|`#]/g,'') + i 
-                    }
+                .attr('class', (d,i) => {
+                    return `label${i}`;
                 })
-                .text((d) => {
+                .text((d, i) => {
                     if (type == "drug") {
                         return d.gene_name
                     } else{

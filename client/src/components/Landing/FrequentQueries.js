@@ -87,20 +87,20 @@ class FrequentQueries extends Component {
             speed: 500,
         };
         const desc1 = 'Encodes a member of the cytochrome P450 superfamily of enzymes.';
-        const desc2 = 'A macrocyclic antibiotic with major activity against mycobacteria, commonly used in combination with other agents as therapy of tuberculosis.';
-        const desc3 = 'drug-gene pair';
-        const desc4 = 'A chlorocarbon that is methane in which all the hydrogens have been replaced by chloro groups.';
-        const desc5 = 'drug-gene pair';
+        const desc2 = 'A synthetic derivative of propylpentanoic acid with antiepileptic properties and potential antineoplastic and antiangiogenesis activities.';
+        const desc3 = 'This drug is reported to elicit a dose and time dependent response on CYP1A1, a liver metabolizing enzyme involved in xenobiotic metabolism.';
+        const desc4 = 'A member of the nuclear receptor family of ligand-activated transcription factors that heterodimerize with the retinoic X receptor to regulate gene expression.';
+        const desc5 = 'PPARA has been reported to be modulated by Valproic acid, in repeated dose toxicity, leading to steatosis.';
 
         return (
             <StyledQueries>
                 <Slider {...settings}>
                     {/* https://www.fullstackreact.com/30-days-of-react/day-13/ to iterate over displaying components */}
-                    <Query desc={desc1} queryName="CYP1A1" type="gene" />
-                    <Query desc={desc2} queryName="rifampicin" type="drug" />
-                    <Query desc={desc3} queryName="CYP1A1 rifampicin" type="pair" />
-                    <Query desc={desc4} queryName="carbon tetrachloride" type="drug" />
-                    <Query desc={desc5} queryName="labetalol CFH" type="pair" />
+                    <Query desc={desc1} queryUrl={`/genes/7468`} queryName="CYP1A1" type="gene" />
+                    <Query desc={desc2} queryUrl={`/drugs/32`} queryName="valproic acid" type="drug" />
+                    <Query desc={desc3} queryUrl={`/expression?drugId=9&geneId=7468`} queryName="CYP1A1 - carbon tetrachloride" type="pair" />
+                    <Query desc={desc4} queryUrl={`/genes/14459`} queryName="PPARA" type="gene" />
+                    <Query desc={desc5} queryUrl={`/expression?drugId=32&geneId=14459`} queryName="valproic acid - PPARA" type="pair" />
 
                 </Slider>
             </StyledQueries>
