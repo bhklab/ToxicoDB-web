@@ -52,18 +52,18 @@ class AnnotationCard extends Component {
             const tablerow = [];
             if (val.name === 'DataType') {
                 Object.keys(val.value).forEach((id) => tablerow.push(
-                    <div key={val.value[id]}>
+                    <div key={val.value[id]} style={{ padding: 3 }}>
                         <span style={{ fontWeight: '500' }}>
                             {id.replace(/_/g, ' ')}
                         </span>
-                        <i>
+                        <span>
                             {` : ${val.value[id]}`}
-                        </i>
+                        </span>
                     </div>,
                 ));
             } else {
                 Object.keys(val.value).forEach((id) => tablerow.push(
-                    <div key={val.value[id]}>
+                    <div key={val.value[id]} style={{ padding: 2 }}>
                         <a href={`${val.value[id]}`} target="_blank" className="value" style={{ color: `${colors.red_highlight}` }}>
                             {id.replace(/_/g, ' ')}
                         </a>
