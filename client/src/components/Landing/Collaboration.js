@@ -20,18 +20,14 @@ const StyledCollaboration = styled.div`
     }
 `;
 
-class Collaboration extends Component {
-    render() {
-        return (
-            <StyledCollaboration>
-                The BHKLab is collaborating with
-                {' '}
-                <a href="https://openrisknet.org">OpenRiskNet</a>
-                {' '}
-for the development of ToxicoDB.
-            </StyledCollaboration>
-        );
-    }
-}
+const Collaboration = () => (
+    <StyledCollaboration>
+            The BHKLab is collaborating with
+        {' '}
+        <a href="https://openrisknet.org">OpenRiskNet</a>
+        {' '}
+            for the development of ToxicoDB.
+    </StyledCollaboration>
+);
 
 export default Collaboration;
