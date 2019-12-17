@@ -20,7 +20,21 @@ const StyledCells = styled.div`
     a {
       color: ${colors.blue_text}
     }
+
+    .rt-td {
+            white-space: normal !important;
+    }
 `;
+
+const cellDescription = {
+    1: {
+        Name: 'Primary hepatocytes',
+        Description: `Primary hepatocytes, derived from isolated from liver tissue, 
+                        express typical hepatic functions and express drug metabolising enzymes. 
+                        Hence it serves as the closest model in vitro for toxicity studies.`,
+    },
+};
+
 
 class Cells extends Component {
     constructor() {
@@ -36,6 +50,11 @@ class Cells extends Component {
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
+                // adding description to the object.
+                data.forEach((element, i) => {
+                    data[i].description = cellDescription[element.id].Description;
+                });
+                // setting the state.
                 this.setState({ cellData: data, loading: false });
             });
     }
@@ -46,6 +65,12 @@ class Cells extends Component {
             {
                 Header: 'Name',
                 accessor: 'name',
+                sortable: true,
+                minWidth: 70,
+            },
+            {
+                Header: 'Description',
+                accessor: 'description',
                 sortable: true,
                 minWidth: 200,
             },

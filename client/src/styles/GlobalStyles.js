@@ -35,7 +35,7 @@ const GlobalStyles = createGlobalStyle`
         .rt-thead.-header {
             border-bottom: 1px solid rgba(0,0,0,0.1);
         }
-        
+
 
         .pagination-bottom {
             box-shadow:none !important;
