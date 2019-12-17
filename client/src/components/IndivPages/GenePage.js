@@ -150,7 +150,7 @@ class GenePage extends Component {
         ];
         return (
             <StyledGenePage>
-                {geneData.length == 0 ? null : (
+                {geneData.length === 0 ? null : (
                     <>
                         <h1>{geneData.name}</h1>
                         <h2>Annotations</h2>
@@ -179,7 +179,7 @@ class GenePage extends Component {
                     headers={headers}
                 />
 
-                {volcanoData.length == 0 ? null : (
+                {volcanoData.length === 0 ? null : (
                     <div className="volcanoWrapper">
                         <center>
                             <h2>

@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
 import styled from 'styled-components';
@@ -41,9 +42,36 @@ class AnnotationCard extends Component {
         this.setState({ data });
     }
 
+
     createCard() {
         const { data } = this.props;
         const table = [];
+
+        // this will create subelements for the table row with more than one variable.
+        const createSubCard = (val) => {
+            const tablerow = [];
+            if (val.name === 'DataType') {
+                Object.keys(val.value).forEach((id) => tablerow.push(
+                    <div key={val.value[id]}>
+                        <span style={{ fontWeight: '500' }}>
+                            {id}
+                        </span>
+                        <i>
+                            {` : ${val.value[id]}`}
+                        </i>
+                    </div>,
+                ));
+            } else {
+                Object.keys(val.value).forEach((id) => tablerow.push(
+                    <div key={val.value[id]}>
+                        <a href={`${val.value[id]}`} target="_blank" className="value" style={{ color: `${colors.red_highlight}` }}>
+                            {id}
+                        </a>
+                    </div>,
+                ));
+            }
+            return tablerow;
+        };
 
         for (let j = 0; j < data.length; j++) {
             if (data[j].value) {
@@ -61,13 +89,18 @@ class AnnotationCard extends Component {
                                         {` ${data[j].value}`}
                                     </a>
                                 )
-                                : data[j].value }
+                                : (
+                                    // (Object.keys(data[j].value).forEach((val) => console.log(val, data[j].value[val])))
+                                    // {`${id}: ${val.value[id]}`}
+                                    typeof (data[j].value) === 'object' ? (
+                                        createSubCard(data[j])
+                                    ) : data[j].value
+                                ) }
                         </td>
                     </tr>,
                 );
             }
         }
-
         return table;
     }
 
@@ -84,7 +117,6 @@ class AnnotationCard extends Component {
                         </table>
                     )}
             </StyledAnnotationCard>
-
         );
     }
 }
