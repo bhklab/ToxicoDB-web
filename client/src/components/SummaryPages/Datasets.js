@@ -45,13 +45,6 @@ class Datasets extends Component {
         const { loading, datasetData } = this.state;
         const columns = [
             {
-                Header: 'Id',
-                accessor: 'id',
-                sortable: true,
-                minWidth: 200,
-                Cell: (row) => (<Link to={`/datasets/${row.original.id}`}>{row.value}</Link>),
-            },
-            {
                 Header: 'Name',
                 accessor: 'name',
                 sortable: true,
