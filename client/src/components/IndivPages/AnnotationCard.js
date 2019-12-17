@@ -54,7 +54,7 @@ class AnnotationCard extends Component {
                 Object.keys(val.value).forEach((id) => tablerow.push(
                     <div key={val.value[id]}>
                         <span style={{ fontWeight: '500' }}>
-                            {id}
+                            {id.replace(/_/g, ' ')}
                         </span>
                         <i>
                             {` : ${val.value[id]}`}
@@ -65,7 +65,7 @@ class AnnotationCard extends Component {
                 Object.keys(val.value).forEach((id) => tablerow.push(
                     <div key={val.value[id]}>
                         <a href={`${val.value[id]}`} target="_blank" className="value" style={{ color: `${colors.red_highlight}` }}>
-                            {id}
+                            {id.replace(/_/g, ' ')}
                         </a>
                     </div>,
                 ));
