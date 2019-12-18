@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -58,8 +59,12 @@ class Drugs extends Component {
         fetch('/api/v1/drugs')
             .then((response) => response.json())
             .then((res) => {
-                const { data } = res;
-                this.setState({ drugData: data, loading: false });
+                // mapping through the data to change the pubchem ids from string to integer.
+                const dataset = res.data.map((row) => {
+                    row.pubchem = Number(row.pubchem);
+                    return row;
+                });
+                this.setState({ drugData: dataset, loading: false });
             });
     }
 
@@ -76,7 +81,11 @@ class Drugs extends Component {
                 Header: 'PubChem ID',
                 accessor: 'pubchem',
                 sortable: true,
-                Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`http://pubchem.ncbi.nlm.nih.gov/compound/${props.value}`}>{props.value}</a>,
+                Cell: (props) => (
+                    <a className="hover" target="_blank" rel="noopener noreferrer" href={`http://pubchem.ncbi.nlm.nih.gov/compound/${props.value}`}>
+                        {Number(props.value) === 0 ? '' : Number(props.value)}
+                    </a>
+                ),
             }, {
                 Header: 'Carcinogenicity',
                 accessor: 'carcinogenicity',
@@ -89,36 +98,14 @@ class Drugs extends Component {
                 Header: 'Class (in vivo)',
                 accessor: 'class_in_vivo',
                 sortable: true,
-            },
-            // {
-            //     Header: 'Targets',
-            //     accessor: 'targets',
-            //     sortable: true,
-            // },
-            // {
-            //     Header: 'Class',
-            //     accessor: 'class',
-            //     sortable: true,
-            // },
-            // {
-            //     Header: 'Class name',
-            //     accessor: 'class_name',
-            //     sortable: true,
-            // },
-            // {
-            //     Header: 'ATC Code',
-            //     accessor: 'atc_code',
-            //     sortable: true,
-            //     Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.whocc.no/atc_ddd_index/?code=${props.value}`}>{props.value}</a>,
-            // },
-            {
+            }, {
                 Header: 'Smiles',
                 accessor: 'smiles',
-                sortable: true,
+                sortable: false,
             }, {
                 Header: 'InchiKey',
                 accessor: 'inchikey',
-                sortable: true,
+                sortable: false,
             },
         ];
 
