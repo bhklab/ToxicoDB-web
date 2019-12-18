@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import { Normalize } from 'styled-normalize';
@@ -8,7 +8,7 @@ import Drugs from './SummaryPages/Drugs';
 import Datasets from './SummaryPages/Datasets';
 import HeaderNav from './HeaderNav';
 import FooterNav from './FooterNav';
-import Documentation from './SummaryPages/Documentation';
+// import Documentation from './SummaryPages/Documentation';
 import DrugCard from './IndivPages/DrugPage';
 import GeneCard from './IndivPages/GenePage';
 import DatasetCard from './IndivPages/DatasetPage';
@@ -17,6 +17,7 @@ import GlobalStyles from '../styles/GlobalStyles';
 import Species from './SummaryPages/Species';
 import Cells from './SummaryPages/Cells';
 import Tissues from './SummaryPages/Tissues';
+import Documentation from './Documentation/MainDocument.js';
 
 
 const StyledApp = styled.div`
@@ -34,7 +35,7 @@ const StyledApp = styled.div`
 `;
 
 const App = () => (
-    <>
+    <div>
         <Normalize />
         <GlobalStyles />
         <StyledApp className="app">
@@ -56,7 +57,7 @@ const App = () => (
         </StyledApp>
         <HeaderNav />
         <FooterNav />
-    </>
+    </div>
 );
 
 export default App;
