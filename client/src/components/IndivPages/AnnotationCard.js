@@ -73,6 +73,35 @@ class AnnotationCard extends Component {
             return tablerow;
         };
 
+        // this will return link based on the input.
+        const createLink = (data) => {
+            // array and variable to store the result.
+            const tableLink = [];
+            let link = '';
+            // right link based on the case.
+            switch (data.name) {
+            case 'name':
+                link = 'http://www.genecards.org/cgi-bin/carddisp.pl?gene';
+                break;
+            case 'ensembl_gid':
+                link = 'http://useast.ensembl.org/Homo_sapiens/Gene/Summary?g';
+                break;
+            case 'entrez_gid':
+                link = 'https://www.ncbi.nlm.nih.gov/gene/?term';
+                break;
+            default:
+                link = '';
+            }
+            // adding the link to the array.
+            tableLink.push(
+                <a href={`${link}=${data.value}`} target="_blank" className="value" key={data.value} style={{ color: `${colors.red_highlight}` }}>
+                    {` ${data.value}`}
+                </a>,
+            );
+            return tableLink;
+        };
+
+
         for (let j = 0; j < data.length; j++) {
             if (data[j].value || data[j].name === 'class_in_vitro' || data[j].name === 'class_in_vivo' || data[j].name === 'carcinogenicity') {
                 table.push(
@@ -83,11 +112,9 @@ class AnnotationCard extends Component {
                             ) : data[j].name.replace(/_/g, ' ') }
                         </td>
                         <td className="value" key={data[j].value}>
-                            { data[j].name === 'name'
+                            { (data[j].name === 'name' || data[j].name === 'ensembl_gid' || data[j].name === 'entrez_gid')
                                 ? (
-                                    <a href={`http://www.genecards.org/cgi-bin/carddisp.pl?gene=${data[j].value}`} target="_blank" className="value" key={data[j].value} style={{ color: `${colors.red_highlight}` }}>
-                                        {` ${data[j].value}`}
-                                    </a>
+                                    createLink(data[j])
                                 )
                                 : (
                                     // (Object.keys(data[j].value).forEach((val) => console.log(val, data[j].value[val])))
