@@ -111,57 +111,22 @@ class MainDocument extends React.Component {
                 display, type: 'general',
             });
             break;
-        case 'syn':
+        case 'drugs':
             this.setState({
                 display, type: 'general',
             });
             break;
-        case 'samples':
+        case 'genes':
             this.setState({
                 display, type: 'general',
             });
             break;
-        case 'compounds':
+        case 'drugvsgene':
             this.setState({
                 display, type: 'general',
             });
             break;
         case 'datasets':
-            this.setState({
-                display, type: 'general',
-            });
-            break;
-        case 'pharmaco':
-            this.setState({
-                display, type: 'general',
-            });
-            break;
-        case 'biomarker':
-            this.setState({
-                display, type: 'general',
-            });
-            break;
-        case 'sensitivity':
-            this.setState({
-                display, type: 'general',
-            });
-            break;
-        case 'enrichment':
-            this.setState({
-                display, type: 'general',
-            });
-            break;
-        case 'consistency':
-            this.setState({
-                display, type: 'general',
-            });
-            break;
-        case 'detailed':
-            this.setState({
-                display, type: 'general',
-            });
-            break;
-        case 'use':
             this.setState({
                 display, type: 'general',
             });
@@ -199,17 +164,17 @@ class MainDocument extends React.Component {
                             <li
                                 className={display === 'drugs' ? 'selected sub-func' : 'sub-func'}
                             >
-                                <button type="button" onClick={() => handleDocChange('syn')}>Drugs</button>
+                                <button type="button" onClick={() => handleDocChange('drugs')}>Drugs</button>
                             </li>
                             <li
-                                className={display === 'samples' ? 'selected sub-func' : 'sub-func'}
+                                className={display === 'genes' ? 'selected sub-func' : 'sub-func'}
                             >
-                                <button type="button" onClick={() => handleDocChange('samples')}>Genes</button>
+                                <button type="button" onClick={() => handleDocChange('genes')}>Genes</button>
                             </li>
                             <li
-                                className={display === 'compounds' ? 'selected sub-func' : 'sub-func'}
+                                className={display === 'drugvsgene' ? 'selected sub-func' : 'sub-func'}
                             >
-                                <button type="button" onClick={() => handleDocChange('compounds')}>Drug vs Gene</button>
+                                <button type="button" onClick={() => handleDocChange('drugvsgene')}>Drug vs Gene</button>
                             </li>
                             <li
                                 className={display === 'datasets' ? 'selected sub-func' : 'sub-func'}
