@@ -12,10 +12,18 @@ const getGenes = function (request, response) {
             'genes.id',
             'gene_annotations.gene_id',
         )
-        .then((gene) => response.status(200).json({
-            status: 'success',
-            data: gene,
-        }))
+        .then((gene) => {
+            // this will loop through the data and remove _at from ensembl_gid.
+            const geneList = gene.map((row) => {
+                row.ensembl_gid = row.ensembl_gid.split('_')[0];
+                return row;
+            });
+            // sending the response.
+            response.status(500).json({
+                status: 'success',
+                data: geneList,
+            });
+        })
         .catch((error) => response.status(500).json({
             status: 'could not find data from genes table, getGenes',
             data: error,
@@ -31,10 +39,17 @@ const getIndivGene = (request, response) => {
             'gene_annotations.gene_id',
         )
         .where({ 'genes.id': request.params.id })
-        .then((gene) => response.status(200).json({
-            status: 'success',
-            data: gene,
-        }))
+        .then((gene) => {
+            const geneList = gene.map((row) => {
+                row.ensembl_gid = row.ensembl_gid.split('_')[0];
+                return row;
+            });
+            // sending the response.
+            response.status(500).json({
+                status: 'success',
+                data: geneList,
+            });
+        })
         .catch((error) => response.status(500).json({
             status: 'could not find data from genes table, getGenes',
             data: error,
