@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-plusplus */
 import React, { Component } from 'react';
@@ -64,7 +65,7 @@ class AnnotationCard extends Component {
             } else {
                 Object.keys(val.value).forEach((id) => tablerow.push(
                     <div key={val.value[id]} style={{ padding: 2 }}>
-                        <a href={`${val.value[id]}`} target="_blank" className="value" style={{ color: `${colors.red_highlight}` }}>
+                        <a href={`${val.value[id]}`} target="_blank" rel="noopener noreferrer" className="value" style={{ color: `${colors.red_highlight}` }}>
                             {id.replace(/_/g, ' ')}
                         </a>
                     </div>,
@@ -81,20 +82,23 @@ class AnnotationCard extends Component {
             // right link based on the case.
             switch (data.name) {
             case 'name':
-                link = 'http://www.genecards.org/cgi-bin/carddisp.pl?gene';
+                link = 'http://www.genecards.org/cgi-bin/carddisp.pl?gene=';
                 break;
             case 'ensembl_gid':
-                link = 'http://useast.ensembl.org/Homo_sapiens/Gene/Summary?g';
+                link = 'http://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=';
                 break;
             case 'entrez_gid':
-                link = 'https://www.ncbi.nlm.nih.gov/gene/?term';
+                link = 'https://www.ncbi.nlm.nih.gov/gene/?term=';
+                break;
+            case 'pubchem':
+                link = 'https://pubchem.ncbi.nlm.nih.gov/compound/';
                 break;
             default:
                 link = '';
             }
             // adding the link to the array.
             tableLink.push(
-                <a href={`${link}=${data.value}`} target="_blank" className="value" key={data.value} style={{ color: `${colors.red_highlight}` }}>
+                <a href={`${link}${data.value}`} target="_blank" rel="noopener noreferrer" className="value" key={data.value} style={{ color: `${colors.red_highlight}` }}>
                     {` ${data.value}`}
                 </a>,
             );
@@ -112,7 +116,7 @@ class AnnotationCard extends Component {
                             ) : data[j].name.replace(/_/g, ' ') }
                         </td>
                         <td className="value" key={data[j].value}>
-                            { (data[j].name === 'name' || data[j].name === 'ensembl_gid' || data[j].name === 'entrez_gid')
+                            { (data[j].name === 'name' || data[j].name === 'ensembl_gid' || data[j].name === 'entrez_gid' || data[j].name === 'pubchem')
                                 ? (
                                     createLink(data[j])
                                 )
