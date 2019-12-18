@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import colors from '../../styles/colors';
 import transitions from '../../styles/transitions';
 
-import Overview from './DocSubComponents/Overview';
+import OverviewDoc from './DocSubComponents/OverviewDoc';
 
 const StyledDiv = styled.div`
     padding: 10px;
@@ -162,7 +162,7 @@ class MainDocument extends React.Component {
                             </li>
                         </ul>
                     </nav>
-                    {display === 'overview' ? <Overview /> : null}
+                    {display === 'overview' ? <OverviewDoc /> : null}
                 </main>
             </StyledDiv>
         );
