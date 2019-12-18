@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import Select, { components } from 'react-select';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import colors from '../../styles/colors';
 import MenuList from './MenuList';
+import styled from 'styled-components';
 
 const customStyles = {
     control: (provided) => ({
         ...provided,
-        background: colors.lightred_bg,
+        background: colors.search_bg,
         borderRadius: '35px',
         height: 80,
         fontFamily: '\'Raleway\', sans-serif',
         fontSize: 'calc(0.5em + 0.8vw)',
         fontWeight: 600,
-        color: colors.red_highlight,
+        color: colors.search_main,
         marginTop: '80px',
         padding: '0 20px',
         border: 'none',
@@ -29,55 +30,55 @@ const customStyles = {
     input: (provided) => ({
         ...provided,
         padding: '0 0px',
-        color: colors.red_highlight,
+        color: colors.search_main,
     }),
     placeholder: (provided) => ({
         ...provided,
-        color: `${colors.red_highlight}`,
+        color: `${colors.search_main}`,
     }),
     clearIndicator: (provided) => ({
         ...provided,
-        color: `${colors.red_highlight}`,
+        color: `${colors.search_main}`,
         '&:hover': {
-            color: `${colors.red_highlight}`,
+            color: `${colors.search_main}`,
             cursor: 'pointer',
         },
     }),
     dropdownIndicator: (provided) => ({
         ...provided,
-        color: `${colors.red_highlight}`,
+        color: `${colors.search_main}`,
         '&:hover': {
-            color: `${colors.red_highlight}`,
+            color: `${colors.search_main}`,
             cursor: 'pointer',
         },
     }),
     indicatorSeparator: (provided) => ({
         ...provided,
-        background: `${colors.red_highlight}`,
+        background: `${colors.search_main}`,
         '&:hover': {
-            background: `${colors.red_highlight}`,
+            background: `${colors.search_main}`,
         },
     }),
     singleValue: (provided) => ({
         ...provided,
-        color: `${colors.red_highlight}`,
+        color: `${colors.search_main}`,
     }),
     multiValue: (provided) => ({
         ...provided,
-        color: `${colors.red_highlight}`,
+        color: `${colors.search_main}`,
         background: '#fff',
         marginRight: '10px',
     }),
     multiValueLabel: (provided) => ({
         ...provided,
-        color: `${colors.red_highlight}`,
+        color: `${colors.search_main}`,
     }),
     option: (provided, state) => ({
         ...provided,
         textAlign: 'left',
         fontWeight: '400',
         background: 'white',
-        color: colors.red_highlight,
+        color: colors.search_main,
     }),
 };
 
@@ -85,11 +86,11 @@ const CustomOption = (innerProps) => (
     <components.Option {...innerProps}>
         <div
             style={{
-                backgroundColor: innerProps.isFocused ? colors.lightred_bg : 'inherit',
+                backgroundColor: innerProps.isFocused ? colors.search_bg : 'inherit',
                 height: 30,
                 padding: '13px 20px',
                 '&:hover': {
-                    background: colors.lightred_bg,
+                    background: colors.search_bg,
                 },
             }}
         >
@@ -106,6 +107,14 @@ const customFilterOption = (option, rawInput) => {
     );
 };
 
+const StyledExample = styled.div`
+    margin: 20px 0 0 10px;
+    color: ${colors.blue_text};
+
+    a {
+        color: ${colors.red_highlight}
+    }
+`
 
 class Search extends Component {
     constructor() {
@@ -246,6 +255,9 @@ class Search extends Component {
                         onMenuClose={handleMenuClose}
                     />
                 )}
+                <StyledExample>
+                    Example Queries: &nbsp;&nbsp;<Link to='/drugs/9'>carbon tetrachloride</Link> &nbsp;&nbsp;|&nbsp;&nbsp; <Link to='/genes/7468'>CYP1A1</Link> &nbsp;&nbsp;|&nbsp;&nbsp; <Link to='/expression?drugId=9&geneId=7468'>CYP1A1 - carbon tetrachloride</Link> 
+                </StyledExample>
             </>
 
 

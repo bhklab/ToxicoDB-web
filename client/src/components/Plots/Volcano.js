@@ -19,10 +19,14 @@ class Volcano extends React.Component {
     formatData(data) {
         let formattedData = {};
         // -log10 pvalue, fold_change is already log2
-        formattedData.pvals = data.map((x) => x.p_value == 0 ? null : -Math.log10(x.p_value));
-        formattedData.fchanges = data.map((x) => x.fold_change);
-        formattedData.fdr = data.map((x) => x.fdr);
+        const pvals = data.map((x) => parseFloat(x.p_value) === 0 ? null : -Math.log10(x.p_value));
+        // calculate cutoff as the lowest pvalue, and then -log10 it
+        const cutoff = -Math.log10(Math.min(...data.map((x) => parseFloat(x.p_value) === 0 ? null : parseFloat(x.p_value)).filter((x) => x !== null)))
+        formattedData.pvals = pvals.map((x) => x === null ? cutoff : x);
+        formattedData.fchanges = data.map((x) => parseFloat(x.fold_change));
+        formattedData.fdr = data.map((x) => parseFloat(x.fdr));
         formattedData.rawData = data;
+        formattedData.cutoff = cutoff;
         formattedData.datasets = [...new Set(data.map((x) => x.dataset_name))];
         return formattedData;
     }
@@ -116,19 +120,22 @@ class Volcano extends React.Component {
             .text("log2(fold change)");
 
         let dots = svg.append("g")
-
+        const cutoff = data.cutoff;
         let fdr = [], fold_change = [], p_value = []
         dots.selectAll("dot")
             .data(data.rawData)
             .enter()
-                // .filter((d,i) => d.fdr !== "0" && !fdr.includes(d.fdr) && d.fold_change !== 0 && !fold_change.includes(d.fold_change) && d.p_value !== "0" && !p_value.includes(d.p_value))
-                // .filter((d,i) => d.fdr !== "0" && d.fold_change !== 0  && d.p_value !== "0")
-                .filter((d,i) => {
-                    const result = !fdr.includes(d.fdr) && !fold_change.includes(d.fold_change) && !p_value.includes(d.p_value);
-                    fdr.push(d.fdr);
+                // .filter((d,i) => parseFloat(d.fdr) !== "0" && !fdr.includes(parseFloat(d.fdr)) && d.fold_change !== 0 && !fold_change.includes(d.fold_change) && parseFloat(d.p_value) !== "0" && !p_value.includes(parseFloat(d.p_value)))
+                // .filter((d,i) => parseFloat(d.fdr) !== "0" && d.fold_change !== 0  && parseFloat(d.p_value) !== "0")
+                .filter((d,i) => { // making sure there are no duplicates
+                    const result = !fdr.includes(parseFloat(d.fdr)) && !fold_change.includes(d.fold_change) && !p_value.includes(parseFloat(d.p_value));
+                    fdr.push(parseFloat(d.fdr));
                     fold_change.push(d.fold_change);
-                    p_value.push(d.p_value);
+                    p_value.push(parseFloat(d.p_value));
                     return result;
+                })
+                .filter((d,i) => {
+                    return !(parseFloat(d.fdr) > 0.05 && Math.abs(d.fold_change) < 1) 
                 })
                 .append("a")
                     .attr("xlink:href", (d) => {
@@ -146,22 +153,19 @@ class Volcano extends React.Component {
                     })
                     .attr("fill", (d) => {
                         let color = "";
-                        if (d.fdr < 0.05 && Math.abs(d.fold_change) < 1) {  
-                            color = colors.red_highlight;
+                        if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) < 1) {  
+                            color = colors.blue_header;
                         }
-                        if (d.fdr < 0.05 && Math.abs(d.fold_change) > 1) {
+                        if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) >= 1) {
                             color = "#5cc33c";
                         } 
-                        if (d.fdr > 0.05 && Math.abs(d.fold_change) > 1 ) {
-                            color = colors.blue_header;
-                        } 
-                        if (d.fdr > 0.05 && Math.abs(d.fold_change) < 1) {
+                        if (parseFloat(d.fdr) > 0.05 && Math.abs(d.fold_change) >= 1 ) {
                             color = "#acacac";
                         }
                         return color;
                     })
                     .attr("cx", function(d) {return xrange(d.fold_change);})
-                    .attr("cy", function(d) {return yrange(d.p_value == 0 ? 0 : -Math.log10(d.p_value));})
+                    .attr("cy", function(d) {return yrange(parseFloat(d.p_value) == 0 ? cutoff : -Math.log10(parseFloat(d.p_value)));})
                     .style("cursor", "pointer")
                     .on("mouseover", (d,i) => {
                         return d3.select(`.label${i}`).attr('opacity',1)
@@ -177,11 +181,11 @@ class Volcano extends React.Component {
             .selectAll("label")
                 .data(data.rawData)
                 .enter()
-                .filter((d,i) => {
-                    const result = !fdr.includes(d.fdr) && !fold_change.includes(d.fold_change) && !p_value.includes(d.p_value);
-                    fdr.push(d.fdr);
+                .filter((d,i) => { // no duplicates
+                    const result = !fdr.includes(parseFloat(d.fdr)) && !fold_change.includes(d.fold_change) && !p_value.includes(parseFloat(d.p_value));
+                    fdr.push(parseFloat(d.fdr));
                     fold_change.push(d.fold_change);
-                    p_value.push(d.p_value);
+                    p_value.push(parseFloat(d.p_value));
                     return result;
                 })
             .append("text")
@@ -222,19 +226,6 @@ class Volcano extends React.Component {
 
         legend.append("rect")
             .attr("x", width + 40)
-            .attr("y", 50)
-            .attr("width", 12)
-            .attr("height",12)
-            .attr("fill", "#acacac")
-
-            legend.append("text")
-                .attr("dx", width + 60)
-                .attr("y", 61)
-                .attr("fill", "black")
-                .text("-1 < fold change < 1")
-
-        legend.append("rect")
-            .attr("x", width + 40)
             .attr("y", 80)
             .attr("width", 12)
             .attr("height",12)
@@ -244,26 +235,14 @@ class Volcano extends React.Component {
                 .attr("dx", width + 60)
                 .attr("y", 91)
                 .attr("fill", "black")
-                .text("fold change > -1,")
+                .text("fdr < 0.05 and")
                 
             legend.append("text")
                 .attr("dx", width + 60)
                 .attr("y", 108)
                 .attr("fill", "black")
-                .text("fold change < 1")
+                .text("fold change < |1|")
 
-        legend.append("rect")
-            .attr("x", width + 40)
-            .attr("y", 125)
-            .attr("width", 12)
-            .attr("height",12)
-            .attr("fill", colors.red_highlight)
-    
-            legend.append("text")
-                .attr("dx", width + 60)
-                .attr("y", 136)
-                .attr("fill", "black")
-                .text("fdr < 0.05")
 
         legend.append("rect")
             .attr("x", width + 40)
@@ -282,13 +261,7 @@ class Volcano extends React.Component {
                     .attr("dx", width + 60)
                     .attr("y", 184)
                     .attr("fill", "black")
-                    .text("fold change > -1,")
-
-                legend.append("text")
-                    .attr("dx", width + 60)
-                    .attr("y", 202)
-                    .attr("fill", "black")
-                    .text("fold change < 1")
+                    .text("fold change >= |1|")
 
         // making the dataset selectors
         let nest = d3.nest()

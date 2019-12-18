@@ -118,6 +118,8 @@ class Bubble extends React.Component {
 
         // labels
         labels = elements
+            .append("a")
+            .attr('xlink:href', (d) => d.text.toLowerCase())
             .append('text')
             .attr('dx', '13')
             .attr('dy', '-0.5em')
