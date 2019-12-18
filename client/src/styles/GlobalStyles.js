@@ -14,6 +14,14 @@ const GlobalStyles = createGlobalStyle`
         }
     }
 
+    ul {
+        padding: 0;
+        list-style: none;
+    }
+    li {
+        text-decoration: none;
+    }
+
     .ReactTable {
         text-align: left;
         margin: 10px 20px;

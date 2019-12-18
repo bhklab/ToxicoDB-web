@@ -4,87 +4,69 @@ import React from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import transitions from '../../styles/transitions';
-// import APIDoc from './APIdocumentation';
-// import FunctionalDoc from './FunctionalDoc';
+
+import Overview from './DocSubComponents/Overview';
 
 const StyledDiv = styled.div`
-  padding: 10px;
-  width: 100%;
-  main {
-    display: flex;
-    max-width: 1200px;
-    padding: 30px;
-    text-align: justify;
-    font-size: 20px;
-    min-height: 80vh;
-    &.documentation {
-      width: 100%;
-      background:white;
-      font-family: Nunito Sans, sans-serif;
-      color:${colors.nav_links};
-      h1, h2 {
-        margin: 25px 0;
-      }
-      span {
+    padding: 10px;
+    width: 100%;
+
+    main {
+        display: flex;
+        max-width: 1200px;
+        padding: 30px;
+        text-align: justify;
         font-size: 20px;
-      }
-      h2 {
-        padding:20px 0px;
-      }
-    }
-    .doc {
-        margin-left: 30px;
-    }
-    nav {
-        margin-top: 25px;
-        // position: fixed;
-        max-width:300px;
-        li {
-            padding: 10px;
-            margin-bottom: 5px;
-            border-left: 2px solid ${colors.color_main_2}
-            transition: ${transitions.main_trans}
-            &.selected {
-                border-left:2px solid ${colors.color_main_5}
+        min-height: 80vh;
+        margin: 0 auto;
+
+        .doc {
+            // background-color: ${colors.lightblue_bg};
+            width: 100%;
+            margin-left: 25px;
+            padding: 15px;
+
+            h1 {
+                color: ${colors.red_highlight};
+            }
+            p {
+                color: ${colors.blue_text};
+            }
+        }
+        nav {
+            width:250px;
+            margin-top: 25px;
+
+            li {
+                padding: 2px 2px 0;
+                transition: ${transitions.main_trans}
+                font-size: 18px;
+                margin-left:25px;
+                border-left: 3px solid ${colors.blue_text};
+
                 button {
-                    color: ${colors.color_main_5}
+                    font-weight: bold
+                    border: 2px solid white;
+                    padding: 15px 10px;
+                    width: 100%;
+                    color: ${colors.blue_text}
+                    outline: none;
+                    transition: ${transitions.main_trans};
+                    cursor: pointer;
+                    text-align:left;
                 }
-            }
-            &.sub-head {
-              font-size: 18px;
-              margin-left:10px;
-              padding: 10px;
-              border-left: none;
-              font-weight: bold;
-            }
-            &.sub-func {
-              font-size: 15px;
-              margin-left:25px;
-              padding: 10px;
-              border-left: none;
-            }
-          }
-          button {
-            border: 0;
-            padding: 0;
-            background: white;
-            color: ${colors.color_main_2}
-            outline: none;
-            transition: ${transitions.main_trans};
-            cursor: pointer;
-            text-align:left;
-          }
+                
+                &.selected {
+                    border-left: 3px solid ${colors.red_highlight};
+                    button {
+                        color: ${colors.red_highlight}
+                    }
+                }
+              }
+              
+        }
+      } 
     }
-    ol {
-      list-style: none;
-      padding: 10px 0;
-    }
-  } 
-  footer {
-    text-align: center;
-    font-size: 20px;
-    color: ${colors.color_main_2}
-  }
 `;
 
 class MainDocument extends React.Component {
@@ -151,46 +133,36 @@ class MainDocument extends React.Component {
                             <li
                                 className={display === 'overview' ? 'selected' : null}
                             >
-                                <button type="button" onClick={() => handleDocChange('overview')}>Functionality</button>
+                                <button type="button" onClick={() => handleDocChange('overview')}>Overview</button>
                             </li>
-                            {/* Functionality sub-features */}
-                            {/* Basic features */}
-                            <li className="sub-head">Basic Features</li>
                             <li
-                                className={display === 'search' ? 'selected sub-func' : 'sub-func'}
+                                className={display === 'search' ? 'selected' : null}
                             >
                                 <button type="button" onClick={() => handleDocChange('search')}>Search</button>
                             </li>
                             <li
-                                className={display === 'drugs' ? 'selected sub-func' : 'sub-func'}
+                                className={display === 'drugs' ? 'selected' : null}
                             >
                                 <button type="button" onClick={() => handleDocChange('drugs')}>Drugs</button>
                             </li>
                             <li
-                                className={display === 'genes' ? 'selected sub-func' : 'sub-func'}
+                                className={display === 'genes' ? 'selected' : null}
                             >
                                 <button type="button" onClick={() => handleDocChange('genes')}>Genes</button>
                             </li>
                             <li
-                                className={display === 'drugvsgene' ? 'selected sub-func' : 'sub-func'}
+                                className={display === 'drugvsgene' ? 'selected' : null}
                             >
                                 <button type="button" onClick={() => handleDocChange('drugvsgene')}>Drug vs Gene</button>
                             </li>
                             <li
-                                className={display === 'datasets' ? 'selected sub-func' : 'sub-func'}
+                                className={display === 'datasets' ? 'selected' : null}
                             >
                                 <button type="button" onClick={() => handleDocChange('datasets')}>Datasets</button>
                             </li>
                         </ul>
                     </nav>
-                    <div className="doc">
-                        {type === 'general' ? (
-                            <h1> Hey </h1>
-                        ) : (
-                            <h1> Hey </h1>
-                        )}
-                        {/* {display === 'func' ? <GeneralDoc /> : <APIDoc />} */}
-                    </div>
+                    {display === 'overview' ? <Overview /> : null}
                 </main>
             </StyledDiv>
         );
