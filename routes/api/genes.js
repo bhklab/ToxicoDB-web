@@ -19,7 +19,7 @@ const getGenes = function (request, response) {
                 return row;
             });
             // sending the response.
-            response.status(500).json({
+            response.status(200).json({
                 status: 'success',
                 data: geneList,
             });
@@ -45,7 +45,7 @@ const getIndivGene = (request, response) => {
                 return row;
             });
             // sending the response.
-            response.status(500).json({
+            response.status(200).json({
                 status: 'success',
                 data: geneList,
             });

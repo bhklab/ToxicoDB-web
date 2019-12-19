@@ -86,6 +86,12 @@ const StyledDiv = styled.div`
         width: 100%;
         max-width: 100%;
         dipslay: block;
+        padding-bottom: 100px;
+        border-bottom: 2px solid ${colors.blue_header}
+
+        &.last {
+            border-bottom: none;
+        }
     }
 `;
 
@@ -175,11 +181,11 @@ class MainDocument extends React.Component {
                             >
                                 <button type="button" onClick={() => handleDocChange('drugvsgene')}>Drug vs Gene</button>
                             </li>
-                            {/* <li
+                            <li
                                 className={display === 'datasets' ? 'selected' : null}
                             >
                                 <button type="button" onClick={() => handleDocChange('datasets')}>Datasets</button>
-                            </li> */}
+                            </li>
                         </ul>
                     </nav>
                     {display === 'overview' ? <OverviewDoc /> : null}
@@ -187,7 +193,7 @@ class MainDocument extends React.Component {
                     {display === 'drugs' ? <DrugDoc /> : null}
                     {display === 'genes' ? <GeneDoc /> : null}
                     {display === 'drugvsgene' ? <DrugGeneDoc /> : null}
-                    {/* {display === 'datasets' ? <DatasetDoc /> : null} */}
+                    {display === 'datasets' ? <DatasetDoc /> : null}
                 </main>
             </StyledDiv>
         );
