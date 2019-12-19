@@ -34,26 +34,19 @@ class BarChart extends React.Component {
     makeBarChart(node, height, width, left, top, bottom, right) {
         const data = [
             {
-                tissue: 'Liver',
-                dataset: 3,
+                name: 'Drug_Matrix',
+                value: 146,
             },
             {
-                tissue: 'Pancreas',
-                dataset: 9,
+                name: 'TGGATES_Human_LDH',
+                value: 140,
             },
             {
-                tissue: 'Lung',
-                dataset: 4,
-            },
-            {
-                tissue: 'Kidney',
-                dataset: 5,
-            },
-            {
-                tissue: 'Breast',
-                dataset: 5,
+                name: 'TGGATES_Rat_LDH',
+                value: 126,
             },
         ];
+
 
         // colors array.
         // using scale ordinal to map tissues with the colors.
@@ -62,10 +55,10 @@ class BarChart extends React.Component {
             '#00468BBF', '#42B540BF', '#0099B4BF', '#925E9FBF', '#FDAF91BF', '#AD002ABF', '#ADB6B6BF',
         ];
 
-        const tissuData = data.map((val) => val.tissue);
+        const nameData = data.map((val) => val.name);
 
         const color = d3.scaleOrdinal()
-            .domain(tissuData)
+            .domain(nameData)
             .range(colors);
 
 
@@ -92,11 +85,11 @@ class BarChart extends React.Component {
 
         // y and x scale for the chart.
         const yScale = d3.scaleLinear()
-            .domain([0, 10])
+            .domain([0, 200])
             .range([height, 0]);
 
         const xScale = d3.scaleBand()
-            .domain(data.map((d) => d.tissue))
+            .domain(data.map((d) => d.name))
             .range([0, width])
             .padding(0.2);
 
@@ -109,7 +102,7 @@ class BarChart extends React.Component {
 
         // calling y and x axis.
         skeleton.append('g')
-            .attr('id', 'datasetAxis')
+            .attr('id', 'valueAxis')
             .call(yAxis)
             .selectAll('text')
             .attr('fill', 'black')
@@ -117,7 +110,7 @@ class BarChart extends React.Component {
             .attr('stroke', 'none');
 
         skeleton.append('g')
-            .attr('id', 'tissueAxis')
+            .attr('id', 'nameAxis')
             .call(xAxis)
             .attr('transform', `translate(0, ${height})`)
             .selectAll('text')
@@ -130,11 +123,11 @@ class BarChart extends React.Component {
             .data(data)
             .enter()
             .append('rect')
-            .attr('x', (d) => xScale(d.tissue))
-            .attr('y', (d) => yScale(d.dataset))
-            .attr('height', (d) => height - yScale(d.dataset))
-            .attr('width', xScale.bandwidth())
-            .style('fill', (d) => color(d.tissue));
+            .attr('x', (d) => xScale(d.name) + xScale.bandwidth() / 4)
+            .attr('y', (d) => yScale(d.value))
+            .attr('height', (d) => height - yScale(d.value))
+            .attr('width', xScale.bandwidth() / 2)
+            .style('fill', (d) => color(d.name));
     }
 
     render() {
