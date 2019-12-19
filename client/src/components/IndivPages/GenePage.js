@@ -5,6 +5,7 @@ import ReactTable from 'react-table';
 import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
 import Volcano from '../Plots/Volcano';
+import VolcanoPlotly from '../Plots/VolcanoPlotly';
 import DownloadButton from '../Utils/DownloadButton';
 import 'react-table/react-table.css';
 
@@ -130,7 +131,7 @@ class GenePage extends Component {
             accessor: 'p_value',
             sortable: true,
             sortMethod(a, b) { return b - a; },
-            Cell: (row) => parseFloat(row.value).toExponential(2),
+            Cell: (row) => parseFloat(row.value).toExponential(3),
         }, {
             Header: 'fold-change',
             accessor: 'fold_change',
@@ -190,6 +191,12 @@ class GenePage extends Component {
 
                         </center>
                         <Volcano
+                            data={volcanoData}
+                            queryId={params.id}
+                            plotId="volcanoPlot"
+                            type="gene"
+                        />
+                        <VolcanoPlotly
                             data={volcanoData}
                             queryId={params.id}
                             plotId="volcanoPlot"
