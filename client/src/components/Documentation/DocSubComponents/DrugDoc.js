@@ -15,7 +15,7 @@ const DrugDoc = () => (
         <Link to="/">
             <img className="doc-img" src={img1} alt="" />
         </Link>
-        <p>Users can look at all drugs profiles across the datasets here with the option to filter drugs based on carcinogenicity and genotoxicity. Each drug page starts with a card which displays information about the drug such as Pubchem annotations, carcinogenicity and genotoxicity.</p>
+        <p>Users can look at all drugs profiled across the datasets here with the option to filter drugs based on carcinogenicity and genotoxicity. Each drug page starts with a card which displays information about the drug such as Pubchem annotations, carcinogenicity and genotoxicity.</p>
         <Link to="/drugs">
             <img className="doc-img" src={img2} alt="" />
         </Link>
