@@ -1,20 +1,25 @@
 /* eslint-disable max-len */
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import img from '../../../images/Search.png';
+import img1 from '../../../images/11.png';
+import img2 from '../../../images/12.png';
+import img3 from '../../../images/13.png';
 
 const DatasetDoc = () => (
     <div className="doc">
         <h1>Datasets</h1>
-        <p>
-            ToxicoDB search engine allows users to query by specific drug of interest or gene of interest or their combination to perform the further analysis.
-            {' '}
-            <Link to="/">http://toxicodb.ca/</Link>
-        </p>
+        <p>All datasets included in ToxicoDB can be viewed by clicking on Datasets icon in the top right corner.</p>
         <Link to="/">
-            <img className="doc-img" src={img} alt="" />
+            <img className="doc-img" src={img1} alt="" />
         </Link>
-
+        <p>The page opens a list of datasets</p>
+        <Link to="/datasets/">
+            <img className="doc-img" src={img2} alt="" />
+        </Link>
+        <p>Upon selection of dataset of choice, the details pertaining to the dataset is available with links to data sources and publications.</p>
+        <Link to="/datasets/1">
+            <img className="doc-img" src={img3} alt="" />
+        </Link>
     </div>
 );
 
