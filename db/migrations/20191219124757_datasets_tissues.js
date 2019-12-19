@@ -2,11 +2,13 @@
 /* eslint-disable no-unused-vars */
 
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('cells', (table) => {
-        table.increments('id')
-            .primary();
-        table.string('name')
-            .notNullable();
+    return knex.schema.createTable('datasets_tissues', (table) => {
+        table.integer('dataset_id')
+            .notNullable()
+            .unsigned()
+            .references('id')
+            .inTable('datasets')
+            .index();
         table.integer('tissue_id')
             .notNullable()
             .unsigned()
@@ -17,5 +19,5 @@ exports.up = function (knex, Promise) {
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTable('cells');
+    return knex.schema.dropTable('datasets_tissues');
 };
