@@ -121,17 +121,19 @@ class Volcano extends React.Component {
 
         let dots = svg.append("g")
         const cutoff = data.cutoff;
-        let fdr = [], fold_change = [], p_value = []
+        let plotted = []; // push in the order [fdr, fold_change, p_value]
         dots.selectAll("dot")
             .data(data.rawData)
             .enter()
                 // .filter((d,i) => parseFloat(d.fdr) !== "0" && !fdr.includes(parseFloat(d.fdr)) && d.fold_change !== 0 && !fold_change.includes(d.fold_change) && parseFloat(d.p_value) !== "0" && !p_value.includes(parseFloat(d.p_value)))
                 // .filter((d,i) => parseFloat(d.fdr) !== "0" && d.fold_change !== 0  && parseFloat(d.p_value) !== "0")
                 .filter((d,i) => { // making sure there are no duplicates
-                    const result = !fdr.includes(parseFloat(d.fdr)) && !fold_change.includes(d.fold_change) && !p_value.includes(parseFloat(d.p_value));
-                    fdr.push(parseFloat(d.fdr));
-                    fold_change.push(d.fold_change);
-                    p_value.push(parseFloat(d.p_value));
+                    const result = !plotted.includes([d.fdr, d.fold_change, d.p_value])
+                    // if these values aren't already plotted, returns false
+                    // if false, then push and return
+                    if (result == false) {
+                        plotted.push([d.fdr, d.fold_change, d.p_value])
+                    }
                     return result;
                 })
                 .filter((d,i) => {
@@ -174,18 +176,18 @@ class Volcano extends React.Component {
                         return d3.select(`.label${i}`).attr('opacity',0)
                     })
                     
-        fdr = [];
-        fold_change = [];
-        p_value = [];
+        plotted = [];
         let dotLabels = svg.append("g")
             .selectAll("label")
                 .data(data.rawData)
                 .enter()
                 .filter((d,i) => { // no duplicates
-                    const result = !fdr.includes(parseFloat(d.fdr)) && !fold_change.includes(d.fold_change) && !p_value.includes(parseFloat(d.p_value));
-                    fdr.push(parseFloat(d.fdr));
-                    fold_change.push(d.fold_change);
-                    p_value.push(parseFloat(d.p_value));
+                    const result = !plotted.includes([d.fdr, d.fold_change, d.p_value])
+                    // if these values aren't already plotted, returns false
+                    // if false, then push and return
+                    if (result == false) {
+                        plotted.push([d.fdr, d.fold_change, d.p_value])
+                    }
                     return result;
                 })
             .append("text")
