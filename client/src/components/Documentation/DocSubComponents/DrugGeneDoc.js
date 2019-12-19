@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import img1 from '../../../images/12.png';
+import img1 from '../../../images/2.png';
 import img2 from '../../../images/15.png';
 
 const DrugGeneDoc = () => (
@@ -13,7 +13,7 @@ const DrugGeneDoc = () => (
         </Link>
         <p>All experiments performed on the dataset for the given drug can be visualized here. Datasets can be selected at the bottom right corner of the plot. In the plot below, time and dose dependent effect of Carbon tetrachloride on CYP1A1 is shown, with biological replicates (represented as dotted lines). The drug and gene name, highlighted in pink, is clickable leading to individual data pages.</p>
         <Link to="/expression?drugId=9&geneId=7468">
-            <img className="doc-img" src={img2} alt="" />
+            <img className="doc-img last" src={img2} alt="" />
         </Link>
     </div>
 );

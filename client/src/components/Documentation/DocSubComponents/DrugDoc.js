@@ -40,7 +40,7 @@ const DrugDoc = () => (
             0.05). The name of the gene will be highlighted upon hovering on the dots as shown below.
         </p>
         <Link to="/drugs/9">
-            <img className="doc-img" src={img6} alt="" />
+            <img className="doc-img last" src={img6} alt="" />
         </Link>
     </div>
 );

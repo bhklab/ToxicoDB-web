@@ -86,6 +86,12 @@ const StyledDiv = styled.div`
         width: 100%;
         max-width: 100%;
         dipslay: block;
+        padding-bottom: 100px;
+        border-bottom: 2px solid ${colors.blue_header}
+
+        &.last {
+            border-bottom: none;
+        }
     }
 `;
 

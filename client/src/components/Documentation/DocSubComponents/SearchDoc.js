@@ -23,7 +23,7 @@ const SearchDoc = () => (
         </Link>
         <p>One can use the search to query for the association of a specific drug-gene pair (e.g., Carbon tetrachloride, CYP1A1), in a dataset. This query will direct you to a page plotting gene expression versus time plot.</p>
         <Link to="/">
-            <img className="doc-img" src={img2} alt="" />
+            <img className="doc-img last" src={img2} alt="" />
         </Link>
     </div>
 );

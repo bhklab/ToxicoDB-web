@@ -18,7 +18,7 @@ const DatasetDoc = () => (
         </Link>
         <p>Upon selection of dataset of choice, the details pertaining to the dataset is available with links to data sources and publications.</p>
         <Link to="/datasets/1">
-            <img className="doc-img" src={img3} alt="" />
+            <img className="doc-img last" src={img3} alt="" />
         </Link>
     </div>
 );
