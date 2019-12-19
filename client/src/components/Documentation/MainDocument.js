@@ -6,6 +6,7 @@ import colors from '../../styles/colors';
 import transitions from '../../styles/transitions';
 
 import OverviewDoc from './DocSubComponents/OverviewDoc';
+import SearchDoc from './DocSubComponents/SearchDoc';
 
 const StyledDiv = styled.div`
     padding: 10px;
@@ -22,7 +23,7 @@ const StyledDiv = styled.div`
 
         .doc {
             // background-color: ${colors.lightblue_bg};
-            width: 100%;
+            // max-width: calc(100% - 250px);
             margin-left: 25px;
             padding: 15px;
 
@@ -66,6 +67,21 @@ const StyledDiv = styled.div`
               
         }
       } 
+    }
+    a {
+        font-family: Nunito Sans,sans-serif;
+        color: ${colors.blue_header};
+        transition: ${transitions.main_trans}
+        &:hover {
+            color: ${colors.red_highlight};
+        }
+    }
+
+    .doc-img {
+        margin: 10px 0;
+        width: 100%;
+        max-width: 100%;
+        dipslay: block;
     }
 `;
 
@@ -163,6 +179,7 @@ class MainDocument extends React.Component {
                         </ul>
                     </nav>
                     {display === 'overview' ? <OverviewDoc /> : null}
+                    {display === 'search' ? <SearchDoc /> : null}
                 </main>
             </StyledDiv>
         );
