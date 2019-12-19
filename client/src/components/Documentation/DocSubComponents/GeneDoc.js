@@ -45,7 +45,7 @@ const GeneDoc = () => (
             <img className="doc-img" src={img5} alt="" />
         </Link>
         <p>
-            Lastly, a volcano plot to visualize top drugs associated with the gene. Green dots, if present, represent the top drugs with fold change ranging from -1 to 1 and FDR
+            Lastly, a volcano plot to visualize top drugs associated with the gene. Green dots, if present, represent the top drugs with fold change >= |1| and FDR
             {' '}
             {'<'}
             {' '}
