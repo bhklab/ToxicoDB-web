@@ -11,7 +11,7 @@ exports.up = function (knex, Promise) {
             .inTable('drugs')
             .index();
         table.string('symbol');
-        table.string('pubchem');
+        table.integer('pubchem');
         table.string('chembl');
         table.string('drugbank');
         table.string('targets');
@@ -19,7 +19,6 @@ exports.up = function (knex, Promise) {
         table.string('class_in_vivo');
         table.string('class_in_vitro');
         table.string('class_name');
-        table.string('atc_code');
         table.string('smiles');
         table.string('inchikey');
     });

@@ -21,7 +21,7 @@ exports.up = function (knex, Promise) {
             .notNullable();
         table.string('dose')
             .notNullable();
-        table.string('time')
+        table.integer('time')
             .notNullable();
         table.integer('replicate')
             .notNullable();
