@@ -8,7 +8,6 @@ import Drugs from './SummaryPages/Drugs';
 import Datasets from './SummaryPages/Datasets';
 import HeaderNav from './HeaderNav';
 import FooterNav from './FooterNav';
-// import Documentation from './SummaryPages/Documentation';
 import DrugCard from './IndivPages/DrugPage';
 import GeneCard from './IndivPages/GenePage';
 import DatasetCard from './IndivPages/DatasetPage';
@@ -18,6 +17,7 @@ import Species from './SummaryPages/Species';
 import Cells from './SummaryPages/Cells';
 import Tissues from './SummaryPages/Tissues';
 import Documentation from './Documentation/MainDocument.js';
+import BarChart from './Plots/BarChat';
 
 
 const StyledApp = styled.div`
@@ -53,6 +53,7 @@ const App = () => (
                 <Route path="/genes/:id" component={GeneCard} />
                 <Route path="/datasets/:id" component={DatasetCard} />
                 <Route path="/expression" component={ExpressionPlot} />
+                <Route path="/bar" component={BarChart} />
             </Switch>
         </StyledApp>
         <HeaderNav />
