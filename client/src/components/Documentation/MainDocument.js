@@ -23,12 +23,12 @@ const StyledDiv = styled.div`
         text-align: justify;
         font-size: 20px;
         min-height: 80vh;
-        margin: 0 auto;
+        margin: 50px auto 0px auto;
 
         .doc {
             // background-color: ${colors.lightblue_bg};
             // max-width: calc(100% - 250px);
-            margin-left: 25px;
+            margin-left: 50px;
             padding: 15px;
 
             h1 {

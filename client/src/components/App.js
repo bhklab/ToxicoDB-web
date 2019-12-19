@@ -21,8 +21,8 @@ import Documentation from './Documentation/MainDocument.js';
 
 
 const StyledApp = styled.div`
-  margin: 0 auto;
-  min-height:100vh;
+  margin: 20px auto 0px auto;
+  min-height:80vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
