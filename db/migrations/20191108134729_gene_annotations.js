@@ -10,9 +10,9 @@ exports.up = function (knex, Promise) {
             .references('id')
             .inTable('genes')
             .index();
-        table.string('ensembl_gid');
-        table.string('entrez_gid');
         table.string('Symbol');
+        table.integer('entrez_gid');
+        table.string('transcript_name');
         table.string('ensembl_tid');
     });
 };
