@@ -7,6 +7,10 @@ import transitions from '../../styles/transitions';
 
 import OverviewDoc from './DocSubComponents/OverviewDoc';
 import SearchDoc from './DocSubComponents/SearchDoc';
+import DrugDoc from './DocSubComponents/DrugDoc';
+import GeneDoc from './DocSubComponents/GeneDoc';
+import DrugGeneDoc from './DocSubComponents/DrugGeneDoc';
+import DatasetDoc from './DocSubComponents/DatasetDoc';
 
 const StyledDiv = styled.div`
     padding: 10px;
@@ -171,15 +175,19 @@ class MainDocument extends React.Component {
                             >
                                 <button type="button" onClick={() => handleDocChange('drugvsgene')}>Drug vs Gene</button>
                             </li>
-                            <li
+                            {/* <li
                                 className={display === 'datasets' ? 'selected' : null}
                             >
                                 <button type="button" onClick={() => handleDocChange('datasets')}>Datasets</button>
-                            </li>
+                            </li> */}
                         </ul>
                     </nav>
                     {display === 'overview' ? <OverviewDoc /> : null}
                     {display === 'search' ? <SearchDoc /> : null}
+                    {display === 'drugs' ? <DrugDoc /> : null}
+                    {display === 'genes' ? <GeneDoc /> : null}
+                    {display === 'drugvsgene' ? <DrugGeneDoc /> : null}
+                    {/* {display === 'datasets' ? <DatasetDoc /> : null} */}
                 </main>
             </StyledDiv>
         );
