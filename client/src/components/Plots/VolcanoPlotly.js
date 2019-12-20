@@ -76,10 +76,12 @@ class VolcanoPlotly extends React.Component {
         };
 
         const greenLegendTrace = {
-            type: 'scatter',
+            type: 'none',
             mode: 'markers',
-            visible: 'legendonly',
-            x: [0],
+            // visible: 'legendonly',
+            hoverinfo: 'none',
+            // opacity: 0,
+            x: [null],
             y: [0],
             marker: {
                 color: '#5cc33c',
@@ -89,11 +91,13 @@ class VolcanoPlotly extends React.Component {
         };
 
         const blueLegendTrace = {
-            type: 'scatter',
+            type: 'none',
             mode: 'markers',
-            visible: 'legendonly',
-            x: [0],
-            y: [0],
+            // visible: 'legendonly',
+            hoverinfo: 'none',
+            // opacity: 0,
+            x: [null],
+            y: [null],
             marker: {
                 color: '#4c84b1',
             },
@@ -150,7 +154,11 @@ class VolcanoPlotly extends React.Component {
                 data={data}
                 layout={layout}
                 graphDiv={plotId}
-                config={{ responsive: true }}
+                config={{
+                    responsive: true,
+                    displayModeBar: false,
+                }}
+                onLegendClick={(e) => !(e.expandedIndex >= 4)}
             />
         );
     }
