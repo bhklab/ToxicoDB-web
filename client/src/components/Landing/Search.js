@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Select, { components } from 'react-select';
 import { Link, withRouter } from 'react-router-dom';
+import styled from 'styled-components';
 import colors from '../../styles/colors';
 import MenuList from './MenuList';
-import styled from 'styled-components';
 
 const customStyles = {
     control: (provided) => ({
@@ -114,7 +114,7 @@ const StyledExample = styled.div`
     a {
         color: ${colors.red_highlight}
     }
-`
+`;
 
 class Search extends Component {
     constructor() {
@@ -152,6 +152,7 @@ class Search extends Component {
         fetch('/api/v1/genes')
             .then((response) => response.json())
             .then((data) => {
+                console.log(data);
                 const geneData = data.data.map((x) => ({
                     label: x.name.charAt(0).toUpperCase() + x.name.slice(1),
                     value: x.id,
@@ -256,7 +257,16 @@ class Search extends Component {
                     />
                 )}
                 <StyledExample>
-                    Example Queries: &nbsp;&nbsp;<Link to='/drugs/9'>carbon tetrachloride</Link> &nbsp;&nbsp;|&nbsp;&nbsp; <Link to='/genes/7468'>CYP1A1</Link> &nbsp;&nbsp;|&nbsp;&nbsp; <Link to='/expression?drugId=9&geneId=7468'>CYP1A1 - carbon tetrachloride</Link> 
+                    Example Queries: &nbsp;&nbsp;
+                    <Link to="/drugs/9">carbon tetrachloride</Link>
+                    {' '}
+&nbsp;&nbsp;|&nbsp;&nbsp;
+                    {' '}
+                    <Link to="/genes/7468">CYP1A1</Link>
+                    {' '}
+&nbsp;&nbsp;|&nbsp;&nbsp;
+                    {' '}
+                    <Link to="/expression?drugId=9&geneId=7468">CYP1A1 - carbon tetrachloride</Link>
                 </StyledExample>
             </>
 
