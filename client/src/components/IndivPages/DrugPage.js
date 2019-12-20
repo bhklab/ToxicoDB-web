@@ -113,7 +113,8 @@ class DrugPage extends Component {
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                this.setState({ analysisData: data, volcanoData: data, loading: false });
+                const filteredData = data.filter((item) => parseFloat(item.p_value) !== 0);
+                this.setState({ analysisData: filteredData, volcanoData: filteredData, loading: false });
             });
     }
 
