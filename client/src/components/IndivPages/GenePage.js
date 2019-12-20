@@ -139,7 +139,13 @@ class GenePage extends Component {
             sortable: true,
             sortMethod(a, b) { return b - a; },
             Cell: (row) => parseFloat(row.value).toExponential(2),
-        }, {
+        },{
+            Header: 'fdr',
+            accessor: 'fdr',
+            sortable: true,
+            sortMethod(a, b) { return b - a; },
+            Cell: (row) => parseFloat(row.value).toExponential(2),
+        },{ 
             Header: 'Dataset',
             accessor: 'dataset_name',
             sortable: true,
@@ -191,12 +197,12 @@ class GenePage extends Component {
                             </h2>
 
                         </center>
-                        <Volcano
+                        {/* <Volcano
                             data={volcanoData}
                             queryId={params.id}
                             plotId="volcanoPlot"
                             type="gene"
-                        />
+                        /> */}
                         <VolcanoPlotly
                             data={volcanoData}
                             queryId={params.id}
