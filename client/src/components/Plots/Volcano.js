@@ -137,7 +137,7 @@ class Volcano extends React.Component {
                     return result;
                 })
                 .filter((d,i) => {
-                    return !(parseFloat(d.fdr) > 0.05 && Math.abs(d.fold_change) < 1) 
+                    return !(parseFloat(d.fdr) > 0.05 && Math.abs(d.fold_change) < 1) && parseFloat(d.p_value) != 0; 
                 })
                 .append("a")
                     .attr("xlink:href", (d) => {
