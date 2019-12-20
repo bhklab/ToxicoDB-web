@@ -116,7 +116,7 @@ class AnnotationCard extends Component {
                             ) : data[j].name.replace(/_/g, ' ') }
                         </td>
                         <td className="value" key={data[j].value}>
-                            { (data[j].name === 'name' || data[j].name === 'ensembl_gid' || data[j].name === 'entrez_gid' || data[j].name === 'pubchem')
+                            { (data[j].name === 'name' || data[j].name === 'ensembl_gid' || data[j].name === 'entrez_gid' || data[j].name === 'pubchem' || data[j].name === 'Symbol')
                                 ? (
                                     createLink(data[j])
                                 )
