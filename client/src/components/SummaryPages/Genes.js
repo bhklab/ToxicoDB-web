@@ -67,12 +67,12 @@ class Genes extends Component {
         const { loading, geneData } = this.state;
         const columns = [{
             Header: 'Name',
-            accessor: 'name',
+            accessor: 'Symbol',
             sortable: true,
             Cell: (row) => (<Link to={`/genes/${row.original.id}`}>{row.value}</Link>),
         }, {
             Header: 'Ensembl ID',
-            accessor: 'ensembl_gid',
+            accessor: 'name',
             sortable: true,
             Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`http://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${props.value}`}>{props.value}</a>,
         }, {
