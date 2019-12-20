@@ -5,6 +5,7 @@ import ReactTable from 'react-table';
 import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
 import Volcano from '../Plots/Volcano';
+import VolcanoPlotly from '../Plots/VolcanoPlotly';
 import 'react-table/react-table.css';
 
 import DownloadButton from '../Utils/DownloadButton';
@@ -131,7 +132,7 @@ class DrugPage extends Component {
             accessor: 'p_value',
             sortable: true,
             sortMethod(a, b) { return b - a; },
-            Cell: (row) => parseFloat(row.value).toExponential(2),
+            Cell: (row) => parseFloat(row.value).toExponential(3),
         }, {
             Header: 'fold-change',
             accessor: 'fold_change',
@@ -189,12 +190,18 @@ class DrugPage extends Component {
                                 {drugData.name}
                             </h2>
                         </center>
-                        <Volcano
+                        <VolcanoPlotly
                             data={volcanoData}
                             queryId={params.id}
                             plotId="volcanoPlot"
                             type="drug"
                         />
+                        {/* <Volcano
+                            data={volcanoData}
+                            queryId={params.id}
+                            plotId="volcanoPlot"
+                            type="drug"
+                        /> */}
                     </div>
                 )}
             </StyledDrugPage>

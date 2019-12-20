@@ -137,7 +137,7 @@ class Volcano extends React.Component {
                     return result;
                 })
                 .filter((d,i) => {
-                    return !(parseFloat(d.fdr) > 0.05 && Math.abs(d.fold_change) < 1) 
+                    return !(parseFloat(d.fdr) > 0.05 && Math.abs(d.fold_change) < 1) && parseFloat(d.p_value) != 0; 
                 })
                 .append("a")
                     .attr("xlink:href", (d) => {
@@ -155,13 +155,13 @@ class Volcano extends React.Component {
                     })
                     .attr("fill", (d) => {
                         let color = "";
-                        if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) < 1) {  
+                        if (parseFloat(d.fdr) < 0.05 && d.fold_change < Math.abs(1)) {  
                             color = colors.blue_header;
                         }
-                        if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) >= 1) {
+                        if (parseFloat(d.fdr) < 0.05 && d.fold_change >= Math.abs(1)) {
                             color = "#5cc33c";
                         } 
-                        if (parseFloat(d.fdr) > 0.05 && Math.abs(d.fold_change) >= 1 ) {
+                        if (parseFloat(d.fdr) > 0.05 && d.fold_change >= Math.abs(1) ) {
                             color = "#acacac";
                         }
                         return color;
