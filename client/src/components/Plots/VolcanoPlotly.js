@@ -1,7 +1,28 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
+import styled from 'styled-components';
+import * as d3 from 'd3';
 import colors from '../../styles/colors';
 
+const StyledDiv = styled.div`
+min-height: 600px;    
+width: 100%;    
+    // .groups:nth-of-type(3) {
+    //     transform: translate(0, 50px);
+    // }
+    .js-plotly-plot {
+        width: 100%;
+    }
+    .scatterpts {
+        opacity: 0;
+    }
+`;
+
+const changeSymbols = () => {
+    console.log(d3.selectAll('.scatterpts'));
+    d3.select('.groups:nth-of-type(1) .scatterpts').style('opacity', '0');
+    d3.select('.groups:nth-of-type(2) .scatterpts').style('opacity', '0');
+};
 
 class VolcanoPlotly extends React.Component {
     constructor(props) {
@@ -9,18 +30,17 @@ class VolcanoPlotly extends React.Component {
         this.state = {
             layout: null,
             data: null,
-            loading: true,
-            displayPlot: true,
         };
     }
 
     componentDidMount() {
         const {
-            data, queryId, plotId, type,
+            data,
         } = this.props;
         console.log(data);
-        const formattedData = this.formatData(data);
+        this.formatData(data);
     }
+
 
     formatData(data) {
         const { type } = this.props;
@@ -82,7 +102,7 @@ class VolcanoPlotly extends React.Component {
             hoverinfo: 'none',
             // opacity: 0,
             x: [null],
-            y: [0],
+            y: [null],
             marker: {
                 color: '#5cc33c',
             },
@@ -126,8 +146,9 @@ class VolcanoPlotly extends React.Component {
         this.setState({
             data: [greenTraceRat, blueTraceRat, greenTraceHuman, blueTraceHuman, blueLegendTrace, greenLegendTrace],
             layout: {
-                height: 450,
-                width: 800,
+                height: 600,
+                autosize: true,
+                // width: 800,
                 paper_bgcolor: 'white',
                 plot_bgcolor: 'white',
                 orientation: 'v',
@@ -142,6 +163,12 @@ class VolcanoPlotly extends React.Component {
                 legend: {
                     traceorder: 'grouped',
                 },
+                margin: {
+                    l: 45,
+                    r: 0,
+                    t: 0,
+                    b: 40,
+                },
             },
         });
     }
@@ -150,16 +177,19 @@ class VolcanoPlotly extends React.Component {
         const { layout, data } = this.state;
         const { plotId } = this.props;
         return (
-            <Plot
-                data={data}
-                layout={layout}
-                graphDiv={plotId}
-                config={{
-                    responsive: true,
-                    displayModeBar: false,
-                }}
-                onLegendClick={(e) => !(e.expandedIndex >= 4)}
-            />
+            <StyledDiv>
+                <Plot
+                    data={data}
+                    layout={layout}
+                    graphDiv={plotId}
+                    config={{
+                        responsive: true,
+                        displayModeBar: false,
+                    }}
+                    onLegendClick={(e) => !(e.expandedIndex >= 4)}
+                    onUpdate={() => changeSymbols()}
+                />
+            </StyledDiv>
         );
     }
 }
