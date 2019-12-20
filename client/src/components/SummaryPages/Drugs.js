@@ -59,9 +59,9 @@ class Drugs extends Component {
         fetch('/api/v1/drugs')
             .then((response) => response.json())
             .then((res) => {
-                // mapping through the data to change the pubchem ids from string to integer.
+                // mapping through the data to remove ? from the class in vitro.
                 const dataset = res.data.map((row) => {
-                    row.pubchem = Number(row.pubchem);
+                    row.class_in_vivo = row.class_in_vivo === '?' ? '' : row.class_in_vivo;
                     return row;
                 });
                 this.setState({ drugData: dataset, loading: false });
