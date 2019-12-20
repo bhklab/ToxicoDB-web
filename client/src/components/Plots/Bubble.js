@@ -123,8 +123,6 @@ class Bubble extends React.Component {
             .append("a")
             .attr('xlink:href', (d) => d.text.toLowerCase())
             .append('text')
-            .attr('dx', '13')
-            .attr('dy', '-0.5em')
             .attr('fill', 'white')
             .style('text-anchor', 'middle')
             .style('font-size', 15)
@@ -139,11 +137,11 @@ class Bubble extends React.Component {
                     tt = `<tspan text-anchor='middle' font-size=15 dx='-2.5em' dy=20>${d.text}</tspan>`;
                 } else if (d.text === 'Tissues') {
                     t = `<tspan text-anchor='middle' font-size=18 dx='0.4em' dy='-0.5em'>${d.count}</tspan>`;
-                    tt = `<tspan text-anchor='middle' font-size=15 dx='-1.4em' dy=20>${d.text}</tspan>`;
+                    tt = `<tspan text-anchor='middle' font-size=15 dx='-2em' dy=20>${d.text}</tspan>`;
                 } else if (d.text === 'Cells'){
                     t = `<tspan text-anchor='middle' font-size=18  dx='10' dy='-0.5em'>${d.count}</tspan>`;
                     tt = `<tspan text-anchor='middle' font-size=15 dx='-1em' dy=20>${d.text}</tspan>`;
-                } else {
+                } else { // datasets, species
                     t = `<tspan text-anchor='middle' font-size=18  dx='5' dy='-0.5em'>${d.count}</tspan>`;
                     tt = `<tspan text-anchor='middle' font-size=15 dx='-2em' dy=20>${d.text}</tspan>`;
                 }

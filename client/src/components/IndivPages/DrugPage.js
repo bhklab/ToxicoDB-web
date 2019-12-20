@@ -141,6 +141,12 @@ class DrugPage extends Component {
             sortMethod(a, b) { return b - a; },
             Cell: (row) => parseFloat(row.value).toExponential(2),
         }, {
+            Header: 'fdr',
+            accessor: 'fdr',
+            sortable: true,
+            sortMethod(a, b) { return b - a; },
+            Cell: (row) => parseFloat(row.value).toExponential(2),
+        },{
             Header: 'Dataset',
             accessor: 'dataset_name',
             sortable: true,
