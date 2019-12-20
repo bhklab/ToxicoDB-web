@@ -113,7 +113,8 @@ class GenePage extends Component {
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                this.setState({ volcanoData: data, analysisData: data, loading: false });
+                const filteredData = data.filter((item) => parseFloat(item.p_value) !== 0 && item.dataset_name !== 'drugMatrix');
+                this.setState({ volcanoData: filteredData, analysisData: filteredData, loading: false });
             });
     }
 
