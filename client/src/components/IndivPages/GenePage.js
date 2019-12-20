@@ -160,7 +160,7 @@ class GenePage extends Component {
             <StyledGenePage>
                 {geneData.length === 0 ? null : (
                     <>
-                        <h1>{geneData.Symbol}</h1>
+                        <h1>{geneData.symbol}</h1>
                         <h2>Annotations</h2>
                         <AnnotationCard data={annotationData} />
                     </>
@@ -193,7 +193,7 @@ class GenePage extends Component {
                             <h2>
                             Analysis -
                                 {' '}
-                                {geneData.Symbol}
+                                {geneData.symbol}
                             </h2>
 
                         </center>
