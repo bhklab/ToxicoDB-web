@@ -8,7 +8,7 @@ const OverviewDoc = () => (
         <p>
             <em>ToxicoDB</em>
             {' '}
-            is a new web-server providing seamless data summary, analysis and visualization of multiple large toxicogenomics datasets. Toxicogenomics is a sub-discipline of pharmacology that takes advantage of multi-omics data such as transcriptomics, proteomics, and metabolomics to predict toxicity. ToxicoDB harmonizes heterogeneous data across datasets, allowing users to easily query and summarize the associations between gene expression and the effects of toxicants.
+            is a new web application providing seamless data summary, analysis and visualization of multiple large toxicogenomics datasets. Toxicogenomics is a sub-discipline of pharmacology that takes advantage of multi-omics data such as transcriptomics, proteomics, and metabolomics to predict toxicity. ToxicoDB harmonizes heterogeneous data across datasets, allowing users to easily query and summarize the associations between gene expression and the effects of toxicants.
         </p>
         <p>
             <em>ToxicoDB</em>
