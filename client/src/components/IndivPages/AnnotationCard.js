@@ -105,18 +105,30 @@ class AnnotationCard extends Component {
             return tableLink;
         };
 
+        // this returns table data.
+        const createTableData = (data) => {
+            let tableData = '';
+            if (data.name.replace(/_/g, ' ') === 'Symbol') {
+                tableData = 'Gene Cards';
+            } else if (data.name.replace(/_/g, ' ') === 'name') {
+                tableData = 'ENSEMBL GID';
+            } else {
+                tableData = data.name.replace(/_/g, ' ');
+            }
+            return tableData;
+        };
 
         for (let j = 0; j < data.length; j++) {
             if (data[j].value || data[j].name === 'class_in_vitro' || data[j].name === 'class_in_vivo' || data[j].name === 'carcinogenicity') {
                 table.push(
                     <tr key={j}>
                         <td className="name" key={data[j].name} style={{ fontWeight: '600' }}>
-                            { data[j].name.replace(/_/g, ' ') === 'name' ? (
-                                'Gene Cards'
-                            ) : data[j].name.replace(/_/g, ' ') }
+                            {
+                                createTableData(data[j])
+                            }
                         </td>
                         <td className="value" key={data[j].value}>
-                            { (data[j].name === 'name' || data[j].name === 'ensembl_gid' || data[j].name === 'entrez_gid' || data[j].name === 'pubchem')
+                            { (data[j].name === 'name' || data[j].name === 'ensembl_gid' || data[j].name === 'entrez_gid' || data[j].name === 'pubchem' || data[j].name === 'Symbol')
                                 ? (
                                     createLink(data[j])
                                 )

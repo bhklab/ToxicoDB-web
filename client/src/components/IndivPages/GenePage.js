@@ -85,6 +85,7 @@ class GenePage extends Component {
         fetch(`/api/v1/genes/${params.id}`)
             .then((response) => response.json())
             .then((res) => {
+                console.log(res);
                 const { data } = res;
                 const annotationData = [];
                 Object.keys(data[0]).forEach((x) => {
@@ -153,7 +154,7 @@ class GenePage extends Component {
             <StyledGenePage>
                 {geneData.length === 0 ? null : (
                     <>
-                        <h1>{geneData.name}</h1>
+                        <h1>{geneData.Symbol}</h1>
                         <h2>Annotations</h2>
                         <AnnotationCard data={annotationData} />
                     </>
@@ -186,7 +187,7 @@ class GenePage extends Component {
                             <h2>
                             Analysis -
                                 {' '}
-                                {geneData.name}
+                                {geneData.Symbol}
                             </h2>
 
                         </center>
