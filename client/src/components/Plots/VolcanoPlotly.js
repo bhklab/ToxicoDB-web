@@ -75,12 +75,38 @@ class VolcanoPlotly extends React.Component {
             legendgroup: 'TGGATES Human LDH',
         };
 
+        const greenLegendTrace = {
+            type: 'scatter',
+            mode: 'markers',
+            visible: 'legendonly',
+            x: [0],
+            y: [0],
+            marker: {
+                color: '#5cc33c',
+            },
+            name: 'fdr < 0.05 and fold change >= |1|',
+            legendgroup: 'legend',
+        };
+
+        const blueLegendTrace = {
+            type: 'scatter',
+            mode: 'markers',
+            visible: 'legendonly',
+            x: [0],
+            y: [0],
+            marker: {
+                color: '#4c84b1',
+            },
+            name: 'fdr < 0.05 and fold change < |1|',
+            legendgroup: 'legend',
+        };
+
         // calculate lowest pvalue that isn't 0, -log10 it, and set all 0s to the cutoff
         const cutoff = -Math.log10(Math.min(...data.map((x) => (parseFloat(x.p_value) === 0 ? null : parseFloat(x.p_value))).filter((x) => x !== null)));
 
         // putting data in
-        data.forEach((d, i) => {
-            if (parseFloat(d.p_value) <= 0.05 && parseFloat(d.p_value) > 0) {
+        data.forEach((d) => {
+            if (parseFloat(d.p_value) <= 0.05) {
                 if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) >= 1) {
                     const trace = d.dataset_name === 'TGGATES Human LDH' ? greenTraceHuman : greenTraceRat;
                     trace.x.push(d.fold_change);
@@ -94,7 +120,7 @@ class VolcanoPlotly extends React.Component {
         });
 
         this.setState({
-            data: [greenTraceRat, blueTraceRat, greenTraceHuman, blueTraceHuman],
+            data: [greenTraceRat, blueTraceRat, greenTraceHuman, blueTraceHuman, blueLegendTrace, greenLegendTrace],
             layout: {
                 height: 450,
                 width: 800,
@@ -108,6 +134,9 @@ class VolcanoPlotly extends React.Component {
                     size: 12,
                     color: colors.nav_links,
                     family: 'Arial',
+                },
+                legend: {
+                    traceorder: 'grouped',
                 },
             },
         });

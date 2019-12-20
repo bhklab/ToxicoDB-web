@@ -98,6 +98,8 @@ class Bubble extends React.Component {
         // create svg element inside provided selector
         svg = d3.select(`#${plotId}`)
             .append('svg')
+            .attr('xmlns', "http://www.w3.org/2000/svg")
+            .attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
             .attr('width', width)
             .attr('height', height)
             .attr('viewBox', '0 0 500 500');
@@ -130,17 +132,20 @@ class Bubble extends React.Component {
                 let t;
                 let tt;
                 if (d.text === 'Drugs') {
-                    t = `<tspan text-anchor='middle' font-size=18 dx='0.5em' >${d.count}</tspan>`;
-                    tt = `<tspan text-anchor='middle' dx='-2.1em' dy=20>${d.text}</tspan>`;
+                    t = `<tspan text-anchor='middle' font-size=18 dx='0.4em' dy='-0.5em'>${d.count}</tspan>`;
+                    tt = `<tspan text-anchor='middle' font-size=15 dx='-2.1em' dy=20>${d.text}</tspan>`;
                 } else if (d.text === 'Genes') {
-                    t = `<tspan text-anchor='middle' font-size=18 dx='0.5em' >${d.count}</tspan>`;
-                    tt = `<tspan text-anchor='middle' dx='-2.5em' dy=20>${d.text}</tspan>`;
-                } else if (d.text === 'Tissue') {
-                    t = `<tspan text-anchor='middle' font-size=18 dx='0.6em' >${d.count}</tspan>`;
-                    tt = `<tspan text-anchor='middle' dx='-1.6em' dy=20>${d.text}</tspan>`;
+                    t = `<tspan text-anchor='middle' font-size=18 dx='0.4em' dy='-0.5em' >${d.count}</tspan>`;
+                    tt = `<tspan text-anchor='middle' font-size=15 dx='-2.5em' dy=20>${d.text}</tspan>`;
+                } else if (d.text === 'Tissues') {
+                    t = `<tspan text-anchor='middle' font-size=18 dx='0.4em' dy='-0.5em'>${d.count}</tspan>`;
+                    tt = `<tspan text-anchor='middle' font-size=15 dx='-1.4em' dy=20>${d.text}</tspan>`;
+                } else if (d.text === 'Cells'){
+                    t = `<tspan text-anchor='middle' font-size=18  dx='10' dy='-0.5em'>${d.count}</tspan>`;
+                    tt = `<tspan text-anchor='middle' font-size=15 dx='-1em' dy=20>${d.text}</tspan>`;
                 } else {
-                    t = `<tspan text-anchor='middle' font-size=18  >${d.count}</tspan>`;
-                    tt = `<tspan text-anchor='middle' dx='-2em' dy=20>${d.text}</tspan>`;
+                    t = `<tspan text-anchor='middle' font-size=18  dx='5' dy='-0.5em'>${d.count}</tspan>`;
+                    tt = `<tspan text-anchor='middle' font-size=15 dx='-2em' dy=20>${d.text}</tspan>`;
                 }
 
                 // var ttt = "<tspan text-anchor='middle' font-size=13 dy=15>aaaaaaaaa</tspan>";
