@@ -37,6 +37,12 @@ class Datasets extends Component {
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
+                console.log(data)
+                data.forEach((d) => {
+                    if (d.name === 'drugMatrix') {
+                        d.name = 'DrugMatrix Hepatocyte'
+                    }
+                })
                 this.setState({ datasetData: data, loading: false });
             });
     }

@@ -57,7 +57,7 @@ const About = () => {
             text: 'Species', count: '2', size: 2, groupid: 3, id: 3,
         },
         {
-            text: 'Drugs', count: '234', size: 4, groupid: 4, id: 4,
+            text: 'Drugs', count: '232', size: 4, groupid: 4, id: 4,
         },
         {
             text: 'Tissues', count: '1', size: 1, groupid: 5, id: 5,

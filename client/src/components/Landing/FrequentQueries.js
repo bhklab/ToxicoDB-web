@@ -89,7 +89,7 @@ class FrequentQueries extends Component {
         const desc1 = 'Encodes a member of the cytochrome P450 superfamily of enzymes.';
         const desc2 = 'A synthetic derivative of propylpentanoic acid with antiepileptic properties and potential antineoplastic and antiangiogenesis activities.';
         const desc3 = 'This drug is reported to elicit a dose and time dependent response on CYP1A1, a liver metabolizing enzyme involved in xenobiotic metabolism.';
-        const desc4 = 'A member of the nuclear receptor family of ligand-activated transcription factors that heterodimerize with the retinoic X receptor to regulate gene expression.';
+        const desc4 = 'NRF2 target gene, involved in NRF2 mediated oxidative stress regulation';
         const desc5 = 'PPARA has been reported to be modulated by Valproic acid, in repeated dose toxicity, leading to steatosis.';
 
         return (
@@ -99,7 +99,7 @@ class FrequentQueries extends Component {
                     <Query desc={desc1} queryUrl={`/genes/7468`} queryName="CYP1A1" type="gene" />
                     <Query desc={desc2} queryUrl={`/drugs/32`} queryName="valproic acid" type="drug" />
                     <Query desc={desc3} queryUrl={`/expression?drugId=9&geneId=7468`} queryName="CYP1A1 - carbon tetrachloride" type="pair" />
-                    <Query desc={desc4} queryUrl={`/genes/14459`} queryName="PPARA" type="gene" />
+                    <Query desc={desc4} queryUrl={`/genes/423`} queryName="GCLM" type="gene" />
                     <Query desc={desc5} queryUrl={`/expression?drugId=32&geneId=14459`} queryName="valproic acid - PPARA" type="pair" />
 
                 </Slider>
