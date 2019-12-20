@@ -58,7 +58,9 @@ class Genes extends Component {
         fetch('/api/v1/genes')
             .then((response) => response.json())
             .then((res) => {
-                const { data } = res;
+                // removes the rows with empty symbols.
+                const removeEmpty = res.data.filter((row) => row.Symbol !== '');
+                const data = removeEmpty;
                 this.setState({ geneData: data, loading: false });
             });
     }
