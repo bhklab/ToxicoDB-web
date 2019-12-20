@@ -25,30 +25,54 @@ class VolcanoPlotly extends React.Component {
     formatData(data) {
         const { type } = this.props;
         // setting up the traces; can't really deep copy
-        const greenTrace = {
+        const greenTraceRat = {
+            showlegend: false,
             type: 'scatter',
             mode: 'markers',
             x: [],
             y: [],
-            // ids: [],
             marker: {
-                // hoverinfo: 'text',
-                // hovertext: [],
                 color: '#5cc33c',
             },
-            name: 'fdr < 0.05, fold change >= |1|',
+            name: 'TGGATES Rat LDH',
+            legendgroup: 'TGGATES Rat LDH',
         };
 
-        const blueTrace = {
+        const greenTraceHuman = {
+            showlegend: false,
             type: 'scatter',
             mode: 'markers',
             x: [],
             y: [],
-            // ids: [],
+            marker: {
+                color: '#5cc33c',
+            },
+            name: 'TGGATES Human LDH',
+            legendgroup: 'TGGATES Human LDH',
+        };
+
+        const blueTraceRat = {
+            type: 'scatter',
+            mode: 'markers',
+            x: [],
+            y: [],
             marker: {
                 color: '#4c84b1',
             },
-            name: 'fdr < 0.05, fold change < |1|',
+            name: 'TGGATES Rat LDH',
+            legendgroup: 'TGGATES Rat LDH',
+        };
+
+        const blueTraceHuman = {
+            type: 'scatter',
+            mode: 'markers',
+            x: [],
+            y: [],
+            marker: {
+                color: '#4c84b1',
+            },
+            name: 'TGGATES Human LDH',
+            legendgroup: 'TGGATES Human LDH',
         };
 
         // calculate lowest pvalue that isn't 0, -log10 it, and set all 0s to the cutoff
@@ -58,23 +82,19 @@ class VolcanoPlotly extends React.Component {
         data.forEach((d, i) => {
             if (parseFloat(d.p_value) <= 0.05 && parseFloat(d.p_value) > 0) {
                 if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) >= 1) {
-                    greenTrace.x.push(d.fold_change);
-                    greenTrace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
-                    // console.log(d.dataset_name, d.dataset_name.replaceAll(' ', ''));
-                    // greenTrace.ids.push(d.dataset_name.replaceAll(' ', ''));
-                    // greenTrace.marker.hovertext.push(type === 'drug' ? d.gene_name : d.drug_name);
+                    const trace = d.dataset_name === 'TGGATES Human LDH' ? greenTraceHuman : greenTraceRat;
+                    trace.x.push(d.fold_change);
+                    trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
                 } else if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) < 1) {
-                    blueTrace.x.push(d.fold_change);
-                    blueTrace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
-                    // blueTrace.ids.push(d.dataset_name.replaceAll(' ', ''));
-                    // blueTrace.marker.hovertext.push(type === 'drug' ? d.gene_name : d.drug_name);
+                    const trace = d.dataset_name === 'TGGATES Human LDH' ? blueTraceHuman : blueTraceRat;
+                    trace.x.push(d.fold_change);
+                    trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
                 }
             }
         });
-        console.log(greenTrace, blueTrace);
 
         this.setState({
-            data: [greenTrace, blueTrace],
+            data: [greenTraceRat, blueTraceRat, greenTraceHuman, blueTraceHuman],
             layout: {
                 height: 450,
                 width: 800,
