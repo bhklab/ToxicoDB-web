@@ -22,7 +22,7 @@ import BarChart from './Plots/BarChat';
 
 const StyledApp = styled.div`
   margin: 20px auto 0px auto;
-  min-height:80vh;
+  min-height:100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

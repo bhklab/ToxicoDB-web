@@ -59,7 +59,7 @@ class Genes extends Component {
             .then((response) => response.json())
             .then((res) => {
                 // removes the rows with empty symbols.
-                const removeEmpty = res.data.filter((row) => row.Symbol !== '');
+                const removeEmpty = res.data.filter((row) => row.symbol !== '');
                 const data = removeEmpty;
                 this.setState({ geneData: data, loading: false });
             });
@@ -69,7 +69,7 @@ class Genes extends Component {
         const { loading, geneData } = this.state;
         const columns = [{
             Header: 'Name',
-            accessor: 'Symbol',
+            accessor: 'symbol',
             sortable: true,
             Cell: (row) => (<Link to={`/genes/${row.original.id}`}>{row.value}</Link>),
         }, {

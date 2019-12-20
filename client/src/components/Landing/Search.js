@@ -152,9 +152,8 @@ class Search extends Component {
         fetch('/api/v1/genes')
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 const geneData = data.data.map((x) => ({
-                    label: x.name.charAt(0).toUpperCase() + x.name.slice(1),
+                    label: x.symbol.charAt(0).toUpperCase() + x.symbol.slice(1),
                     value: x.id,
                     type: 'gene',
                 }));

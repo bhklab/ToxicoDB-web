@@ -108,7 +108,7 @@ class AnnotationCard extends Component {
         // this returns table data.
         const createTableData = (data) => {
             let tableData = '';
-            if (data.name.replace(/_/g, ' ') === 'Symbol') {
+            if (data.name.replace(/_/g, ' ') === 'symbol') {
                 tableData = 'Gene Cards';
             } else if (data.name.replace(/_/g, ' ') === 'name') {
                 tableData = 'ENSEMBL GID';
@@ -128,7 +128,7 @@ class AnnotationCard extends Component {
                             }
                         </td>
                         <td className="value" key={data[j].value}>
-                            { (data[j].name === 'name' || data[j].name === 'ensembl_gid' || data[j].name === 'entrez_gid' || data[j].name === 'pubchem' || data[j].name === 'Symbol')
+                            { (data[j].name === 'name' || data[j].name === 'ensembl_gid' || data[j].name === 'entrez_gid' || data[j].name === 'pubchem' || data[j].name === 'symbol')
                                 ? (
                                     createLink(data[j])
                                 )

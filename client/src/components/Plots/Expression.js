@@ -191,7 +191,7 @@ class Expression extends React.Component {
                 .attr("width", 13)
                 .attr("height", 13)
                 .attr("fill", () => {
-                    if (datasets[i] != "TGGATES Human LDH") {
+                    if (datasets[i] != datasets[0]) {
                         d3.selectAll(`.${datasets[i].replaceAll(' ','')}-path`).attr("opacity", 0)
                         d3.selectAll(`.${datasets[i].replaceAll(' ','')}-legRect`).attr("fill", "white")
                         return 'white';
@@ -205,8 +205,8 @@ class Expression extends React.Component {
                 .on("click", () => {
                     let active   = d.active ? false : true
 
-                    // only show tggates human first
-                    if (datasets[i] != "TGGATES Human LDH") {
+                    // only show first dataset first
+                    if (datasets[i] != datasets[0]) {
                         //to show that this dataset has been selected
                         if (active) {
                             d3.selectAll(`.${datasets[i].replaceAll(' ','')}-path`).attr("opacity", 1)
@@ -245,7 +245,7 @@ class Expression extends React.Component {
                     let active   = d.active ? false : true
         
                     // only show tggates human first
-                    if (datasets[i] != "TGGATES Human LDH") {
+                    if (datasets[i] != datasets[0]) {
                         //to show that this dataset has been selected
                         if (active) {
                             d3.selectAll(`.${datasets[i].replaceAll(' ','')}-path`).attr("opacity", 1)
