@@ -47,7 +47,7 @@ class AnnotationCard extends Component {
     createCard() {
         const { data } = this.props;
         const table = [];
-        
+        const isDrugData = data.filter(val => val.name === 'pubchem')
 
         // this will create subelements for the table row with more than one variable.
         const createSubCard = (val) => {
@@ -109,7 +109,7 @@ class AnnotationCard extends Component {
         // this returns table data.
         const createTableData = (data) => {
             let tableData = '';
-            if (data.name.replace(/_/g, ' ') === 'symbol') {
+            if (data.name.replace(/_/g, ' ') === 'symbol' && isDrugData.length === 0) {
                 tableData = 'Gene Cards';
             } else if (data.name.replace(/_/g, ' ') === 'name') {
                 tableData = 'ENSEMBL GID';
@@ -120,7 +120,6 @@ class AnnotationCard extends Component {
         };
 
         for (let j = 0; j < data.length; j++) {
-            console.log(data)
             if (data[j].value || data[j].name === 'class_in_vitro' || data[j].name === 'class_in_vivo' || data[j].name === 'carcinogenicity') {
                 table.push(
                     <tr key={j}>
@@ -130,7 +129,8 @@ class AnnotationCard extends Component {
                             }
                         </td>
                         <td className="value" key={data[j].value}>
-                            { (data[j].name === 'name' || data[j].name === 'ensembl_gid' || data[j].name === 'entrez_gid' || data[j].name === 'pubchem' || data[j].name === 'symbol')
+                            { ( data[j].name === 'name' || data[j].name === 'ensembl_gid' || 
+                                    data[j].name === 'entrez_gid' || data[j].name === 'pubchem' ||( data[j].name === 'symbol' && isDrugData.length === 0))
                                 ? (
                                     createLink(data[j])
                                 )
