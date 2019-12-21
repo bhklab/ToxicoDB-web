@@ -47,6 +47,7 @@ class AnnotationCard extends Component {
     createCard() {
         const { data } = this.props;
         const table = [];
+        
 
         // this will create subelements for the table row with more than one variable.
         const createSubCard = (val) => {
@@ -82,10 +83,10 @@ class AnnotationCard extends Component {
             // right link based on the case.
             switch (data.name) {
             case 'name':
-                link = 'http://www.genecards.org/cgi-bin/carddisp.pl?gene=';
-                break;
-            case 'ensembl_gid':
                 link = 'http://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=';
+                break;
+            case 'symbol':
+                link = 'http://www.genecards.org/cgi-bin/carddisp.pl?gene=';
                 break;
             case 'entrez_gid':
                 link = 'https://www.ncbi.nlm.nih.gov/gene/?term=';
@@ -119,6 +120,7 @@ class AnnotationCard extends Component {
         };
 
         for (let j = 0; j < data.length; j++) {
+            console.log(data)
             if (data[j].value || data[j].name === 'class_in_vitro' || data[j].name === 'class_in_vivo' || data[j].name === 'carcinogenicity') {
                 table.push(
                     <tr key={j}>
