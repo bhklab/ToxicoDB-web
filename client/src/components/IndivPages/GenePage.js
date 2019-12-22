@@ -129,24 +129,24 @@ class GenePage extends Component {
             sortable: true,
             Cell: (row) => (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${geneData.id}`}>{row.value}</Link>),
         }, {
+            Header: 'log2(fold change)',
+            accessor: 'fold_change',
+            sortable: true,
+            sortMethod(a, b) { return b - a; },
+            Cell: (row) => parseFloat(row.value).toFixed(1),
+        }, {
             Header: 'p-value',
             accessor: 'p_value',
             sortable: true,
             sortMethod(a, b) { return b - a; },
             Cell: (row) => parseFloat(row.value).toExponential(3),
         }, {
-            Header: 'fold-change',
-            accessor: 'fold_change',
-            sortable: true,
-            sortMethod(a, b) { return b - a; },
-            Cell: (row) => parseFloat(row.value).toExponential(2),
-        },{
             Header: 'fdr',
             accessor: 'fdr',
             sortable: true,
             sortMethod(a, b) { return b - a; },
             Cell: (row) => parseFloat(row.value).toExponential(2),
-        },{ 
+        }, {
             Header: 'Dataset',
             accessor: 'dataset_name',
             sortable: true,
