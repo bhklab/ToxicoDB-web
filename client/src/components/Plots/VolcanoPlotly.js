@@ -18,10 +18,11 @@ width: 100%;
     }
 `;
 
-const changeSymbols = () => {
-    console.log(d3.selectAll('.scatterpts'));
+const changeSymbols = (type) => {
     d3.select('.groups:nth-of-type(1) .scatterpts').style('opacity', '0');
-    d3.select('.groups:nth-of-type(2) .scatterpts').style('opacity', '0');
+    if (type == 'drug') {
+        d3.select('.groups:nth-of-type(2) .scatterpts').style('opacity', '0');
+    }
 };
 
 class VolcanoPlotly extends React.Component {
@@ -35,7 +36,7 @@ class VolcanoPlotly extends React.Component {
 
     componentDidMount() {
         const {
-            data,
+            data, type
         } = this.props;
         console.log(data);
         this.formatData(data);
@@ -185,7 +186,7 @@ class VolcanoPlotly extends React.Component {
 
     render() {
         const { layout, data } = this.state;
-        const { plotId } = this.props;
+        const { plotId, type } = this.props;
         return (
             <StyledDiv>
                 <Plot
@@ -197,7 +198,7 @@ class VolcanoPlotly extends React.Component {
                         displayModeBar: false,
                     }}
                     onLegendClick={(e) => !(e.expandedIndex >= 4)}
-                    onUpdate={() => changeSymbols()}
+                    onUpdate={() => changeSymbols(type)}
                 />
             </StyledDiv>
         );

@@ -139,13 +139,13 @@ class DrugPage extends Component {
             accessor: 'p_value',
             sortable: true,
             sortMethod(a, b) { return b - a; },
-            Cell: (row) => parseFloat(row.value).toExponential(3),
+            Cell: (row) => parseFloat(row.value).toExponential(1),
         }, {
             Header: 'fdr',
             accessor: 'fdr',
             sortable: true,
             sortMethod(a, b) { return b - a; },
-            Cell: (row) => parseFloat(row.value).toExponential(2),
+            Cell: (row) => parseFloat(row.value).toExponential(1),
         }, {
             Header: 'Dataset',
             accessor: 'dataset_name',
@@ -176,7 +176,7 @@ class DrugPage extends Component {
                     defaultPageSize={10}
                     defaultSorted={[
                         {
-                            id: 'p_value',
+                            id: 'fold_change',
                             desc: true,
                         },
                     ]}
