@@ -22,10 +22,10 @@ const d3Changes = (type) => {
     d3.select('.groups:nth-of-type(1) path.scatterpts').style('fill', 'black');
     if (type == 'drug') {
         d3.select('.groups:nth-of-type(2) path.scatterpts').style('fill', 'black');
-        d3.select('.groups:nth-of-type(3) .legendtoggle').style('cursor', 'default');
+        d3.selectAll('.groups:nth-of-type(3) .legendtoggle').style('cursor', 'default');
         d3.select('.groups:nth-of-type(3)').attr('transform', 'translate(0,100)');
     } else {
-        d3.select('.groups:nth-of-type(2) .legendtoggle').style('cursor', 'default');
+        d3.selectAll('.groups:nth-of-type(2) .legendtoggle').style('cursor', 'default');
         d3.select('.groups:nth-of-type(2)').attr('transform', 'translate(0,100)');
     }
     
