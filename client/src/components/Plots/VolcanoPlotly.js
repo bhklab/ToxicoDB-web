@@ -18,12 +18,39 @@ width: 100%;
     }
 `;
 
-const changeSymbols = (type) => {
-    d3.select('.groups:nth-of-type(1) .scatterpts').style('opacity', '0');
+const d3Changes = (type) => {
+    d3.select('.groups:nth-of-type(1) path.scatterpts').style('fill', 'black');
     if (type == 'drug') {
-        d3.select('.groups:nth-of-type(2) .scatterpts').style('opacity', '0');
+        d3.select('.groups:nth-of-type(2) path.scatterpts').style('fill', 'black');
+        d3.select('.groups:nth-of-type(3) .legendtoggle').style('cursor', 'default');
+        d3.select('.groups:nth-of-type(3)').attr('transform', 'translate(0,100)');
+    } else {
+        d3.select('.groups:nth-of-type(2) .legendtoggle').style('cursor', 'default');
+        d3.select('.groups:nth-of-type(2)').attr('transform', 'translate(0,100)');
     }
+    
+    d3.select('g.scrollbox').attr('clip-path', '');
+
+    d3.select('.legendTitle').remove();
+    d3.select('g.legend').append('text')
+        .attr('class', 'legendTitle')
+        .attr('fill', 'black')
+        .attr('x', 20)
+        .attr('y', 20)
+        .text('Dataset Selectors')
+
+    d3.select('.scrollbox').attr('transform', 'translate(0,30)');
 };
+
+const click = (data, type, queryId) => {
+
+    const id = parseInt(data.points[0].data.click_ids[data.points[0].pointIndex]);
+    if (type == 'drug') {
+        document.location.href = `/expression?drugId=${queryId}&geneId=${id}`;
+    } else {
+        document.location.href = `/expression?drugId=${id}&geneId=${queryId}`;
+    }
+}
 
 class VolcanoPlotly extends React.Component {
     constructor(props) {
@@ -36,9 +63,8 @@ class VolcanoPlotly extends React.Component {
 
     componentDidMount() {
         const {
-            data, type
+            data, type, queryId
         } = this.props;
-        console.log(data);
         this.formatData(data);
     }
 
@@ -52,10 +78,13 @@ class VolcanoPlotly extends React.Component {
             mode: 'markers',
             x: [],
             y: [],
+            click_ids: [],
             hoverinfo: 'text',
             hovertext: [],
             marker: {
                 color: '#5cc33c',
+                symbol: 'triangle-up',
+                size:8,
             },
             name: 'TGGATES Rat LDH',
             legendgroup: 'TGGATES Rat LDH',
@@ -67,10 +96,13 @@ class VolcanoPlotly extends React.Component {
             mode: 'markers',
             x: [],
             y: [],
+            click_ids: [],
             hoverinfo: 'text',
             hovertext: [],
             marker: {
                 color: '#5cc33c',
+                symbol: 'square',
+                size:7,
             },
             name: 'TGGATES Human LDH',
             legendgroup: 'TGGATES Human LDH',
@@ -81,10 +113,13 @@ class VolcanoPlotly extends React.Component {
             mode: 'markers',
             x: [],
             y: [],
+            click_ids: [],
             hoverinfo: 'text',
             hovertext: [],
             marker: {
                 color: '#4c84b1',
+                symbol: 'triangle-up',
+                size:8,
             },
             name: 'TGGATES Rat LDH',
             legendgroup: 'TGGATES Rat LDH',
@@ -95,10 +130,13 @@ class VolcanoPlotly extends React.Component {
             mode: 'markers',
             x: [],
             y: [],
+            click_ids: [],
             hoverinfo: 'text',
             hovertext: [],
             marker: {
                 color: '#4c84b1',
+                symbol: 'square',
+                size:7,
             },
             name: 'TGGATES Human LDH',
             legendgroup: 'TGGATES Human LDH',
@@ -115,7 +153,7 @@ class VolcanoPlotly extends React.Component {
             marker: {
                 color: '#5cc33c',
             },
-            name: 'fdr < 0.05 and fold change >= |1|',
+            name: 'fdr < 0.05 and |fold change| >= 1',
             legendgroup: 'legend',
         };
 
@@ -130,7 +168,7 @@ class VolcanoPlotly extends React.Component {
             marker: {
                 color: '#4c84b1',
             },
-            name: 'fdr < 0.05 and fold change < |1|',
+            name: 'fdr < 0.05 and |fold change| < 1',
             legendgroup: 'legend',
         };
 
@@ -144,11 +182,21 @@ class VolcanoPlotly extends React.Component {
                     const trace = d.dataset_name === 'TGGATES Human LDH' ? greenTraceHuman : greenTraceRat;
                     trace.x.push(d.fold_change);
                     trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
+                    if (type == 'drug') {
+                        trace.click_ids.push(d.gene_id);
+                    } else {
+                        trace.click_ids.push(d.drug_id);
+                    }
                     trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
                 } else if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) < 1) {
                     const trace = d.dataset_name === 'TGGATES Human LDH' ? blueTraceHuman : blueTraceRat;
                     trace.x.push(d.fold_change);
                     trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
+                    if (type == 'drug') {
+                        trace.click_ids.push(d.gene_id);
+                    } else {
+                        trace.click_ids.push(d.drug_id);
+                    }
                     trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
                 }
             }
@@ -186,7 +234,7 @@ class VolcanoPlotly extends React.Component {
 
     render() {
         const { layout, data } = this.state;
-        const { plotId, type } = this.props;
+        const { plotId, type, queryId } = this.props;
         return (
             <StyledDiv>
                 <Plot
@@ -198,7 +246,8 @@ class VolcanoPlotly extends React.Component {
                         displayModeBar: false,
                     }}
                     onLegendClick={(e) => !(e.expandedIndex >= 4)}
-                    onUpdate={() => changeSymbols(type)}
+                    onUpdate={() => d3Changes(type)}
+                    onClick={(d) => click(d,type, queryId)}
                 />
             </StyledDiv>
         );
