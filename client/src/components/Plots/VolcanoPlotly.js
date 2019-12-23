@@ -51,6 +51,8 @@ class VolcanoPlotly extends React.Component {
             mode: 'markers',
             x: [],
             y: [],
+            hoverinfo: 'text',
+            hovertext: [],
             marker: {
                 color: '#5cc33c',
             },
@@ -64,6 +66,8 @@ class VolcanoPlotly extends React.Component {
             mode: 'markers',
             x: [],
             y: [],
+            hoverinfo: 'text',
+            hovertext: [],
             marker: {
                 color: '#5cc33c',
             },
@@ -76,6 +80,8 @@ class VolcanoPlotly extends React.Component {
             mode: 'markers',
             x: [],
             y: [],
+            hoverinfo: 'text',
+            hovertext: [],
             marker: {
                 color: '#4c84b1',
             },
@@ -88,6 +94,8 @@ class VolcanoPlotly extends React.Component {
             mode: 'markers',
             x: [],
             y: [],
+            hoverinfo: 'text',
+            hovertext: [],
             marker: {
                 color: '#4c84b1',
             },
@@ -135,10 +143,12 @@ class VolcanoPlotly extends React.Component {
                     const trace = d.dataset_name === 'TGGATES Human LDH' ? greenTraceHuman : greenTraceRat;
                     trace.x.push(d.fold_change);
                     trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
+                    trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
                 } else if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) < 1) {
                     const trace = d.dataset_name === 'TGGATES Human LDH' ? blueTraceHuman : blueTraceRat;
                     trace.x.push(d.fold_change);
                     trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
+                    trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
                 }
             }
         });
