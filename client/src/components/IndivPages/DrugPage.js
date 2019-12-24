@@ -1,10 +1,9 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table';
 import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
-import Volcano from '../Plots/Volcano';
 import VolcanoPlotly from '../Plots/VolcanoPlotly';
 import 'react-table/react-table.css';
 
@@ -88,7 +87,7 @@ class DrugPage extends Component {
             .then((res) => {
                 const { data } = res;
                 const annotationData = [];
-                Object.keys(data[0]).forEach((x, i) => {
+                Object.keys(data[0]).forEach((x) => {
                     if (x !== 'name' && x !== 'id') {
                         const temp = {
                             name: x,
@@ -114,7 +113,11 @@ class DrugPage extends Component {
             .then((res) => {
                 const { data } = res;
                 const filteredData = data.filter((item) => parseFloat(item.p_value) !== 0 && item.dataset_name !== 'drugMatrix');
-                this.setState({ analysisData: filteredData, volcanoData: filteredData, loading: false });
+                this.setState({
+                    analysisData: filteredData,
+                    volcanoData: filteredData,
+                    loading: false,
+                });
             });
     }
 

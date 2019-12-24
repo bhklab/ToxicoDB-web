@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import img1 from '../../../images/7.png';
 import img2 from '../../../images/8.png';
@@ -37,21 +37,25 @@ const GeneDoc = () => (
             <img className="doc-img" src={img3} alt="" />
         </Link>
         <p>Upon entering the gene name, an exclusive web page for the gene shows annotations and links to several databases, highlighted in pink.</p>
-        <Link to="/genes/7468">
+        <Link to="/genes/423">
             <img className="doc-img" src={img4} alt="" />
         </Link>
         <p>This is a table summarizing top drugs associated with the gene for dataset of choice. The dataset can be selected by typing the name in the Dataset column.</p>
-        <Link to="/genes/7468">
+        <Link to="/genes/423">
             <img className="doc-img" src={img5} alt="" />
         </Link>
         <p>
-            Lastly, a volcano plot to visualize top drugs associated with the gene. Green dots, if present, represent the top drugs with fold change >= |1| and FDR
+            Lastly, a volcano plot to visualize top drugs associated with the gene. Green dots, if present, represent the top drugs with fold change
+            {' '}
+            {'>='}
+            {' '}
+            |1| and FDR
             {' '}
             {'<'}
             {' '}
             0.05. The name of the drug will be highlighted upon hovering on the dots as shown below.
         </p>
-        <Link to="/genes/7468">
+        <Link to="/genes/423">
             <img className="doc-img last" src={img6} alt="" />
         </Link>
     </div>

@@ -1,3 +1,4 @@
+/* eslint-disable radix */
 import React from 'react';
 import Plot from 'react-plotly.js';
 import styled from 'styled-components';
@@ -20,7 +21,7 @@ width: 100%;
 
 const d3Changes = (type) => {
     d3.select('.groups:nth-of-type(1) path.scatterpts').style('fill', 'black');
-    if (type == 'drug') {
+    if (type === 'drug') {
         d3.select('.groups:nth-of-type(2) path.scatterpts').style('fill', 'black');
         d3.selectAll('.groups:nth-of-type(3) .legendtoggle').style('cursor', 'default');
         d3.select('.groups:nth-of-type(3)').attr('transform', 'translate(0,100)');
@@ -28,7 +29,7 @@ const d3Changes = (type) => {
         d3.selectAll('.groups:nth-of-type(2) .legendtoggle').style('cursor', 'default');
         d3.select('.groups:nth-of-type(2)').attr('transform', 'translate(0,100)');
     }
-    
+
     d3.select('g.scrollbox').attr('clip-path', '');
 
     d3.select('.legendTitle').remove();
@@ -37,20 +38,19 @@ const d3Changes = (type) => {
         .attr('fill', 'black')
         .attr('x', 20)
         .attr('y', 20)
-        .text('Dataset Selectors')
+        .text('Dataset Selectors');
 
     d3.select('.scrollbox').attr('transform', 'translate(0,30)');
 };
 
 const click = (data, type, queryId) => {
-
     const id = parseInt(data.points[0].data.click_ids[data.points[0].pointIndex]);
-    if (type == 'drug') {
+    if (type === 'drug') {
         document.location.href = `/expression?drugId=${queryId}&geneId=${id}`;
     } else {
         document.location.href = `/expression?drugId=${id}&geneId=${queryId}`;
     }
-}
+};
 
 class VolcanoPlotly extends React.Component {
     constructor(props) {
@@ -63,7 +63,7 @@ class VolcanoPlotly extends React.Component {
 
     componentDidMount() {
         const {
-            data, type, queryId
+            data, type, queryId,
         } = this.props;
         this.formatData(data);
     }
@@ -84,7 +84,7 @@ class VolcanoPlotly extends React.Component {
             marker: {
                 color: '#5cc33c',
                 symbol: 'triangle-up',
-                size:8,
+                size: 8,
             },
             name: 'TGGATES Rat LDH',
             legendgroup: 'TGGATES Rat LDH',
@@ -102,7 +102,7 @@ class VolcanoPlotly extends React.Component {
             marker: {
                 color: '#5cc33c',
                 symbol: 'square',
-                size:7,
+                size: 7,
             },
             name: 'TGGATES Human LDH',
             legendgroup: 'TGGATES Human LDH',
@@ -119,7 +119,7 @@ class VolcanoPlotly extends React.Component {
             marker: {
                 color: '#4c84b1',
                 symbol: 'triangle-up',
-                size:8,
+                size: 8,
             },
             name: 'TGGATES Rat LDH',
             legendgroup: 'TGGATES Rat LDH',
@@ -136,7 +136,7 @@ class VolcanoPlotly extends React.Component {
             marker: {
                 color: '#4c84b1',
                 symbol: 'square',
-                size:7,
+                size: 7,
             },
             name: 'TGGATES Human LDH',
             legendgroup: 'TGGATES Human LDH',
@@ -247,7 +247,7 @@ class VolcanoPlotly extends React.Component {
                     }}
                     onLegendClick={(e) => !(e.expandedIndex >= 4)}
                     onUpdate={() => d3Changes(type)}
-                    onClick={(d) => click(d,type, queryId)}
+                    onClick={(d) => click(d, type, queryId)}
                 />
             </StyledDiv>
         );
