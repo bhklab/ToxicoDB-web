@@ -52,6 +52,22 @@ const click = (data, type, queryId) => {
     }
 };
 
+const hover = (data) => {
+     // d3.selectAll('g.points').selectAll('path')
+    // .style('cursor', 'pointer')
+
+    let dragLayer = document.getElementsByClassName('nsewdrag')[0];
+    dragLayer.style.cursor = 'pointer';
+}
+
+const unhover = (data) => {
+     // d3.selectAll('g.points').selectAll('path')
+    // .style('cursor', 'pointer')
+
+    let dragLayer = document.getElementsByClassName('nsewdrag')[0];
+    dragLayer.style.cursor = '';
+}
+
 class VolcanoPlotly extends React.Component {
     constructor(props) {
         super(props);
@@ -248,6 +264,8 @@ class VolcanoPlotly extends React.Component {
                     onLegendClick={(e) => !(e.expandedIndex >= 4)}
                     onUpdate={() => d3Changes(type)}
                     onClick={(d) => click(d, type, queryId)}
+                    onHover={() => hover()}
+                    onUnhover={() => unhover()}
                 />
             </StyledDiv>
         );
