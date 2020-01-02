@@ -27,6 +27,7 @@ const GlobalStyles = createGlobalStyle`
         margin: 10px 20px;
         color: ${colors.blue_header};
         font-family: 'Raleway', sans-serif;
+        order: -5;
 
         .rt-thead.-header,
         .raw-names,
@@ -60,6 +61,10 @@ const GlobalStyles = createGlobalStyle`
 
         
         input {
+            background: ${colors.lightblue_bg} !important;
+        }
+
+        .rt-thead.-filters select {
             background: ${colors.lightblue_bg} !important;
         }
     }
