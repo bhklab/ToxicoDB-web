@@ -39,10 +39,6 @@ const StyledDrugPage = styled.div`
     .table {
         margin:60px 0px 30px 0px;
     }
-    select {
-        height: 100%;
-        width: 100%;
-    }
 `;
 
 const filterCaseInsensitive = (filter, row) => {
@@ -76,7 +72,6 @@ class DrugPage extends Component {
             volcanoData: [],
             analysisData: [],
             loading: true,
-            renderSelect: false,
         };
     }
 
@@ -125,10 +120,9 @@ class DrugPage extends Component {
 
     render() {
         const {
-            drugData, annotationData, volcanoData, analysisData, loading, renderSelect,
+            drugData, annotationData, volcanoData, analysisData, loading,
         } = this.state;
         const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
-        console.log(datasetOptions);
         const { match: { params } } = this.props;
         const columns = [{
             Header: 'Gene',

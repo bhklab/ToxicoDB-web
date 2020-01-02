@@ -66,6 +66,8 @@ const GlobalStyles = createGlobalStyle`
 
         .rt-thead.-filters select {
             background: ${colors.lightblue_bg} !important;
+            height: 100%;
+            width: 100%;
         }
     }
 `;

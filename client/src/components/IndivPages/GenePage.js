@@ -124,8 +124,7 @@ class GenePage extends Component {
             geneData, annotationData, volcanoData, analysisData, loading, selectedDataset,
         } = this.state;
         const { match: { params } } = this.props;
-        const datasetData = [...new Set(analysisData.map((item) => item.dataset_name))];
-        console.log(datasetData);
+        const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
         const columns = [{
             Header: 'Drug',
             accessor: 'drug_name',
@@ -153,48 +152,33 @@ class GenePage extends Component {
             Header: 'Dataset',
             accessor: 'dataset_name',
             sortable: true,
-            Filter: ({
-                column: {
-                    filterValue, setFilter, preFilteredRows, id,
-                },
-                // onChange,
-
-            }) => {
-                console.log(filterValue, setFilter, preFilteredRows, id);
-                return (
-                    <select
-                        value={filterValue}
-                        // onChange={(value) => onChange(value)}
-                    >
-                        <option value="">All</option>
-                        {datasetData.map((option, i) => (
-                            <option key={i} value={option}>
-                                {option}
-                            </option>
-                        ))}
-                    </select>
-                );
+            filterMethod: (filter, row) => {
+                if (filter.value === 'all') {
+                    return true;
+                }
+                // if (filter.value === 'true') {
+                //     return row[filter.id] >= 21;
+                // }
+                // return row[filter.id] < 21;
+                if (row.dataset_name === filter.value) {
+                    return true;
+                }
+                return false;
             },
-            // Filter: (temp) => {
-            //     // console.log(filterValue, setFilter, preFilteredRows, id);
-            //     console.log(temp);
-            //     // return (
-            //     //     <select
-            //     //         value={filterValue}
-            //     //         onChange={(e) => {
-            //     //             setFilter(e.target.value || undefined);
-            //     //         }}
-            //     //     >
-            //     //         <option value="">All</option>
-            //     //         {datasetData.map((option, i) => (
-            //     //             <option key={i} value={option}>
-            //     //                 {option}
-            //     //             </option>
-            //     //         ))}
-            //     //     </select>
-            //     // );
-            // },
-            filter: 'includes',
+            Filter: ({ filter, onChange }) => (
+                <select
+                    onChange={(event) => onChange(event.target.value)}
+                    style={{ width: '100%' }}
+                    value={filter ? filter.value : 'all'}
+                >
+                    <option value="all">Show All</option>
+                    {datasetOptions.map((option, i) => (
+                        <option key={i} value={option}>
+                            {option}
+                        </option>
+                    ))}
+                </select>
+            ),
         }];
         const headers = [
             { displayName: 'drug', id: 'drug_name' },
