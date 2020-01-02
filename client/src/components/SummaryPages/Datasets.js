@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import ReactTable from 'react-table';
+import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
 import 'react-table/react-table.css';
 
@@ -37,12 +37,12 @@ class Datasets extends Component {
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                console.log(data)
+                console.log(data);
                 data.forEach((d) => {
                     if (d.name === 'drugMatrix') {
-                        d.name = 'DrugMatrix Hepatocyte'
+                        d.name = 'DrugMatrix Hepatocyte';
                     }
-                })
+                });
                 this.setState({ datasetData: data, loading: false });
             });
     }

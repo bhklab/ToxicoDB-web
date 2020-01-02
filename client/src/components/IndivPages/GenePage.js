@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import ReactTable from 'react-table';
+import ReactTable from 'react-table-6';
+import Select from 'react-select';
 import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
 import Volcano from '../Plots/Volcano';
@@ -75,6 +76,7 @@ class GenePage extends Component {
             volcanoData: [],
             analysisData: [],
             loading: true,
+            selectedDataset: null,
         };
     }
 
@@ -85,7 +87,6 @@ class GenePage extends Component {
         fetch(`/api/v1/genes/${params.id}`)
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
                 const { data } = res;
                 const annotationData = [];
                 Object.keys(data[0]).forEach((x) => {
@@ -120,9 +121,11 @@ class GenePage extends Component {
 
     render() {
         const {
-            geneData, annotationData, volcanoData, analysisData, loading,
+            geneData, annotationData, volcanoData, analysisData, loading, selectedDataset,
         } = this.state;
         const { match: { params } } = this.props;
+        const datasetData = [...new Set(analysisData.map((item) => item.dataset_name))];
+        console.log(datasetData);
         const columns = [{
             Header: 'Drug',
             accessor: 'drug_name',
@@ -150,6 +153,48 @@ class GenePage extends Component {
             Header: 'Dataset',
             accessor: 'dataset_name',
             sortable: true,
+            Filter: ({
+                column: {
+                    filterValue, setFilter, preFilteredRows, id,
+                },
+                // onChange,
+
+            }) => {
+                console.log(filterValue, setFilter, preFilteredRows, id);
+                return (
+                    <select
+                        value={filterValue}
+                        // onChange={(value) => onChange(value)}
+                    >
+                        <option value="">All</option>
+                        {datasetData.map((option, i) => (
+                            <option key={i} value={option}>
+                                {option}
+                            </option>
+                        ))}
+                    </select>
+                );
+            },
+            // Filter: (temp) => {
+            //     // console.log(filterValue, setFilter, preFilteredRows, id);
+            //     console.log(temp);
+            //     // return (
+            //     //     <select
+            //     //         value={filterValue}
+            //     //         onChange={(e) => {
+            //     //             setFilter(e.target.value || undefined);
+            //     //         }}
+            //     //     >
+            //     //         <option value="">All</option>
+            //     //         {datasetData.map((option, i) => (
+            //     //             <option key={i} value={option}>
+            //     //                 {option}
+            //     //             </option>
+            //     //         ))}
+            //     //     </select>
+            //     // );
+            // },
+            filter: 'includes',
         }];
         const headers = [
             { displayName: 'drug', id: 'drug_name' },

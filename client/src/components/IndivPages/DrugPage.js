@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import ReactTable from 'react-table';
+import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
 import VolcanoPlotly from '../Plots/VolcanoPlotly';
@@ -16,11 +16,9 @@ const StyledDrugPage = styled.div`
     max-width: 1200px;
     padding:140px 0px;
     color: ${colors.blue_text};
-
     .volcanoWrapper {
         margin-top: 100px;
     }
-
     h1 {
         color: ${colors.red_highlight};
         font-family: 'Raleway', sans-serif;
@@ -34,11 +32,9 @@ const StyledDrugPage = styled.div`
         margin: 20px 0;
         font-weight:600;
     }
-
     a {
       color: ${colors.blue_text};
     }
-
     .table {
         margin:60px 0px 30px 0px;
     }
@@ -125,6 +121,7 @@ class DrugPage extends Component {
         const {
             drugData, annotationData, volcanoData, analysisData, loading,
         } = this.state;
+        const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
         const { match: { params } } = this.props;
         const columns = [{
             Header: 'Gene',
@@ -153,6 +150,35 @@ class DrugPage extends Component {
             Header: 'Dataset',
             accessor: 'dataset_name',
             sortable: true,
+            filterMethod: (filter, row) => {
+                if (filter.value === 'all') {
+                    return true;
+                }
+                // if (filter.value === 'true') {
+                //     return row[filter.id] >= 21;
+                // }
+                // return row[filter.id] < 21;
+                if (row.dataset_name === filter.value) {
+                    return true;
+                }
+                return false;
+            },
+            Filter: ({ filter, onChange }) => (
+                <select
+                    onChange={(event) => onChange(event.target.value)}
+                    style={{ width: '100%' }}
+                    value={filter ? filter.value : 'all'}
+                >
+                    <option value="all">Show All</option>
+                    {datasetOptions.map((option, i) => (
+                        <option key={i} value={option}>
+                            {option}
+                        </option>
+                    ))}
+                </select>
+            ),
+
+
         }];
 
         const headers = [
@@ -185,6 +211,7 @@ class DrugPage extends Component {
                     ]}
                     loading={loading}
                     LoadingComponent={LoadingComponent}
+
                 />
                 <DownloadButton
                     data={analysisData}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import ReactTable from 'react-table';
+import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
 import 'react-table/react-table.css';
 
