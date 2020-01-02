@@ -81,7 +81,11 @@ class Genes extends Component {
             Header: 'Entrez ID',
             accessor: 'entrez_gid',
             sortable: true,
-            Cell: (props) => <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/gene/?term=${props.value}`}>{props.value}</a>,
+            Cell: (props) => (
+                <a className="hover" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/gene/?term=${props.value}`}>
+                    {Number(props.value) === 0 ? '' : Number(props.value)}
+                </a>
+            ),
         }];
 
         return (
