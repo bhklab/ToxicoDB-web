@@ -34,7 +34,6 @@
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
     "mysql": "^2.17.1",
-    "prop-types": "^15.7.2",
     "query-string": "^6.9.0",
     "react-csv-downloader": "^1.4.0",
     "react-table": "^6.10.3"
