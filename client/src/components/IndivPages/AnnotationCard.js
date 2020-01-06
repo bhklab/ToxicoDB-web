@@ -47,7 +47,7 @@ class AnnotationCard extends Component {
     createCard() {
         const { data } = this.props;
         const table = [];
-        const isDrugData = data.filter(val => val.name === 'pubchem')
+        const isDrugData = data.filter((val) => val.name === 'pubchem');
 
         // this will create subelements for the table row with more than one variable.
         const createSubCard = (val) => {
@@ -129,8 +129,8 @@ class AnnotationCard extends Component {
                             }
                         </td>
                         <td className="value" key={data[j].value}>
-                            { ( data[j].name === 'name' || data[j].name === 'ensembl_gid' || 
-                                    data[j].name === 'entrez_gid' || data[j].name === 'pubchem' ||( data[j].name === 'symbol' && isDrugData.length === 0))
+                            { (data[j].name === 'name' || data[j].name === 'ensembl_gid'
+                                    || data[j].name === 'entrez_gid' || data[j].name === 'pubchem' || (data[j].name === 'symbol' && isDrugData.length === 0))
                                 ? (
                                     createLink(data[j])
                                 )
