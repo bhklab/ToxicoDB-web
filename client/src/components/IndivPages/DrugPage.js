@@ -84,6 +84,7 @@ class DrugPage extends Component {
             .then((res) => {
                 const { data } = res;
                 const annotationData = [];
+                console.log(data);
                 Object.keys(data[0]).forEach((x) => {
                     if (x !== 'name' && x !== 'id') {
                         const temp = {
@@ -91,6 +92,7 @@ class DrugPage extends Component {
                             value: data[0][x],
                         };
                         annotationData.push(temp);
+                        console.log(annotationData);
                     }
                 });
                 this.setState({ drugData: data[0], annotationData });
