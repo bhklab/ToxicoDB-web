@@ -5,7 +5,6 @@ const useFetchAnalysisData = (url) => {
     const [{ analysisData, loading }, setAnalysisData] = useState({
         analysisData: [], loading: true,
     });
-    console.log('useFetchAnalysisData');
     useEffect(() => {
         setAnalysisData({ volcanoData: [], analysisData: [], loading: true });
         fetch(url)

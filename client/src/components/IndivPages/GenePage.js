@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
@@ -71,9 +71,9 @@ const filterCaseInsensitive = (filter, row) => {
 
 const GenePage = (props) => {
     const { match: { params } } = props;
-    // geneData and annotationData are being updated together
+    // apiData and annotationData are being updated together
     // so they can be handled under the same hook
-    const { geneData, annotationData } = useFetchAnnotation(`/api/v1/genes/${params.id}`, 'gene');
+    const { apiData, annotationData } = useFetchAnnotation(`/api/v1/genes/${params.id}`, 'gene');
     // analysisData and loading are handled together => one hook
     const { analysisData, loading } = useFetchAnalysisData(`/api/v1/genes/${params.id}/analysis`);
 
@@ -82,7 +82,7 @@ const GenePage = (props) => {
         Header: 'Drug',
         accessor: 'drug_name',
         sortable: true,
-        Cell: (row) => (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${geneData.id}`}>{row.value}</Link>),
+        Cell: (row) => (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${apiData.id}`}>{row.value}</Link>),
     }, {
         Header: 'log2(fold change)',
         accessor: 'fold_change',
@@ -137,9 +137,9 @@ const GenePage = (props) => {
     ];
     return (
         <StyledGenePage>
-            {geneData.length === 0 ? null : (
+            {apiData.length === 0 ? null : (
                 <>
-                    <h1>{geneData.symbol}</h1>
+                    <h1>{apiData.symbol}</h1>
                     <h2>Annotations</h2>
                     <AnnotationCard data={annotationData} />
                 </>
@@ -162,7 +162,7 @@ const GenePage = (props) => {
             />
             <DownloadButton
                 data={analysisData}
-                filename={`${geneData.name}-drugsData`}
+                filename={`${apiData.name}-drugsData`}
                 headers={headers}
             />
 
@@ -172,7 +172,7 @@ const GenePage = (props) => {
                         <h2>
                             Analysis -
                             {' '}
-                            {geneData.symbol}
+                            {apiData.symbol}
                         </h2>
 
                     </center>
