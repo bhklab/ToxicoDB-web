@@ -6,6 +6,8 @@ import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
 import VolcanoPlotly from '../Plots/VolcanoPlotly';
+import VolcanoSingle from '../Plots/VolcanoSingle';
+import VolcanoSelect from './VolcanoSelect';
 import DownloadButton from '../Utils/DownloadButton';
 import 'react-table-6/react-table.css';
 // 2 custom hooks to get and process the data
@@ -19,11 +21,6 @@ const StyledGenePage = styled.div`
     max-width: 1200px;
     padding:140px 0px;
     color: ${colors.blue_text};
-
-    .volcanoWrapper {
-        margin-top: 100px;
-    }
-
     h1 {
         color: ${colors.red_highlight};
         font-family: 'Raleway', sans-serif;
@@ -44,6 +41,9 @@ const StyledGenePage = styled.div`
     
     .table {
         margin:60px 0px 30px 0px;
+    }
+    .volcanoWrapper {
+        margin-top: 100px;
     }
 `;
 
@@ -166,24 +166,47 @@ const GenePage = (props) => {
                 headers={headers}
             />
 
-            {analysisData.length !== 0 && (
-                <div className="volcanoWrapper">
-                    <center>
-                        <h2>
+             {/* {analysisData.length === 0 ? null : (
+                    <div className="volcanoWrapper">
+                        <center>
+                            <h2>
                             Analysis -
-                            {' '}
-                            {apiData.symbol}
-                        </h2>
+                                {' '}
+                                {geneData.symbol}
+                            </h2>
 
-                    </center>
-                    <VolcanoPlotly
-                        data={analysisData}
-                        queryId={params.id}
-                        plotId="volcanoPlot"
-                        type="gene"
-                    />
-                </div>
-            )}
+                        </center>
+                        <Volcano
+                            data={analysisData}
+                            queryId={params.id}
+                            plotId="volcanoPlot"
+                            type="gene"
+                        />
+                        <VolcanoPlotly
+                            data={analysisData}
+                            queryId={params.id}
+                            plotId="volcanoPlot"
+                            type="gene"
+                        />
+                    </div>
+                )} */}
+                {analysisData.length === 0 ? null : (
+                    <div className='volcanoWrapper'>
+                        <center>
+                            <h2>
+                            Analysis -
+                                {' '}
+                                {apiData.symbol}
+                            </h2>
+    
+                        </center>
+                        <VolcanoSelect 
+                            data={analysisData}
+                            queryId={params.id}
+                            type="gene"
+                        />
+                    </div>
+                )}
         </StyledGenePage>
     );
 };
