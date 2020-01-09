@@ -7,6 +7,8 @@ import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
 import Volcano from '../Plots/Volcano';
 import VolcanoPlotly from '../Plots/VolcanoPlotly';
+import VolcanoSingle from '../Plots/VolcanoSingle';
+import VolcanoSelect from './VolcanoSelect';
 import DownloadButton from '../Utils/DownloadButton';
 import 'react-table/react-table.css';
 
@@ -17,11 +19,6 @@ const StyledGenePage = styled.div`
     max-width: 1200px;
     padding:140px 0px;
     color: ${colors.blue_text};
-
-    .volcanoWrapper {
-        margin-top: 100px;
-    }
-
     h1 {
         color: ${colors.red_highlight};
         font-family: 'Raleway', sans-serif;
@@ -42,6 +39,9 @@ const StyledGenePage = styled.div`
     
     .table {
         margin:60px 0px 30px 0px;
+    }
+    .volcanoWrapper {
+        margin-top: 100px;
     }
 `;
 
@@ -217,7 +217,7 @@ class GenePage extends Component {
                     headers={headers}
                 />
 
-                {volcanoData.length === 0 ? null : (
+                {/* {volcanoData.length === 0 ? null : (
                     <div className="volcanoWrapper">
                         <center>
                             <h2>
@@ -227,16 +227,33 @@ class GenePage extends Component {
                             </h2>
 
                         </center>
-                        {/* <Volcano
+                        <Volcano
                             data={volcanoData}
                             queryId={params.id}
                             plotId="volcanoPlot"
                             type="gene"
-                        /> */}
+                        />
                         <VolcanoPlotly
                             data={volcanoData}
                             queryId={params.id}
                             plotId="volcanoPlot"
+                            type="gene"
+                        />
+                    </div>
+                )} */}
+                {volcanoData.length === 0 ? null : (
+                    <div className='volcanoWrapper'>
+                        <center>
+                            <h2>
+                            Analysis -
+                                {' '}
+                                {geneData.symbol}
+                            </h2>
+    
+                        </center>
+                        <VolcanoSelect 
+                            data={volcanoData}
+                            queryId={params.id}
                             type="gene"
                         />
                     </div>
