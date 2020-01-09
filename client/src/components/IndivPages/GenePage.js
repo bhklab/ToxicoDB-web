@@ -1,16 +1,18 @@
-import React, { Component, Fragment } from 'react';
+/* eslint-disable no-console */
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
-import Select from 'react-select';
 import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
-import Volcano from '../Plots/Volcano';
 import VolcanoPlotly from '../Plots/VolcanoPlotly';
 import VolcanoSingle from '../Plots/VolcanoSingle';
 import VolcanoSelect from './VolcanoSelect';
 import DownloadButton from '../Utils/DownloadButton';
 import 'react-table/react-table.css';
+// 2 custom hooks to get and process the data
+import useFetchAnnotation from './Hooks/useFetchAnnotation';
+import useFetchAnalysisData from './Hooks/useFetchAnalysisData';
 
 import LoadingComponent from '../Utils/Loading';
 
@@ -67,157 +69,104 @@ const filterCaseInsensitive = (filter, row) => {
     }
 };
 
-class GenePage extends Component {
-    constructor() {
-        super();
-        this.state = {
-            geneData: [],
-            annotationData: [],
-            volcanoData: [],
-            analysisData: [],
-            loading: true,
-            selectedDataset: null,
-        };
-    }
+const GenePage = (props) => {
+    const { match: { params } } = props;
+    // apiData and annotationData are being updated together
+    // so they can be handled under the same hook
+    const { apiData, annotationData } = useFetchAnnotation(`/api/v1/genes/${params.id}`, 'gene');
+    // analysisData and loading are handled together => one hook
+    const { analysisData, loading } = useFetchAnalysisData(`/api/v1/genes/${params.id}/analysis`);
 
-    componentDidMount() {
-        const { match: { params } } = this.props;
+    const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
+    const columns = [{
+        Header: 'Drug',
+        accessor: 'drug_name',
+        sortable: true,
+        Cell: (row) => (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${apiData.id}`}>{row.value}</Link>),
+    }, {
+        Header: 'log2(fold change)',
+        accessor: 'fold_change',
+        sortable: true,
+        sortMethod(a, b) { return b - a; },
+        Cell: (row) => parseFloat(row.value).toFixed(1),
+    }, {
+        Header: 'p-value',
+        accessor: 'p_value',
+        sortable: true,
+        sortMethod(a, b) { return b - a; },
+        Cell: (row) => parseFloat(row.value).toExponential(1),
+    }, {
+        Header: 'fdr',
+        accessor: 'fdr',
+        sortable: true,
+        sortMethod(a, b) { return b - a; },
+        Cell: (row) => parseFloat(row.value).toExponential(1),
+    }, {
+        Header: 'Dataset',
+        accessor: 'dataset_name',
+        sortable: true,
+        filterMethod: (filter, row) => {
+            if (filter.value === 'all') {
+                return true;
+            }
+            if (row.dataset_name === filter.value) {
+                return true;
+            }
+            return false;
+        },
+        Filter: ({ filter, onChange }) => (
+            <select
+                onChange={(event) => onChange(event.target.value)}
+                style={{ width: '100%' }}
+                value={filter ? filter.value : 'all'}
+            >
+                <option value="all">Show All</option>
+                {datasetOptions.map((option, i) => (
+                    <option key={i} value={option}>
+                        {option}
+                    </option>
+                ))}
+            </select>
+        ),
+    }];
+    const headers = [
+        { displayName: 'drug', id: 'drug_name' },
+        { displayName: 'p-value', id: 'p_value' },
+        { displayName: 'fold-change', id: 'fold_change' },
+        { displayName: 'dataset', id: 'dataset_name' },
+    ];
+    return (
+        <StyledGenePage>
+            {apiData.length === 0 ? null : (
+                <>
+                    <h1>{apiData.symbol}</h1>
+                    <h2>Annotations</h2>
+                    <AnnotationCard data={annotationData} />
+                </>
+            )}
+            <ReactTable
+                data={analysisData}
+                columns={columns}
+                filterable
+                defaultFilterMethod={filterCaseInsensitive}
+                className="table -highlight"
+                defaultPageSize={10}
+                defaultSorted={[
+                    {
+                        id: 'fold_change',
+                        desc: true,
+                    },
+                ]}
+                loading={loading}
+                LoadingComponent={LoadingComponent}
+            />
+            <DownloadButton
+                data={analysisData}
+                filename={`${apiData.name}-drugsData`}
+                headers={headers}
+            />
 
-        // annotations
-        fetch(`/api/v1/genes/${params.id}`)
-            .then((response) => response.json())
-            .then((res) => {
-                const { data } = res;
-                const annotationData = [];
-                Object.keys(data[0]).forEach((x) => {
-                    if (x !== 'id' && x !== 'ensembl_tid') {
-                        const temp = {
-                            name: x,
-                            value: data[0][x],
-                        };
-                        annotationData.push(temp);
-                    }
-                });
-                this.setState({ geneData: data[0], annotationData });
-            });
-
-        // // volcano plot
-        // fetch(`/api/v1/analysis?geneId=${params.id}`)
-        //     .then((response) => response.json())
-        //     .then((res) => {
-        //         const {data} = res;
-        //         this.setState({volcanoData: data})
-        //     })
-
-        // analysis table
-        fetch(`/api/v1/genes/${params.id}/analysis`)
-            .then((response) => response.json())
-            .then((res) => {
-                const { data } = res;
-                const filteredData = data.filter((item) => parseFloat(item.p_value) !== 0 && item.dataset_name !== 'drugMatrix');
-                this.setState({ volcanoData: filteredData, analysisData: filteredData, loading: false });
-            });
-    }
-
-    render() {
-        const {
-            geneData, annotationData, volcanoData, analysisData, loading, selectedDataset,
-        } = this.state;
-        const { match: { params } } = this.props;
-        const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
-        const columns = [{
-            Header: 'Drug',
-            accessor: 'drug_name',
-            sortable: true,
-            Cell: (row) => (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${geneData.id}`}>{row.value}</Link>),
-        }, {
-            Header: 'log2(fold change)',
-            accessor: 'fold_change',
-            sortable: true,
-            sortMethod(a, b) { return b - a; },
-            Cell: (row) => parseFloat(row.value).toFixed(1),
-        }, {
-            Header: 'p-value',
-            accessor: 'p_value',
-            sortable: true,
-            sortMethod(a, b) { return b - a; },
-            Cell: (row) => parseFloat(row.value).toExponential(1),
-        }, {
-            Header: 'fdr',
-            accessor: 'fdr',
-            sortable: true,
-            sortMethod(a, b) { return b - a; },
-            Cell: (row) => parseFloat(row.value).toExponential(1),
-        }, {
-            Header: 'Dataset',
-            accessor: 'dataset_name',
-            sortable: true,
-            filterMethod: (filter, row) => {
-                if (filter.value === 'all') {
-                    return true;
-                }
-                // if (filter.value === 'true') {
-                //     return row[filter.id] >= 21;
-                // }
-                // return row[filter.id] < 21;
-                if (row.dataset_name === filter.value) {
-                    return true;
-                }
-                return false;
-            },
-            Filter: ({ filter, onChange }) => (
-                <select
-                    onChange={(event) => onChange(event.target.value)}
-                    style={{ width: '100%' }}
-                    value={filter ? filter.value : 'all'}
-                >
-                    <option value="all">Show All</option>
-                    {datasetOptions.map((option, i) => (
-                        <option key={i} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </select>
-            ),
-        }];
-        const headers = [
-            { displayName: 'drug', id: 'drug_name' },
-            { displayName: 'p-value', id: 'p_value' },
-            { displayName: 'fold-change', id: 'fold_change' },
-            { displayName: 'dataset', id: 'dataset_name' },
-        ];
-        return (
-            <StyledGenePage>
-                {geneData.length === 0 ? null : (
-                    <>
-                        <h1>{geneData.symbol}</h1>
-                        <h2>Annotations</h2>
-                        <AnnotationCard data={annotationData} />
-                    </>
-                )}
-                <ReactTable
-                    data={analysisData}
-                    columns={columns}
-                    filterable
-                    defaultFilterMethod={filterCaseInsensitive}
-                    className="table -highlight"
-                    defaultPageSize={10}
-                    defaultSorted={[
-                        {
-                            id: 'fold_change',
-                            desc: true,
-                        },
-                    ]}
-                    loading={loading}
-                    LoadingComponent={LoadingComponent}
-                />
-                <DownloadButton
-                    data={analysisData}
-                    filename={`${geneData.name}-drugsData`}
-                    headers={headers}
-                />
-
-                {/* {volcanoData.length === 0 ? null : (
+             {/* {analysisData.length === 0 ? null : (
                     <div className="volcanoWrapper">
                         <center>
                             <h2>
@@ -228,41 +177,39 @@ class GenePage extends Component {
 
                         </center>
                         <Volcano
-                            data={volcanoData}
+                            data={analysisData}
                             queryId={params.id}
                             plotId="volcanoPlot"
                             type="gene"
                         />
                         <VolcanoPlotly
-                            data={volcanoData}
+                            data={analysisData}
                             queryId={params.id}
                             plotId="volcanoPlot"
                             type="gene"
                         />
                     </div>
                 )} */}
-                {volcanoData.length === 0 ? null : (
+                {analysisData.length === 0 ? null : (
                     <div className='volcanoWrapper'>
                         <center>
                             <h2>
                             Analysis -
                                 {' '}
-                                {geneData.symbol}
+                                {apiData.symbol}
                             </h2>
     
                         </center>
                         <VolcanoSelect 
-                            data={volcanoData}
+                            data={analysisData}
                             queryId={params.id}
                             type="gene"
                         />
                     </div>
                 )}
-
-            </StyledGenePage>
-        );
-    }
-}
+        </StyledGenePage>
+    );
+};
 
 
 export default GenePage;

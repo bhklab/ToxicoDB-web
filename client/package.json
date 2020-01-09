@@ -14,7 +14,6 @@
     "react-plotly.js": "^2.4.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "react-select": "^3.0.8",
     "react-select-fast-filter-options": "^0.2.3",
     "react-select-virtualized": "^2.3.3",
     "react-slick": "^0.25.2",
