@@ -34,9 +34,7 @@
     "lodash": "^4.17.15",
     "morgan": "^1.9.1",
     "mysql": "^2.17.1",
-    "query-string": "^6.9.0",
-    "react-csv-downloader": "^1.4.0",
-    "react-table": "^6.10.3"
+    "query-string": "^6.9.0"
   },
   "devDependencies": {
     "eslint": "^6.6.0",

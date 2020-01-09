@@ -7,7 +7,7 @@ import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
 import VolcanoPlotly from '../Plots/VolcanoPlotly';
 import DownloadButton from '../Utils/DownloadButton';
-import 'react-table/react-table.css';
+import 'react-table-6/react-table.css';
 // 2 custom hooks to get and process the data
 import useFetchAnnotation from './Hooks/useFetchAnnotation';
 import useFetchAnalysisData from './Hooks/useFetchAnalysisData';

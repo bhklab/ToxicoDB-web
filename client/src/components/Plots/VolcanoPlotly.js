@@ -53,20 +53,20 @@ const click = (data, type, queryId) => {
 };
 
 const hover = (data) => {
-     // d3.selectAll('g.points').selectAll('path')
+    // d3.selectAll('g.points').selectAll('path')
     // .style('cursor', 'pointer')
 
-    let dragLayer = document.getElementsByClassName('nsewdrag')[0];
+    const dragLayer = document.getElementsByClassName('nsewdrag')[0];
     dragLayer.style.cursor = 'pointer';
-}
+};
 
 const unhover = (data) => {
-     // d3.selectAll('g.points').selectAll('path')
+    // d3.selectAll('g.points').selectAll('path')
     // .style('cursor', 'pointer')
 
-    let dragLayer = document.getElementsByClassName('nsewdrag')[0];
+    const dragLayer = document.getElementsByClassName('nsewdrag')[0];
     dragLayer.style.cursor = '';
-}
+};
 
 class VolcanoPlotly extends React.Component {
     constructor(props) {
@@ -81,6 +81,7 @@ class VolcanoPlotly extends React.Component {
         const {
             data, type, queryId,
         } = this.props;
+        console.log(data);
         this.formatData(data);
     }
 
@@ -198,7 +199,7 @@ class VolcanoPlotly extends React.Component {
                     const trace = d.dataset_name === 'TGGATES Human LDH' ? greenTraceHuman : greenTraceRat;
                     trace.x.push(d.fold_change);
                     trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
-                    if (type == 'drug') {
+                    if (type === 'drug') {
                         trace.click_ids.push(d.gene_id);
                     } else {
                         trace.click_ids.push(d.drug_id);
@@ -208,7 +209,7 @@ class VolcanoPlotly extends React.Component {
                     const trace = d.dataset_name === 'TGGATES Human LDH' ? blueTraceHuman : blueTraceRat;
                     trace.x.push(d.fold_change);
                     trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
-                    if (type == 'drug') {
+                    if (type === 'drug') {
                         trace.click_ids.push(d.gene_id);
                     } else {
                         trace.click_ids.push(d.drug_id);
