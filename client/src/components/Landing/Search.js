@@ -154,10 +154,20 @@ class Search extends Component {
         fetch('/api/v1/genes')
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
-                const geneData = data.data.map((x) => ({
-                    label: x.symbol.charAt(0).toUpperCase() + x.symbol.slice(1),
-                    value: x.id,
+                // Generating an array of options fro react select where value section
+                // can store multiple ids
+                const geneObj = {};
+                data.data.forEach((item) => {
+                    const name = item.symbol.toUpperCase();
+                    if (!geneObj[name]) {
+                        geneObj[name] = { label: name, value: [item.id] };
+                    } else {
+                        geneObj[name].value.push(item.id);
+                    }
+                });
+                const geneData = Object.values(geneObj).map((x) => ({
+                    label: x.label,
+                    value: x.value,
                     type: 'gene',
                 }));
                 // adding genes data to searchData drug options

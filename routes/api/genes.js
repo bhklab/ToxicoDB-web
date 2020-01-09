@@ -5,22 +5,12 @@ const knex = require('../../db/knex');
 // get all the data from the genes table.
 
 const getGenes = function (request, response) {
-    knex.select('genes.id as id', 'genes.name as name', 'symbol', 'ensembl_tid', 'entrez_gid', 'transcript_name', 'datasets.name as dataset')
+    knex.select('id', 'name', 'symbol', 'ensembl_tid', 'entrez_gid', 'transcript_name')
         .from('genes')
         .leftJoin(
             'gene_annotations',
             'genes.id',
             'gene_annotations.gene_id',
-        )
-        .leftJoin(
-            'genes_datasets',
-            'genes_datasets.gene_id',
-            'genes.id',
-        )
-        .leftJoin(
-            'datasets',
-            'genes_datasets.dataset_id',
-            'datasets.id',
         )
         .then((gene) => {
             // this will loop through the data and remove _at from ensembl_gid.
