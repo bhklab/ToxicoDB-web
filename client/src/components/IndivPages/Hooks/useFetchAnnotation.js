@@ -11,6 +11,7 @@ const useFetchAnnotation = (url, type) => {
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
+                console.log(data);
                 const annotationArray = [];
                 Object.keys(data[0]).forEach((x) => {
                     if ((type === 'gene' && x !== 'id' && x !== 'ensembl_tid')

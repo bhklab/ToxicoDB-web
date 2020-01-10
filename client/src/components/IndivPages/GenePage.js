@@ -74,6 +74,7 @@ const GenePage = (props) => {
     // apiData and annotationData are being updated together
     // so they can be handled under the same hook
     const { apiData, annotationData } = useFetchAnnotation(`/api/v1/genes/${params.id}`, 'gene');
+    console.log(apiData, annotationData);
     // analysisData and loading are handled together => one hook
     const { analysisData, loading } = useFetchAnalysisData(`/api/v1/genes/${params.id}/analysis`);
 
@@ -82,7 +83,7 @@ const GenePage = (props) => {
         Header: 'Drug',
         accessor: 'drug_name',
         sortable: true,
-        Cell: (row) => (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${apiData.id}`}>{row.value}</Link>),
+        Cell: (row) => (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${params.id}`}>{row.value}</Link>),
     }, {
         Header: 'log2(fold change)',
         accessor: 'fold_change',
@@ -137,9 +138,9 @@ const GenePage = (props) => {
     ];
     return (
         <StyledGenePage>
-            {apiData.length === 0 ? null : (
+            {apiData.symbol && (
                 <>
-                    <h1>{apiData.symbol}</h1>
+                    <h1>{apiData.symbol.toUpperCase()}</h1>
                     <h2>Annotations</h2>
                     <AnnotationCard data={annotationData} />
                 </>
@@ -162,7 +163,7 @@ const GenePage = (props) => {
             />
             <DownloadButton
                 data={analysisData}
-                filename={`${apiData.name}-drugsData`}
+                filename={`${apiData.symbol && apiData.symbol.toUpperCase()}-drugsData`}
                 headers={headers}
             />
 
@@ -196,7 +197,7 @@ const GenePage = (props) => {
                         <h2>
                             Analysis -
                             {' '}
-                            {apiData.symbol}
+                            {apiData.symbol.toUpperCase()}
                         </h2>
 
                     </center>

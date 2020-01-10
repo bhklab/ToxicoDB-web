@@ -31,6 +31,7 @@ const getGenes = function (request, response) {
 };
 
 const getIndivGene = (request, response) => {
+    const geneIds = request.params.id.split(',').map((item) => parseInt(item, 10));
     knex.select('id', 'name', 'symbol', 'ensembl_tid', 'entrez_gid', 'transcript_name')
         .from('genes')
         .leftJoin(
@@ -38,7 +39,7 @@ const getIndivGene = (request, response) => {
             'genes.id',
             'gene_annotations.gene_id',
         )
-        .where({ 'genes.id': request.params.id })
+        .whereIn('genes.id', geneIds)
         .then((gene) => {
             const geneList = gene.map((row) => {
                 row.name = row.name.split('_')[0];
