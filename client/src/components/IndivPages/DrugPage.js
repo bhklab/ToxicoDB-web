@@ -5,6 +5,7 @@ import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
 import VolcanoPlotly from '../Plots/VolcanoPlotly';
+import VolcanoSelect from './VolcanoSelect';
 import 'react-table/react-table.css';
 // 2 custom hooks to get and process the data
 import useFetchAnnotation from './Hooks/useFetchAnnotation';
@@ -162,7 +163,7 @@ const DrugPage = (props) => {
                 filename={`${apiData.name}-drugsData`}
                 headers={headers}
             />
-            {analysisData.length === 0 ? null : (
+            {/* {analysisData.length === 0 ? null : (
                 <div className="volcanoWrapper">
                     <center>
                         <h2>
@@ -178,7 +179,25 @@ const DrugPage = (props) => {
                         type="drug"
                     />
                 </div>
-            )}
+            )} */}
+
+                {analysisData.length === 0 ? null : (
+                    <div className='volcanoWrapper'>
+                        <center>
+                            <h2>
+                            Analysis -
+                                {' '}
+                                {apiData.symbol}
+                            </h2>
+    
+                        </center>
+                        <VolcanoSelect 
+                            data={analysisData}
+                            queryId={params.id}
+                            type="drug"
+                        />
+                    </div>
+                )}
         </StyledDrugPage>
     );
 };
