@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
-import AnnotationCard from './AnnotationCard';
-import VolcanoPlotly from '../Plots/VolcanoPlotly';
-import VolcanoSingle from '../Plots/VolcanoSingle';
+// import AnnotationCard from './AnnotationCard';
+import AnnotationCard from './GeneDrugCard';
+// import VolcanoPlotly from '../Plots/VolcanoPlotly';
+// import VolcanoSingle from '../Plots/VolcanoSingle';
 import VolcanoSelect from './VolcanoSelect';
 import DownloadButton from '../Utils/DownloadButton';
-import 'react-table/react-table.css';
+import 'react-table-6/react-table.css';
 // 2 custom hooks to get and process the data
 import useFetchAnnotation from './Hooks/useFetchAnnotation';
 import useFetchAnalysisData from './Hooks/useFetchAnalysisData';
@@ -74,6 +75,7 @@ const GenePage = (props) => {
     // apiData and annotationData are being updated together
     // so they can be handled under the same hook
     const { apiData, annotationData } = useFetchAnnotation(`/api/v1/genes/${params.id}`, 'gene');
+    console.log(apiData, annotationData);
     // analysisData and loading are handled together => one hook
     const { analysisData, loading } = useFetchAnalysisData(`/api/v1/genes/${params.id}/analysis`);
 
@@ -82,7 +84,7 @@ const GenePage = (props) => {
         Header: 'Drug',
         accessor: 'drug_name',
         sortable: true,
-        Cell: (row) => (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${apiData.id}`}>{row.value}</Link>),
+        Cell: (row) => (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${params.id}`}>{row.value}</Link>),
     }, {
         Header: 'log2(fold change)',
         accessor: 'fold_change',
@@ -137,11 +139,11 @@ const GenePage = (props) => {
     ];
     return (
         <StyledGenePage>
-            {apiData.length === 0 ? null : (
+            {apiData.symbol && (
                 <>
-                    <h1>{apiData.symbol}</h1>
+                    <h1>{apiData.symbol.toUpperCase()}</h1>
                     <h2>Annotations</h2>
-                    <AnnotationCard data={annotationData} />
+                    <AnnotationCard data={annotationData} type="gene" />
                 </>
             )}
             <ReactTable
@@ -162,11 +164,11 @@ const GenePage = (props) => {
             />
             <DownloadButton
                 data={analysisData}
-                filename={`${apiData.name}-drugsData`}
+                filename={`${apiData.symbol && apiData.symbol.toUpperCase()}-drugsData`}
                 headers={headers}
             />
 
-             {/* {analysisData.length === 0 ? null : (
+            {/* {analysisData.length === 0 ? null : (
                     <div className="volcanoWrapper">
                         <center>
                             <h2>
@@ -190,23 +192,23 @@ const GenePage = (props) => {
                         />
                     </div>
                 )} */}
-                {analysisData.length === 0 ? null : (
-                    <div className='volcanoWrapper'>
-                        <center>
-                            <h2>
+            {analysisData.length === 0 ? null : (
+                <div className="volcanoWrapper">
+                    <center>
+                        <h2>
                             Analysis -
-                                {' '}
-                                {apiData.symbol}
-                            </h2>
-    
-                        </center>
-                        <VolcanoSelect 
-                            data={analysisData}
-                            queryId={params.id}
-                            type="gene"
-                        />
-                    </div>
-                )}
+                            {' '}
+                            {apiData.symbol && apiData.symbol.toUpperCase()}
+                        </h2>
+
+                    </center>
+                    <VolcanoSelect
+                        data={analysisData}
+                        queryId={params.id}
+                        type="gene"
+                    />
+                </div>
+            )}
         </StyledGenePage>
     );
 };

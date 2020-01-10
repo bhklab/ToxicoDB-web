@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import colors from '../styles/colors';
 
@@ -21,25 +20,19 @@ const StyledLanding = styled.div`
     }
 `;
 
-class Landing extends Component {
-    render() {
-        return (
-            <StyledLanding>
-                <h1 style={{ marginTop: '200px' }} className="title">Mine multiple toxicogenomic datasets.</h1>
-                <Search />
+const Landing = (props) => (
+    <StyledLanding>
+        <h1 style={{ marginTop: '200px' }} className="title">Mine multiple toxicogenomic datasets.</h1>
+        <Search />
 
-                <h1 style={{ marginTop: '90px', marginBottom: '0px' }}>About our database</h1>
-                <About />
+        <h1 style={{ marginTop: '90px', marginBottom: '0px' }}>About our database</h1>
+        <About />
 
-                <h1 style={{ marginTop: '50px' }}>Most frequent queries</h1>
-                <FrequentQueries />
+        <h1 style={{ marginTop: '50px' }}>Most frequent queries</h1>
+        <FrequentQueries />
 
-                {/* <h1 style={{marginTop: "150px"}}>Explore our database</h1> */}
-
-                <Collaboration />
-            </StyledLanding>
-        );
-    }
-}
+        <Collaboration />
+    </StyledLanding>
+);
 
 export default Landing;

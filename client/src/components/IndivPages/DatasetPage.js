@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { DatasetDescription } from './DatasetDescription';
 import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
-import 'react-table/react-table.css';
+import 'react-table-6/react-table.css';
 
 const StyledDatasetPage = styled.div`
     width: 80vw;

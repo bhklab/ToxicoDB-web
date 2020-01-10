@@ -1,3 +1,5 @@
+/* eslint-disable no-lonely-if */
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
 import Select, { components } from 'react-select';
 import { Link, withRouter } from 'react-router-dom';
@@ -73,7 +75,7 @@ const customStyles = {
         ...provided,
         color: `${colors.search_main}`,
     }),
-    option: (provided, state) => ({
+    option: (provided) => ({
         ...provided,
         textAlign: 'left',
         fontWeight: '400',
@@ -152,9 +154,20 @@ class Search extends Component {
         fetch('/api/v1/genes')
             .then((response) => response.json())
             .then((data) => {
-                const geneData = data.data.map((x) => ({
-                    label: x.symbol.charAt(0).toUpperCase() + x.symbol.slice(1),
-                    value: x.id,
+                // Generating an array of options fro react select where value section
+                // can store multiple ids
+                const geneObj = {};
+                data.data.forEach((item) => {
+                    const name = item.symbol.toUpperCase();
+                    if (!geneObj[name]) {
+                        geneObj[name] = { label: name, value: [item.id] };
+                    } else {
+                        geneObj[name].value.push(item.id);
+                    }
+                });
+                const geneData = Object.values(geneObj).map((x) => ({
+                    label: x.label,
+                    value: x.value,
                     type: 'gene',
                 }));
                 // adding genes data to searchData drug options
@@ -164,7 +177,7 @@ class Search extends Component {
 
                 // having a separate options so i can filter out options
                 // but keep all the data in searchData so I don't have to make fetch statements
-                this.setState({ options: this.state.searchData });
+                this.setState({ options: searchData });
             });
     }
 
@@ -180,7 +193,7 @@ class Search extends Component {
             // filter based on the opposite of the selected value's type
             if (event.length === 1) {
                 const newData = [];
-                searchData.forEach((x, i) => {
+                searchData.forEach((x) => {
                     if (x.type !== event[0].type) {
                         newData.push(x);
                     }

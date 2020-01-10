@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
-import AnnotationCard from './AnnotationCard';
+// import AnnotationCard from './AnnotationCard';
+import AnnotationCard from './GeneDrugCard';
 import VolcanoPlotly from '../Plots/VolcanoPlotly';
 import VolcanoSelect from './VolcanoSelect';
 import 'react-table/react-table.css';
@@ -138,7 +139,7 @@ const DrugPage = (props) => {
                 <div>
                     <h1>{apiData.name}</h1>
                     <h2>Annotations</h2>
-                    <AnnotationCard data={annotationData} />
+                    <AnnotationCard data={annotationData} type="drug" />
                 </div>
             )}
             <ReactTable

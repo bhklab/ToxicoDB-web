@@ -5,17 +5,18 @@ const getExperiments = function (request, response) {
     let {
         drugId, geneId,
     } = request.query;
-
+    console.log('geneId is ', geneId);
     drugId = drugId && parseInt(drugId, 10);
-    geneId = geneId && parseInt(geneId, 10);
-
+    geneId = geneId && geneId.split(',').map((item) => parseInt(item, 10));
+    console.log('and now geneId is ', geneId);
     // get experiment information
     knex.select('time', 'expression', 'dose', 'replicate', 'd.name')
         .from('drug_gene_response AS dgr')
         .innerJoin('samples AS s', 's.id', 'dgr.sample_id')
         .innerJoin('datasets_samples AS ds', 'dgr.sample_id', 'ds.sample_id')
         .innerJoin('datasets AS d', 'ds.dataset_id', 'd.id')
-        .where({ 's.drug_id': drugId, 'dgr.gene_id': geneId })
+        .where({ 's.drug_id': drugId })
+        .whereIn('dgr.gene_id', geneId)
         .then((experiment) => response.status(200).json({
             status: 'success',
             data: experiment,

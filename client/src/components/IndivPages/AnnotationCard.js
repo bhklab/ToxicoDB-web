@@ -51,6 +51,7 @@ class AnnotationCard extends Component {
 
         // this will create subelements for the table row with more than one variable.
         const createSubCard = (val) => {
+            console.log(val);
             const tablerow = [];
             if (val.name === 'DataType') {
                 Object.keys(val.value).forEach((id) => tablerow.push(
