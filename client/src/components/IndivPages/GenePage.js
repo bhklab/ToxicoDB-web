@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
-import VolcanoPlotly from '../Plots/VolcanoPlotly';
-import VolcanoSingle from '../Plots/VolcanoSingle';
+// import VolcanoPlotly from '../Plots/VolcanoPlotly';
+// import VolcanoSingle from '../Plots/VolcanoSingle';
 import VolcanoSelect from './VolcanoSelect';
 import DownloadButton from '../Utils/DownloadButton';
 import 'react-table-6/react-table.css';
@@ -166,7 +166,7 @@ const GenePage = (props) => {
                 headers={headers}
             />
 
-             {/* {analysisData.length === 0 ? null : (
+            {/* {analysisData.length === 0 ? null : (
                     <div className="volcanoWrapper">
                         <center>
                             <h2>
@@ -190,23 +190,23 @@ const GenePage = (props) => {
                         />
                     </div>
                 )} */}
-                {analysisData.length === 0 ? null : (
-                    <div className='volcanoWrapper'>
-                        <center>
-                            <h2>
+            {analysisData.length === 0 ? null : (
+                <div className="volcanoWrapper">
+                    <center>
+                        <h2>
                             Analysis -
-                                {' '}
-                                {apiData.symbol}
-                            </h2>
-    
-                        </center>
-                        <VolcanoSelect 
-                            data={analysisData}
-                            queryId={params.id}
-                            type="gene"
-                        />
-                    </div>
-                )}
+                            {' '}
+                            {apiData.symbol}
+                        </h2>
+
+                    </center>
+                    <VolcanoSelect
+                        data={analysisData}
+                        queryId={params.id}
+                        type="gene"
+                    />
+                </div>
+            )}
         </StyledGenePage>
     );
 };
