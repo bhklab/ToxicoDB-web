@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
-import AnnotationCard from './AnnotationCard';
+// import AnnotationCard from './AnnotationCard';
+import AnnotationCard from './GeneDrugCard';
 // import VolcanoPlotly from '../Plots/VolcanoPlotly';
 // import VolcanoSingle from '../Plots/VolcanoSingle';
 import VolcanoSelect from './VolcanoSelect';
@@ -142,7 +143,7 @@ const GenePage = (props) => {
                 <>
                     <h1>{apiData.symbol.toUpperCase()}</h1>
                     <h2>Annotations</h2>
-                    <AnnotationCard data={annotationData} />
+                    <AnnotationCard data={annotationData} type="gene" />
                 </>
             )}
             <ReactTable
@@ -197,7 +198,7 @@ const GenePage = (props) => {
                         <h2>
                             Analysis -
                             {' '}
-                            {apiData.symbol.toUpperCase()}
+                            {apiData.symbol && apiData.symbol.toUpperCase()}
                         </h2>
 
                     </center>

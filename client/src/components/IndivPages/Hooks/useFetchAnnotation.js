@@ -23,6 +23,7 @@ const useFetchAnnotation = (url, type) => {
                         annotationArray.push(temp);
                     }
                 });
+                console.log(annotationArray);
                 setGeneData({ apiData: data[0], annotationData: annotationArray });
             });
     }, [url]);
