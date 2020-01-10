@@ -133,7 +133,7 @@ class ExpressionPlot extends Component {
             .then((response) => response.json())
             .then((res) => {
                 const {data} = res;
-                this.setState({ geneName: data[0].symbol});
+                this.setState({ geneName: data[0].symbol.toUpperCase() });
             });
     }
 
