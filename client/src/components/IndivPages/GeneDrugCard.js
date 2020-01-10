@@ -31,27 +31,33 @@ const StyledAnnotationCard = styled.div`
         font-weight: 600;
     }
 `;
-const generateLink = (obj, type) => {
+const generateLink = (obj, i, type) => {
     let content;
     switch (obj.name) {
     case 'name':
-        content = <a href={`http://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${obj.value}`} target="_blank" rel="noopener noreferrer">{obj.value}</a>;
+        // human redirect checks by 4 first characters
+        if (obj.value[i].substring(0, 4) === 'ENSG') {
+            content = <a href={`http://useast.ensembl.org/Homo_sapiens/Gene/Summary?g=${obj.value[i]}`} target="_blank" rel="noopener noreferrer">{obj.value[i]}</a>;
+        } else {
+            // rat redirect
+            content = <a href={`https://useast.ensembl.org/Rattus_norvegicus/Gene/Summary?g=${obj.value[i]}`} target="_blank" rel="noopener noreferrer">{obj.value[i]}</a>;
+        }
         break;
     case 'symbol':
         // handles edge case when both gene and drug have symbol value
-        content = type === 'gene' ? <a href={`http://www.genecards.org/cgi-bin/carddisp.pl?gene=${obj.value}`} target="_blank" rel="noopener noreferrer">{obj.value}</a> : obj.value;
+        content = type === 'gene' ? <a href={`http://www.genecards.org/cgi-bin/carddisp.pl?gene=${obj.value[i]}`} target="_blank" rel="noopener noreferrer">{obj.value[i]}</a> : obj.value[i];
         break;
     case 'entrez_gid':
-        content = <a href={`https://www.ncbi.nlm.nih.gov/gene/?term=${obj.value}`} target="_blank" rel="noopener noreferrer">{obj.value}</a>;
+        content = <a href={`https://www.ncbi.nlm.nih.gov/gene/?term=${obj.value[i]}`} target="_blank" rel="noopener noreferrer">{obj.value[i]}</a>;
         break;
     case 'pubchem':
-        content = <a href={`https://pubchem.ncbi.nlm.nih.gov/compound/${obj.value}`} target="_blank" rel="noopener noreferrer">{obj.value}</a>;
+        content = <a href={`https://pubchem.ncbi.nlm.nih.gov/compound/${obj.value[i]}`} target="_blank" rel="noopener noreferrer">{obj.value[i]}</a>;
         break;
     default:
-        content = obj.value;
+        content = obj.value[i];
     }
     return (
-        <td className="value-column">{content}</td>
+        <td key={type.concat(i)} className="value-column">{content}</td>
     );
 };
 
@@ -66,7 +72,7 @@ const GeneDrugCard = (props) => {
                         {data.map((item, index) => (item.value ? (
                             <tr key={index}>
                                 <td className="name-column">{item.name.replace(/_/g, ' ').toUpperCase()}</td>
-                                {generateLink(item, type)}
+                                { item.value.map((val, i) => generateLink(item, i, type))}
                             </tr>
                         ) : null))}
                     </tbody>

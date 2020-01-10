@@ -11,16 +11,23 @@ const useFetchAnnotation = (url, type) => {
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                console.log(data);
                 const annotationArray = [];
-                Object.keys(data[0]).forEach((x) => {
-                    if ((type === 'gene' && x !== 'id' && x !== 'ensembl_tid')
-                    || (type === 'drug' && x !== 'name' && x !== 'id')) {
-                        const temp = {
-                            name: x,
-                            value: data[0][x],
-                        };
-                        annotationArray.push(temp);
+                const annotationObj = {};
+                data.forEach((item) => {
+                    Object.keys(item).forEach((key, index) => {
+                        if (!annotationObj[key]) {
+                            annotationObj[key] = { name: key, value: [item[key]] };
+                        } else {
+                            annotationObj[key].value.push(item[key]);
+                        }
+                    });
+                });
+                console.log(annotationObj);
+                Object.values(annotationObj).forEach((x) => {
+                    const { name } = x;
+                    if ((type === 'gene' && name !== 'id' && name !== 'ensembl_tid')
+                    || (type === 'drug' && name !== 'name' && name !== 'id')) {
+                        annotationArray.push(x);
                     }
                 });
                 console.log(annotationArray);
