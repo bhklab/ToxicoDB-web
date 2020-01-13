@@ -274,11 +274,11 @@ class Search extends Component {
                     {' '}
 &nbsp;&nbsp;|&nbsp;&nbsp;
                     {' '}
-                    <Link to="/genes/423">GCLM</Link>
+                    <Link to="/genes/423,25156">GCLM</Link>
                     {' '}
 &nbsp;&nbsp;|&nbsp;&nbsp;
                     {' '}
-                    <Link to="/expression?drugId=9&geneId=7468">CYP1A1 - carbon tetrachloride</Link>
+                    <Link to="/expression?drugId=9&geneId=7468,27658">CYP1A1 - carbon tetrachloride</Link>
                 </StyledExample>
             </>
 
