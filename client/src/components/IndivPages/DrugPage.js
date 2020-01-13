@@ -192,7 +192,7 @@ const DrugPage = (props) => {
                             </h2>
     
                         </center>
-                        <VolcanoSelect 
+                        <VolcanoSelect
                             data={analysisData}
                             queryId={params.id}
                             type="drug"
