@@ -58,6 +58,7 @@ const getIndivGene = (request, response) => {
 };
 
 const getGeneAnalysis = (request, response) => {
+    const geneIds = request.params.id.split(',').map((item) => parseInt(item, 10));
     knex.distinct('fdr', 'fold_change', 'p_value', 'drugs.id AS drug_id', 'drugs.name AS drug_name', 'datasets.name AS dataset_name')
         .from('analysis')
         .innerJoin('drug_gene_response AS dgr', 'analysis.id', 'dgr.analysis_id')
@@ -65,7 +66,7 @@ const getGeneAnalysis = (request, response) => {
         .innerJoin('drugs', 'samples.drug_id', 'drugs.id')
         .innerJoin('datasets_samples AS ds', 'samples.id', 'ds.sample_id')
         .innerJoin('datasets', 'ds.dataset_id', 'datasets.id')
-        .where({ gene_id: request.params.id })
+        .whereIn('gene_id', geneIds)
         .then((analysis) => response.status(200).json({
             status: 'success',
             data: analysis,
