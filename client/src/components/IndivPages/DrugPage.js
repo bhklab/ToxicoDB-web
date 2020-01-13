@@ -188,7 +188,7 @@ const DrugPage = (props) => {
                         <h2>
                             Analysis -
                                 {' '}
-                                {apiData.symbol}
+                                {apiData.name}
                             </h2>
     
                         </center>
