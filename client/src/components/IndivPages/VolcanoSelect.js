@@ -193,7 +193,6 @@ const VolcanoSelect = (props) => {
                     />
                     <VolcanoLegend plotId="legend"/>
                     <StyledVolcanoSelect>
-                        {console.log('data', state.data)}
                         {console.log('selected', state.selected)}
                         {state.selected.map((x,i) => {
                             return <VolcanoSingle 
