@@ -6,17 +6,19 @@ import * as d3 from 'd3';
 import colors from '../../styles/colors';
 
 const StyledDiv = styled.div`
-min-height: 600px;    
-width: 100%;    
-    // .groups:nth-of-type(3) {
-    //     transform: translate(0, 50px);
-    // }
+    min-height: 600px;    
+    width: 100%;    
+
+    h3 {
+        text-align: center;
+    }
     .js-plotly-plot {
         width: 100%;
     }
     .scatterpts {
         opacity: 0;
     }
+
 `;
 
 const d3Changes = (type) => {
@@ -210,9 +212,10 @@ class VolcanoSingle extends React.Component {
 
     render() {
         const { layout, data } = this.state;
-        const { plotId, type, queryId } = this.props;
+        const { plotId, type, queryId, datasetName } = this.props;
         return (
             <StyledDiv>
+                <h3>{datasetName}</h3>
                 <Plot
                     data={data}
                     layout={layout}

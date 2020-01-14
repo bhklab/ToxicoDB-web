@@ -187,18 +187,18 @@ const DrugPage = (props) => {
                     <center>
                         <h2>
                             Analysis -
-                            {' '}
-                            {apiData.symbol}
-                        </h2>
-
-                    </center>
-                    <VolcanoSelect
-                        data={analysisData}
-                        queryId={params.id}
-                        type="drug"
-                    />
-                </div>
-            )}
+                                {' '}
+                                {apiData.name}
+                            </h2>
+    
+                        </center>
+                        <VolcanoSelect
+                            data={analysisData}
+                            queryId={params.id}
+                            type="drug"
+                        />
+                    </div>
+                )}
         </StyledDrugPage>
     );
 };

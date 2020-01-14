@@ -75,7 +75,6 @@ const GenePage = (props) => {
     // apiData and annotationData are being updated together
     // so they can be handled under the same hook
     const { apiData, annotationData } = useFetchAnnotation(`/api/v1/genes/${params.id}`, 'gene');
-    console.log(apiData, annotationData);
     // analysisData and loading are handled together => one hook
     const { analysisData, loading } = useFetchAnalysisData(`/api/v1/genes/${params.id}/analysis`);
 

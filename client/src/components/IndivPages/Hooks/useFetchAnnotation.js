@@ -23,7 +23,6 @@ const useFetchAnnotation = (url, type) => {
                         }
                     });
                 });
-                console.log(annotationObj);
                 Object.values(annotationObj).forEach((x) => {
                     const { name } = x;
                     if ((type === 'gene' && name !== 'id' && name !== 'ensembl_tid')
@@ -31,7 +30,6 @@ const useFetchAnnotation = (url, type) => {
                         annotationArray.push(x);
                     }
                 });
-                console.log(annotationArray);
                 setGeneData({ apiData: data[0], annotationData: annotationArray });
             });
     }, [url]);
