@@ -1,16 +1,20 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable max-len */
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import transitions from '../../styles/transitions';
 
-import OverviewDoc from './DocSubComponents/OverviewDoc';
-import SearchDoc from './DocSubComponents/SearchDoc';
-import DrugDoc from './DocSubComponents/DrugDoc';
-import GeneDoc from './DocSubComponents/GeneDoc';
-import DrugGeneDoc from './DocSubComponents/DrugGeneDoc';
-import DatasetDoc from './DocSubComponents/DatasetDoc';
+// Funtionality subcomponents
+import OverviewDoc from './DocSubFunctionality/OverviewDoc';
+import SearchDoc from './DocSubFunctionality/SearchDoc';
+import DrugDoc from './DocSubFunctionality/DrugDoc';
+import GeneDoc from './DocSubFunctionality/GeneDoc';
+import DrugGeneDoc from './DocSubFunctionality/DrugGeneDoc';
+import DatasetDoc from './DocSubFunctionality/DatasetDoc';
+// API subcomponents
+import DrugApiDoc from './DocSubAPI/DrugAPIDoc';
+
 
 const StyledDiv = styled.div`
     padding: 10px;
@@ -39,8 +43,11 @@ const StyledDiv = styled.div`
             }
         }
         nav {
-            width:250px;
             margin-top: 25px;
+
+            h3 {
+                color: ${colors.blue_text};
+            }
 
             li {
                 padding: 2px 2px 0;
@@ -95,109 +102,94 @@ const StyledDiv = styled.div`
     }
 `;
 
-class MainDocument extends React.Component {
-    constructor(props) {
-        console.log(props);
-        super(props);
-        this.state = {
-            display: 'overview',
-            type: 'general',
-        };
-        this.handleDocChange = this.handleDocChange.bind(this);
-    }
+const MainDocument = (props) => {
+    const [{ display, type }, setState] = useState({ display: 'overview', type: 'general' });
 
-    handleDocChange(display) {
-        console.log(display);
-        switch (display) {
+    const handleDocChange = (displayType) => {
+        switch (displayType) {
         case 'overview':
-            this.setState({
-                display, type: 'general',
-            });
+            setState({ display: displayType, type: 'general' });
             break;
         case 'search':
-            this.setState({
-                display, type: 'general',
-            });
+            setState({ display: displayType, type: 'general' });
             break;
         case 'drugs':
-            this.setState({
-                display, type: 'general',
-            });
+            setState({ display: displayType, type: 'general' });
             break;
         case 'genes':
-            this.setState({
-                display, type: 'general',
-            });
+            setState({ display: displayType, type: 'general' });
             break;
         case 'drugvsgene':
-            this.setState({
-                display, type: 'general',
-            });
+            setState({ display: displayType, type: 'general' });
             break;
         case 'datasets':
-            this.setState({
-                display, type: 'general',
-            });
+            setState({ display: displayType, type: 'general' });
+            break;
+        case 'drug-api':
+            setState({ display: displayType, type: 'api' });
             break;
         default:
-            this.setState({ display, type: 'api' });
+            setState({ display: displayType, type: 'api' });
             break;
         }
-    }
+    };
+    return (
 
-    render() {
-        const { handleDocChange } = this;
-        const {
-            display, type,
-        } = this.state;
-        return (
-
-            <StyledDiv>
-                <main className="documentation">
-                    <nav>
-                        <ul>
-                            <li
-                                className={display === 'overview' ? 'selected' : null}
-                            >
-                                <button type="button" onClick={() => handleDocChange('overview')}>Overview</button>
-                            </li>
-                            <li
-                                className={display === 'search' ? 'selected' : null}
-                            >
-                                <button type="button" onClick={() => handleDocChange('search')}>Search</button>
-                            </li>
-                            <li
-                                className={display === 'drugs' ? 'selected' : null}
-                            >
-                                <button type="button" onClick={() => handleDocChange('drugs')}>Drugs</button>
-                            </li>
-                            <li
-                                className={display === 'genes' ? 'selected' : null}
-                            >
-                                <button type="button" onClick={() => handleDocChange('genes')}>Genes</button>
-                            </li>
-                            <li
-                                className={display === 'drugvsgene' ? 'selected' : null}
-                            >
-                                <button type="button" onClick={() => handleDocChange('drugvsgene')}>Drug vs Gene</button>
-                            </li>
-                            <li
-                                className={display === 'datasets' ? 'selected' : null}
-                            >
-                                <button type="button" onClick={() => handleDocChange('datasets')}>Datasets</button>
-                            </li>
-                        </ul>
-                    </nav>
-                    {display === 'overview' ? <OverviewDoc /> : null}
-                    {display === 'search' ? <SearchDoc /> : null}
-                    {display === 'drugs' ? <DrugDoc /> : null}
-                    {display === 'genes' ? <GeneDoc /> : null}
-                    {display === 'drugvsgene' ? <DrugGeneDoc /> : null}
-                    {display === 'datasets' ? <DatasetDoc /> : null}
-                </main>
-            </StyledDiv>
-        );
-    }
-}
+        <StyledDiv>
+            <main className="documentation">
+                <nav>
+                    <h3>Functionality</h3>
+                    <ul>
+                        <li
+                            className={display === 'overview' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => handleDocChange('overview')}>Overview</button>
+                        </li>
+                        <li
+                            className={display === 'search' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => handleDocChange('search')}>Search</button>
+                        </li>
+                        <li
+                            className={display === 'drugs' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => handleDocChange('drugs')}>Drugs</button>
+                        </li>
+                        <li
+                            className={display === 'genes' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => handleDocChange('genes')}>Genes</button>
+                        </li>
+                        <li
+                            className={display === 'drugvsgene' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => handleDocChange('drugvsgene')}>Drug vs Gene</button>
+                        </li>
+                        <li
+                            className={display === 'datasets' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => handleDocChange('datasets')}>Datasets</button>
+                        </li>
+                    </ul>
+                    <h3>API</h3>
+                    <ul>
+                        <li
+                            className={display === 'drug-api' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => handleDocChange('drug-api')}>Drugs</button>
+                        </li>
+                    </ul>
+                </nav>
+                {display === 'overview' ? <OverviewDoc /> : null}
+                {display === 'search' ? <SearchDoc /> : null}
+                {display === 'drugs' ? <DrugDoc /> : null}
+                {display === 'genes' ? <GeneDoc /> : null}
+                {display === 'drugvsgene' ? <DrugGeneDoc /> : null}
+                {display === 'datasets' ? <DatasetDoc /> : null}
+                {display === 'drug-api' ? <DrugApiDoc /> : null}
+            </main>
+        </StyledDiv>
+    );
+};
 
 export default MainDocument;
