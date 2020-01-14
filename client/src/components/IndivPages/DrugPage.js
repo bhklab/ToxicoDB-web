@@ -5,7 +5,7 @@ import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
 // import AnnotationCard from './AnnotationCard';
 import AnnotationCard from './GeneDrugCard';
-import VolcanoPlotly from '../Plots/VolcanoPlotly';
+// import VolcanoPlotly from '../Plots/VolcanoPlotly';
 import VolcanoSelect from './VolcanoSelect';
 import 'react-table-6/react-table.css';
 // 2 custom hooks to get and process the data
