@@ -52,16 +52,15 @@ const hover = (data) => {
      // d3.selectAll('g.points').selectAll('path')
     // .style('cursor', 'pointer')
 
-    let dragLayer = document.getElementsByClassName('nsewdrag')[0];
-    dragLayer.style.cursor = 'pointer';
+    d3.selectAll('.nsewdrag').style('cursor', 'pointer')
+
 }
 
 const unhover = (data) => {
      // d3.selectAll('g.points').selectAll('path')
     // .style('cursor', 'pointer')
 
-    let dragLayer = document.getElementsByClassName('nsewdrag')[0];
-    dragLayer.style.cursor = '';
+    d3.selectAll('.nsewdrag').style('cursor', '')
 }
 
 class VolcanoSingle extends React.Component {
@@ -82,6 +81,7 @@ class VolcanoSingle extends React.Component {
 
 
     formatData(data) {
+        console.log('passed to plotly', data[0].dataset_name);
         const { type } = this.props;
         // setting up the traces; can't really deep copy
         const greenTrace = {
@@ -214,7 +214,7 @@ class VolcanoSingle extends React.Component {
         const { layout, data } = this.state;
         const { plotId, type, queryId, datasetName } = this.props;
         return (
-            <StyledDiv>
+            <StyledDiv className="plot">
                 <h3>{datasetName}</h3>
                 <Plot
                     data={data}

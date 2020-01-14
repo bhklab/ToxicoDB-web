@@ -5,7 +5,7 @@ import React, { Component, Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import VolcanoSingle from '../Plots/VolcanoSingle';
-import VolcanoPlotly from '../Plots/VolcanoPlotly';
+import VolcanoLegend from '../Plots/VolcanoLegend';
 import Select, { components } from 'react-select';
 import { timingSafeEqual } from 'crypto';
 
@@ -13,6 +13,13 @@ const StyledVolcanoSelect = styled.div`
     width: 100%;
     display:flex;
     flex-direction: row;
+    flex-wrap: wrap;
+
+    .plot {
+        width: 50%;
+        flex-grow: 1;
+    }
+
 `;
 
 const customStyles = {
@@ -130,7 +137,6 @@ const VolcanoSelect = (props) => {
     const { data, queryId, type } = props;
     
     const handleChange = (event) => {
-        console.log(event)
         let selected = [];
         // no options selected
         if (event === null || event.length === 0) {
@@ -140,6 +146,7 @@ const VolcanoSelect = (props) => {
             event.map((x) => selected.push(x.value));
             setState({...state, selected: selected});
         }
+        
     }
 
     // initial rendering
@@ -184,7 +191,10 @@ const VolcanoSelect = (props) => {
                         styles={customStyles}
                         onChange={handleChange}
                     />
+                    <VolcanoLegend plotId="legend"/>
                     <StyledVolcanoSelect>
+                        {console.log('data', state.data)}
+                        {console.log('selected', state.selected)}
                         {state.selected.map((x,i) => {
                             return <VolcanoSingle 
                                         key={i}
