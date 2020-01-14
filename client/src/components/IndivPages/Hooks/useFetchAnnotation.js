@@ -5,6 +5,7 @@ const useFetchAnnotation = (url, type) => {
     const [{ apiData, annotationData }, setGeneData] = useState({
         apiData: [], annotationData: [],
     });
+
     useEffect(() => {
         setGeneData({ apiData: [], annotationData: [] });
         fetch(url)

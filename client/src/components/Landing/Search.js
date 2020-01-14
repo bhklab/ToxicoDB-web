@@ -259,13 +259,15 @@ class Search extends Component {
                         isMulti
                         filterOption={customFilterOption}
                         options={options}
-                        components={{ MenuList, Option: CustomOption }}
+                        components={{ MenuList: (props) => (<MenuList {...props} />), Option: CustomOption }}
                         placeholder={placeholder}
                         styles={customStyles}
                         onChange={handleChange}
                         onKeyDown={handleKeyDown}
                         onMenuOpen={handleMenuOpen}
                         onMenuClose={handleMenuClose}
+                        onMenuScrollToTop={(e) => console.log('onMenuScrollToTop', e)}
+                        onMenuScrollToBottom={(e) => console.log('onMenuScrollToBottom', e)}
                     />
                 )}
                 <StyledExample>
