@@ -35,11 +35,21 @@ const StyledDiv = styled.div`
             margin-left: 50px;
             padding: 15px;
 
-            h1 {
+            h1,
+            h2,
+            h3 {
                 color: ${colors.red_highlight};
+                padding: 20px 0;
             }
             p {
                 color: ${colors.blue_text};
+            }
+            .code {
+                width: calc(100% - 10px);
+                background-color: #444444;
+                padding: 5px;
+                color: #fff;
+                margin: 0;
             }
         }
         nav {
@@ -100,39 +110,30 @@ const StyledDiv = styled.div`
             border-bottom: none;
         }
     }
+    p {
+        font-size: 20px;
+        font-weight: 400;
+    }  
+    .output {
+        width: calc(100% - 10px);
+        background-color: #444444;
+        padding: 5px;
+        font-size: 15px;
+        color: ${colors.red_highlight};
+    }
+    .api-section {
+        width: 100%;
+        margin: 10px;
+        border-bottom: 2px solid ${colors.red_highlight};
+        &:nth-last-of-type(1) {
+        border-bottom: none;
+        }
+    }
 `;
 
-const MainDocument = (props) => {
-    const [{ display, type }, setState] = useState({ display: 'overview', type: 'general' });
+const MainDocument = () => {
+    const [display, setDisplay] = useState('overview');
 
-    const handleDocChange = (displayType) => {
-        switch (displayType) {
-        case 'overview':
-            setState({ display: displayType, type: 'general' });
-            break;
-        case 'search':
-            setState({ display: displayType, type: 'general' });
-            break;
-        case 'drugs':
-            setState({ display: displayType, type: 'general' });
-            break;
-        case 'genes':
-            setState({ display: displayType, type: 'general' });
-            break;
-        case 'drugvsgene':
-            setState({ display: displayType, type: 'general' });
-            break;
-        case 'datasets':
-            setState({ display: displayType, type: 'general' });
-            break;
-        case 'drug-api':
-            setState({ display: displayType, type: 'api' });
-            break;
-        default:
-            setState({ display: displayType, type: 'api' });
-            break;
-        }
-    };
     return (
 
         <StyledDiv>
@@ -143,32 +144,32 @@ const MainDocument = (props) => {
                         <li
                             className={display === 'overview' ? 'selected' : null}
                         >
-                            <button type="button" onClick={() => handleDocChange('overview')}>Overview</button>
+                            <button type="button" onClick={() => setDisplay('overview')}>Overview</button>
                         </li>
                         <li
                             className={display === 'search' ? 'selected' : null}
                         >
-                            <button type="button" onClick={() => handleDocChange('search')}>Search</button>
+                            <button type="button" onClick={() => setDisplay('search')}>Search</button>
                         </li>
                         <li
                             className={display === 'drugs' ? 'selected' : null}
                         >
-                            <button type="button" onClick={() => handleDocChange('drugs')}>Drugs</button>
+                            <button type="button" onClick={() => setDisplay('drugs')}>Drugs</button>
                         </li>
                         <li
                             className={display === 'genes' ? 'selected' : null}
                         >
-                            <button type="button" onClick={() => handleDocChange('genes')}>Genes</button>
+                            <button type="button" onClick={() => setDisplay('genes')}>Genes</button>
                         </li>
                         <li
                             className={display === 'drugvsgene' ? 'selected' : null}
                         >
-                            <button type="button" onClick={() => handleDocChange('drugvsgene')}>Drug vs Gene</button>
+                            <button type="button" onClick={() => setDisplay('drugvsgene')}>Drug vs Gene</button>
                         </li>
                         <li
                             className={display === 'datasets' ? 'selected' : null}
                         >
-                            <button type="button" onClick={() => handleDocChange('datasets')}>Datasets</button>
+                            <button type="button" onClick={() => setDisplay('datasets')}>Datasets</button>
                         </li>
                     </ul>
                     <h3>API</h3>
@@ -176,7 +177,27 @@ const MainDocument = (props) => {
                         <li
                             className={display === 'drug-api' ? 'selected' : null}
                         >
-                            <button type="button" onClick={() => handleDocChange('drug-api')}>Drugs</button>
+                            <button type="button" onClick={() => setDisplay('drug-api')}>Drugs</button>
+                        </li>
+                        <li
+                            className={display === 'gene-api' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => setDisplay('gene-api')}>Genes</button>
+                        </li>
+                        <li
+                            className={display === 'experiment-api' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => setDisplay('experiment-api')}>Drug vs Gene</button>
+                        </li>
+                        <li
+                            className={display === 'dataset-api' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => setDisplay('dataset-api')}>Datasets</button>
+                        </li>
+                        <li
+                            className={display === 'sample-api' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => setDisplay('sample-api')}>Samples</button>
                         </li>
                     </ul>
                 </nav>
