@@ -193,7 +193,6 @@ const VolcanoSelect = (props) => {
                     />
                     <VolcanoLegend plotId="legend"/>
                     <StyledVolcanoSelect>
-                        {console.log('selected', state.selected)}
                         {state.selected.map((x,i) => {
                             return <VolcanoSingle 
                                         key={i}
@@ -204,6 +203,18 @@ const VolcanoSelect = (props) => {
                                         type={type}
                                     />
                         })}
+                        {/* render all, hide unless selected with className */}
+                        {/* {state.datasets.map((x,i) => {
+                            return <VolcanoSingle 
+                                        key={i}
+                                        data={state.data[x]} 
+                                        datasetName={x}
+                                        queryId={queryId}
+                                        plotId="volcanoPlot"
+                                        type={type}
+                                        className={state.selected.includes(x) ? '' : 'hide'}
+                                    />
+                        })} */}
                     </StyledVolcanoSelect>
                 </Fragment>
                 
