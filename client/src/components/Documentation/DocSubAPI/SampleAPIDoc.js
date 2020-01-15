@@ -1,95 +1,42 @@
 /* eslint-disable max-len */
 import React from 'react';
 
-const allDrugData = {
+const cellData = {
     status: 'success',
     data: [
         {
             id: 1,
-            name: '1-Naphthyl isothiocyanate',
-            symbol: 'ANIT',
-            pubchem: 11080,
-            chembl: '',
-            drugbank: '',
-            carcinogenicity: '',
-            class_in_vitro: 'NGTX',
-            class_in_vivo: '',
-            targets: '',
-            class_name: '',
-            smiles: 'C1=CC=C2C(=C1)C=CC=C2N=C=S',
-            inchikey: 'JBDOSUUXMYMWQH-UHFFFAOYSA-N',
-        },
-        {
-            id: 2,
-            name: 'Phenylbutazone',
-            symbol: 'PhB',
-            pubchem: 4781,
-            chembl: '',
-            drugbank: '',
-            carcinogenicity: 'C',
-            class_in_vitro: 'GTX',
-            class_in_vivo: 'NGTX',
-            targets: '',
-            class_name: '',
-            smiles: 'CCCCC1C(=O)N(N(C1=O)C2=CC=CC=C2)C3=CC=CC=C3',
-            inchikey: 'VYMDGNCVAMGZFE-UHFFFAOYSA-N',
+            name: 'Hepatocyte',
+            tissue_id: 1,
         },
     ],
 };
 
-const drugData = {
+const tissueData = {
     status: 'success',
     data: [
         {
-            id: 72,
-            name: 'Chlorpropamide',
-            symbol: 'CPP',
-            pubchem: 2727,
-            chembl: '',
-            drugbank: '',
-            carcinogenicity: 'NC',
-            class_in_vitro: 'NGTX',
-            class_in_vivo: '',
-            targets: '',
-            class_name: '',
-            smiles: 'CCCNC(=O)NS(=O)(=O)c1ccc(Cl)cc1',
-            inchikey: 'RKWGIWYCVPQPMF-UHFFFAOYSA-N',
+            id: 1,
+            name: 'Liver',
+            code: '',
         },
     ],
 };
 
-const drugAnalysis = {
+const specieData = {
     status: 'success',
     data: [
         {
-            fdr: '0.0140394900967384',
-            fold_change: -0.26868251,
-            p_value: '0.00275455691716522',
-            gene_id: 3935,
-            gene_name: 'MSH3',
-            dataset_name: 'TGGATES Human LDH',
+            name: 'Human',
         },
         {
-            fdr: '0.0140665335551909',
-            fold_change: -0.39425924,
-            p_value: '0.00276156045048297',
-            gene_id: 3937,
-            gene_name: 'GABRG2',
-            dataset_name: 'TGGATES Human LDH',
-        },
-        {
-            fdr: '0.0140665335551909',
-            fold_change: -0.35523966,
-            p_value: '0.00276196694955832',
-            gene_id: 3938,
-            gene_name: 'CCNG1',
-            dataset_name: 'TGGATES Human LDH',
+            name: 'Rattus norvegicus',
         },
     ],
 };
 
 
-const DrugApiDoc = () => (
+const SampleApiDoc = () => (
     <div className="doc">
         <h1>API Documentation</h1>
         <p>
@@ -97,51 +44,47 @@ const DrugApiDoc = () => (
             {' '}
              supports RESTful API which allows users to directly query the database without having to use web app interface
         </p>
-        <h2>Drug API</h2>
+        <h2>Cell API</h2>
         <div className="api-section">
-            <h3>Get list of drugs</h3>
-            <p>Retrieves data for all drugs that have been used in the analysis</p>
+            <h3>Get List of Cells</h3>
+            <p>
+                Retrieves data about all cell types that are available in
+                {' '}
+                <em>ToxicoDB</em>
+            </p>
             <p className="code">
-                <span>curl http://toxicodb.ca/api/v1/drugs</span>
+                <span>curl http://toxicodb.ca/api/v1/cells</span>
             </p>
             <p>Output: </p>
-            <div><pre className="output">{JSON.stringify(allDrugData, null, 2)}</pre></div>
+            <div><pre className="output">{JSON.stringify(cellData, null, 2)}</pre></div>
         </div>
         <div className="api-section">
-            <h3>Get Specific Drug</h3>
+            <h3>Get List of Tissues</h3>
             <p>
-                Retrieves information for a given drug. The API request requires
+                Retrieves data about all tissue types that are available in
                 {' '}
-                <em>drug id</em>
-                {' '}
-                (integer)
-                {' '}
-                request paramater.
+                <em>ToxicoDB</em>
             </p>
             <p className="code">
-                <span>curl http://toxicodb.ca/api/v1/drugs/72</span>
+                <span>curl http://toxicodb.ca/api/v1/tissues</span>
             </p>
             <p>Output: </p>
-            <div><pre className="output">{JSON.stringify(drugData, null, 2)}</pre></div>
+            <div><pre className="output">{JSON.stringify(tissueData, null, 2)}</pre></div>
         </div>
         <div className="api-section">
-            <h3>Get Drug Analysis Data</h3>
+            <h3>Get List of Species</h3>
             <p>
-                Retrieves analysis data for a given drug across all genes. The API requires
+                Retrieves data about all species that are available in
                 {' '}
-                <em>drug id</em>
-                {' '}
-                (integer)
-                {' '}
-                to process the request.
+                <em>ToxicoDB</em>
             </p>
             <p className="code">
-                <span>curl http://toxicodb.ca/api/v1/drugs/1/analysis</span>
+                <span>curl http://toxicodb.ca/api/v1/species</span>
             </p>
             <p>Output: </p>
-            <div><pre className="output">{JSON.stringify(drugAnalysis, null, 2)}</pre></div>
+            <div><pre className="output">{JSON.stringify(specieData, null, 2)}</pre></div>
         </div>
     </div>
 );
 
-export default DrugApiDoc;
+export default SampleApiDoc;

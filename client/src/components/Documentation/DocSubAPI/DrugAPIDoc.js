@@ -99,7 +99,7 @@ const DrugApiDoc = () => (
         </p>
         <h2>Drug API</h2>
         <div className="api-section">
-            <h3>Get list of drugs</h3>
+            <h3>Get List of Drugs</h3>
             <p>Retrieves data for all drugs that have been used in the analysis</p>
             <p className="code">
                 <span>curl http://toxicodb.ca/api/v1/drugs</span>
