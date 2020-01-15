@@ -13,6 +13,8 @@ const getWidth = () => {
     return width;
 };
 
+// autosizer library is not an option due to the bug that makes scrolling up disabled
+// window size event listener is used instead to calculate the width of the option list
 const MenuList = (props) => {
     const [width, setWidth] = useState(getWidth());
 
