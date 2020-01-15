@@ -163,23 +163,6 @@ const DrugPage = (props) => {
                 filename={`${apiData.name}-drugsData`}
                 headers={headers}
             />
-            {/* {analysisData.length === 0 ? null : (
-                <div className="volcanoWrapper">
-                    <center>
-                        <h2>
-                            Analysis -
-                            {' '}
-                            {apiData.name}
-                        </h2>
-                    </center>
-                    <VolcanoPlotly
-                        data={analysisData}
-                        queryId={params.id}
-                        plotId="volcanoPlot"
-                        type="drug"
-                    />
-                </div>
-            )} */}
 
             {analysisData.length === 0 ? null : (
                 <div className="volcanoWrapper">

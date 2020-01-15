@@ -19,10 +19,6 @@ const StyledDiv = styled.div`
         opacity: 0;
     }
 
-    .hide { 
-        display:none;
-    }
-
 `;
 
 const d3Changes = (type) => {
@@ -52,22 +48,31 @@ const click = (data, type, queryId) => {
 };
 
 // for changing the cursor on hover of points
-const hover = (data) => {
+const hover = () => {
     d3.selectAll('.nsewdrag').style('cursor', 'pointer')
 
 }
 
-const unhover = (data) => {
+const unhover = () => {
     d3.selectAll('.nsewdrag').style('cursor', '')
 }
+
+// // after plotting, return the datasetName
+// // to show that it's done loading
+// const afterPlot = () => {
+//     // pass prop to parent - loading: done
+// }
 
 const VolcanoSingle = (props) => {
     const [state, setState] = useState({
             layout: null,
             data: null,
+            class: null,
+            // loading: false,
         });
 
-    const { data, type, queryId, datasetName, plotId } = props;
+    const { data, type, queryId, datasetName, plotId, selected } = props;
+
     const formatData = (data) => {
 
         // setting up the traces; can't really deep copy
@@ -145,7 +150,7 @@ const VolcanoSingle = (props) => {
                         trace.click_ids.push(d.drug_id);
                     }
                     trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
-                } else if (parseFloat(d.fdr) >= 0.05 && Math.abs(d.fold_change) <= 1) {
+                } else if (parseFloat(d.fdr) >= 0.05 && Math.abs(d.fold_change) < 1) {
                     const trace = grayTrace
                     trace.x.push(d.fold_change);
                     trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
@@ -170,7 +175,10 @@ const VolcanoSingle = (props) => {
             }
         });
 
-        setState({
+        // if dataset is not selected, give class hidden to hide
+        const className = selected.includes(datasetName) ? 'plot' : 'plot hidden';
+        
+        setState({ ...state,
             data: [greenTrace, blueTrace, grayTrace],
             layout: {
                 height: 600,
@@ -194,6 +202,7 @@ const VolcanoSingle = (props) => {
                     b: 40,
                 },
             },
+            class: className
         });
     };
 
@@ -202,22 +211,24 @@ const VolcanoSingle = (props) => {
         setState({...state,
             layout: null,
             data: null,
+            class: null,
         })
        formatData(data);
     }, []);
 
-    // determining if datasetName changes
+    // determining if selected changes
     useEffect(() => {
         setState({...state,
             layout: null,
             data: null,
+            class: null,
         })
        formatData(data);
-    }, [datasetName]);
+    }, [selected]);
 
 
     return (
-        <StyledDiv className="plot">
+        <StyledDiv className={state.class}>
             <h3>{datasetName}</h3>
             <Plot
                 data={state.data}
@@ -230,6 +241,7 @@ const VolcanoSingle = (props) => {
                 onClick={(d) => click(d, type, queryId)}
                 onHover={() => hover()}
                 onUnhover={() => unhover()}
+                // onAfterPlot={() => afterPlot()}
             />
         </StyledDiv>
     );

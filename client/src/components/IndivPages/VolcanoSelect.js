@@ -19,6 +19,9 @@ const StyledVolcanoSelect = styled.div`
         width: 50%;
         flex-grow: 1;
     }
+    .hidden { 
+        display:none;
+    }
 
 `;
 
@@ -132,6 +135,7 @@ const VolcanoSelect = (props) => {
         data: [],
         options: [],
         selected: [],
+        datasets: [],
     });
 
     const { data, queryId, type } = props;
@@ -155,6 +159,7 @@ const VolcanoSelect = (props) => {
             data: [],
             options: [],
             selected: [],
+            datasets: [],
         });
         // refactoring data to be per dataset for the dataset selector
         let newData = {};
@@ -175,7 +180,7 @@ const VolcanoSelect = (props) => {
         // set selected to the first 1 or 2 datasets
         const selected = (options.length > 1 ? options.slice(0,2) : [options[0]]).map((x) => x.value);
 
-        setState({options: options, data: newData, selected: selected});
+        setState({options: options, data: newData, selected: selected, datasets: datasets});
     }, []);
 
     return (
@@ -193,7 +198,7 @@ const VolcanoSelect = (props) => {
                     />
                     <VolcanoLegend plotId="legend"/>
                     <StyledVolcanoSelect>
-                        {state.selected.map((x,i) => {
+                        {state.datasets.map((x,i) => {
                             return <VolcanoSingle 
                                         key={i}
                                         data={state.data[x]} 
@@ -201,6 +206,7 @@ const VolcanoSelect = (props) => {
                                         queryId={queryId}
                                         plotId="volcanoPlot"
                                         type={type}
+                                        selected={state.selected}
                                     />
                         })}
                         {/* render all, hide unless selected with className */}
