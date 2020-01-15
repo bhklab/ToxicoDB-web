@@ -14,6 +14,10 @@ import DrugGeneDoc from './DocSubFunctionality/DrugGeneDoc';
 import DatasetDoc from './DocSubFunctionality/DatasetDoc';
 // API subcomponents
 import DrugApiDoc from './DocSubAPI/DrugAPIDoc';
+import GeneApiDoc from './DocSubAPI/GeneAPIDoc';
+import ExperimentApiDoc from './DocSubAPI/ExperimentAPIDoc';
+import DatasetApiDoc from './DocSubAPI/DatasetAPIDoc';
+import SampleApiDoc from './DocSubAPI/SampleAPIDoc';
 
 
 const StyledDiv = styled.div`
@@ -208,6 +212,10 @@ const MainDocument = () => {
                 {display === 'drugvsgene' ? <DrugGeneDoc /> : null}
                 {display === 'datasets' ? <DatasetDoc /> : null}
                 {display === 'drug-api' ? <DrugApiDoc /> : null}
+                {display === 'gene-api' ? <GeneApiDoc /> : null}
+                {display === 'experiment-api' ? <ExperimentApiDoc /> : null}
+                {display === 'dataset-api' ? <DatasetApiDoc /> : null}
+                {display === 'sample-api' ? <SampleApiDoc /> : null}
             </main>
         </StyledDiv>
     );
