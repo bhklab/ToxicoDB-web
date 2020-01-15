@@ -29,7 +29,7 @@ class VolcanoLegend extends React.Component {
                 .attr("y", 0)
                 .attr("width", 12)
                 .attr("height",12)
-                .attr("fill", '#4c84b1')
+                .attr("fill", '#e1f1fb')
 
                 legend.append("text")
                     .attr("dx", 16)
@@ -54,20 +54,20 @@ class VolcanoLegend extends React.Component {
                     .attr("fill", "black")
                     .text("fdr < 0.05 and |fold change| >= 1")
 
-            legend.append("rect")
-                .attr("x", 500)
-                .attr("y", 0)
-                .attr("width", 12)
-                .attr("height",12)
-                .attr("fill", 'lightgray')
+            // legend.append("rect")
+            //     .attr("x", 500)
+            //     .attr("y", 0)
+            //     .attr("width", 12)
+            //     .attr("height",12)
+            //     .attr("fill", 'lightgray')
     
-                    legend.append("text")
-                        .attr("dx", 516)
-                        .attr("y", 10)
-                        .style('font-family', 'Arial')
-                        .style('font-size', 12)
-                        .attr("fill", "black")
-                        .text("fdr >= 0.05 and |fold change| < 1")
+            //         legend.append("text")
+            //             .attr("dx", 516)
+            //             .attr("y", 10)
+            //             .style('font-family', 'Arial')
+            //             .style('font-size', 12)
+            //             .attr("fill", "black")
+            //             .text("fdr >= 0.05 and |fold change| < 1")
     
 
     }
