@@ -76,7 +76,7 @@ const geneAnalysis = {
 };
 
 
-const DrugApiDoc = () => (
+const GeneApiDoc = () => (
     <div className="doc">
         <h1>API Documentation</h1>
         <p>
@@ -133,4 +133,4 @@ const DrugApiDoc = () => (
     </div>
 );
 
-export default DrugApiDoc;
+export default GeneApiDoc;
