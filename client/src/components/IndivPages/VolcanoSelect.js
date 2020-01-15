@@ -136,6 +136,8 @@ const VolcanoSelect = (props) => {
         options: [],
         selected: [],
         datasets: [],
+        datasetLabels: [],
+        loading: null,
     });
 
     const { data, queryId, type } = props;
@@ -160,6 +162,8 @@ const VolcanoSelect = (props) => {
             options: [],
             selected: [],
             datasets: [],
+            datasetLabels: [],
+            loading: null,
         });
         // refactoring data to be per dataset for the dataset selector
         let newData = {};
@@ -173,14 +177,29 @@ const VolcanoSelect = (props) => {
         })
 
         const datasets = Object.keys(newData);
+        
+        // nicer names for datasets
+        const datasetLabels = [];
+        datasets.forEach((x) => {
+            if (x == 'TGGATESHumanLDH') datasetLabels.push('TGGATES Human (LDH)'); 
+            else if (x == 'TGGATESRatLDH') datasetLabels.push('TGGATES Rat (LDH)');
+            else if (x == 'drugMatrix') datasetLabels.push('DrugMatrix');
+            else datasetLabels.push(x);
+        })
 
         // set options
-        const options = datasets.map((x) => {return {'value': x, 'label': x}});
+        const options = datasetLabels.map((x,i) => {return {'value': datasets[i], 'label': x}});
 
         // set selected to the first 1 or 2 datasets
         const selected = (options.length > 1 ? options.slice(0,2) : [options[0]]).map((x) => x.value);
 
-        setState({options: options, data: newData, selected: selected, datasets: datasets});
+        // set loading to an object with a pair for each dataset
+        const loading = {};
+        datasets.forEach((x) => {
+            loading[x] = false;
+        })
+
+        setState({loading: loading, options: options, data: newData, selected: selected, datasets: datasets, datasetLabels: datasetLabels});
     }, []);
 
     return (
@@ -207,23 +226,12 @@ const VolcanoSelect = (props) => {
                                         plotId="volcanoPlot"
                                         type={type}
                                         selected={state.selected}
+                                        // loading={state.loading[x]}
                                     />
                         })}
-                        {/* render all, hide unless selected with className */}
-                        {/* {state.datasets.map((x,i) => {
-                            return <VolcanoSingle 
-                                        key={i}
-                                        data={state.data[x]} 
-                                        datasetName={x}
-                                        queryId={queryId}
-                                        plotId="volcanoPlot"
-                                        type={type}
-                                        className={state.selected.includes(x) ? '' : 'hide'}
-                                    />
-                        })} */}
+
                     </StyledVolcanoSelect>
-                </Fragment>
-                
+                </Fragment>                
             )}
         </Fragment>
     );   

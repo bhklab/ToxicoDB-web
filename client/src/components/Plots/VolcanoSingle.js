@@ -102,27 +102,27 @@ const VolcanoSingle = (props) => {
             hoverinfo: 'text',
             hovertext: [],
             marker: {
-                color: '#4c84b1',
+                color: '#e1f1fb',
                 size: 8,
             },
             name: 'blue',
         };
 
-        const grayTrace = {
-            showlegend: false,
-            type: 'scatter',
-            mode: 'markers',
-            x: [],
-            y: [],
-            click_ids: [],
-            hoverinfo: 'text',
-            hovertext: [],
-            marker: {
-                color: 'lightgray',
-                size: 8,
-            },
-            name: 'gray',
-        };
+        // const grayTrace = {
+        //     showlegend: false,
+        //     type: 'scatter',
+        //     mode: 'markers',
+        //     x: [],
+        //     y: [],
+        //     click_ids: [],
+        //     hoverinfo: 'text',
+        //     hovertext: [],
+        //     marker: {
+        //         color: 'lightgray',
+        //         size: 8,
+        //     },
+        //     name: 'gray',
+        // };
 
         // calculate lowest pvalue that isn't 0, -log10 it, and set all 0s to the cutoff
         const cutoff = -Math.log10(Math.min(...data.map((x) => (parseFloat(x.p_value) === 0 ? null : parseFloat(x.p_value))).filter((x) => x !== null)));
@@ -150,36 +150,37 @@ const VolcanoSingle = (props) => {
                         trace.click_ids.push(d.drug_id);
                     }
                     trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
-                } else if (parseFloat(d.fdr) >= 0.05 && Math.abs(d.fold_change) < 1) {
-                    const trace = grayTrace
-                    trace.x.push(d.fold_change);
-                    trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
-                    if (type == 'drug') {
-                        trace.click_ids.push(d.gene_id);
-                    } else {
-                        trace.click_ids.push(d.drug_id);
-                    }
-                    trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
-                }
+                } 
+                // else if (parseFloat(d.fdr) >= 0.05 && Math.abs(d.fold_change) < 1) {
+                //     const trace = grayTrace
+                //     trace.x.push(d.fold_change);
+                //     trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
+                //     if (type == 'drug') {
+                //         trace.click_ids.push(d.gene_id);
+                //     } else {
+                //         trace.click_ids.push(d.drug_id);
+                //     }
+                //     trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
+                // }
             } 
-            else {
-                const trace = grayTrace
-                    trace.x.push(d.fold_change);
-                    trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
-                    if (type == 'drug') {
-                        trace.click_ids.push(d.gene_id);
-                    } else {
-                        trace.click_ids.push(d.drug_id);
-                    }
-                    trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
-            }
+            // else {
+            //     const trace = grayTrace
+            //         trace.x.push(d.fold_change);
+            //         trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
+            //         if (type == 'drug') {
+            //             trace.click_ids.push(d.gene_id);
+            //         } else {
+            //             trace.click_ids.push(d.drug_id);
+            //         }
+            //         trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
+            // }
         });
 
         // if dataset is not selected, give class hidden to hide
         const className = selected.includes(datasetName) ? 'plot' : 'plot hidden';
         
         setState({ ...state,
-            data: [greenTrace, blueTrace, grayTrace],
+            data: [greenTrace, blueTrace],
             layout: {
                 height: 600,
                 autosize: true,
@@ -229,7 +230,10 @@ const VolcanoSingle = (props) => {
 
     return (
         <StyledDiv className={state.class}>
-            <h3>{datasetName}</h3>
+            <h3>{(datasetName == 'TGGATESHumanLDH') ? 'TGGATES Human (LDH)' 
+                : (datasetName == 'TGGATESRatLDH') ? 'TGGATES Rat (LDH)'
+                : (datasetName == 'drugMatrix') ? 'DrugMatrix' 
+                : datasetName}</h3>
             <Plot
                 data={state.data}
                 layout={state.layout}
