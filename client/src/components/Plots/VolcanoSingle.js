@@ -4,6 +4,7 @@ import Plot from 'react-plotly.js';
 import styled from 'styled-components';
 import * as d3 from 'd3';
 import colors from '../../styles/colors';
+import { NONAME } from 'dns';
 
 const StyledDiv = styled.div`
     min-height: 600px;    
@@ -99,8 +100,9 @@ const VolcanoSingle = (props) => {
             x: [],
             y: [],
             click_ids: [],
-            hoverinfo: 'text',
-            hovertext: [],
+            // hoverinfo: 'text',
+            // hovertext: [],
+            hoverinfo: 'none',
             marker: {
                 color: '#e1f1fb',
                 size: 8,
@@ -149,7 +151,7 @@ const VolcanoSingle = (props) => {
                     } else {
                         trace.click_ids.push(d.drug_id);
                     }
-                    trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
+                    // trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
                 } 
                 // else if (parseFloat(d.fdr) >= 0.05 && Math.abs(d.fold_change) < 1) {
                 //     const trace = grayTrace
