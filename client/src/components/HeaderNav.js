@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { slide as Menu } from 'react-burger-menu';
 import logo from '../images/toxicodb-logo.png';
 import colors from '../styles/colors';
 
@@ -32,6 +33,32 @@ const StyledNav = styled.div`
     }
   }
 
+  .standard-nav {
+    img {
+      position:fixed;
+      float:left;
+      margin-left:5vw;
+      margin-top:5px;
+    }
+    @media (min-width : 1024px) {
+      display: block;
+    }
+    @media (max-width : 1023px) {
+      display: none;
+    }
+  }
+
+  
+  .top-nav {
+    z-index: 10;
+    text-align: center;
+    padding: 15px 0px 0px 0px;
+    margin-left: 175px;
+    a {
+      padding:0em 2.5vw;
+    }
+  }
+
   img {
     position:fixed;
     float:left;
@@ -49,16 +76,106 @@ const StyledNav = styled.div`
       padding:0em 2.5vw;
     }
   }
+  .standard-nav {
+    img {
+      position:fixed;
+      float:left;
+      margin-left:5vw;
+      margin-top:5px;
+    }
+    @media (min-width : 1024px) {
+      display: block;
+    }
+    @media (max-width : 1023px) {
+      display: none;
+    }
+  }
+  .burger-nav {
+    a {
+      padding:0em 2.5vw;
+    }
+    @media (min-width : 1024px) {
+      display: none;
+    }
+    @media (max-width : 1023px) {
+      display: block;
+    }
+    img {
+      position: static;
+      margin: 0 0 20px;
+    }
+  }
+  .top-nav {
+    z-index: 10;
+    text-align: center;
+    padding: 15px 0px 0px 0px;
+    margin-left: 175px;
+    a {
+      padding:0em 2.5vw;
+    }
+  }
 `;
 
 const StyledLogo = styled.img`
   width:150px;
+  display: block;
 `;
 
-class HeaderNav extends Component {
-    render() {
-        return (
-            <StyledNav className="header-nav">
+const BurgerMenuStyles = {
+    bmBurgerButton: {
+        position: 'fixed',
+        width: '36px',
+        height: '30px',
+        right: 'calc(50% - 18px)',
+        top: '23px',
+    },
+    bmBurgerBars: {
+        background: colors.search_main,
+    },
+    bmBurgerBarsHover: {
+        background: '#a90000',
+    },
+    bmCrossButton: {
+        height: '24px',
+        width: '24px',
+    },
+    bmCross: {
+        background: colors.red_highlight,
+    },
+    bmMenuWrap: {
+        position: 'fixed',
+        height: '100%',
+    },
+    bmMenu: {
+        background: 'white',
+        padding: '2.5em 1.5em 0',
+        fontSize: '1.15em',
+        Zindex: '999',
+    },
+    bmMorphShape: {
+        fill: '#373a47',
+    },
+    bmItemList: {
+        color: '#b8b7ad',
+        padding: '0.8em',
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    bmItem: {
+        display: 'inline-block',
+        outline: 'none',
+    },
+    bmOverlay: {
+        background: 'rgba(0, 0, 0, 0.3)',
+    },
+};
+
+const HeaderNav = () => {
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    return (
+        <StyledNav className="header-nav">
+            <div className="standard-nav">
                 <Link to="/">
                     <StyledLogo src={logo} alt="logo" />
                 </Link>
@@ -68,10 +185,49 @@ class HeaderNav extends Component {
                     <Link to="/genes/">Genes</Link>
                     <Link to="/datasets/">Datasets</Link>
                 </nav>
-            </StyledNav>
-        );
-    }
-}
+            </div>
+            <div className="burger-nav">
+                <Menu
+                    styles={BurgerMenuStyles}
+                    right
+                    isOpen={menuOpen}
+                    onStateChange={(state) => setMenuOpen(state.isOpen)}
+                >
+                    <Link
+                        to="/"
+                        onClick={() => setMenuOpen(false)}
+                    >
+                        <StyledLogo src={logo} alt="logo" />
+                    </Link>
+                    <Link
+                        to="/documentation/"
+                        onClick={() => setMenuOpen(false)}
+                    >
+                      Documentation
+                    </Link>
+                    <Link
+                        to="/drugs/"
+                        onClick={() => setMenuOpen(false)}
+                    >
+                      Drugs
+                    </Link>
+                    <Link
+                        to="/genes/"
+                        onClick={() => setMenuOpen(false)}
+                    >
+                      Genes
+                    </Link>
+                    <Link
+                        to="/datasets/"
+                        onClick={() => setMenuOpen(false)}
+                    >
+                      Datasets
+                    </Link>
+                </Menu>
+            </div>
+        </StyledNav>
+    );
+};
 
 
 export default HeaderNav;
