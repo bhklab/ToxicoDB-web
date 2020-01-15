@@ -58,6 +58,36 @@ const drugData = {
     ],
 };
 
+const drugAnalysis = {
+    status: 'success',
+    data: [
+        {
+            fdr: '0.0140394900967384',
+            fold_change: -0.26868251,
+            p_value: '0.00275455691716522',
+            gene_id: 3935,
+            gene_name: 'MSH3',
+            dataset_name: 'TGGATES Human LDH',
+        },
+        {
+            fdr: '0.0140665335551909',
+            fold_change: -0.39425924,
+            p_value: '0.00276156045048297',
+            gene_id: 3937,
+            gene_name: 'GABRG2',
+            dataset_name: 'TGGATES Human LDH',
+        },
+        {
+            fdr: '0.0140665335551909',
+            fold_change: -0.35523966,
+            p_value: '0.00276196694955832',
+            gene_id: 3938,
+            gene_name: 'CCNG1',
+            dataset_name: 'TGGATES Human LDH',
+        },
+    ],
+};
+
 
 const DrugApiDoc = () => (
     <div className="doc">
@@ -84,6 +114,8 @@ const DrugApiDoc = () => (
                 {' '}
                 <em>drug id</em>
                 {' '}
+                (integer)
+                {' '}
                 request paramater.
             </p>
             <p className="code">
@@ -91,6 +123,23 @@ const DrugApiDoc = () => (
             </p>
             <p>Output: </p>
             <div><pre className="output">{JSON.stringify(drugData, null, 2)}</pre></div>
+        </div>
+        <div className="api-section">
+            <h3>Get Drug Analysis Data</h3>
+            <p>
+                Retrieves analysis data for a given drug across all genes. The API requires
+                {' '}
+                <em>drug id</em>
+                {' '}
+                (integer)
+                {' '}
+                to process the request.
+            </p>
+            <p className="code">
+                <span>curl http://toxicodb.ca/api/v1/drugs/1/analysis</span>
+            </p>
+            <p>Output: </p>
+            <div><pre className="output">{JSON.stringify(drugAnalysis, null, 2)}</pre></div>
         </div>
     </div>
 );
