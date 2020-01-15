@@ -1,5 +1,5 @@
 /* eslint-disable radix */
-import React from 'react';
+import React, { Component, Fragment, useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 import styled from 'styled-components';
 import * as d3 from 'd3';
@@ -17,6 +17,10 @@ const StyledDiv = styled.div`
     }
     .scatterpts {
         opacity: 0;
+    }
+
+    .hide { 
+        display:none;
     }
 
 `;
@@ -49,40 +53,23 @@ const click = (data, type, queryId) => {
 
 // for changing the cursor on hover of points
 const hover = (data) => {
-     // d3.selectAll('g.points').selectAll('path')
-    // .style('cursor', 'pointer')
+    d3.selectAll('.nsewdrag').style('cursor', 'pointer')
 
-    let dragLayer = document.getElementsByClassName('nsewdrag')[0];
-    dragLayer.style.cursor = 'pointer';
 }
 
 const unhover = (data) => {
-     // d3.selectAll('g.points').selectAll('path')
-    // .style('cursor', 'pointer')
-
-    let dragLayer = document.getElementsByClassName('nsewdrag')[0];
-    dragLayer.style.cursor = '';
+    d3.selectAll('.nsewdrag').style('cursor', '')
 }
 
-class VolcanoSingle extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
+const VolcanoSingle = (props) => {
+    const [state, setState] = useState({
             layout: null,
             data: null,
-        };
-    }
+        });
 
-    componentDidMount() {
-        const {
-            data, type, queryId,
-        } = this.props;
-        this.formatData(data);
-    }
+    const { data, type, queryId, datasetName, plotId } = props;
+    const formatData = (data) => {
 
-
-    formatData(data) {
-        const { type } = this.props;
         // setting up the traces; can't really deep copy
         const greenTrace = {
             showlegend: false,
@@ -183,7 +170,7 @@ class VolcanoSingle extends React.Component {
             }
         });
 
-        this.setState({
+        setState({
             data: [greenTrace, blueTrace, grayTrace],
             layout: {
                 height: 600,
@@ -208,29 +195,44 @@ class VolcanoSingle extends React.Component {
                 },
             },
         });
-    }
+    };
 
-    render() {
-        const { layout, data } = this.state;
-        const { plotId, type, queryId, datasetName } = this.props;
-        return (
-            <StyledDiv>
-                <h3>{datasetName}</h3>
-                <Plot
-                    data={data}
-                    layout={layout}
-                    graphDiv={plotId}
-                    config={{
-                        responsive: true,
-                        displayModeBar: false,
-                    }}
-                    onClick={(d) => click(d, type, queryId)}
-                    onHover={() => hover()}
-                    onUnhover={() => unhover()}
-                />
-            </StyledDiv>
-        );
-    }
+    // initial render - like a componentdidmount, only runs once
+    useEffect(() => {
+        setState({...state,
+            layout: null,
+            data: null,
+        })
+       formatData(data);
+    }, []);
+
+    // determining if datasetName changes
+    useEffect(() => {
+        setState({...state,
+            layout: null,
+            data: null,
+        })
+       formatData(data);
+    }, [datasetName]);
+
+
+    return (
+        <StyledDiv className="plot">
+            <h3>{datasetName}</h3>
+            <Plot
+                data={state.data}
+                layout={state.layout}
+                graphDiv={plotId}
+                config={{
+                    responsive: true,
+                    displayModeBar: false,
+                }}
+                onClick={(d) => click(d, type, queryId)}
+                onHover={() => hover()}
+                onUnhover={() => unhover()}
+            />
+        </StyledDiv>
+    );
 }
 
 export default VolcanoSingle;
