@@ -11,8 +11,7 @@ import 'slick-carousel/slick/slick-theme.css';
 const StyledQueries = styled.div`
     margin-top:35px;
     width: 100%;
-
-
+    
 
     .slick-next::before {
         content: '>' !important;
@@ -24,14 +23,22 @@ const StyledQueries = styled.div`
     
     .slick-prev {
         left: -35px !important;
+
+        @media (max-width : 500px) {
+            left: -25px !important
+        }
     }
 
     .slick-next {
-        right: -40px !important;
+        right: -35px !important;
+
+        @media (max-width : 500px) {
+            right: -25px !important
+        }
     }
     
     .slick-next::before, .slick-prev::before {
-        font-size:calc(5em + 3vw) !important;
+        font-size:calc(2rem + 3vw) !important;
         color:${colors.blue_text} !important;
         font-family: 'Dosis', sans-serif !important;
     }
@@ -84,8 +91,10 @@ const getSlides = () => {
     let slides;
     if (width >= 800) {
         return 3;
+    } if (width >= 480) {
+        return 2;
     }
-    return 2;
+    return 1;
 };
 
 const FrequentQueries = () => {

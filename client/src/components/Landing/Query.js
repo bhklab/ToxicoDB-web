@@ -13,6 +13,7 @@ const StyledQuery = styled.div`
 
     h2, a {
         color: ${colors.blue_header};
+        height: 60px;
         &:hover {
             color: ${colors.red_highlight}
         }
