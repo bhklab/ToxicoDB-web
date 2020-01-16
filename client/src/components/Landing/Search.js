@@ -266,8 +266,6 @@ class Search extends Component {
                         onKeyDown={handleKeyDown}
                         onMenuOpen={handleMenuOpen}
                         onMenuClose={handleMenuClose}
-                        onMenuScrollToTop={(e) => console.log('onMenuScrollToTop', e)}
-                        onMenuScrollToBottom={(e) => console.log('onMenuScrollToBottom', e)}
                     />
                 )}
                 <StyledExample>

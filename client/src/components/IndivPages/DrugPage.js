@@ -156,7 +156,9 @@ const DrugPage = (props) => {
                 ]}
                 loading={loading}
                 LoadingComponent={LoadingComponent}
-
+                onFilteredChange={(column, value) => {
+                    console.log(column, value);
+                }}
             />
             <DownloadButton
                 data={analysisData}
@@ -169,18 +171,18 @@ const DrugPage = (props) => {
                     <center>
                         <h2>
                             Analysis -
-                                {' '}
-                                {apiData.name}
-                            </h2>
-    
-                        </center>
-                        <VolcanoSelect
-                            data={analysisData}
-                            queryId={params.id}
-                            type="drug"
-                        />
-                    </div>
-                )}
+                            {' '}
+                            {apiData.name}
+                        </h2>
+
+                    </center>
+                    <VolcanoSelect
+                        data={analysisData}
+                        queryId={params.id}
+                        type="drug"
+                    />
+                </div>
+            )}
         </StyledDrugPage>
     );
 };
