@@ -1,10 +1,12 @@
 /* eslint-disable radix */
-import React, { Component, Fragment, useState, useEffect } from 'react';
+import React, {
+    Component, Fragment, useState, useEffect,
+} from 'react';
 import Plot from 'react-plotly.js';
 import styled from 'styled-components';
 import * as d3 from 'd3';
-import colors from '../../styles/colors';
 import { NONAME } from 'dns';
+import colors from '../../styles/colors';
 
 const StyledDiv = styled.div`
     min-height: 600px;    
@@ -50,13 +52,12 @@ const click = (data, type, queryId) => {
 
 // for changing the cursor on hover of points
 const hover = () => {
-    d3.selectAll('.nsewdrag').style('cursor', 'pointer')
-
-}
+    d3.selectAll('.nsewdrag').style('cursor', 'pointer');
+};
 
 const unhover = () => {
-    d3.selectAll('.nsewdrag').style('cursor', '')
-}
+    d3.selectAll('.nsewdrag').style('cursor', '');
+};
 
 // // after plotting, return the datasetName
 // // to show that it's done loading
@@ -66,16 +67,17 @@ const unhover = () => {
 
 const VolcanoSingle = (props) => {
     const [state, setState] = useState({
-            layout: null,
-            data: null,
-            class: null,
-            // loading: false,
-        });
+        layout: null,
+        data: null,
+        class: null,
+        // loading: false,
+    });
 
-    const { data, type, queryId, datasetName, plotId, selected } = props;
+    const {
+        data, type, queryId, datasetName, plotId, selected,
+    } = props;
 
     const formatData = (data) => {
-
         // setting up the traces; can't really deep copy
         const greenTrace = {
             showlegend: false,
@@ -133,26 +135,26 @@ const VolcanoSingle = (props) => {
         data.forEach((d) => {
             if (parseFloat(d.p_value) <= 0.05) {
                 if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) >= 1) {
-                    const trace = greenTrace
+                    const trace = greenTrace;
                     trace.x.push(d.fold_change);
                     trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
-                    if (type == 'drug') {
+                    if (type === 'drug') {
                         trace.click_ids.push(d.gene_id);
                     } else {
                         trace.click_ids.push(d.drug_id);
                     }
                     trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
                 } else if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) < 1) {
-                    const trace = blueTrace
+                    const trace = blueTrace;
                     trace.x.push(d.fold_change);
                     trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
-                    if (type == 'drug') {
+                    if (type === 'drug') {
                         trace.click_ids.push(d.gene_id);
                     } else {
                         trace.click_ids.push(d.drug_id);
                     }
                     // trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
-                } 
+                }
                 // else if (parseFloat(d.fdr) >= 0.05 && Math.abs(d.fold_change) < 1) {
                 //     const trace = grayTrace
                 //     trace.x.push(d.fold_change);
@@ -164,7 +166,7 @@ const VolcanoSingle = (props) => {
                 //     }
                 //     trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
                 // }
-            } 
+            }
             // else {
             //     const trace = grayTrace
             //         trace.x.push(d.fold_change);
@@ -180,8 +182,9 @@ const VolcanoSingle = (props) => {
 
         // if dataset is not selected, give class hidden to hide
         const className = selected.includes(datasetName) ? 'plot' : 'plot hidden';
-        
-        setState({ ...state,
+
+        setState({
+            ...state,
             data: [greenTrace, blueTrace],
             layout: {
                 height: 600,
@@ -205,37 +208,42 @@ const VolcanoSingle = (props) => {
                     b: 40,
                 },
             },
-            class: className
+            class: className,
         });
     };
 
     // initial render - like a componentdidmount, only runs once
     useEffect(() => {
-        setState({...state,
+        setState({
+            ...state,
             layout: null,
             data: null,
             class: null,
-        })
-       formatData(data);
+        });
+        formatData(data);
     }, []);
 
     // determining if selected changes
     useEffect(() => {
-        setState({...state,
+        setState({
+            ...state,
             layout: null,
             data: null,
             class: null,
-        })
-       formatData(data);
+        });
+        formatData(data);
     }, [selected]);
 
 
     return (
         <StyledDiv className={state.class}>
-            <h3>{(datasetName == 'TGGATESHumanLDH') ? 'TGGATES Human (LDH)' 
-                : (datasetName == 'TGGATESRatLDH') ? 'TGGATES Rat (LDH)'
-                : (datasetName == 'drugMatrix') ? 'DrugMatrix' 
-                : datasetName}</h3>
+            <h3>
+                {(datasetName === 'TGGATESHumanLDH') ? 'TGGATES Human (LDH)'
+                    : (datasetName === 'TGGATESRatLDH') ? 'TGGATES Rat (LDH)'
+                        : (datasetName === 'drugMatrix') ? 'DrugMatrix'
+                            : datasetName}
+
+            </h3>
             <Plot
                 data={state.data}
                 layout={state.layout}
@@ -251,6 +259,6 @@ const VolcanoSingle = (props) => {
             />
         </StyledDiv>
     );
-}
+};
 
 export default VolcanoSingle;

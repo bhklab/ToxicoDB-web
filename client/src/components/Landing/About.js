@@ -16,6 +16,10 @@ const StyledAbout = styled.div`
         clear: both;
     }
     height:auto;
+
+    @media (max-width : 779px) {
+        flex-direction: column;
+    }
 `;
 
 const StyledDescription = styled.div`
@@ -29,7 +33,10 @@ const StyledDescription = styled.div`
     width:45%;
     float:left;
     margin-right:3%;
-    
+
+    @media (max-width : 779px) {
+        width: 100%
+    }
 `;
 
 const StyledChart = styled.div`
@@ -38,10 +45,13 @@ const StyledChart = styled.div`
     font-family: 'Raleway', sans-serif;
     font-size: calc(1em + 0.3vw);
     line-height:0px;
-    padding:20px;
     border-radius:15px;
     width:47%;
     float:right;
+
+    @media (max-width : 779px) {
+        width: 100%
+    }
 `;
 
 

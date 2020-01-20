@@ -9,7 +9,7 @@ const StyledNav = styled.div`
     bottom:0px;
     margin-bottom:-10px;
     right:0px;
-    height:170px;
+    padding: 10px 0;
     white-space:nowrap;
     background-color: ${colors.lightblue_bg};
     font-size: calc(0.8em + 0.2vw);
@@ -18,13 +18,15 @@ const StyledNav = styled.div`
     align-items:center;
     justify-content: center;
 
-    @media (max-width : 1023px) {
-        height:100px;
-    }
-
+    
     .container {
         width:80vw;
         display:flex;
+        @media (max-width : 500px) {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
     }
 
     h3 {
@@ -53,6 +55,7 @@ const StyledNav = styled.div`
         color: ${colors.blue_header};
         line-height:25px;
         border-radius:25px;
+        padding: 0 10px 5px;
         h3 {
             margin:15px 0 5px 0;
         }
@@ -61,37 +64,33 @@ const StyledNav = styled.div`
 }
 `;
 
-class FooterNav extends Component {
-    render() {
-        return (
-            <StyledNav className="footer-nav">
-                <div className="container">
-                    <div className="database links">
-                        <h3>Database</h3>
-                        <Link to="/drugs">Drugs</Link>
-                        <Link to="/genes">Genes</Link>
-                        <Link to="/datasets">Datasets</Link>
-                    </div>
-                    <div className="support links">
-                        <h3>Support</h3>
-                        <Link to="/documentation">Documentation</Link>
-                        <a href="https://github.com/bhklab">GitHub</a>
-                        <a href="https://bhklab.ca/">BHKLab</a>
-                    </div>
-                    <div className="contact">
-                        <h3>BHKLab</h3>
+const FooterNav = () => (
+    <StyledNav className="footer-nav">
+        <div className="container">
+            <div className="database links">
+                <h3>Database</h3>
+                <Link to="/drugs">Drugs</Link>
+                <Link to="/genes">Genes</Link>
+                <Link to="/datasets">Datasets</Link>
+            </div>
+            <div className="support links">
+                <h3>Support</h3>
+                <Link to="/documentation">Documentation</Link>
+                <a href="https://github.com/bhklab">GitHub</a>
+                <a href="https://bhklab.ca/">BHKLab</a>
+            </div>
+            <div className="contact">
+                <h3>BHKLab</h3>
                     The MaRS center
-                        <br />
+                <br />
                     101 College St, Toronto ON
-                        {' '}
-                        <br />
+                {' '}
+                <br />
                     TMDT RM 11-310
-                    </div>
-                </div>
-            </StyledNav>
-        );
-    }
-}
+            </div>
+        </div>
+    </StyledNav>
+);
 
 
 export default FooterNav;

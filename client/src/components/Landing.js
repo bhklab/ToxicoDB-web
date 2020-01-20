@@ -18,14 +18,15 @@ const StyledLanding = styled.div`
             text-align:center;
         }
     }
+    
 `;
 
-const Landing = (props) => (
+const Landing = () => (
     <StyledLanding>
         <h1 style={{ marginTop: '200px' }} className="title">Mine multiple toxicogenomic datasets.</h1>
         <Search />
 
-        <h1 style={{ marginTop: '90px', marginBottom: '0px' }}>About our database</h1>
+        <h1 style={{ marginTop: '90px', marginBottom: '10px' }}>About our database</h1>
         <About />
 
         <h1 style={{ marginTop: '50px' }}>Most frequent queries</h1>
