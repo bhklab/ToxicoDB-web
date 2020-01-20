@@ -28,14 +28,14 @@ const StyledVolcanoSelect = styled.div`
 const customStyles = {
     control: (provided) => ({
         ...provided,
-        background: colors.search_bg,
+        background: colors.lightblue_bg,
         borderRadius: '10px',
         marginBottom:'30px',
         // width:300,
         height: 20,
         fontFamily: '\'Raleway\', sans-serif',
         fontWeight: 600,
-        color: colors.search_main,
+        color: colors.blue_header,
         marginTop: '80px',
         padding: '0 0px',
         border: `1px solid ${colors.blue_header}`,
@@ -51,55 +51,55 @@ const customStyles = {
     input: (provided) => ({
         ...provided,
         padding: '0 0px',
-        color: colors.search_main,
+        color: colors.blue_header,
     }),
     placeholder: (provided) => ({
         ...provided,
-        color: `${colors.search_main}`,
+        color: `${colors.blue_header}`,
     }),
     clearIndicator: (provided) => ({
         ...provided,
-        color: `${colors.search_main}`,
+        color: `${colors.blue_header}`,
         '&:hover': {
-            color: `${colors.search_main}`,
+            color: `${colors.blue_header}`,
             cursor: 'pointer',
         },
     }),
     dropdownIndicator: (provided) => ({
         ...provided,
-        color: `${colors.search_main}`,
+        color: `${colors.blue_header}`,
         '&:hover': {
-            color: `${colors.search_main}`,
+            color: `${colors.blue_header}`,
             cursor: 'pointer',
         },
     }),
     indicatorSeparator: (provided) => ({
         ...provided,
-        background: `${colors.search_main}`,
+        background: `${colors.blue_header}`,
         '&:hover': {
-            background: `${colors.search_main}`,
+            background: `${colors.blue_header}`,
         },
     }),
     singleValue: (provided) => ({
         ...provided,
-        color: `${colors.search_main}`,
+        color: `${colors.blue_header}`,
     }),
     multiValue: (provided) => ({
         ...provided,
-        color: `${colors.search_main}`,
+        color: `${colors.blue_header}`,
         background: '#fff',
         marginRight: '10px',
     }),
     multiValueLabel: (provided) => ({
         ...provided,
-        color: `${colors.search_main}`,
+        color: `${colors.blue_header}`,
     }),
     option: (provided, state) => ({
         ...provided,
         textAlign: 'left',
         fontWeight: '400',
         background: 'white',
-        color: colors.search_main,
+        color: colors.blue_header,
     }),
 };
 
@@ -107,11 +107,11 @@ const CustomOption = (innerProps) => (
     <components.Option {...innerProps}>
         <div
             style={{
-                backgroundColor: innerProps.isFocused ? colors.search_bg : 'inherit',
+                backgroundColor: innerProps.isFocused ? colors.lightblue_bg : 'inherit',
                 height: 30,
                 padding: '13px 20px',
                 '&:hover': {
-                    background: colors.search_bg,
+                    background: colors.lightblue_bg,
                 },
             }}
         >
