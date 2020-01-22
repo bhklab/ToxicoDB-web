@@ -7,9 +7,13 @@ import colors from '../../styles/colors';
 const StyledQuery = styled.div`
     text-align: center !important;
     font-family: 'Raleway', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
 
     h2, a {
         color: ${colors.blue_header};
+        height: 60px;
         &:hover {
             color: ${colors.red_highlight}
         }

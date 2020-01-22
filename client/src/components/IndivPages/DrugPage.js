@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable no-restricted-globals */
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
@@ -66,14 +67,50 @@ const filterCaseInsensitive = (filter, row) => {
     }
 };
 
+
 const DrugPage = (props) => {
     const { match: { params } } = props;
+
+    // creates an object that contains all filter values
+    const [filterValues, setFilterValues] = useState({});
+    const [{ filteredData, processedData }, setData] = useState({ filteredData: [], processedData: [] });
+
     // apiData and annotationData are being updated together
     // so they can be handled under the same hook
     const { apiData, annotationData } = useFetchAnnotation(`/api/v1/drugs/${params.id}`, 'drug');
     // analysisData and loading are handled together => one hook
-    const { analysisData, loading } = useFetchAnalysisData(`/api/v1/drugs/${params.id}/analysis`);
+    const {
+        analysisData,
+        loading,
+    } = useFetchAnalysisData(`/api/v1/drugs/${params.id}/analysis`);
+    console.log(analysisData);
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
+
+    useEffect(() => {
+        const data = [...analysisData].map((item) => {
+            const newItem = {};
+            Object.entries(item).forEach((val) => {
+                if (typeof val[1] === 'string') {
+                    newItem[val[0]] = isNaN(parseFloat(val[1])) ? val[1] : parseFloat(val[1]).toExponential(1).toString();
+                } else if (val[0] === 'gene_id') {
+                    // eslint-disable-next-line prefer-destructuring
+                    newItem[val[0]] = val[1];
+                } else {
+                    newItem[val[0]] = val[1].toFixed(1).toString();
+                }
+            });
+            return newItem;
+        });
+
+        setData({ processedData: data, filteredData: data });
+    }, [analysisData]);
+
+    useEffect(() => {
+        const updatedFilteredData = processedData.filter((item) => Object.entries(filterValues)
+            .every((val) => item[val[0]].includes(val[1])));
+        setData({ filteredData: updatedFilteredData, processedData });
+    }, [filterValues]);
+
     const columns = [{
         Header: 'Gene',
         accessor: 'gene_name',
@@ -84,19 +121,19 @@ const DrugPage = (props) => {
         accessor: 'fold_change',
         sortable: true,
         sortMethod(a, b) { return b - a; },
-        Cell: (row) => parseFloat(row.value).toFixed(1),
+        // Cell: (row) => parseFloat(row.value).toFixed(1),
     }, {
         Header: 'p-value',
         accessor: 'p_value',
         sortable: true,
         sortMethod(a, b) { return b - a; },
-        Cell: (row) => parseFloat(row.value).toExponential(1),
+        // Cell: (row) => parseFloat(row.value).toExponential(1),
     }, {
         Header: 'fdr',
         accessor: 'fdr',
         sortable: true,
         sortMethod(a, b) { return b - a; },
-        Cell: (row) => parseFloat(row.value).toExponential(1),
+        // Cell: (row) => parseFloat(row.value).toExponential(1),
     }, {
         Header: 'Dataset',
         accessor: 'dataset_name',
@@ -129,6 +166,7 @@ const DrugPage = (props) => {
     const headers = [
         { displayName: 'gene', id: 'gene_name' },
         { displayName: 'p-value', id: 'p_value' },
+        { displayName: 'fdr', id: 'fdr' },
         { displayName: 'fold-change', id: 'fold_change' },
         { displayName: 'dataset', id: 'dataset_name' },
     ];
@@ -142,7 +180,7 @@ const DrugPage = (props) => {
                 </div>
             )}
             <ReactTable
-                data={analysisData}
+                data={processedData}
                 columns={columns}
                 filterable
                 defaultFilterMethod={filterCaseInsensitive}
@@ -156,14 +194,21 @@ const DrugPage = (props) => {
                 ]}
                 loading={loading}
                 LoadingComponent={LoadingComponent}
-
+                onFilteredChange={(values) => {
+                    const filterObj = {};
+                    values.forEach((item) => {
+                        filterObj[item.id] = item.value;
+                    });
+                    setFilterValues(filterObj);
+                }}
             />
             <DownloadButton
-                data={analysisData}
+                data={filteredData}
                 filename={`${apiData.name}-drugsData`}
                 headers={headers}
             />
-            {/* {analysisData.length === 0 ? null : (
+
+            {analysisData.length === 0 ? null : (
                 <div className="volcanoWrapper">
                     <center>
                         <h2>
@@ -171,33 +216,15 @@ const DrugPage = (props) => {
                             {' '}
                             {apiData.name}
                         </h2>
+
                     </center>
-                    <VolcanoPlotly
+                    <VolcanoSelect
                         data={analysisData}
                         queryId={params.id}
-                        plotId="volcanoPlot"
                         type="drug"
                     />
                 </div>
-            )} */}
-
-            {analysisData.length === 0 ? null : (
-                <div className="volcanoWrapper">
-                    <center>
-                        <h2>
-                            Analysis -
-                                {' '}
-                                {apiData.name}
-                            </h2>
-    
-                        </center>
-                        <VolcanoSelect
-                            data={analysisData}
-                            queryId={params.id}
-                            type="drug"
-                        />
-                    </div>
-                )}
+            )}
         </StyledDrugPage>
     );
 };

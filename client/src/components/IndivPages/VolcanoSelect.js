@@ -4,10 +4,9 @@
 import React, { Component, Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
-import VolcanoSingle from '../Plots/VolcanoSingle';
+import VolcanoSingle from '../Plots/VolcanoSinglePlotly';
 import VolcanoLegend from '../Plots/VolcanoLegend';
 import Select, { components } from 'react-select';
-import { timingSafeEqual } from 'crypto';
 
 const StyledVolcanoSelect = styled.div`
     width: 100%;
@@ -19,20 +18,23 @@ const StyledVolcanoSelect = styled.div`
         width: 50%;
         flex-grow: 1;
     }
+    .hidden { 
+        display:none;
+    }
 
 `;
 
 const customStyles = {
     control: (provided) => ({
         ...provided,
-        background: colors.search_bg,
+        background: colors.lightblue_bg,
         borderRadius: '10px',
         marginBottom:'30px',
         // width:300,
         height: 20,
         fontFamily: '\'Raleway\', sans-serif',
         fontWeight: 600,
-        color: colors.search_main,
+        color: colors.blue_header,
         marginTop: '80px',
         padding: '0 0px',
         border: `1px solid ${colors.blue_header}`,
@@ -48,55 +50,55 @@ const customStyles = {
     input: (provided) => ({
         ...provided,
         padding: '0 0px',
-        color: colors.search_main,
+        color: colors.blue_header,
     }),
     placeholder: (provided) => ({
         ...provided,
-        color: `${colors.search_main}`,
+        color: `${colors.blue_header}`,
     }),
     clearIndicator: (provided) => ({
         ...provided,
-        color: `${colors.search_main}`,
+        color: `${colors.blue_header}`,
         '&:hover': {
-            color: `${colors.search_main}`,
+            color: `${colors.blue_header}`,
             cursor: 'pointer',
         },
     }),
     dropdownIndicator: (provided) => ({
         ...provided,
-        color: `${colors.search_main}`,
+        color: `${colors.blue_header}`,
         '&:hover': {
-            color: `${colors.search_main}`,
+            color: `${colors.blue_header}`,
             cursor: 'pointer',
         },
     }),
     indicatorSeparator: (provided) => ({
         ...provided,
-        background: `${colors.search_main}`,
+        background: `${colors.blue_header}`,
         '&:hover': {
-            background: `${colors.search_main}`,
+            background: `${colors.blue_header}`,
         },
     }),
     singleValue: (provided) => ({
         ...provided,
-        color: `${colors.search_main}`,
+        color: `${colors.blue_header}`,
     }),
     multiValue: (provided) => ({
         ...provided,
-        color: `${colors.search_main}`,
+        color: `${colors.blue_header}`,
         background: '#fff',
         marginRight: '10px',
     }),
     multiValueLabel: (provided) => ({
         ...provided,
-        color: `${colors.search_main}`,
+        color: `${colors.blue_header}`,
     }),
     option: (provided, state) => ({
         ...provided,
         textAlign: 'left',
         fontWeight: '400',
         background: 'white',
-        color: colors.search_main,
+        color: colors.blue_header,
     }),
 };
 
@@ -104,11 +106,11 @@ const CustomOption = (innerProps) => (
     <components.Option {...innerProps}>
         <div
             style={{
-                backgroundColor: innerProps.isFocused ? colors.search_bg : 'inherit',
+                backgroundColor: innerProps.isFocused ? colors.lightblue_bg : 'inherit',
                 height: 30,
                 padding: '13px 20px',
                 '&:hover': {
-                    background: colors.search_bg,
+                    background: colors.lightblue_bg,
                 },
             }}
         >
@@ -132,6 +134,9 @@ const VolcanoSelect = (props) => {
         data: [],
         options: [],
         selected: [],
+        datasets: [],
+        datasetLabels: [],
+        loading: null,
     });
 
     const { data, queryId, type } = props;
@@ -155,6 +160,9 @@ const VolcanoSelect = (props) => {
             data: [],
             options: [],
             selected: [],
+            datasets: [],
+            datasetLabels: [],
+            loading: null,
         });
         // refactoring data to be per dataset for the dataset selector
         let newData = {};
@@ -168,14 +176,29 @@ const VolcanoSelect = (props) => {
         })
 
         const datasets = Object.keys(newData);
+        
+        // nicer names for datasets
+        const datasetLabels = [];
+        datasets.forEach((x) => {
+            if (x == 'TGGATESHumanLDH') datasetLabels.push('TGGATES Human (LDH)'); 
+            else if (x == 'TGGATESRatLDH') datasetLabels.push('TGGATES Rat (LDH)');
+            else if (x == 'drugMatrix') datasetLabels.push('DrugMatrix');
+            else datasetLabels.push(x);
+        })
 
         // set options
-        const options = datasets.map((x) => {return {'value': x, 'label': x}});
+        const options = datasetLabels.map((x,i) => {return {'value': datasets[i], 'label': x}});
 
         // set selected to the first 1 or 2 datasets
         const selected = (options.length > 1 ? options.slice(0,2) : [options[0]]).map((x) => x.value);
 
-        setState({options: options, data: newData, selected: selected});
+        // set loading to an object with a pair for each dataset
+        const loading = {};
+        datasets.forEach((x) => {
+            loading[x] = false;
+        })
+
+        setState({loading: loading, options: options, data: newData, selected: selected, datasets: datasets, datasetLabels: datasetLabels});
     }, []);
 
     return (
@@ -193,7 +216,7 @@ const VolcanoSelect = (props) => {
                     />
                     <VolcanoLegend plotId="legend"/>
                     <StyledVolcanoSelect>
-                        {state.selected.map((x,i) => {
+                        {state.datasets.map((x,i) => {
                             return <VolcanoSingle 
                                         key={i}
                                         data={state.data[x]} 
@@ -201,23 +224,13 @@ const VolcanoSelect = (props) => {
                                         queryId={queryId}
                                         plotId="volcanoPlot"
                                         type={type}
+                                        selected={state.selected}
+                                        // loading={state.loading[x]}
                                     />
                         })}
-                        {/* render all, hide unless selected with className */}
-                        {/* {state.datasets.map((x,i) => {
-                            return <VolcanoSingle 
-                                        key={i}
-                                        data={state.data[x]} 
-                                        datasetName={x}
-                                        queryId={queryId}
-                                        plotId="volcanoPlot"
-                                        type={type}
-                                        className={state.selected.includes(x) ? '' : 'hide'}
-                                    />
-                        })} */}
+
                     </StyledVolcanoSelect>
-                </Fragment>
-                
+                </Fragment>                
             )}
         </Fragment>
     );   

@@ -4,7 +4,7 @@ import React from 'react';
 class VolcanoLegend extends React.Component {
     componentDidMount() {
         const {plotId} = this.props;
-        const width = 500;
+        const width = 800;
         const height = 20;
         const margin = {
             top: 0,
@@ -29,15 +29,15 @@ class VolcanoLegend extends React.Component {
                 .attr("y", 0)
                 .attr("width", 12)
                 .attr("height",12)
-                .attr("fill", '#4c84b1')
+                .attr("fill", '#e1f1fb')
 
-            legend.append("text")
-                .attr("dx", 16)
-                .attr("y", 10)
-                .attr("fill", "black")
-                .style('font-family', 'Arial')
-                .style('font-size', 12)
-                .text("fdr < 0.05 and |fold change| < 1")
+                legend.append("text")
+                    .attr("dx", 16)
+                    .attr("y", 10)
+                    .attr("fill", "black")
+                    .style('font-family', 'Arial')
+                    .style('font-size', 12)
+                    .text("fdr < 0.05 and |fold change| < 1")
 
             legend.append("rect")
                 .attr("x", 250)
@@ -46,13 +46,30 @@ class VolcanoLegend extends React.Component {
                 .attr("height",12)
                 .attr("fill", '#5cc33c')
 
-            legend.append("text")
-                .attr("dx", 266)
-                .attr("y", 10)
-                .style('font-family', 'Arial')
-                .style('font-size', 12)
-                .attr("fill", "black")
-                .text("fdr < 0.05 and |fold change| >= 1")
+                legend.append("text")
+                    .attr("dx", 266)
+                    .attr("y", 10)
+                    .style('font-family', 'Arial')
+                    .style('font-size', 12)
+                    .attr("fill", "black")
+                    .text("fdr < 0.05 and |fold change| >= 1")
+
+            // legend.append("rect")
+            //     .attr("x", 500)
+            //     .attr("y", 0)
+            //     .attr("width", 12)
+            //     .attr("height",12)
+            //     .attr("fill", 'lightgray')
+    
+            //         legend.append("text")
+            //             .attr("dx", 516)
+            //             .attr("y", 10)
+            //             .style('font-family', 'Arial')
+            //             .style('font-size', 12)
+            //             .attr("fill", "black")
+            //             .text("fdr >= 0.05 and |fold change| < 1")
+    
+
     }
     render() {
         return <div id={this.props.plotId}/>;
