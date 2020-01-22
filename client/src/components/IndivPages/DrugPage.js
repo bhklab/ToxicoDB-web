@@ -83,6 +83,7 @@ const DrugPage = (props) => {
         analysisData,
         loading,
     } = useFetchAnalysisData(`/api/v1/drugs/${params.id}/analysis`);
+    console.log(analysisData);
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
 
     useEffect(() => {
@@ -93,6 +94,7 @@ const DrugPage = (props) => {
                 if (typeof val[1] === 'string') {
                     newItem[val[0]] = isNaN(parseFloat(val[1])) ? val[1] : parseFloat(val[1]).toExponential(1).toString();
                 } else if (val[0] === 'gene_id') {
+                    // eslint-disable-next-line prefer-destructuring
                     newItem[val[0]] = val[1];
                 } else {
                     newItem[val[0]] = val[1].toFixed(1).toString();
