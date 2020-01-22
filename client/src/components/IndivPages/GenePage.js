@@ -136,6 +136,7 @@ const GenePage = (props) => {
     const headers = [
         { displayName: 'drug', id: 'drug_name' },
         { displayName: 'p-value', id: 'p_value' },
+        { displayName: 'fdr', id: 'fdr' },
         { displayName: 'fold-change', id: 'fold_change' },
         { displayName: 'dataset', id: 'dataset_name' },
     ];
