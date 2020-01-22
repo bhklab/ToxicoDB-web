@@ -87,7 +87,6 @@ const DrugPage = (props) => {
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
 
     useEffect(() => {
-        console.log(analysisData);
         const data = [...analysisData].map((item) => {
             const newItem = {};
             Object.entries(item).forEach((val) => {
@@ -162,7 +161,6 @@ const DrugPage = (props) => {
             </select>
         ),
     }];
-    console.log(processedData);
 
     const headers = [
         { displayName: 'gene', id: 'gene_name' },

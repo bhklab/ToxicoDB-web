@@ -77,7 +77,7 @@ const GenePage = (props) => {
     const { apiData, annotationData } = useFetchAnnotation(`/api/v1/genes/${params.id}`, 'gene');
     // analysisData and loading are handled together => one hook
     const { analysisData, loading } = useFetchAnalysisData(`/api/v1/genes/${params.id}/analysis`);
-
+    console.log(analysisData)
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
     const columns = [{
         Header: 'Drug',

@@ -4,10 +4,9 @@
 import React, { Component, Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
-import VolcanoSingle from '../Plots/VolcanoSingle';
+import VolcanoSingle from '../Plots/VolcanoSinglePlotly';
 import VolcanoLegend from '../Plots/VolcanoLegend';
 import Select, { components } from 'react-select';
-import { timingSafeEqual } from 'crypto';
 
 const StyledVolcanoSelect = styled.div`
     width: 100%;

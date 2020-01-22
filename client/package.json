@@ -11,6 +11,7 @@
     "query-string": "^6.9.0",
     "react": "^16.11.0",
     "react-burger-menu": "^2.6.13",
+    "react-canvas-js": "^1.0.1",
     "react-csv-downloader": "^1.5.0",
     "react-dom": "^16.11.0",
     "react-loading": "^2.0.3",
