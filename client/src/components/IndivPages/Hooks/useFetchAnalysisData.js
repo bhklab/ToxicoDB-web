@@ -30,11 +30,10 @@ const useFetchAnalysisData = (url) => {
             });
     }, [url]);
 
-    return [{
+    return {
         analysisData,
         loading,
-        //   filteredData
-    }, setAnalysisData];
+    };
 };
 
 export default useFetchAnalysisData;

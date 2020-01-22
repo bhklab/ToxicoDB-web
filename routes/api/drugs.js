@@ -46,7 +46,7 @@ const getDrugAnalysis = (request, response) => {
         .innerJoin('drug_gene_response AS dgr', 'analysis.id', 'dgr.analysis_id')
         .innerJoin('samples', 'samples.id', 'dgr.sample_id')
         .innerJoin('genes', 'dgr.gene_id', 'genes.id')
-        .innerJoin('gene_annotations AS ga','genes.id','ga.gene_id')
+        .innerJoin('gene_annotations AS ga', 'genes.id', 'ga.gene_id')
         .innerJoin('datasets_samples AS ds', 'samples.id', 'ds.sample_id')
         .innerJoin('datasets', 'ds.dataset_id', 'datasets.id')
         .where({ drug_id: request.params.id })
