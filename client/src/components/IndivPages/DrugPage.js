@@ -79,11 +79,10 @@ const DrugPage = (props) => {
     // so they can be handled under the same hook
     const { apiData, annotationData } = useFetchAnnotation(`/api/v1/drugs/${params.id}`, 'drug');
     // analysisData and loading are handled together => one hook
-    const [{
+    const {
         analysisData,
-        //  filteredData,
         loading,
-    }, setAnalysisData] = useFetchAnalysisData(`/api/v1/drugs/${params.id}/analysis`);
+    } = useFetchAnalysisData(`/api/v1/drugs/${params.id}/analysis`);
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
 
     useEffect(() => {
