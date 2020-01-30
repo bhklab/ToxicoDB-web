@@ -59,9 +59,18 @@ const getIndivGene = (request, response) => {
 
 const getGeneAnalysis = (request, response) => {
     const geneIds = request.params.id.split(',').map((item) => parseInt(item, 10));
+
+    // removes data with p value of 0
+    function subqueryAnalysis() {
+        return this.select('fdr', 'fold_change', 'p_value', 'id')
+            .from('analysis')
+            .whereNot({ id: 0 })
+            .as('A');
+    }
+
     knex.distinct('fdr', 'fold_change', 'p_value', 'drugs.id AS drug_id', 'drugs.name AS drug_name', 'datasets.name AS dataset_name')
-        .from('analysis')
-        .innerJoin('drug_gene_response AS dgr', 'analysis.id', 'dgr.analysis_id')
+        .from(subqueryAnalysis)
+        .innerJoin('drug_gene_response AS dgr', 'A.id', 'dgr.analysis_id')
         .innerJoin('samples', 'samples.id', 'dgr.sample_id')
         .innerJoin('drugs', 'samples.drug_id', 'drugs.id')
         .innerJoin('datasets_samples AS ds', 'samples.id', 'ds.sample_id')
