@@ -7,19 +7,6 @@ import Landing from './Landing';
 import HeaderNav from './HeaderNav';
 import FooterNav from './FooterNav';
 
-// import Genes from './SummaryPages/Genes';
-// import Drugs from './SummaryPages/Drugs';
-// import Datasets from './SummaryPages/Datasets';
-// import Cells from './SummaryPages/Cells';
-// import Tissues from './SummaryPages/Tissues';
-// import Species from './SummaryPages/Species';
-// import Documentation from './Documentation/MainDocument';
-// import DrugCard from './IndivPages/DrugPage';
-// import GeneCard from './IndivPages/GenePage';
-// import DatasetCard from './IndivPages/DatasetPage';
-// import ExpressionPlot from './ExpressionPlot';
-// import BarChart from './Plots/BarChat';
-
 const Genes = lazy(() => import('./SummaryPages/Genes'));
 const Drugs = lazy(() => import('./SummaryPages/Drugs'));
 const Datasets = lazy(() => import('./SummaryPages/Datasets'));
@@ -33,7 +20,6 @@ const DatasetCard = lazy(() => import('./IndivPages/DatasetPage'));
 const ExpressionPlot = lazy(() => import('./ExpressionPlot'));
 const BarChart = lazy(() => import('./Plots/BarChat'));
 
-console.log('loading');
 const StyledApp = styled.div`
   margin: 20px auto 0px auto;
   min-height:100vh;

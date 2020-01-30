@@ -130,7 +130,7 @@ const BurgerMenuStyles = {
         top: '23px',
     },
     bmBurgerBars: {
-        background: colors.search_main,
+        background: colors.blue_header,
     },
     bmBurgerBarsHover: {
         background: '#a90000',

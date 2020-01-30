@@ -80,6 +80,7 @@ const StyledDiv = styled.div`
                     transition: ${transitions.main_trans};
                     cursor: pointer;
                     text-align:left;
+                    background-color: white;
                 }
                 
                 &.selected {
