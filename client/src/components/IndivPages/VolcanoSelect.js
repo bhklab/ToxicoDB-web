@@ -167,7 +167,7 @@ const VolcanoSelect = (props) => {
         // refactoring data to be per dataset for the dataset selector
         let newData = {};
         data.forEach((x) => {
-            const dname = x.dataset_name.replaceAll(' ', '');
+            const dname = x.dataset_name.replace(/ /g, '');
             // if the dataset name isn't a key in newData yet
             if (newData[dname] === undefined) {
                 newData[dname] = [];
