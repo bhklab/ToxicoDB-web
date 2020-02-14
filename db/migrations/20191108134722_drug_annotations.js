@@ -10,7 +10,6 @@ exports.up = function (knex, Promise) {
             .references('id')
             .inTable('drugs')
             .index();
-        table.string('symbol');
         table.integer('pubchem');
         table.string('chembl');
         table.string('drugbank');
