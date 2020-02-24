@@ -270,7 +270,7 @@ class Search extends Component {
                 )}
                 <StyledExample>
                     Example Queries: &nbsp;&nbsp;
-                    <Link to="/drugs/9">carbon tetrachloride</Link>
+                    <Link to="/drugs/32">Valproic acid</Link>
                     {' '}
 &nbsp;&nbsp;|&nbsp;&nbsp;
                     {' '}
