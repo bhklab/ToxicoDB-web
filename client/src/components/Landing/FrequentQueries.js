@@ -128,10 +128,10 @@ const FrequentQueries = () => {
         <StyledQueries>
             <Slider {...settings}>
                 {/* https://www.fullstackreact.com/30-days-of-react/day-13/ to iterate over displaying components */}
-                <Query desc={desc1} queryUrl="/genes/435" queryName="CD44" type="gene" />
+                <Query desc={desc1} queryUrl="/genes/435,22217" queryName="CD44" type="gene" />
                 <Query desc={desc2} queryUrl="/drugs/32" queryName="valproic acid" type="drug" />
                 <Query desc={desc3} queryUrl="/expression?drugId=9&geneId=7396" queryName="CYP1A1 - carbon tetrachloride" type="pair" />
-                <Query desc={desc4} queryUrl="/genes/418" queryName="GCLM" type="gene" />
+                <Query desc={desc4} queryUrl="/genes/418,25039" queryName="GCLM" type="gene" />
                 <Query desc={desc5} queryUrl="/expression?drugId=32&geneId=14333" queryName="valproic acid - PPARA" type="pair" />
             </Slider>
         </StyledQueries>
