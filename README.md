@@ -43,7 +43,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## Migrations
 
-- `knex migrate:make(migration_name)` - To create a new migration file.
+- `knex migrate:make (migration_name)` - To create a new migration file.
 - `knex migrate:latest` - To run the lastest migrations and create corresponding tables.
 
 ## Seeds (Seeding Files)
