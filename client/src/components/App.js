@@ -50,13 +50,14 @@ const App = () => (
                     <Route exact path="/cells/" component={Cells} />
                     <Route exact path="/species/" component={Species} />
                     <Route exact path="/tissues/" component={Tissues} />
+                    <Route exact path="/pathways" component={Pathways} />
                     <Route exact path="/documentation/" component={Documentation} />
                     <Route path="/drugs/:id" component={DrugCard} />
                     <Route path="/genes/:id" component={GeneCard} />
                     <Route path="/datasets/:id" component={DatasetCard} />
                     <Route path="/expression" component={ExpressionPlot} />
                     <Route path="/bar" component={BarChart} />
-                    <Route path="/pathways" component={Pathways} />
+
                 </Suspense>
             </Switch>
         </StyledApp>

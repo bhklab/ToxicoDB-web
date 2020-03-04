@@ -9,6 +9,7 @@ const StyleContainer = styled.div`
     
     .div-dataset, .div-drug , .div-ontology {
         min-width: 350px;
+        margin: 20px;
     }
 `;
 
