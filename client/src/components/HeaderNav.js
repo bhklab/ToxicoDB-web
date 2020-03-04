@@ -184,6 +184,7 @@ const HeaderNav = () => {
                     <Link to="/drugs/">Drugs</Link>
                     <Link to="/genes/">Genes</Link>
                     <Link to="/datasets/">Datasets</Link>
+                    <Link to="/pathways/">Pathways</Link>
                 </nav>
             </div>
             <div className="burger-nav">

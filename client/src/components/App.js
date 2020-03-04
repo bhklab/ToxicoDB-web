@@ -19,6 +19,7 @@ const GeneCard = lazy(() => import('./IndivPages/GenePage'));
 const DatasetCard = lazy(() => import('./IndivPages/DatasetPage'));
 const ExpressionPlot = lazy(() => import('./ExpressionPlot'));
 const BarChart = lazy(() => import('./Plots/BarChat'));
+const Pathways = lazy(() => import('./SummaryPages/Pathways'));
 
 const StyledApp = styled.div`
   margin: 20px auto 0px auto;
@@ -54,6 +55,7 @@ const App = () => (
                     <Route path="/datasets/:id" component={DatasetCard} />
                     <Route path="/expression" component={ExpressionPlot} />
                     <Route path="/bar" component={BarChart} />
+                    <Route path="/pathways" component={Pathways} />
                 </Suspense>
             </Switch>
         </StyledApp>
