@@ -22,17 +22,18 @@ const BarChart = lazy(() => import('./Plots/BarChat'));
 const Pathways = lazy(() => import('./SummaryPages/Pathways'));
 
 const StyledApp = styled.div`
-  margin: 20px auto 0px auto;
-  min-height:100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  flex-grow: 1;
-  font-family: 'Raleway', sans-serif;
-  
-  order:2;
-  z-index:1;
+    margin: 20px auto 0px auto;
+    min-height:100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    flex-grow: 1;
+    font-family: 'Raleway', sans-serif;
+
+    order:2;
+    z-index:1;
 `;
 
 const App = () => (
