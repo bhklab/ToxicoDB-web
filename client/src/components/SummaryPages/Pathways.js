@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
@@ -6,10 +6,12 @@ import colors from '../../styles/colors';
 const StyleContainer = styled.div`
     display: flex;
     flex-direction: row;
+    max-width: 1200px;
+    justify-content: center;
     
-    .div-dataset, .div-drug , .div-ontology {
-        min-width: 350px;
-        margin: 20px;
+    .div-dataset, .div-drug , .div-ontology, .div-pathway {
+        min-width: 250px;
+        margin: 0px 15px 15px 15px;
     }
 `;
 
@@ -120,43 +122,78 @@ const ontology = [
     { value: 'GO', label: 'GO' },
 ];
 
-const drugs = [
-    { value: 'TGGATES Human LDH', label: 'TGGATES Human LDH' },
-    { value: 'TGGATES Rat LDH', label: 'TGGATES Rat LDH' },
-    { value: 'drugMatrix', label: 'drugMatrix' },
-];
 
-const Pathways = () => (
-    <div>
-        <StyleHeading>
-            <h1>
+const Pathways = () => {
+    // setting dataset and drug state.
+    const [dataset, setDataset] = useState('');
+    const [drug, setDrug] = useState([]);
+
+    useEffect(() => {
+        if (dataset) {
+            fetch('/api/v1/drugs/dataset', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id: dataset }),
+            })
+                .then((response) => response.json())
+                .then((res) => {
+                    const drugData = res.data.map((val) => ({
+                        value: val.name,
+                        label: val.name,
+                    }));
+                    // drugs based on dataset.
+                    setDrug(drugData);
+                });
+        }
+    }, [dataset]);
+
+    const handleDatasetChange = (selection) => {
+        setDataset(selection.value);
+    };
+
+    return (
+        <div>
+            <StyleHeading>
+                <h1>
                 Pathways
-            </h1>
-        </StyleHeading>
-        <StyleContainer>
-            <div className="div-dataset">
-                <Select
-                    options={datasets}
-                    styles={customStyles}
-                    placeholder="Select the Dataset"
-                />
-            </div>
-            <div className="div-drug">
-                <Select
-                    options={drugs}
-                    styles={customStyles}
-                    placeholder="Select the Drug"
-                />
-            </div>
-            <div className="div-ontology">
-                <Select
-                    options={ontology}
-                    styles={customStyles}
-                    placeholder="Select Ontology"
-                />
-            </div>
-        </StyleContainer>
-    </div>
-);
+                </h1>
+            </StyleHeading>
+            <StyleContainer>
+                <div className="div-dataset">
+                    <Select
+                        options={datasets}
+                        styles={customStyles}
+                        placeholder="Select the Dataset"
+                        onChange={handleDatasetChange}
+                    />
+                </div>
+                <div className="div-drug">
+                    <Select
+                        options={drug}
+                        styles={customStyles}
+                        placeholder="Select the Drug"
+                    />
+                </div>
+                <div className="div-ontology">
+                    <Select
+                        options={ontology}
+                        styles={customStyles}
+                        placeholder="Select Ontology"
+                    />
+                </div>
+                <div className="div-pathway">
+                    <Select
+                        options={ontology}
+                        styles={customStyles}
+                        placeholder="Select Pathway"
+                    />
+                </div>
+            </StyleContainer>
+        </div>
+    );
+};
 
 export default Pathways;
