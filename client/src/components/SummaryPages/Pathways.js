@@ -110,14 +110,14 @@ const customStyles = {
 };
 
 
-const datasets = [
+const datasetList = [
     { value: 'TGGATES Human LDH', label: 'TGGATES Human LDH' },
     { value: 'TGGATES Rat LDH', label: 'TGGATES Rat LDH' },
     { value: 'drugMatrix', label: 'drugMatrix' },
 ];
 
 
-const ontology = [
+const ontologyList = [
     { value: 'Reactome', label: 'Reactome' },
     { value: 'GO', label: 'GO' },
 ];
@@ -126,7 +126,10 @@ const ontology = [
 const Pathways = () => {
     // setting dataset and drug state.
     const [dataset, setDataset] = useState('');
-    const [drug, setDrug] = useState([]);
+    const [drugList, setDrugList] = useState([]);
+    const [drug, setDrug] = useState('');
+    const [ontology, setOntology] = useState('');
+    const [pathwayList, setPathwayList] = useState([]);
 
     useEffect(() => {
         if (dataset) {
@@ -145,13 +148,43 @@ const Pathways = () => {
                         label: val.name,
                     }));
                     // drugs based on dataset.
-                    setDrug(drugData);
+                    setDrugList(drugData);
                 });
         }
     }, [dataset]);
 
+    useEffect(() => {
+        if (dataset && drug) {
+            fetch('/api/v1/pathways/dataset/drug', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ datasetName: dataset, drugName: drug }),
+            })
+                .then((response) => response.json())
+                .then((res) => {
+                    const pathwayData = res.data.map((val) => ({
+                        value: val.name,
+                        label: val.name,
+                    }));
+                    // pathways based on drug and dataset.
+                    setPathwayList(pathwayData);
+                });
+        }
+    }, [dataset, drug]);
+
     const handleDatasetChange = (selection) => {
         setDataset(selection.value);
+    };
+
+    const handleDrugChange = (selection) => {
+        setDrug(selection.value);
+    };
+
+    const handleOntologyChange = (selection) => {
+        setOntology(selection.value);
     };
 
     return (
@@ -164,7 +197,7 @@ const Pathways = () => {
             <StyleContainer>
                 <div className="div-dataset">
                     <Select
-                        options={datasets}
+                        options={datasetList}
                         styles={customStyles}
                         placeholder="Select the Dataset"
                         onChange={handleDatasetChange}
@@ -172,21 +205,23 @@ const Pathways = () => {
                 </div>
                 <div className="div-drug">
                     <Select
-                        options={drug}
+                        options={drugList}
                         styles={customStyles}
                         placeholder="Select the Drug (eg. Valproic acid)"
+                        onChange={handleDrugChange}
                     />
                 </div>
                 <div className="div-ontology">
                     <Select
-                        options={ontology}
+                        options={ontologyList}
                         styles={customStyles}
                         placeholder="Select Ontology"
+                        onChange={handleOntologyChange}
                     />
                 </div>
                 <div className="div-pathway">
                     <Select
-                        options={ontology}
+                        options={pathwayList}
                         styles={customStyles}
                         placeholder="Select Pathway"
                     />
