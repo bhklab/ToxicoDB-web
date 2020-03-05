@@ -6,11 +6,11 @@ import colors from '../../styles/colors';
 const StyleContainer = styled.div`
     display: flex;
     flex-direction: row;
-    max-width: 1200px;
+    width: 80vw;
     justify-content: center;
     
     .div-dataset, .div-drug , .div-ontology, .div-pathway {
-        min-width: 250px;
+        min-width: 15vw;
         margin: 0px 15px 15px 15px;
     }
 `;
@@ -174,7 +174,7 @@ const Pathways = () => {
                     <Select
                         options={drug}
                         styles={customStyles}
-                        placeholder="Select the Drug"
+                        placeholder="Select the Drug (eg. Valproic acid)"
                     />
                 </div>
                 <div className="div-ontology">
