@@ -21,7 +21,6 @@ class Expression extends React.Component {
 
 
     plotExpression(data, plotId, xRange, yRange, datasets) {
-        console.log(data)
         // positions and dimensions
         const margin = {
         top: 20,

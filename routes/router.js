@@ -27,6 +27,7 @@ router.get('/v1/genes/:id/analysis', genes.getGeneAnalysis);
 // router.get('/v1/samples', samples.getSamples);
 
 router.get('/v1/experiments', experiments.getExperiments);
+router.get('/v1/experiments/control', experiments.getControl);
 
 router.get('/v1/tissues', tissues.getTissues);
 
