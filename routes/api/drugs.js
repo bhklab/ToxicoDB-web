@@ -78,6 +78,28 @@ const getDrugAnalysis = (request, response) => {
         }));
 };
 
+
+const getDrugsPerDataset = (request, response) => {
+    const { id: dataset } = request.body;
+    // get the drugs based on the dataset name.
+    knex.select('drugs.id', 'drugs.name')
+        .from('drugs_datasets')
+        .innerJoin('drugs', 'drugs.id', 'drugs_datasets.drug_id')
+        .innerJoin('datasets', 'datasets.id', 'drugs_datasets.dataset_id')
+        .where('datasets.name', dataset)
+        .then((drugs) => response.status(200).json({
+            status: 'success',
+            data: drugs,
+        }))
+        .catch((error) => response.status(500).json({
+            status: 'could not find data from drugs table, getDrugsPerDataset',
+            data: error,
+        }));
+};
+
 module.exports = {
-    getDrugs, getIndivDrug, getDrugAnalysis,
+    getDrugs,
+    getIndivDrug,
+    getDrugAnalysis,
+    getDrugsPerDataset,
 };
