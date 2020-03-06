@@ -194,7 +194,7 @@ const VolcanoSingle = (props) => {
                 plot_bgcolor: 'white',
                 orientation: 'v',
                 yaxis: { ticklen: 0, title: '-log10(p value)' },
-                xaxis: { title: '-log2(fold change)', zeroline: false },
+                xaxis: { title: 'log2(fold change)', zeroline: false },
                 hovermode: 'closest',
                 font: {
                     size: 12,

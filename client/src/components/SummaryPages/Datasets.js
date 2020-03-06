@@ -10,7 +10,7 @@ import LoadingComponent from '../Utils/Loading';
 const StyledDatasets = styled.div`
     width: 80vw;
     max-width: 1200px;
-    padding:140px 0px;
+    padding: 140px 0px;
     h1 {
         color: ${colors.red_highlight};
         font-family: 'Raleway', sans-serif;

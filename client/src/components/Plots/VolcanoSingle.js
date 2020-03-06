@@ -94,7 +94,7 @@ const VolcanoSingle = (props) => {
             ...state,
             options: {
                 axisY: { title: '-log10(p value)', labelFontFamily: 'Arial', labelFontSize: 12},
-                axisX: { title: '-log2(fold change)', labelFontFamily: 'Arial', labelFontSize: 12, zeroline: false },
+                axisX: { title: 'log2(fold change)', labelFontFamily: 'Arial', labelFontSize: 12, zeroline: false },
                 tooltip: {
                     content: '{name}'
                 },
