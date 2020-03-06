@@ -5,18 +5,18 @@ const getExperiments = function (request, response) {
     let {
         drugId, geneId,
     } = request.query;
-    console.log('geneId is ', geneId);
     drugId = drugId && parseInt(drugId, 10);
     geneId = geneId && geneId.split(',').map((item) => parseInt(item, 10));
-    console.log('and now geneId is ', geneId);
     // get experiment information
     knex.select('time', 'expression', 'dose', 'replicate', 'd.name')
         .from('drug_gene_response AS dgr')
         .innerJoin('samples AS s', 's.id', 'dgr.sample_id')
         .innerJoin('datasets_samples AS ds', 'dgr.sample_id', 'ds.sample_id')
         .innerJoin('datasets AS d', 'ds.dataset_id', 'd.id')
-        .where({ 's.drug_id': drugId })
+        .where( 's.drug_id', drugId)
+        // .whereIn('s.drug_id', [drugId, 232])
         .whereIn('dgr.gene_id', geneId)
+        // .orderBy('d.name', 'desc')
         .then((experiment) => response.status(200).json({
             status: 'success',
             data: experiment,
@@ -26,6 +26,25 @@ const getExperiments = function (request, response) {
             data: error,
         }));
 };
+
+const getControl = function(request, response) {
+    knex.select('time', 'expression', 'dose', 'replicate', 'd.name')
+        .from('drug_gene_response AS dgr')
+        .innerJoin('samples AS s', 's.id', 'dgr.sample_id')
+        .innerJoin('datasets_samples AS ds', 'dgr.sample_id', 'ds.sample_id')
+        .innerJoin('datasets AS d', 'ds.dataset_id', 'd.id')
+        .where( {'s.drug_id': 232, 'dgr.gene_id': 27541})
+        .then((experiment) => {
+            response.status(200).json({
+                status: 'success',
+                data: experiment,
+            })
+        })
+        .catch((error) => response.status(500).json({
+            status: 'could not find data from experiments table, getControl',
+            data: error,
+        }));
+}
 
 // const getAnalysis = function (request, response) {
 //     let {
@@ -72,5 +91,5 @@ const getExperiments = function (request, response) {
 
 
 module.exports = {
-    getExperiments,
+    getExperiments, getControl
 };
