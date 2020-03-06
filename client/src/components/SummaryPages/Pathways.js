@@ -130,50 +130,101 @@ const Pathways = () => {
     const [drug, setDrug] = useState('');
     const [ontology, setOntology] = useState('');
     const [pathwayList, setPathwayList] = useState([]);
+    const [parsedDataset, setParsedDataset] = useState({});
+
+    // useEffect(() => {
+    //     if (dataset) {
+    //         fetch('/api/v1/drugs/dataset', {
+    //             method: 'POST',
+    //             headers: {
+    //                 Accept: 'application/json',
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ id: dataset }),
+    //         })
+    //             .then((response) => response.json())
+    //             .then((res) => {
+    //                 const drugData = res.data.map((val) => ({
+    //                     value: val.name,
+    //                     label: val.name,
+    //                 }));
+    //                 // drugs based on dataset.
+    //                 setDrugList(drugData);
+    //             });
+    //     }
+    // }, [dataset]);
+
+    // useEffect(() => {
+    //     if (dataset && drug) {
+    //         fetch('/api/v1/pathways/dataset/drug', {
+    //             method: 'POST',
+    //             headers: {
+    //                 Accept: 'application/json',
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ datasetName: dataset, drugName: drug }),
+    //         })
+    //             .then((response) => response.json())
+    //             .then((res) => {
+    //                 const pathwayData = res.data.map((val) => ({
+    //                     value: val.name,
+    //                     label: val.name,
+    //                 }));
+    //                 // pathways based on drug and dataset.
+    //                 setPathwayList(pathwayData);
+    //             });
+    //     }
+    // }, [dataset, drug]);
+
+    const parseData = (response) => {
+        const { data } = response;
+        let drugName = '';
+        const parsedData = {};
+
+        data.forEach((element) => {
+            if (element.drug !== drugName) {
+                drugName = element.drug;
+                parsedData[element.drug] = {};
+            } else if (element.drug === drugName) {
+                parsedData[element.drug][element.pathway] = {};
+                parsedData[element.drug][element.pathway].fdr = element.fdr;
+                parsedData[element.drug][element.pathway].p_value = element.p_value;
+                parsedData[element.drug][element.pathway].stat_dis = element.stat_dis;
+            }
+        });
+
+        // setting the states for pathways, drugs and parsed data.
+        const drugNameList = [...Object.keys(parsedData)];
+        const pathwayNameList = [...Object.keys(parsedData[drugNameList[0]])];
+
+        // setting the state if we have drug list, pathway list and parsedData.
+        if (parseData && drugNameList && pathwayNameList) {
+            setParsedDataset({
+                drug: drugNameList,
+                pathway: pathwayNameList,
+                data: parsedData,
+            });
+        }
+    };
+
+    useEffect(() => {
+        console.log(parsedDataset);
+    }, [parsedDataset]);
 
     useEffect(() => {
         if (dataset) {
-            fetch('/api/v1/drugs/dataset', {
+            fetch('/api/v1/pathwaystats/dataset', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ id: dataset }),
+                body: JSON.stringify({ datasetName: dataset }),
             })
                 .then((response) => response.json())
-                .then((res) => {
-                    const drugData = res.data.map((val) => ({
-                        value: val.name,
-                        label: val.name,
-                    }));
-                    // drugs based on dataset.
-                    setDrugList(drugData);
-                });
+                .then((res) => parseData(res));
         }
     }, [dataset]);
-
-    useEffect(() => {
-        if (dataset && drug) {
-            fetch('/api/v1/pathways/dataset/drug', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ datasetName: dataset, drugName: drug }),
-            })
-                .then((response) => response.json())
-                .then((res) => {
-                    const pathwayData = res.data.map((val) => ({
-                        value: val.name,
-                        label: val.name,
-                    }));
-                    // pathways based on drug and dataset.
-                    setPathwayList(pathwayData);
-                });
-        }
-    }, [dataset, drug]);
 
     const handleDatasetChange = (selection) => {
         setDataset(selection.value);
