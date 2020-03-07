@@ -3,9 +3,9 @@ import React, {
     useState, useEffect,
 } from 'react';
 import styled from 'styled-components';
+import { Canvas } from 'react-canvas-js';
 import colors from '../../styles/colors';
-import {Canvas} from 'react-canvas-js';
-import {CanvasJSChart} from '../../lib/canvasjs.react';
+import { CanvasJSChart } from '../../lib/canvasjs.react';
 
 
 const StyledDiv = styled.div`
@@ -71,7 +71,7 @@ const VolcanoSingle = (props) => {
         // putting data in
         data.forEach((d) => {
             if (parseFloat(d.p_value) <= 0.05) {
-                let temp = {};
+                const temp = {};
                 temp.x = (d.fold_change);
                 temp.y = (parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
                 temp.id = d.gene_id || d.drug_id;
@@ -80,7 +80,7 @@ const VolcanoSingle = (props) => {
                 if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) >= 1) {
                     greenTrace.dataPoints.push(temp);
                 }
-                // blue 
+                // blue
                 else if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) < 1) {
                     blueTrace.dataPoints.push(temp);
                 }
@@ -93,10 +93,12 @@ const VolcanoSingle = (props) => {
         setState({
             ...state,
             options: {
-                axisY: { title: '-log10(p value)', labelFontFamily: 'Arial', labelFontSize: 12},
-                axisX: { title: '-log2(fold change)', labelFontFamily: 'Arial', labelFontSize: 12, zeroline: false },
+                axisY: { title: '-log10(p value)', labelFontFamily: 'Arial', labelFontSize: 12 },
+                axisX: {
+                    title: '-log2(fold change)', labelFontFamily: 'Arial', labelFontSize: 12, zeroline: false,
+                },
                 tooltip: {
-                    content: '{name}'
+                    content: '{name}',
                 },
                 data: [greenTrace, blueTrace],
             },
@@ -111,7 +113,7 @@ const VolcanoSingle = (props) => {
             ...state,
             options: null,
             class: null,
-            loaded:false,
+            loaded: false,
         });
         formatData(data);
     }, []);
@@ -122,7 +124,7 @@ const VolcanoSingle = (props) => {
             ...state,
             options: null,
             class: null,
-            loaded:false,
+            loaded: false,
         });
         formatData(data);
     }, [selected]);
