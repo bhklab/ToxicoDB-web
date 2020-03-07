@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
+import HeatMap from '../Plots/HeatMap';
 
 const StyleContainer = styled.div`
     display: flex;
     flex-direction: row;
-    width: 80vw;
+    width: 90vw;
     justify-content: center;
     
     .div-dataset, .div-drug , .div-ontology, .div-pathway {
-        min-width: 15vw;
+        min-width: 18vw;
         margin: 0px 15px 15px 15px;
     }
 `;
@@ -22,6 +23,7 @@ const StyleHeading = styled.div`
         font-size: calc(1em + 1vw);
         text-align:center;
         margin-bottom:50px;
+        margin-top: 150px;
     }
     a {
     color: ${colors.blue_text}
@@ -200,15 +202,15 @@ const Pathways = () => {
         // setting the state if we have drug list, pathway list and parsedData.
         if (parseData && drugNameList && pathwayNameList) {
             setParsedDataset({
-                drug: drugNameList,
-                pathway: pathwayNameList,
+                drugs: drugNameList,
+                pathways: pathwayNameList,
                 data: parsedData,
             });
         }
     };
 
     useEffect(() => {
-        console.log(parsedDataset);
+        // console.log(parsedDataset);
     }, [parsedDataset]);
 
     useEffect(() => {
@@ -237,6 +239,8 @@ const Pathways = () => {
     const handleOntologyChange = (selection) => {
         setOntology(selection.value);
     };
+
+    const isObjectEmpty = (data) => Object.entries(data).length === 0 && data.constructor === Object;
 
     return (
         <div>
@@ -278,6 +282,12 @@ const Pathways = () => {
                     />
                 </div>
             </StyleContainer>
+            { isObjectEmpty(parsedDataset) ? null : (
+                <div>
+                    <HeatMap data={parsedDataset} />
+                </div>
+            )}
+
         </div>
     );
 };
