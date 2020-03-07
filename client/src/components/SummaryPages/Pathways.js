@@ -17,6 +17,7 @@ const StyleContainer = styled.div`
 `;
 
 const StyleHeading = styled.div`
+    padding-top: 140px;
     h1 {
         color: ${colors.red_highlight};
         font-family: 'Raleway', sans-serif;

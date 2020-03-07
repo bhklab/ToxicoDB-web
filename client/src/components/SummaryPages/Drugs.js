@@ -77,7 +77,8 @@ class Drugs extends Component {
                 sortable: true,
                 minWidth: 200,
                 Cell: (row) => (<Link to={`/drugs/${row.original.id}`}>{row.value}</Link>),
-            }, {
+            }, 
+            {
                 Header: 'PubChem ID',
                 accessor: 'pubchem',
                 sortable: true,
@@ -86,27 +87,34 @@ class Drugs extends Component {
                         {Number(props.value) === 0 ? '' : Number(props.value)}
                     </a>
                 ),
-            }, {
-                Header: 'Carcinogenicity',
-                accessor: 'carcinogenicity',
-                sortable: true,
-            }, {
-                Header: 'Class (in vitro)',
-                accessor: 'class_in_vitro',
-                sortable: true,
-            }, {
-                Header: 'Class (in vivo)',
-                accessor: 'class_in_vivo',
-                sortable: true,
-            }, {
+            }, 
+            {
                 Header: 'Smiles',
                 accessor: 'smiles',
                 sortable: false,
-            }, {
+            }, 
+            {
                 Header: 'InchiKey',
                 accessor: 'inchikey',
                 sortable: false,
             },
+            {
+                Header: 'Carcinogenicity',
+                accessor: 'carcinogenicity',
+                minWidth: 140,
+                sortable: true,
+            }, 
+            {
+                Header: 'Class (in vitro)',
+                accessor: 'class_in_vitro',
+                sortable: true,
+            }, 
+            {
+                Header: 'Class (in vivo)',
+                accessor: 'class_in_vivo',
+                sortable: true,
+            }, 
+           
         ];
 
         return (

@@ -104,7 +104,7 @@ class Expression extends React.Component {
             .attr("fill","black")
             .attr("font-family", "Arial")
             .attr("transform", "translate("+ (width/2) +","+(height+50)+")")
-            .text("Time");
+            .text("Time (hrs)");
         
         // line function
         const line = d3.line()

@@ -18,7 +18,6 @@ const useFetchAnalysisData = (url) => {
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                console.log(data);
                 const updatedData = data.filter((item) => parseFloat(item.p_value) !== 0 && item.dataset_name !== 'drugMatrix');
                 setAnalysisData({
                     analysisData: updatedData,

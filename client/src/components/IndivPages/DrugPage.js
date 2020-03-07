@@ -131,7 +131,7 @@ const DrugPage = (props) => {
         sortMethod(a, b) { return b - a; },
         // Cell: (row) => parseFloat(row.value).toExponential(1),
     }, {
-        Header: 'fdr',
+        Header: 'FDR',
         accessor: 'fdr',
         sortable: true,
         sortMethod(a, b) { return b - a; },
@@ -168,7 +168,7 @@ const DrugPage = (props) => {
     const headers = [
         { displayName: 'gene', id: 'gene_name' },
         { displayName: 'p-value', id: 'p_value' },
-        { displayName: 'fdr', id: 'fdr' },
+        { displayName: 'FDR', id: 'fdr' },
         { displayName: 'fold-change', id: 'fold_change' },
         { displayName: 'dataset', id: 'dataset_name' },
     ];

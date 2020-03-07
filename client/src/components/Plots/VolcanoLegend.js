@@ -54,6 +54,24 @@ class VolcanoLegend extends React.Component {
                     .attr("fill", "black")
                     .text("fdr < 0.05 and |fold change| >= 1")
 
+
+            // last time point etc
+            legend.append("text")
+                .attr("dx", 516)
+                .attr("y", 10)
+                .style('font-family', 'Arial')
+                .style('font-size', 12)
+                .attr("fill", "black")
+                .text("Last time point: 24 hrs")
+
+            legend.append("text")
+                .attr("dx", 700)
+                .attr("y", 10)
+                .style('font-family', 'Arial')
+                .style('font-size', 12)
+                .attr("fill", "black")
+                .text("Max dose: High")
+
             // legend.append("rect")
             //     .attr("x", 500)
             //     .attr("y", 0)
