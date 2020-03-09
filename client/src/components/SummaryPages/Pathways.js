@@ -185,7 +185,6 @@ const Pathways = () => {
     // }, [dataset, drug]);
 
     const parseData = (response) => {
-        console.log(response);
         const { data } = response;
         let drugName = '';
         const parsedData = {};
@@ -193,7 +192,6 @@ const Pathways = () => {
         let max = 0;
 
         data.forEach((element) => {
-            console.log(element);
             if (element.stat_dis > max) { max = element.stat_dis; }
             if (element.stat_dis < min) { min = element.stat_dis; }
             if (element.drug !== drugName) {
@@ -235,7 +233,6 @@ const Pathways = () => {
                 body: JSON.stringify({ datasetName: 'TGGATES Human LDH', pathways: pathwayList }),
             })
                 .then((response) => response.json())
-                // .then((res) => console.log(res));
                 .then((res) => parseData(res));
         }
     }, []);
