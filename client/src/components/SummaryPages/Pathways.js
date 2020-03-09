@@ -192,8 +192,15 @@ const Pathways = () => {
         const parsedData = {};
         let min = 0;
         let max = 0;
+        let totalMax = 0;
+        let total = 0;
+        let mean = 0;
 
         data.forEach((element) => {
+            if (element.stat_dis > 0) {
+                totalMax += element.stat_dis;
+                total += 1;
+            }
             if (element.stat_dis > max) { max = element.stat_dis; }
             if (element.stat_dis < min) { min = element.stat_dis; }
             if (element.drug !== drugName) {
@@ -206,6 +213,8 @@ const Pathways = () => {
                 parsedData[element.drug][element.pathway].stat_dis = element.stat_dis;
             }
         });
+
+        mean = totalMax / total;
 
 
         // setting the states for pathways, drugs and parsed data.
@@ -220,6 +229,7 @@ const Pathways = () => {
                 data: parsedData,
                 min,
                 max,
+                mean,
             });
         }
     };

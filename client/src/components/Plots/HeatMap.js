@@ -17,6 +17,7 @@ const HeatMap = (props) => {
     const width = dimension.rectWidth * drugs.length;
     const { min } = data;
     const { max } = data;
+    const { mean } = data;
 
     const createSvg = (height, width, margin, selection) => {
         // make the SVG element.
@@ -81,11 +82,11 @@ const HeatMap = (props) => {
     };
 
 
-    const createRectangle = (drugs, pathways, skeleton, width, height, data, min, max) => {
+    const createRectangle = (drugs, pathways, skeleton, width, height, data, min, max, mean) => {
         // color scaling for rectangles
         const linearColorScale = d3.scaleLinear()
-            .domain([min, 0, max])
-            .range(['#67a9cf', '#f7f7f7', '#ef8a62']);
+            .domain([min, 0, mean, max])
+            .range(['#67a9cf', '#f7f7f7', '#ef8a62', '#8a2904']);
 
         // creating and coloring rectangles.
         for (let i = 0; i < drugs.length; i++) {
@@ -152,16 +153,16 @@ const HeatMap = (props) => {
         const targetRect = skeleton.append('g')
             .attr('id', 'small_rect');
 
-        const legendValue = [-1, 0, 1];
+        const legendValue = ['Up', 'Down'];
         targetRect.selectAll('text')
             .data(legendValue)
             .enter()
             .append('text')
-            .attr('x', width + 90)
-            .attr('y', (d, i) => height / 2 + 28 * i + 10)
+            .attr('x', width + 80)
+            .attr('y', (d, i) => height / 2 + 58 * i + 10)
             .text((d) => d)
             .attr('font-size', '14px')
-            .style('text-anchor', 'end');
+            .style('text-anchor', 'start');
     };
 
     const createHeatMap = () => {
@@ -175,9 +176,9 @@ const HeatMap = (props) => {
         // create scale and axis for drug names and pathway names.
         createAxis(drugs, pathways, skeleton, dimension.rectWidth, dimension.rectHeight);
         // create rectangles for heatmap.
-        createRectangle(drugs, pathways, skeleton, dimension.rectWidth, dimension.rectHeight, dataset, min, max);
+        createRectangle(drugs, pathways, skeleton, dimension.rectWidth, dimension.rectHeight, dataset, min, max, mean);
         // create legend.
-        // createLegend(skeleton, height, width);
+        createLegend(skeleton, height, width);
     };
 
     // on component mounting calling create heatmap.
