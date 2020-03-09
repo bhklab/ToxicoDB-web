@@ -5,7 +5,6 @@ import React, {
 import Plot from 'react-plotly.js';
 import styled from 'styled-components';
 import * as d3 from 'd3';
-import { NONAME } from 'dns';
 import colors from '../../styles/colors';
 
 const StyledDiv = styled.div`

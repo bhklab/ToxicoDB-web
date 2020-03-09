@@ -98,7 +98,7 @@ class Bubble extends React.Component {
         // create svg element inside provided selector
         svg = d3.select(`#${plotId}`)
             .append('svg')
-            .attr('xmlns', "http://www.w3.org/2000/svg")
+            .attr('xmlns', 'http://www.w3.org/2000/svg')
             .attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
             .attr('width', width)
             .attr('height', height)
@@ -120,7 +120,7 @@ class Bubble extends React.Component {
 
         // labels
         labels = elements
-            .append("a")
+            .append('a')
             .attr('xlink:href', (d) => d.text.toLowerCase())
             .append('text')
             .attr('fill', 'white')

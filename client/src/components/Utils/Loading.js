@@ -21,17 +21,17 @@ const LoadingContainer = styled.div`
 
 
 const LoadingComponent = (props) => {
-  // eslint-disable-next-line react/prop-types
-  const { loading } = props;
-  return loading ? (
-    <LoadingContainer className="-loading -active">
-      <div className="-loading-inner">
-        <ReactLoading type="spinningBubbles" width={150} height={150} color={colors.blue_header} />
-      </div>
-    </LoadingContainer>
-  ) : (
-    <div />
-  );
+    // eslint-disable-next-line react/prop-types
+    const { loading } = props;
+    return loading ? (
+        <LoadingContainer className="-loading -active">
+            <div className="-loading-inner">
+                <ReactLoading type="spinningBubbles" width={150} height={150} color={colors.blue_header} />
+            </div>
+        </LoadingContainer>
+    ) : (
+        <div />
+    );
 };
 
 export default LoadingComponent;
