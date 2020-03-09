@@ -3,6 +3,7 @@ import Select from 'react-select';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import HeatMap from '../Plots/HeatMap';
+import DefaultPathways from '../Utils/PathwaysList';
 
 const StyleContainer = styled.div`
     display: flex;
@@ -10,7 +11,7 @@ const StyleContainer = styled.div`
     width: 90vw;
     justify-content: center;
     
-    .div-dataset, .div-drug , .div-ontology, .div-pathway {
+    .div-dataset, .div-drug , .div-ontology, .div-pathway{
         min-width: 18vw;
         margin: 0px 15px 15px 15px;
     }
@@ -29,6 +30,10 @@ const StyleHeading = styled.div`
     a {
     color: ${colors.blue_text}
     }
+`;
+
+const StyleHeatmap = styled.div`
+    max-width: 18vw;
 `;
 
 const customStyles = {
@@ -132,7 +137,7 @@ const Pathways = () => {
     const [drugList, setDrugList] = useState([]);
     const [drug, setDrug] = useState('');
     const [ontology, setOntology] = useState('');
-    const [pathwayList, setPathwayList] = useState([]);
+    const [pathwayList, setPathwayList] = useState(DefaultPathways.TGGATES_Human);
     const [parsedDataset, setParsedDataset] = useState({});
 
     // useEffect(() => {
@@ -180,11 +185,17 @@ const Pathways = () => {
     // }, [dataset, drug]);
 
     const parseData = (response) => {
+        console.log(response);
         const { data } = response;
         let drugName = '';
         const parsedData = {};
+        let min = 0;
+        let max = 0;
 
         data.forEach((element) => {
+            console.log(element);
+            if (element.stat_dis > max) { max = element.stat_dis; }
+            if (element.stat_dis < min) { min = element.stat_dis; }
             if (element.drug !== drugName) {
                 drugName = element.drug;
                 parsedData[element.drug] = {};
@@ -196,6 +207,7 @@ const Pathways = () => {
             }
         });
 
+
         // setting the states for pathways, drugs and parsed data.
         const drugNameList = [...Object.keys(parsedData)];
         const pathwayNameList = [...Object.keys(parsedData[drugNameList[0]])];
@@ -206,9 +218,28 @@ const Pathways = () => {
                 drugs: drugNameList,
                 pathways: pathwayNameList,
                 data: parsedData,
+                min,
+                max,
             });
         }
     };
+
+    useEffect(() => {
+        if (pathwayList) {
+            fetch('/api/v1/pathways/dataset/pathways', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ datasetName: 'TGGATES Human LDH', pathways: pathwayList }),
+            })
+                .then((response) => response.json())
+                // .then((res) => console.log(res));
+                .then((res) => parseData(res));
+        }
+    }, []);
+
 
     useEffect(() => {
         // console.log(parsedDataset);
@@ -284,11 +315,10 @@ const Pathways = () => {
                 </div>
             </StyleContainer>
             { isObjectEmpty(parsedDataset) ? null : (
-                <div>
+                <StyleHeatmap>
                     <HeatMap data={parsedDataset} />
-                </div>
+                </StyleHeatmap>
             )}
-
         </div>
     );
 };

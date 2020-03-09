@@ -9,9 +9,9 @@ const HeatMap = (props) => {
     const { pathways } = data;
     const { drugs } = data;
     const { data: dataset } = data;
-    const dimension = { rectHeight: 15, rectWidth: 15 };
+    const dimension = { rectHeight: 12, rectWidth: 12 };
     const margin = {
-        top: 300, right: 150, bottom: 100, left: 1050,
+        top: 300, right: 150, bottom: 100, left: 500,
     };
     const height = dimension.rectHeight * pathways.length;
     const width = dimension.rectWidth * drugs.length;
@@ -90,9 +90,14 @@ const HeatMap = (props) => {
         for (let i = 0; i < drugs.length; i++) {
             for (let j = 0; j < pathways.length; j++) {
                 let value = 0;
+                let opacity = 1;
 
                 if (data[drugs[i]][pathways[j]].stat_dis) {
                     value = data[drugs[i]][pathways[j]].stat_dis;
+                }
+
+                if (data[drugs[i]][pathways[j]].fdr > 0.05) {
+                    opacity = 0.2;
                 }
 
                 skeleton.append('rect')
@@ -100,7 +105,8 @@ const HeatMap = (props) => {
                     .attr('y', j * height + height)
                     .attr('height', height - 2)
                     .attr('width', width - 2)
-                    .attr('fill', linearColorScale(value));
+                    .attr('fill', linearColorScale(value))
+                    .attr('opacity', opacity);
             }
         }
     };
@@ -125,9 +131,7 @@ const HeatMap = (props) => {
     }, []);
 
     return (
-        <div>
-            <div className="heatmap" />
-        </div>
+        <div className="heatmap" />
     );
 };
 
