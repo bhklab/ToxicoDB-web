@@ -35,6 +35,7 @@ const StyleHeading = styled.div`
 const StyleHeatmap = styled.div`
      width: 90vw;
      overflow-x: scroll;
+     overflow-y: scroll;
 `;
 
 const customStyles = {

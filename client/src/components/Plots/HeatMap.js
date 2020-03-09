@@ -11,7 +11,7 @@ const HeatMap = (props) => {
     const { data: dataset } = data;
     const dimension = { rectHeight: 12, rectWidth: 12 };
     const margin = {
-        top: 300, right: 150, bottom: 100, left: 500,
+        top: 250, right: 150, bottom: 100, left: 500,
     };
     const height = dimension.rectHeight * pathways.length;
     const width = dimension.rectWidth * drugs.length;
@@ -61,7 +61,7 @@ const HeatMap = (props) => {
 
         drugName.attr('stroke-width', '0')
             .style('font-family', '\'Raleway\',sans-serif')
-            .style('font-size', '10px')
+            .style('font-size', '8px')
             .attr('font-weight', '500')
             .style('text-anchor', 'start')
             .call(xAxis)
@@ -73,8 +73,9 @@ const HeatMap = (props) => {
 
         pathwayName.attr('stroke-width', '0')
             .style('font-family', '\'Raleway\',sans-serif')
-            .style('font-size', '10px')
+            .style('font-size', '8px')
             .attr('font-weight', '500')
+            .style('text-anchor', 'end')
             .call(yAxis)
             .selectAll('text');
     };
@@ -84,7 +85,7 @@ const HeatMap = (props) => {
         // color scaling for rectangles
         const linearColorScale = d3.scaleLinear()
             .domain([min, 0, max])
-            .range(['#e0f3db', '#a8ddb5', '#43a2ca']);
+            .range(['#67a9cf', '#f7f7f7', '#ef8a62']);
 
         // creating and coloring rectangles.
         for (let i = 0; i < drugs.length; i++) {
@@ -97,7 +98,7 @@ const HeatMap = (props) => {
                 }
 
                 if (data[drugs[i]][pathways[j]].fdr > 0.05) {
-                    opacity = 0.2;
+                    opacity = 0.0;
                 }
 
                 skeleton.append('rect')
@@ -109,6 +110,58 @@ const HeatMap = (props) => {
                     .attr('opacity', opacity);
             }
         }
+    };
+
+    const createLegend = (skeleton) => {
+        const defs = skeleton.append('defs');
+
+        const linearGradient = defs.append('linearGradient')
+            .attr('id', 'linear-gradient');
+
+        // Vertical gradient
+        linearGradient
+            .attr('x1', '0%')
+            .attr('y1', '0%')
+            .attr('x2', '0%')
+            .attr('y2', '100%');
+
+        // Set the color for the start (0%)
+        linearGradient.append('stop')
+            .attr('offset', '0%')
+            .attr('stop-color', '#67a9cf');
+
+        // Set the color for the start (50%)
+        linearGradient.append('stop')
+            .attr('offset', '50%')
+            .attr('stop-color', '#f7f7f7');
+
+        // Set the color for the end (100%)
+        linearGradient.append('stop')
+            .attr('offset', '100%')
+            .attr('stop-color', '#ef8a62');
+
+        // Draw the rectangle and fill with gradient
+        skeleton.append('rect')
+            .attr('x', width + 50)
+            .attr('y', height / 2)
+            .attr('width', 25)
+            .attr('height', 69)
+            .style('fill', 'url(#linear-gradient)');
+
+        // legend value.
+        const targetRect = skeleton.append('g')
+            .attr('id', 'small_rect');
+
+        const legendValue = [-1, 0, 1];
+        targetRect.selectAll('text')
+            .data(legendValue)
+            .enter()
+            .append('text')
+            .attr('x', width + 90)
+            .attr('y', (d, i) => height / 2 + 28 * i + 10)
+            .text((d) => d)
+            .attr('font-size', '14px')
+            .style('text-anchor', 'end');
     };
 
     const createHeatMap = () => {
@@ -123,6 +176,8 @@ const HeatMap = (props) => {
         createAxis(drugs, pathways, skeleton, dimension.rectWidth, dimension.rectHeight);
         // create rectangles for heatmap.
         createRectangle(drugs, pathways, skeleton, dimension.rectWidth, dimension.rectHeight, dataset, min, max);
+        // create legend.
+        // createLegend(skeleton, height, width);
     };
 
     // on component mounting calling create heatmap.
