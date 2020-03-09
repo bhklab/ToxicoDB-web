@@ -61,8 +61,36 @@ const getPathwayStatsPerDataset = function (request, response) {
         }));
 };
 
+
+// get the pathway stats based on the dataset.
+const getPathwayStatsPerDatasetPathways = function (request, response) {
+    const { datasetName } = request.body;
+    const { pathways } = request.body;
+
+    knex.select('stat_dis', 'p_value', 'fdr', 'drugs.name as drug', 'pathways.name as pathway')
+        .from('pathway_stats')
+        .innerJoin('pathways_drugs', 'pathways_drugs.id', 'pathway_stats.id')
+        .innerJoin('datasets', 'datasets.id', 'pathways_drugs.dataset_id')
+        .innerJoin('drugs', 'drugs.id', 'pathways_drugs.drug_id')
+        .innerJoin('pathways', 'pathways.id', 'pathways_drugs.pathway_id')
+        .where('datasets.name', datasetName)
+        .whereIn('pathways.name', pathways)
+        .orderBy('drugs.name')
+        .orderBy('pathways.name')
+        .then((stats) => response.status(200).json({
+            status: 'success',
+            data: stats,
+        }))
+        .catch((error) => response.status(500).json({
+            status: 'could not find data from pathway stats table, getPathwayStatsPerDataset',
+            data: error,
+        }));
+};
+
+
 module.exports = {
     getPathways,
     getPathwaysPerDatasetDrug,
     getPathwayStatsPerDataset,
+    getPathwayStatsPerDatasetPathways,
 };
