@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { DatasetDescription } from './DatasetDescription';
+import { DatasetDescription } from '../Utils/DatasetDescription';
 import colors from '../../styles/colors';
 import AnnotationCard from './AnnotationCard';
 import 'react-table-6/react-table.css';
