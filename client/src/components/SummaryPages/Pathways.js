@@ -33,7 +33,8 @@ const StyleHeading = styled.div`
 `;
 
 const StyleHeatmap = styled.div`
-    max-width: 18vw;
+     width: 90vw;
+     overflow-x: scroll;
 `;
 
 const customStyles = {
