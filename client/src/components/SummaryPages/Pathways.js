@@ -226,7 +226,7 @@ const Pathways = () => {
 
     useEffect(() => {
         if (pathwayList) {
-            fetch('/api/v1/pathways/dataset/pathways', {
+            fetch('/api/v1/pathwaystats/dataset/pathways', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

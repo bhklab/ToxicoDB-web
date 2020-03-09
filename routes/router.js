@@ -27,7 +27,7 @@ router.get('/v1/genes/:id/analysis', genes.getGeneAnalysis);
 
 router.post('/v1/pathways/dataset/drug', pathways.getPathwaysPerDatasetDrug);
 router.post('/v1/pathwaystats/dataset', pathways.getPathwayStatsPerDataset);
-router.post('/v1/pathways/dataset/pathways', pathways.getPathwayStatsPerDatasetPathways);
+router.post('/v1/pathwaystats/dataset/pathways', pathways.getPathwayStatsPerDatasetPathways);
 // router.get('/v1/pathways', pathways.getPathways);
 // router.get('/v1/samples', samples.getSamples);
 
