@@ -15,6 +15,8 @@ const HeatMap = (props) => {
     };
     const height = dimension.rectHeight * pathways.length;
     const width = dimension.rectWidth * drugs.length;
+    const { min } = data;
+    const { max } = data;
 
     const createSvg = (height, width, margin, selection) => {
         // make the SVG element.
@@ -78,10 +80,10 @@ const HeatMap = (props) => {
     };
 
 
-    const createRectangle = (drugs, pathways, skeleton, width, height, data) => {
+    const createRectangle = (drugs, pathways, skeleton, width, height, data, min, max) => {
         // color scaling for rectangles
         const linearColorScale = d3.scaleLinear()
-            .domain([-3, 0, 3])
+            .domain([min, 0, max])
             .range(['#e0f3db', '#a8ddb5', '#43a2ca']);
 
         // creating and coloring rectangles.
@@ -96,8 +98,8 @@ const HeatMap = (props) => {
                 skeleton.append('rect')
                     .attr('x', i * width)
                     .attr('y', j * height + height)
-                    .attr('height', height - 4)
-                    .attr('width', width - 4)
+                    .attr('height', height - 2)
+                    .attr('width', width - 2)
                     .attr('fill', linearColorScale(value));
             }
         }
@@ -114,7 +116,7 @@ const HeatMap = (props) => {
         // create scale and axis for drug names and pathway names.
         createAxis(drugs, pathways, skeleton, dimension.rectWidth, dimension.rectHeight);
         // create rectangles for heatmap.
-        createRectangle(drugs, pathways, skeleton, dimension.rectWidth, dimension.rectHeight, dataset);
+        createRectangle(drugs, pathways, skeleton, dimension.rectWidth, dimension.rectHeight, dataset, min, max);
     };
 
     // on component mounting calling create heatmap.
