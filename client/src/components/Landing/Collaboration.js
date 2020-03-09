@@ -24,7 +24,7 @@ const Collaboration = () => (
     <StyledCollaboration>
             The BHKLab is collaborating with
         {' '}
-        <a href="https://openrisknet.org">OpenRiskNet</a>
+        <a target="_blank" href="https://openrisknet.org">OpenRiskNet</a>
         {' '}
             for the development of ToxicoDB.
     </StyledCollaboration>

@@ -125,28 +125,28 @@ class Bubble extends React.Component {
             .append('text')
             .attr('fill', 'white')
             .style('text-anchor', 'middle')
-            .style('font-size', 15)
+            .style('font-size', 17)
             .html((d) => {
                 let t;
                 let tt;
                 if (d.text === 'Drugs') {
-                    t = `<tspan text-anchor='middle' font-size=18 dx='0.4em' dy='-0.5em'>${d.count}</tspan>`;
-                    tt = `<tspan text-anchor='middle' font-size=15 dx='-2.1em' dy=20>${d.text}</tspan>`;
+                    t = `<tspan text-anchor='middle' font-size=20 dx='0.4em' dy='-0.5em'>${d.count}</tspan>`;
+                    tt = `<tspan text-anchor='middle' font-size=20 dx='-2.1em' dy=20>${d.text}</tspan>`;
                 } else if (d.text === 'Genes') {
-                    t = `<tspan text-anchor='middle' font-size=18 dx='0.4em' dy='-0.5em' >${d.count}</tspan>`;
-                    tt = `<tspan text-anchor='middle' font-size=15 dx='-2.5em' dy=20>${d.text}</tspan>`;
+                    t = `<tspan text-anchor='middle' font-size=20 dx='0.4em' dy='-0.5em' >${d.count}</tspan>`;
+                    tt = `<tspan text-anchor='middle' font-size=18 dx='-2.5em' dy=20>${d.text}</tspan>`;
                 } else if (d.text === 'Tissues') {
-                    t = `<tspan text-anchor='middle' font-size=18 dx='0.4em' dy='-0.5em'>${d.count}</tspan>`;
-                    tt = `<tspan text-anchor='middle' font-size=15 dx='-2em' dy=20>${d.text}</tspan>`;
-                } else if (d.text === 'Cells') {
-                    t = `<tspan text-anchor='middle' font-size=18  dx='10' dy='-0.5em'>${d.count}</tspan>`;
-                    tt = `<tspan text-anchor='middle' font-size=15 dx='-1em' dy=20>${d.text}</tspan>`;
+                    t = `<tspan text-anchor='middle' font-size=20 dx='0.4em' dy='-0.5em'>${d.count}</tspan>`;
+                    tt = `<tspan text-anchor='middle' font-size=17 dx='-1.7em' dy=20>${d.text}</tspan>`;
+                } else if (d.text === 'Cells'){
+                    t = `<tspan text-anchor='middle' font-size=20  dx='10' dy='-0.5em'>${d.count}</tspan>`;
+                    tt = `<tspan text-anchor='middle' font-size=18 dx='-1em' dy=20>${d.text}</tspan>`;
                 } else { // datasets, species
-                    t = `<tspan text-anchor='middle' font-size=18  dx='5' dy='-0.5em'>${d.count}</tspan>`;
-                    tt = `<tspan text-anchor='middle' font-size=15 dx='-2em' dy=20>${d.text}</tspan>`;
+                    t = `<tspan text-anchor='middle' font-size=20  dx='13' dy='-0.5em'>${d.count}</tspan>`;
+                    tt = `<tspan text-anchor='middle' font-size=18 dx='-1.6em' dy=20>${d.text}</tspan>`;
                 }
 
-                // var ttt = "<tspan text-anchor='middle' font-size=13 dy=15>aaaaaaaaa</tspan>";
+                // var ttt = "<tspan text-anchor='middle' font-size=13 dy=18>aaaaaaaaa</tspan>";
                 return t + tt;// appending it to the html
             });
 
