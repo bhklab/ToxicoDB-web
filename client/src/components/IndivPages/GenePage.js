@@ -16,6 +16,7 @@ import useFetchAnnotation from './Hooks/useFetchAnnotation';
 import useFetchAnalysisData from './Hooks/useFetchAnalysisData';
 
 import LoadingComponent from '../Utils/Loading';
+import useFetchGeneName from './Hooks/useFetchGeneName';
 
 const StyledGenePage = styled.div`
     width: 80vw;
@@ -72,15 +73,31 @@ const filterCaseInsensitive = (filter, row) => {
 
 const GenePage = (props) => {
     const { match: { params } } = props;
+    
     // apiData and annotationData are being updated together
     // so they can be handled under the same hook
-    const { apiData, annotationData } = useFetchAnnotation(`/api/v1/genes/${params.id}`, 'gene');
+    const { apiData, entrez_gid, annotationData } = useFetchAnnotation(`/api/v1/genes/${params.id}`, 'gene');
+    
     // analysisData and loading are handled together => one hook
     const {
         analysisData,
         loading,
     } = useFetchAnalysisData(`/api/v1/genes/${params.id}/analysis`);
 
+    // get gene card description
+    const {name} = useFetchGeneName(entrez_gid)
+
+    // changing the headers of the annotation data to include 
+    if (annotationData.length != 0) {
+        annotationData.forEach((item) => {
+            if (item.name === "name") {
+                item.name = "Ensembl ID"
+            }
+        })
+        if (name !== "") {
+            annotationData.unshift({name: "Full name", value: [name]})
+        }
+    }
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
     const columns = [{
         Header: 'Drug',
