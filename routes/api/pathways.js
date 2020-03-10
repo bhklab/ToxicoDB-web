@@ -17,17 +17,18 @@ const getPathways = function (request, response) {
 };
 
 // get the pathways based on dataset and drug.
-const getPathwaysPerDatasetDrug = function (request, response) {
+const getPathwaysPerDatasetBasedOnDrugs = function (request, response) {
     const { drugName } = request.body;
     const { datasetName } = request.body;
 
-    knex.select()
+    knex.select('pathways.id', 'pathways.name')
         .from('pathways_drugs')
+        .distinct()
         .innerJoin('datasets', 'datasets.id', 'pathways_drugs.dataset_id')
         .innerJoin('drugs', 'drugs.id', 'pathways_drugs.drug_id')
         .innerJoin('pathways', 'pathways.id', 'pathways_drugs.pathway_id')
         .where('datasets.name', datasetName)
-        .andWhere('drugs.name', drugName)
+        .whereIn('drugs.name', drugName)
         .then((pathways) => response.status(200).json({
             status: 'success',
             data: pathways,
@@ -39,31 +40,31 @@ const getPathwaysPerDatasetDrug = function (request, response) {
 };
 
 // get the pathway stats based on the dataset.
+// const getPathwayStatsPerDataset = function (request, response) {
+//     const { datasetName } = request.body;
+
+//     knex.select('stat_dis', 'p_value', 'fdr', 'drugs.name as drug', 'pathways.name as pathway')
+//         .from('pathway_stats')
+//         .innerJoin('pathways_drugs', 'pathways_drugs.id', 'pathway_stats.id')
+//         .innerJoin('datasets', 'datasets.id', 'pathways_drugs.dataset_id')
+//         .innerJoin('drugs', 'drugs.id', 'pathways_drugs.drug_id')
+//         .innerJoin('pathways', 'pathways.id', 'pathways_drugs.pathway_id')
+//         .where('datasets.name', datasetName)
+//         .orderBy('drugs.name')
+//         .orderBy('pathways.name')
+//         .then((stats) => response.status(200).json({
+//             status: 'success',
+//             data: stats,
+//         }))
+//         .catch((error) => response.status(500).json({
+//             status: 'could not find data from pathway stats table, getPathwayStatsPerDataset',
+//             data: error,
+//         }));
+// };
+
+
+// get the pathway stats based on the dataset and pathways.
 const getPathwayStatsPerDataset = function (request, response) {
-    const { datasetName } = request.body;
-
-    knex.select('stat_dis', 'p_value', 'fdr', 'drugs.name as drug', 'pathways.name as pathway')
-        .from('pathway_stats')
-        .innerJoin('pathways_drugs', 'pathways_drugs.id', 'pathway_stats.id')
-        .innerJoin('datasets', 'datasets.id', 'pathways_drugs.dataset_id')
-        .innerJoin('drugs', 'drugs.id', 'pathways_drugs.drug_id')
-        .innerJoin('pathways', 'pathways.id', 'pathways_drugs.pathway_id')
-        .where('datasets.name', datasetName)
-        .orderBy('drugs.name')
-        .orderBy('pathways.name')
-        .then((stats) => response.status(200).json({
-            status: 'success',
-            data: stats,
-        }))
-        .catch((error) => response.status(500).json({
-            status: 'could not find data from pathway stats table, getPathwayStatsPerDataset',
-            data: error,
-        }));
-};
-
-
-// get the pathway stats based on the dataset.
-const getPathwayStatsPerDatasetPathways = function (request, response) {
     const { datasetName } = request.body;
     const { pathways } = request.body;
 
@@ -87,10 +88,31 @@ const getPathwayStatsPerDatasetPathways = function (request, response) {
         }));
 };
 
+// get the drugs from pathways_drugs table based upon the dataset.
+const getDrugsPerDataset = function (request, response) {
+    const { datasetName } = request.body;
+
+    // get the drugs based on the dataset name.
+    knex.select('drugs.id', 'drugs.name')
+        .distinct()
+        .from('pathways_drugs')
+        .innerJoin('drugs', 'drugs.id', 'pathways_drugs.drug_id')
+        .innerJoin('datasets', 'datasets.id', 'pathways_drugs.dataset_id')
+        .where('datasets.name', datasetName)
+        .then((drugs) => response.status(200).json({
+            status: 'success',
+            data: drugs,
+        }))
+        .catch((error) => response.status(500).json({
+            status: 'could not find data from drugs table, getDrugsPerDataset',
+            data: error,
+        }));
+};
+
 
 module.exports = {
     getPathways,
-    getPathwaysPerDatasetDrug,
+    getPathwaysPerDatasetBasedOnDrugs,
     getPathwayStatsPerDataset,
-    getPathwayStatsPerDatasetPathways,
+    getDrugsPerDataset,
 };
