@@ -9,7 +9,7 @@ const StyledNav = styled.div`
     bottom:0px;
     margin-bottom:-10px;
     right:0px;
-    padding: 10px 0;
+    padding: 20px 0;
     white-space:nowrap;
     background-color: ${colors.lightblue_bg};
     font-size: calc(0.8em + 0.2vw);
@@ -50,12 +50,12 @@ const StyledNav = styled.div`
     }
     .contact {
         background:white;
-        flex-grow:2;
+        flex-grow:1;
         text-align:center;
         color: ${colors.blue_header};
         line-height:25px;
         border-radius:25px;
-        padding: 0 10px 5px;
+        font-size: calc(0.7em + 0.2vw);
         h3 {
             margin:15px 0 5px 0;
         }
