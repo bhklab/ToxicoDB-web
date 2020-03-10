@@ -38,7 +38,7 @@ const StyledQueries = styled.div`
     }
     
     .slick-next::before, .slick-prev::before {
-        font-size:calc(2rem + 3vw) !important;
+        font-size:calc(2rem + 2vw) !important;
         color:${colors.blue_text} !important;
         font-family: 'Dosis', sans-serif !important;
     }
