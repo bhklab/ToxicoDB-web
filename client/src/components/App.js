@@ -20,13 +20,14 @@ const DatasetCard = lazy(() => import('./IndivPages/DatasetPage'));
 const ExpressionPlot = lazy(() => import('./ExpressionPlot'));
 const BarChart = lazy(() => import('./Plots/BarChat'));
 const Pathways = lazy(() => import('./SummaryPages/Pathways'));
+const Contact = lazy(() => import('./Contact'));
 
 const StyledApp = styled.div`
     margin: 20px auto 0px auto;
     min-height:100vh;
     display: flex;
     // flex-direction: column;
-    justify-content: space-around;
+    justify-content: center;
     align-items: flex-start;    
 
     flex-grow: 1;
@@ -54,6 +55,7 @@ const App = () => (
                     <Route exact path="/species/" component={Species} />
                     <Route exact path="/tissues/" component={Tissues} />
                     <Route exact path="/pathways" component={Pathways} />
+                    <Route exact path="/contact/" component={Contact} />
                     <Route exact path="/documentation/" component={Documentation} />
                     <Route path="/drugs/:id" component={DrugCard} />
                     <Route path="/genes/:id" component={GeneCard} />

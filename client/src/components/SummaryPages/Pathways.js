@@ -25,7 +25,11 @@ const StyleHeading = styled.div`
         font-size: calc(1em + 1vw);
         text-align:center;
         margin-bottom:50px;
+<<<<<<< HEAD
         margin-top: 140px;
+=======
+        margin-top: 165px;
+>>>>>>> 7ee8372a72f049f3c6094fa4e2d89120aa33a784
     }
     a {
     color: ${colors.blue_text}

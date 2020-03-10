@@ -2,16 +2,17 @@ import { useState, useEffect } from 'react';
 
 // this function is called whenever url changed
 const useFetchAnnotation = (url, type) => {
-    const [{ apiData, annotationData }, setGeneData] = useState({
-        apiData: [], annotationData: [],
+    const [{ apiData, entrez_gid, annotationData }, setGeneData] = useState({
+        apiData: [], entrez_gid: 0, annotationData: [],
     });
 
     useEffect(() => {
-        setGeneData({ apiData: [], annotationData: [] });
+        setGeneData({ apiData: [], entrez_gid: 0, annotationData: [] });
         fetch(url)
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
+                const gid = data[0].entrez_gid;
                 const annotationArray = [];
                 const annotationObj = {};
                 data.forEach((item) => {
@@ -30,12 +31,12 @@ const useFetchAnnotation = (url, type) => {
                         annotationArray.push(x);
                     }
                 });
-                setGeneData({ apiData: data[0], annotationData: annotationArray });
+                setGeneData({ apiData: data[0], entrez_gid: gid, annotationData: annotationArray });
             });
     }, [url]);
 
 
-    return { apiData, annotationData };
+    return { apiData, entrez_gid, annotationData };
 };
 
 export default useFetchAnnotation;
