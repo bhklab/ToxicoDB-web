@@ -73,11 +73,11 @@ const filterCaseInsensitive = (filter, row) => {
 
 const GenePage = (props) => {
     const { match: { params } } = props;
-    
+
     // apiData and annotationData are being updated together
     // so they can be handled under the same hook
     const { apiData, entrez_gid, annotationData } = useFetchAnnotation(`/api/v1/genes/${params.id}`, 'gene');
-    
+
     // analysisData and loading are handled together => one hook
     const {
         analysisData,
@@ -85,17 +85,17 @@ const GenePage = (props) => {
     } = useFetchAnalysisData(`/api/v1/genes/${params.id}/analysis`);
 
     // get gene card description
-    const {name} = useFetchGeneName(entrez_gid)
+    const { name } = useFetchGeneName(entrez_gid);
 
-    // changing the headers of the annotation data to include 
+    // changing the headers of the annotation data to include
     if (annotationData.length != 0) {
         annotationData.forEach((item) => {
-            if (item.name === "name") {
-                item.name = "Ensembl ID"
+            if (item.name === 'name') {
+                item.name = 'Ensembl ID';
             }
-        })
-        if (name !== "") {
-            annotationData.unshift({name: "Full name", value: [name]})
+        });
+        if (name !== '') {
+            annotationData.unshift({ name: 'Full name', value: [name] });
         }
     }
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];

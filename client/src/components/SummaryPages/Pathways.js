@@ -229,6 +229,7 @@ const Pathways = () => {
     }, [dataset]);
 
     useEffect(() => {
+        console.log(dataset, drugs);
         if (dataset && drugs.length > 0) {
             fetch('/api/v1/pathways/dataset/drug', {
                 method: 'POST',

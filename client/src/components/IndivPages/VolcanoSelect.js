@@ -1,12 +1,14 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-plusplus */
-import React, { Component, Fragment, useState, useEffect } from 'react';
+import React, {
+    Component, Fragment, useState, useEffect,
+} from 'react';
 import styled from 'styled-components';
+import Select, { components } from 'react-select';
 import colors from '../../styles/colors';
 import VolcanoSingle from '../Plots/VolcanoSinglePlotly';
 import VolcanoLegend from '../Plots/VolcanoLegend';
-import Select, { components } from 'react-select';
 
 const StyledVolcanoSelect = styled.div`
     width: 100%;
@@ -29,7 +31,7 @@ const customStyles = {
         ...provided,
         background: colors.lightblue_bg,
         borderRadius: '10px',
-        marginBottom:'30px',
+        marginBottom: '30px',
         // width:300,
         height: 20,
         fontFamily: '\'Raleway\', sans-serif',
@@ -129,7 +131,6 @@ const customFilterOption = (option, rawInput) => {
 
 
 const VolcanoSelect = (props) => {
-
     const [state, setState] = useState({
         data: [],
         options: [],
@@ -140,23 +141,23 @@ const VolcanoSelect = (props) => {
     });
 
     const { data, queryId, type } = props;
-    
+
     const handleChange = (event) => {
-        let selected = [];
+        const selected = [];
         // no options selected
         if (event === null || event.length === 0) {
             // can't map an empty event, so separate condition here
-            setState({...state, selected: []})
+            setState({ ...state, selected: [] });
         } else {
             event.map((x) => selected.push(x.value));
-            setState({...state, selected: selected});
+            setState({ ...state, selected });
         }
-        
-    }
+    };
 
     // initial rendering
     useEffect(() => {
-        setState({...state, 
+        setState({
+            ...state,
             data: [],
             options: [],
             selected: [],
@@ -165,75 +166,76 @@ const VolcanoSelect = (props) => {
             loading: null,
         });
         // refactoring data to be per dataset for the dataset selector
-        let newData = {};
+        const newData = {};
         data.forEach((x) => {
             const dname = x.dataset_name.replace(/ /g, '');
             // if the dataset name isn't a key in newData yet
             if (newData[dname] === undefined) {
                 newData[dname] = [];
-            } 
+            }
             newData[dname].push(x);
-        })
+        });
 
         const datasets = Object.keys(newData);
-        
+
         // nicer names for datasets
         const datasetLabels = [];
         datasets.forEach((x) => {
-            if (x == 'TGGATESHumanLDH') datasetLabels.push('TGGATES Human (LDH)'); 
-            else if (x == 'TGGATESRatLDH') datasetLabels.push('TGGATES Rat (LDH)');
-            else if (x == 'drugMatrix') datasetLabels.push('DrugMatrix');
+            if (x === 'TGGATESHumanLDH') datasetLabels.push('TGGATES Human (LDH)');
+            else if (x === 'TGGATESRatLDH') datasetLabels.push('TGGATES Rat (LDH)');
+            else if (x === 'drugMatrix') datasetLabels.push('DrugMatrix');
             else datasetLabels.push(x);
-        })
+        });
 
         // set options
-        const options = datasetLabels.map((x,i) => {return {'value': datasets[i], 'label': x}});
+        const options = datasetLabels.map((x, i) => ({ value: datasets[i], label: x }));
 
         // set selected to the first 1 or 2 datasets
-        const selected = (options.length > 1 ? options.slice(0,2) : [options[0]]).map((x) => x.value);
+        const selected = (options.length > 1 ? options.slice(0, 2) : [options[0]]).map((x) => x.value);
 
         // set loading to an object with a pair for each dataset
         const loading = {};
         datasets.forEach((x) => {
             loading[x] = false;
-        })
+        });
 
-        setState({loading: loading, options: options, data: newData, selected: selected, datasets: datasets, datasetLabels: datasetLabels});
+        setState({
+            loading, options, data: newData, selected, datasets, datasetLabels,
+        });
     }, []);
 
     return (
-        <Fragment>
+        <>
             {state.data.length === 0 && state.options.length === 0 && state.selected.length === 0 ? null : (
-                <Fragment>
+                <>
                     <Select
                         isMulti
-                        defaultValue={state.options.length > 1 ? state.options.slice(0,2) : [state.options[0]]}
+                        defaultValue={state.options.length > 1 ? state.options.slice(0, 2) : [state.options[0]]}
                         filterOption={customFilterOption}
                         options={state.options}
                         components={{ Option: CustomOption }}
                         styles={customStyles}
                         onChange={handleChange}
                     />
-                    <VolcanoLegend plotId="legend"/>
+                    <VolcanoLegend plotId="legend" />
                     <StyledVolcanoSelect>
-                        {state.datasets.map((x,i) => {
-                            return <VolcanoSingle 
-                                        key={i}
-                                        data={state.data[x]} 
-                                        datasetName={x}
-                                        queryId={queryId}
-                                        plotId="volcanoPlot"
-                                        type={type}
-                                        selected={state.selected}
-                                        // loading={state.loading[x]}
-                                    />
-                        })}
+                        {state.datasets.map((x, i) => (
+                            <VolcanoSingle
+                                key={i}
+                                data={state.data[x]}
+                                datasetName={x}
+                                queryId={queryId}
+                                plotId="volcanoPlot"
+                                type={type}
+                                selected={state.selected}
+                            />
+                        ))}
 
                     </StyledVolcanoSelect>
-                </Fragment>                
+                </>
             )}
-        </Fragment>
-    );   
+        </>
+    );
 };
 
 export default VolcanoSelect;

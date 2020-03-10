@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 
@@ -24,14 +23,12 @@ const StyledDocumentation = styled.div`
     }
 `;
 
-class Documentation extends Component {
-    render() {
-        return (
-            <StyledDocumentation>
-        Documentation will be added soon.
-            </StyledDocumentation>
-        );
-    }
+function Documentation() {
+    return (
+        <StyledDocumentation>
+            Documentation will be added soon.
+        </StyledDocumentation>
+    );
 }
 
 
