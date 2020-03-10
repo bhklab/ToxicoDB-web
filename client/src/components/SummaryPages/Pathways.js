@@ -138,7 +138,7 @@ const Pathways = () => {
     const [dataset, setDataset] = useState('');
     const [drugList, setDrugList] = useState([]);
     const [drugs, setDrugs] = useState([]);
-    const [ontology, setOntology] = useState('');
+    const [ontology, setOntology] = useState('Reactome');
     const [pathwayList, setPathwayList] = useState(DefaultPathways.TGGATES_Human);
     const [pathways, setPathways] = useState([]);
     const [parsedDataset, setParsedDataset] = useState({});
@@ -163,23 +163,21 @@ const Pathways = () => {
             if (element.drug !== drugName) {
                 drugName = element.drug;
                 parsedData[element.drug] = {};
-            } else if (element.drug === drugName) {
-                parsedData[element.drug][element.pathway] = {};
-                parsedData[element.drug][element.pathway].fdr = element.fdr;
-                parsedData[element.drug][element.pathway].p_value = element.p_value;
-                parsedData[element.drug][element.pathway].stat_dis = element.stat_dis;
             }
+            parsedData[element.drug][element.pathway] = {};
+            parsedData[element.drug][element.pathway].fdr = element.fdr;
+            parsedData[element.drug][element.pathway].p_value = element.p_value;
+            parsedData[element.drug][element.pathway].stat_dis = element.stat_dis;
         });
 
         mean = totalMax / total;
-
 
         // setting the states for pathways, drugs and parsed data.
         const drugNameList = [...Object.keys(parsedData)];
         const pathwayNameList = [...Object.keys(parsedData[drugNameList[0]])];
 
         // setting the state if we have drug list, pathway list and parsedData.
-        if (parseData && drugNameList && pathwayNameList) {
+        if (parsedDataset && drugNameList && pathwayNameList) {
             setParsedDataset({
                 drugs: drugNameList,
                 pathways: pathwayNameList,
@@ -199,12 +197,32 @@ const Pathways = () => {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ datasetName: 'TGGATES Human LDH', pathways: pathwayList }),
+                body: JSON.stringify({
+                    datasetName: 'TGGATES Human LDH', pathways: pathwayList, ontology, drugs,
+                }),
             })
                 .then((response) => response.json())
                 .then((res) => parseData(res));
         }
     }, []);
+
+
+    useEffect(() => {
+        if (drugs.length > 0 && dataset && ontology && pathways.length > 0) {
+            fetch('/api/v1/pathwaystats/dataset', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    datasetName: 'TGGATES Human LDH', pathways, ontology, drugs,
+                }),
+            })
+                .then((response) => response.json())
+                .then((res) => parseData(res));
+        }
+    }, [drugs, dataset, ontology, pathways]);
 
     useEffect(() => {
         if (dataset) {
@@ -229,7 +247,6 @@ const Pathways = () => {
     }, [dataset]);
 
     useEffect(() => {
-        console.log(dataset, drugs);
         if (dataset && drugs.length > 0) {
             fetch('/api/v1/pathways/dataset/drug', {
                 method: 'POST',
@@ -326,5 +343,6 @@ const Pathways = () => {
         </div>
     );
 };
+
 
 export default Pathways;
