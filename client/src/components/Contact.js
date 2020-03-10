@@ -47,7 +47,8 @@ class Drugs extends Component {
             <h1>Contact Us</h1>
             <div className="content">
               <b>Email: </b> <a href='mailto: ToxicoDB@gmail.com'>ToxicoDB@gmail.com</a> <p/>
-              <b>BHKLAB</b> <br/>
+              <b>Github: </b> <a href='http://github.com/bhklab'>bhklab/ToxicoDB</a> <p/>
+              <b><a href="http://bhklab.ca">BHKLAB</a></b> <br/>
               The MaRS Center<br/>
               TMDT room 11-310<br/>
               101 College Street Toronto, ON<br/>

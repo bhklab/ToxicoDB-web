@@ -60,6 +60,9 @@ const StyledNav = styled.div`
             margin:15px 0 5px 0;
         }
     }
+    .logo {
+        width: 50px;
+    }
   
 }
 `;
@@ -79,7 +82,7 @@ const FooterNav = () => (
                 <a href="https://github.com/bhklab">GitHub</a>
                 <a href="https://bhklab.ca/">BHKLab</a>
             </div>
-            <div className="contact">
+            {/* <div className="contact">
                 <h3>BHKLab</h3>
                     The MaRS center
                 <br />
@@ -87,7 +90,7 @@ const FooterNav = () => (
                 {' '}
                 <br />
                     TMDT RM 11-310
-            </div>
+            </div> */}
         </div>
     </StyledNav>
 );
