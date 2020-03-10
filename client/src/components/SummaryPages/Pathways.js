@@ -14,6 +14,7 @@ const StyleContainer = styled.div`
     .div-dataset, .div-drug , .div-ontology, .div-pathway{
         min-width: 18vw;
         margin: 0px 15px 15px 15px;
+        max-width: 19vw;
     }
 `;
 
@@ -136,54 +137,11 @@ const Pathways = () => {
     // setting dataset and drug state.
     const [dataset, setDataset] = useState('');
     const [drugList, setDrugList] = useState([]);
-    const [drug, setDrug] = useState('');
+    const [drugs, setDrugs] = useState([]);
     const [ontology, setOntology] = useState('');
     const [pathwayList, setPathwayList] = useState(DefaultPathways.TGGATES_Human);
+    const [pathways, setPathways] = useState([]);
     const [parsedDataset, setParsedDataset] = useState({});
-
-    // useEffect(() => {
-    //     if (dataset) {
-    //         fetch('/api/v1/drugs/dataset', {
-    //             method: 'POST',
-    //             headers: {
-    //                 Accept: 'application/json',
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ id: dataset }),
-    //         })
-    //             .then((response) => response.json())
-    //             .then((res) => {
-    //                 const drugData = res.data.map((val) => ({
-    //                     value: val.name,
-    //                     label: val.name,
-    //                 }));
-    //                 // drugs based on dataset.
-    //                 setDrugList(drugData);
-    //             });
-    //     }
-    // }, [dataset]);
-
-    // useEffect(() => {
-    //     if (dataset && drug) {
-    //         fetch('/api/v1/pathways/dataset/drug', {
-    //             method: 'POST',
-    //             headers: {
-    //                 Accept: 'application/json',
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ datasetName: dataset, drugName: drug }),
-    //         })
-    //             .then((response) => response.json())
-    //             .then((res) => {
-    //                 const pathwayData = res.data.map((val) => ({
-    //                     value: val.name,
-    //                     label: val.name,
-    //                 }));
-    //                 // pathways based on drug and dataset.
-    //                 setPathwayList(pathwayData);
-    //             });
-    //     }
-    // }, [dataset, drug]);
 
     const parseData = (response) => {
         const { data } = response;
@@ -235,7 +193,7 @@ const Pathways = () => {
 
     useEffect(() => {
         if (pathwayList) {
-            fetch('/api/v1/pathwaystats/dataset/pathways', {
+            fetch('/api/v1/pathwaystats/dataset', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -248,14 +206,9 @@ const Pathways = () => {
         }
     }, []);
 
-
-    useEffect(() => {
-        // console.log(parsedDataset);
-    }, [parsedDataset]);
-
     useEffect(() => {
         if (dataset) {
-            fetch('/api/v1/pathwaystats/dataset', {
+            fetch('/api/v1/pathway-drugs/dataset', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -264,20 +217,55 @@ const Pathways = () => {
                 body: JSON.stringify({ datasetName: dataset }),
             })
                 .then((response) => response.json())
-                .then((res) => parseData(res));
+                .then((res) => {
+                    const drugData = res.data.map((val) => ({
+                        value: val.name,
+                        label: val.name,
+                    }));
+                        // drugs based on dataset.
+                    setDrugList(drugData);
+                });
         }
     }, [dataset]);
+
+    useEffect(() => {
+        if (dataset && drugs.length > 0) {
+            fetch('/api/v1/pathways/dataset/drug', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ datasetName: dataset, drugName: drugs }),
+            })
+                .then((response) => response.json())
+                .then((res) => {
+                    const pathwayData = res.data.map((val) => ({
+                        value: val.name,
+                        label: val.name,
+                    }));
+                    // pathways based on drug and dataset.
+                    setPathwayList(pathwayData);
+                });
+        }
+    }, [dataset, drugs]);
 
     const handleDatasetChange = (selection) => {
         setDataset(selection.value);
     };
 
     const handleDrugChange = (selection) => {
-        setDrug(selection.value);
+        const list = selection.map((row) => row.value);
+        setDrugs(list);
     };
 
     const handleOntologyChange = (selection) => {
         setOntology(selection.value);
+    };
+
+    const handlePathwayChange = (selection) => {
+        const list = selection.map((row) => row.value);
+        setPathways(list);
     };
 
     const isObjectEmpty = (data) => Object.entries(data).length === 0 && data.constructor === Object;
@@ -304,6 +292,9 @@ const Pathways = () => {
                         styles={customStyles}
                         placeholder="Select the Drug (eg. Valproic acid)"
                         onChange={handleDrugChange}
+                        isMulti
+                        isSearchable
+                        isClearable
                     />
                 </div>
                 <div className="div-ontology">
@@ -319,6 +310,10 @@ const Pathways = () => {
                         options={pathwayList}
                         styles={customStyles}
                         placeholder="Select Pathway"
+                        onChange={handlePathwayChange}
+                        isMulti
+                        isSearchable
+                        isClearable
                     />
                 </div>
             </StyleContainer>

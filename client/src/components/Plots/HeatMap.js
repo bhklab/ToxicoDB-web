@@ -11,7 +11,7 @@ const HeatMap = (props) => {
     const { data: dataset } = data;
     const dimension = { rectHeight: 12, rectWidth: 12 };
     const margin = {
-        top: 250, right: 150, bottom: 100, left: 500,
+        top: 250, right: 150, bottom: 100, left: 300,
     };
     const height = dimension.rectHeight * pathways.length;
     const width = dimension.rectWidth * drugs.length;
