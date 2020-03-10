@@ -18,6 +18,7 @@ const StyledWrapper = styled.div`
 
     h1 {
         color: ${colors.red_highlight};
+        font-size: calc(1vw + 1em);
     }
 
     .content {
