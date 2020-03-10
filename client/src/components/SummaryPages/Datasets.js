@@ -81,7 +81,7 @@ class Datasets extends Component {
         return (
             <StyledDatasets>
                 <div className="wrapper">
-                    <h1>List of Datasets</h1>
+                    <h1>Datasets</h1>
                     <ReactTable
                         data={datasetData}
                         columns={columns}

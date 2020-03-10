@@ -91,7 +91,7 @@ class Genes extends Component {
         return (
             <StyledGenes>
                 <div className="wrapper">
-                    <h1>List of Genes</h1>
+                    <h1>Genes</h1>
                     <ReactTable
                         data={geneData}
                         columns={columns}

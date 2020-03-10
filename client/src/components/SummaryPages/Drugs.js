@@ -120,7 +120,7 @@ class Drugs extends Component {
         return (
             <StyledDrugs>
                 <div className="wrapper">
-                    <h1>List of drugs</h1>
+                    <h1>Drugs</h1>
                     <ReactTable
                         data={drugData}
                         filterable
