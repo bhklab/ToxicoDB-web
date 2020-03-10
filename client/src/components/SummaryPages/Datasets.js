@@ -34,10 +34,16 @@ class Datasets extends Component {
 
     componentDidMount() {
         const data = [
-            {id: 1, name: "TGGATES Human LDH", sample: "Human", num_compounds: 146},
-            {id: 2, name: "TGGATES Rat LDH", sample: "Rat", num_compounds: 140},
-            {id: 3, name: "DrugMatrix Hepatocyte", sample: "Hepatocyte", num_compounds: 126}
-        ]
+            {
+                id: 1, name: 'TGGATES Human', sample: 'Human', num_compounds: 146,
+            },
+            {
+                id: 2, name: 'TGGATES Rat', sample: 'Rat', num_compounds: 140,
+            },
+            {
+                id: 3, name: 'DrugMatrix Hepatocyte', sample: 'Hepatocyte', num_compounds: 125,
+            },
+        ];
 
         this.setState({ datasetData: data, loading: false });
         // fetch('/api/v1/datasets')

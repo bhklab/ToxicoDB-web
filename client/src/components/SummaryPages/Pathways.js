@@ -121,8 +121,8 @@ const customStyles = {
 
 
 const datasetList = [
-    { value: 'TGGATES Human LDH', label: 'TGGATES Human LDH' },
-    { value: 'TGGATES Rat LDH', label: 'TGGATES Rat LDH' },
+    { value: 'TGGATES Human', label: 'TGGATES Human' },
+    { value: 'TGGATES Rat', label: 'TGGATES Rat' },
     { value: 'drugMatrix', label: 'drugMatrix' },
 ];
 
@@ -198,7 +198,7 @@ const Pathways = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    datasetName: 'TGGATES Human LDH', pathways: pathwayList, ontology, drugs,
+                    datasetName: 'TGGATES Human', pathways: pathwayList, ontology, drugs,
                 }),
             })
                 .then((response) => response.json())
@@ -216,7 +216,7 @@ const Pathways = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    datasetName: 'TGGATES Human LDH', pathways, ontology, drugs,
+                    datasetName: 'TGGATES Human', pathways, ontology, drugs,
                 }),
             })
                 .then((response) => response.json())

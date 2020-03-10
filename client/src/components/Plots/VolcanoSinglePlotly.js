@@ -237,8 +237,8 @@ const VolcanoSingle = (props) => {
     return (
         <StyledDiv className={state.class}>
             <h3>
-                {(datasetName === 'TGGATESHumanLDH') ? 'TGGATES Human (LDH)'
-                    : (datasetName === 'TGGATESRatLDH') ? 'TGGATES Rat (LDH)'
+                {(datasetName === 'TGGATESHuman') ? 'TGGATES Human'
+                    : (datasetName === 'TGGATESRat') ? 'TGGATES Rat'
                         : (datasetName === 'drugMatrix') ? 'DrugMatrix'
                             : datasetName}
 
