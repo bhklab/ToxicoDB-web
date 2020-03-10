@@ -183,8 +183,9 @@ const HeatMap = (props) => {
 
     // on component mounting calling create heatmap.
     useEffect(() => {
+        d3.select('#heatmap-pathways').remove();
         createHeatMap();
-    }, []);
+    }, [data]);
 
     return (
         <div className="heatmap" />
