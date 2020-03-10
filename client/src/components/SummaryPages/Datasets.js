@@ -33,18 +33,25 @@ class Datasets extends Component {
     }
 
     componentDidMount() {
-        fetch('/api/v1/datasets')
-            .then((response) => response.json())
-            .then((res) => {
-                const { data } = res;
-                console.log(data);
-                data.forEach((d) => {
-                    if (d.name === 'drugMatrix') {
-                        d.name = 'DrugMatrix Hepatocyte';
-                    }
-                });
-                this.setState({ datasetData: data, loading: false });
-            });
+        const data = [
+            {id: 1, name: "TGGATES Human LDH", sample: "Human", num_compounds: 146},
+            {id: 2, name: "TGGATES Rat LDH", sample: "Rat", num_compounds: 140},
+            {id: 3, name: "DrugMatrix Hepatocyte", sample: "Hepatocyte", num_compounds: 126}
+        ]
+
+        this.setState({ datasetData: data, loading: false });
+        // fetch('/api/v1/datasets')
+        //     .then((response) => response.json())
+        //     .then((res) => {
+        //         const { data } = res;
+        //         console.log(data);
+        //         data.forEach((d) => {
+        //             if (d.name === 'drugMatrix') {
+        //                 d.name = 'DrugMatrix Hepatocyte';
+        //             }
+        //         });
+        //         this.setState({ datasetData: data, loading: false });
+        //     });
     }
 
     render() {
@@ -56,6 +63,18 @@ class Datasets extends Component {
                 sortable: true,
                 minWidth: 200,
                 Cell: (row) => (<Link to={`/datasets/${row.original.id}`}>{row.value}</Link>),
+            },
+            {
+                Header: 'Sample',
+                accessor: 'sample',
+                sortable: true,
+                minWidth: 200,
+            },
+            {
+                Header: 'Number of Compounds',
+                accessor: 'num_compounds',
+                sortable: true,
+                minWidth: 200,
             },
         ];
 

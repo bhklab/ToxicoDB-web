@@ -109,11 +109,14 @@ class AnnotationCard extends Component {
 
         // this returns table data.
         const createTableData = (data) => {
+            console.log(data.name)
             let tableData = '';
             if (data.name.replace(/_/g, ' ') === 'symbol' && isDrugData.length === 0) {
                 tableData = 'Gene Cards';
             } else if (data.name.replace(/_/g, ' ') === 'name') {
                 tableData = 'ENSEMBL GID';
+            } else if (data.name.replace(/_/g, ' ') === 'pubchem') {
+                tableData = 'PUBCHEM CID';
             } else {
                 tableData = data.name.replace(/_/g, ' ');
             }

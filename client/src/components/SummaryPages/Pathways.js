@@ -18,14 +18,13 @@ const StyleContainer = styled.div`
 `;
 
 const StyleHeading = styled.div`
-    padding-top: 140px;
     h1 {
         color: ${colors.red_highlight};
         font-family: 'Raleway', sans-serif;
         font-size: calc(1em + 1vw);
         text-align:center;
         margin-bottom:50px;
-        margin-top: 150px;
+        margin-top: 140px;
     }
     a {
     color: ${colors.blue_text}

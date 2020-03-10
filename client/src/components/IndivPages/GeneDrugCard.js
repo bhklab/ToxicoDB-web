@@ -73,7 +73,11 @@ const GeneDrugCard = (props) => {
                             <tr key={index}>
                                 { type !== 'gene' && !item.value[0] ? null : (
                                     <>
-                                        <td className="name-column">{item.name.replace(/_/g, ' ').toUpperCase()}</td>
+                                        { item.name === "pubchem" ? (
+                                            <td className="name-column">PUBCHEM CID</td>
+                                        ) : (
+                                            <td className="name-column">{item.name.replace(/_/g, ' ').toUpperCase()}</td>
+                                        )}
                                         { item.value.map((val, i) => generateLink(item, i, type))}
                                     </>
                                 )}

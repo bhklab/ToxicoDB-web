@@ -79,7 +79,7 @@ class Drugs extends Component {
                 Cell: (row) => (<Link to={`/drugs/${row.original.id}`}>{row.value}</Link>),
             }, 
             {
-                Header: 'PubChem ID',
+                Header: 'PubChem CID',
                 accessor: 'pubchem',
                 sortable: true,
                 Cell: (props) => (
@@ -128,6 +128,16 @@ class Drugs extends Component {
                         columns={columns}
                         className="-highlight"
                         defaultPageSize={25}
+                        defaultSorted={[
+                            {
+                                id: "carcinogenicity",
+                                desc: true
+                            }, 
+                            {
+                                id: "name",
+                                desc: false
+                            }
+                          ]}
                         loading={loading}
                         LoadingComponent={LoadingComponent}
                     />

@@ -83,7 +83,6 @@ const DrugPage = (props) => {
         analysisData,
         loading,
     } = useFetchAnalysisData(`/api/v1/drugs/${params.id}/analysis`);
-    console.log(analysisData);
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
 
     useEffect(() => {
