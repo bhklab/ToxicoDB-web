@@ -67,6 +67,9 @@ const getPathwaysPerDatasetBasedOnDrugs = function (request, response) {
 const getPathwayStatsPerDataset = function (request, response) {
     const { datasetName } = request.body;
     const { pathways } = request.body;
+    const { ontology } = request.body;
+    const { drugs } = request.body;
+
 
     knex.select('stat_dis', 'p_value', 'fdr', 'drugs.name as drug', 'pathways.name as pathway')
         .from('pathway_stats')
@@ -75,6 +78,14 @@ const getPathwayStatsPerDataset = function (request, response) {
         .innerJoin('drugs', 'drugs.id', 'pathways_drugs.drug_id')
         .innerJoin('pathways', 'pathways.id', 'pathways_drugs.pathway_id')
         .where('datasets.name', datasetName)
+        .andWhere('pathway_stats.ontology', ontology)
+        .where((drug) => {
+            if (drugs.length === 0) {
+                drug.where('drugs.name', 'like', '%');
+            } else {
+                drug.whereIn('drugs.name', drugs);
+            }
+        })
         .whereIn('pathways.name', pathways)
         .orderBy('drugs.name')
         .orderBy('pathways.name')
