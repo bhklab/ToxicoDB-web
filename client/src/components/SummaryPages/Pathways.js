@@ -222,7 +222,7 @@ const Pathways = () => {
                 .then((response) => response.json())
                 .then((res) => parseData(res));
         }
-    }, [drugs, dataset, ontology, pathways]);
+    }, [pathways]);
 
     useEffect(() => {
         if (dataset) {
@@ -266,7 +266,7 @@ const Pathways = () => {
                     setPathwayList(pathwayData);
                 });
         }
-    }, [dataset, drugs]);
+    }, [drugs]);
 
     const handleDatasetChange = (selection) => {
         setDataset(selection.value);

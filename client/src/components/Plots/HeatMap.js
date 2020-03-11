@@ -188,7 +188,7 @@ const HeatMap = (props) => {
     }, [data]);
 
     return (
-        <div className="heatmap" />
+        <div className="heatmap" style={{ textAlign: 'center' }} />
     );
 };
 
