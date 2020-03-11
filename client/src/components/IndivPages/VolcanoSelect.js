@@ -181,7 +181,6 @@ const VolcanoSelect = (props) => {
         // nicer names for datasets
         const datasetLabels = [];
         datasets.forEach((x) => {
-            console.log(x);
             if (x === 'TGGATESHuman') datasetLabels.push('TGGATES Human');
             else if (x === 'TGGATESRat') datasetLabels.push('TGGATES Rat');
             else if (x === 'drugMatrix') datasetLabels.push('DrugMatrix');

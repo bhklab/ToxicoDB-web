@@ -94,8 +94,8 @@ const GenePage = (props) => {
                 item.name = 'Ensembl ID';
             }
         });
-        if (name !== '') {
-            annotationData.unshift({ name: 'Full name', value: [name] });
+        if (name.length != 0) {
+            annotationData.unshift({ name: 'Full name', value: name });
         }
     }
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
