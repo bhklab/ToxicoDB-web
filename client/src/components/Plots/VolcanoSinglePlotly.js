@@ -224,7 +224,7 @@ const VolcanoSingle = (props) => {
                     x1: -1,
                     y1: maxY,
                     line: {
-                        color: 'rgb(55, 128, 191)',
+                        color: '#accffa',
                         width: 1
                     }
                 },
@@ -236,7 +236,7 @@ const VolcanoSingle = (props) => {
                     x1: 1,
                     y1: maxY,
                     line: {
-                        color: 'rgb(55, 128, 191)',
+                        color: '#accffa',
                         width: 1
                     }
                 },
@@ -252,7 +252,7 @@ const VolcanoSingle = (props) => {
                 x1: maxX,
                 y1: 20,
                 line: {
-                    color: 'rgb(55, 128, 191)',
+                    color: '#accffa',
                     width: 1
                 }
             })
