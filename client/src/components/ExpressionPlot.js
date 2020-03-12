@@ -174,21 +174,23 @@ class ExpressionPlot extends Component {
                 temp.points[item.time].push(item.expression);
             })
             traces["drugMatrix"]["Control"]["rep1"] = temp
+
+            // parse multiple timepoints into averages - specific to drugMatrix
+            Object.keys(traces["drugMatrix"]).forEach((dose) => {
+                Object.keys(traces["drugMatrix"][dose]).forEach((rep) => {
+                    let temp = [];
+                    Object.keys(traces["drugMatrix"][dose][rep].points).forEach((time) => {
+                        let tempObj = {};
+                        tempObj.time = parseInt(time);
+                        tempObj.exp = traces["drugMatrix"][dose][rep].points[time].reduce((total, x) => total + x) / traces["drugMatrix"][dose][rep].points[time].length;
+                        temp.push(tempObj);
+                    })
+                    traces["drugMatrix"][dose][rep].points = temp;
+                })
+            })
         }
 
-        // parse multiple timepoints into averages
-        Object.keys(traces["drugMatrix"]).forEach((dose) => {
-            Object.keys(traces["drugMatrix"][dose]).forEach((rep) => {
-                let temp = [];
-                Object.keys(traces["drugMatrix"][dose][rep].points).forEach((time) => {
-                    let tempObj = {};
-                    tempObj.time = parseInt(time);
-                    tempObj.exp = traces["drugMatrix"][dose][rep].points[time].reduce((total, x) => total + x) / traces["drugMatrix"][dose][rep].points[time].length;
-                    temp.push(tempObj);
-                })
-                traces["drugMatrix"][dose][rep].points = temp;
-            })
-        })
+        
 
         console.log("traces", traces)
 
