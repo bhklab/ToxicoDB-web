@@ -7,8 +7,22 @@ const HeatMap = (props) => {
     // destructuring data, pathways and drugs from props.
     const { data } = props;
     const { pathways } = data;
-    let { drugs } = data;
-    drugs = Object.keys(drugs);
+    const { isGroup } = data;
+    const { drugs: drugObject } = data;
+    const drugs = [];
+    Object.keys(drugObject).forEach((val) => {
+        if (isGroup.length > 0 && drugObject[val].carcinogenicity === 'C' && isGroup.includes('carcinogenicity')) {
+            drugs.push(val);
+        } else if (isGroup.length > 0 && drugObject[val].carcinogenicity === 'NC' && isGroup.includes('carcinogenicity')) {
+            drugs.unshift(val);
+        } else if (isGroup.length > 0 && drugObject[val].class_in_vivo === 'GTX' && isGroup.includes('class_in_vivo')) {
+            drugs.push(val);
+        } else if (isGroup.length > 0 && drugObject[val].class_in_vivo === 'NGTX' && isGroup.includes('class_in_vivo')) {
+            drugs.unshift(val);
+        } else {
+            drugs.push(val);
+        }
+    });
     const { data: dataset } = data;
     const dimension = { rectHeight: 14, rectWidth: 14 };
     const margin = {
@@ -19,7 +33,7 @@ const HeatMap = (props) => {
     const { min } = data;
     const { max } = data;
     const { mean } = data;
-    const { isGroup } = data;
+
 
     const createSvg = (height, width, margin, selection) => {
         // make the SVG element.
@@ -73,11 +87,18 @@ const HeatMap = (props) => {
             .attr('color', (i) => {
                 let color = 'black';
 
-                if (isGroup && (data.drugs[i].carcinogenicity === 'C' || data.drugs[i].class_in_vivo === 'GTX')) {
+                if (isGroup.length > 0 && data.drugs[i].carcinogenicity === 'C' && isGroup.includes('carcinogenicity')) {
                     color = 'red';
-                } if (isGroup && (data.drugs[i].carcinogenicity === 'NC' || data.drugs[i].class_in_vivo === 'NGTX')) {
+                } else if (isGroup.length > 0 && data.drugs[i].carcinogenicity === 'NC' && isGroup.includes('carcinogenicity')) {
                     color = 'green';
+                } else if (isGroup.length > 0 && data.drugs[i].class_in_vivo === 'GTX' && isGroup.includes('class_in_vivo')) {
+                    color = 'red';
+                } else if (isGroup.length > 0 && data.drugs[i].class_in_vivo === 'NGTX' && isGroup.includes('class_in_vivo')) {
+                    color = 'green';
+                } else {
+                    color = 'black';
                 }
+
                 return color;
             });
 
@@ -157,8 +178,8 @@ const HeatMap = (props) => {
         skeleton.append('rect')
             .attr('x', width + 50)
             .attr('y', height / 2)
-            .attr('width', 25)
-            .attr('height', 69)
+            .attr('width', 28)
+            .attr('height', 89)
             .style('fill', 'url(#linear-gradient)');
 
         // legend value.
@@ -171,7 +192,7 @@ const HeatMap = (props) => {
             .enter()
             .append('text')
             .attr('x', width + 80)
-            .attr('y', (d, i) => height / 2 + 58 * i + 10)
+            .attr('y', (d, i) => height / 2 + 88 * i + 10)
             .text((d) => d)
             .attr('font-size', '14px')
             .style('text-anchor', 'start');

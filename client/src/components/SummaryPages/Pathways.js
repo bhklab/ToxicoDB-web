@@ -175,11 +175,10 @@ const Pathways = () => {
     const [pathways, setPathways] = useState([]);
     const [parsedDataset, setParsedDataset] = useState({});
     const [drugGroup, setDrugGroups] = useState({});
-    const [isGroup, setIsGroup] = useState(false);
+    const [isGroup, setIsGroup] = useState([]);
 
 
     const parseData = (response) => {
-        console.log(response);
         const { data } = response;
         let drugName = '';
         const parsedData = {};
@@ -367,6 +366,16 @@ const Pathways = () => {
 
     const handleDrugChange = (selection) => {
         const list = selection ? selection.map((row) => row.value) : [];
+        // setting group in order to change the color in heatmap.
+        const group = [];
+        list.forEach((val) => {
+            if (val.match(/Carcinogenic & Non-Carcinogenic/)) {
+                group.push('carcinogenicity');
+            } else if (val.match(/Genotoxic & Non-Genotoxic/)) {
+                group.push('class_in_vivo');
+            }
+        });
+        setIsGroup(group);
         if (list.length > 0 && list[0].match(/(Carcinogenic & Non-Carcinogenic|Genotoxic & Non-Genotoxic)/)) {
             // list of drugs based on grouping.
             const drugs = [];
@@ -375,7 +384,6 @@ const Pathways = () => {
             selectedList.forEach((val) => drugs.push(...drugGroup[val.replace(' ', '')]));
             // setting only the unique values.
             setDrugs([...new Set(drugs)]);
-            setIsGroup(true);
         } else {
             setDrugs(list);
         }
@@ -391,7 +399,7 @@ const Pathways = () => {
     };
 
     // const isObjectEmpty = (data) => Object.entries(data).length === 0 && data.constructor === Object;
-    const isObjectEmpty = (data) => (Object.entries(data).length === 0 && data.constructor === Object) || data.pathways.length === 0;
+    const isObjectEmpty = (data) => (Object.entries(data).length === 0 && data.constructor === Object);
 
     return (
         <div>
