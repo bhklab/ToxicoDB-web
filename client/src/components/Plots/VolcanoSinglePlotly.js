@@ -182,31 +182,86 @@ const VolcanoSingle = (props) => {
         // if dataset is not selected, give class hidden to hide
         const className = selected.includes(datasetName) ? 'plot' : 'plot hidden';
 
+        // calculating highest y value for plotting lines for fold change
+        const maxY = d3.max([d3.max(greenTrace.y), d3.max(blueTrace.y)]);
+        const minY = d3.min([d3.min(greenTrace.y), d3.min(blueTrace.y)]);
+
+        // calculating highest x value for plotting the pvalue at 20
+        const maxX = d3.max([d3.max(greenTrace.x), d3.max(blueTrace.x)]);
+        const minX = d3.min([d3.min(greenTrace.x), d3.min(blueTrace.x)]);
+
+        const layout = {
+            height: 600,
+            autosize: true,
+            // width: 800,
+            paper_bgcolor: 'white',
+            plot_bgcolor: 'white',
+            orientation: 'v',
+            yaxis: { ticklen: 0, title: '-log10(p value)' },
+            xaxis: { title: 'log2(fold change)', zeroline: false },
+            hovermode: 'closest',
+            font: {
+                size: 12,
+                color: colors.nav_links,
+                family: 'Arial',
+            },
+            margin: {
+                l: 45,
+                r: 0,
+                t: 0,
+                b: 40,
+            },
+        };
+       
+        // determine if show x axis fold change lines or not
+        if (greenTrace.x.length !== 0) {
+            layout.shapes = [
+                // x: -1
+                {
+                    type: 'line',
+                    x0: -1,
+                    y0: minY,
+                    x1: -1,
+                    y1: maxY,
+                    line: {
+                        color: '#accffa',
+                        width: 1
+                    }
+                },
+                // x: 1
+                {
+                    type: 'line',
+                    x0: 1,
+                    y0: minY,
+                    x1: 1,
+                    y1: maxY,
+                    line: {
+                        color: '#accffa',
+                        width: 1
+                    }
+                },
+            ];
+        }
+
+        // determine if plot the y axis pvalue line (max beyond 20)
+        if (maxY > 20) {
+            layout.shapes.push({
+                type: 'line',
+                x0: minX,
+                y0: 20,
+                x1: maxX,
+                y1: 20,
+                line: {
+                    color: '#accffa',
+                    width: 1
+                }
+            })
+        }
+
         setState({
             ...state,
             data: [greenTrace, blueTrace],
-            layout: {
-                height: 600,
-                autosize: true,
-                // width: 800,
-                paper_bgcolor: 'white',
-                plot_bgcolor: 'white',
-                orientation: 'v',
-                yaxis: { ticklen: 0, title: '-log10(p value)' },
-                xaxis: { title: 'log2(fold change)', zeroline: false },
-                hovermode: 'closest',
-                font: {
-                    size: 12,
-                    color: colors.nav_links,
-                    family: 'Arial',
-                },
-                margin: {
-                    l: 45,
-                    r: 0,
-                    t: 0,
-                    b: 40,
-                },
-            },
+            layout: layout,
             class: className,
         });
     };
