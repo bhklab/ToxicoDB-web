@@ -88,13 +88,13 @@ const GenePage = (props) => {
     const { name } = useFetchGeneName(entrez_gid);
 
     // changing the headers of the annotation data to include
-    if (annotationData.length != 0) {
+    if (annotationData.length !== 0) {
         annotationData.forEach((item) => {
             if (item.name === 'name') {
                 item.name = 'Ensembl ID';
             }
         });
-        if (name.length != 0) {
+        if (name.length !== 0) {
             annotationData.unshift({ name: 'Full name', value: name });
         }
     }
