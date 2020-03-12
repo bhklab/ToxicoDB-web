@@ -251,7 +251,7 @@ const Pathways = () => {
             label: val.name,
         }));
 
-        const groups = Object.keys(groupDrug).map((val) => ({
+        const groups = ['Carcinogenic & Non-Carcinogenic', 'Genotoxic & Non-Genotoxic'].map((val) => ({
             value: val,
             label: val,
         }));
@@ -272,6 +272,7 @@ const Pathways = () => {
         setDrugGroups(groupDrug);
     };
 
+    // similar to componentDidMount.
     useEffect(() => {
         if (pathwayList) {
             fetch('/api/v1/pathwaystats/dataset', {
@@ -289,6 +290,7 @@ const Pathways = () => {
         }
     }, []);
 
+    // this will be triggerred on the dataset change.
     useEffect(() => {
         if (dataset) {
             fetch('/api/v1/pathway-drugs/dataset', {
@@ -305,6 +307,7 @@ const Pathways = () => {
     }, [dataset]);
 
 
+    // this will be triggerred on the drugs change.
     useEffect(() => {
         if (dataset && drugs.length > 0) {
             fetch('/api/v1/pathways/dataset/drug', {
@@ -328,6 +331,7 @@ const Pathways = () => {
     }, [drugs]);
 
 
+    // this will be triggerred on the pathways change.
     useEffect(() => {
         if (drugs.length > 0 && dataset && ontology && pathways.length > 0) {
             fetch('/api/v1/pathwaystats/dataset', {
@@ -351,11 +355,18 @@ const Pathways = () => {
     };
 
     const handleDrugChange = (selection) => {
-        let list = selection.map((row) => row.value);
-        if (list[0].match(/(Carcinogenic|Non-Carcinogenic|Genotoxic|Non-Genotoxic)/)) {
-            list = drugGroup[list[0]];
+        const list = selection ? selection.map((row) => row.value) : [];
+        if (list.length > 0 && list[0].match(/(Carcinogenic & Non-Carcinogenic|Genotoxic & Non-Genotoxic)/)) {
+            // list of drugs based on grouping.
+            const drugs = [];
+            const selectedList = [];
+            list.forEach((val) => selectedList.push(...val.split('&')));
+            selectedList.forEach((val) => drugs.push(...drugGroup[val.replace(' ', '')]));
+            // setting only the unique values.
+            setDrugs([...new Set(drugs)]);
+        } else {
+            setDrugs(list);
         }
-        setDrugs(list);
     };
 
     const handleOntologyChange = (selection) => {
@@ -363,7 +374,7 @@ const Pathways = () => {
     };
 
     const handlePathwayChange = (selection) => {
-        const list = selection.map((row) => row.value);
+        const list = selection ? selection.map((row) => row.value) : [];
         setPathways(list);
     };
 
