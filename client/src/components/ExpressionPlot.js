@@ -65,11 +65,33 @@ class ExpressionPlot extends Component {
 
                         // find datasets for the legend
                         const datasets = [...new Set(data.map((x) => x.name))];
+                        
+                        // getting control points for range
+                        const controlTimes = [];
+                        const controlExps = [];
+                        expData.forEach((x) => {
+                            if (x.class === "drugMatrix" && x.label === "Control replicate 1") {
+                                x.points.forEach((i) => {
+                                    controlTimes.push(i.time);
+                                    controlExps.push(i.exp);
+                                })
+                            }
+                        })
+
+                        // determining x/yrange to encompass control ranges as well
+                        const xRange = [
+                            Math.min(Math.min(...times) - 1, Math.min(...controlTimes)- 1),
+                            Math.min(Math.max(...times) + 1, Math.max(...controlTimes) + 1)
+                        ];
+                        const yRange = [
+                            Math.min(Math.min(...exps) - 1, Math.min(...controlExps) - 1),
+                            Math.max(Math.max(...exps) + 1, Math.max(...controlExps) + 1),
+                        ];
 
                         this.setState({
                             expressionData: expData,
-                            xRange: [Math.min(...times) - 1, Math.max(...times) + 1],
-                            yRange: [Math.min(...exps) - 1, Math.max(...exps) + 1],
+                            xRange: xRange,
+                            yRange: yRange,
                             datasets,
                             loading: false,
                         });
