@@ -15,7 +15,7 @@ const StyleContainer = styled.div`
     .div-dataset, .div-drug , .div-ontology, .div-pathway{
         min-width: 18vw;
         margin: 0px 15px 15px 15px;
-        max-width: 19vw;
+        max-width: 20vw;
     }
 `;
 
@@ -175,9 +175,11 @@ const Pathways = () => {
     const [pathways, setPathways] = useState([]);
     const [parsedDataset, setParsedDataset] = useState({});
     const [drugGroup, setDrugGroups] = useState({});
+    const [isGroup, setIsGroup] = useState(false);
 
 
     const parseData = (response) => {
+        console.log(response);
         const { data } = response;
         let drugName = '';
         const parsedData = {};
@@ -202,23 +204,32 @@ const Pathways = () => {
             parsedData[element.drug][element.pathway].fdr = element.fdr;
             parsedData[element.drug][element.pathway].p_value = element.p_value;
             parsedData[element.drug][element.pathway].stat_dis = element.stat_dis;
+            parsedData[element.drug][element.pathway].carcinogenicity = element.carcinogenicity;
+            parsedData[element.drug][element.pathway].class_in_vivo = element.class_in_vivo;
         });
 
         mean = totalMax / total;
 
         // setting the states for pathways, drugs and parsed data.
+        const finalDrugNameList = {};
         const drugNameList = [...Object.keys(parsedData)];
         const pathwayNameList = [...Object.keys(parsedData[drugNameList[0]])];
+        drugNameList.forEach((val) => {
+            finalDrugNameList[val] = {};
+            finalDrugNameList[val].carcinogenicity = parsedData[val][pathwayNameList[0]].carcinogenicity;
+            finalDrugNameList[val].class_in_vivo = parsedData[val][pathwayNameList[0]].class_in_vivo;
+        });
 
         // setting the state if we have drug list, pathway list and parsedData.
         if (parsedDataset && drugNameList && pathwayNameList) {
             setParsedDataset({
-                drugs: drugNameList,
+                drugs: finalDrugNameList,
                 pathways: pathwayNameList,
                 data: parsedData,
                 min,
                 max,
                 mean,
+                isGroup,
             });
         }
     };
@@ -364,6 +375,7 @@ const Pathways = () => {
             selectedList.forEach((val) => drugs.push(...drugGroup[val.replace(' ', '')]));
             // setting only the unique values.
             setDrugs([...new Set(drugs)]);
+            setIsGroup(true);
         } else {
             setDrugs(list);
         }
@@ -378,7 +390,8 @@ const Pathways = () => {
         setPathways(list);
     };
 
-    const isObjectEmpty = (data) => Object.entries(data).length === 0 && data.constructor === Object;
+    // const isObjectEmpty = (data) => Object.entries(data).length === 0 && data.constructor === Object;
+    const isObjectEmpty = (data) => (Object.entries(data).length === 0 && data.constructor === Object) || data.pathways.length === 0;
 
     return (
         <div>

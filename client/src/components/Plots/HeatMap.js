@@ -7,7 +7,8 @@ const HeatMap = (props) => {
     // destructuring data, pathways and drugs from props.
     const { data } = props;
     const { pathways } = data;
-    const { drugs } = data;
+    let { drugs } = data;
+    drugs = Object.keys(drugs);
     const { data: dataset } = data;
     const dimension = { rectHeight: 14, rectWidth: 14 };
     const margin = {
@@ -18,6 +19,7 @@ const HeatMap = (props) => {
     const { min } = data;
     const { max } = data;
     const { mean } = data;
+    const { isGroup } = data;
 
     const createSvg = (height, width, margin, selection) => {
         // make the SVG element.
@@ -67,7 +69,17 @@ const HeatMap = (props) => {
             .style('text-anchor', 'start')
             .call(xAxis)
             .selectAll('text')
-            .attr('transform', 'rotate(-90)');
+            .attr('transform', 'rotate(-90)')
+            .attr('color', (i) => {
+                let color = 'black';
+
+                if (isGroup && (data.drugs[i].carcinogenicity === 'C' || data.drugs[i].class_in_vivo === 'GTX')) {
+                    color = 'red';
+                } if (isGroup && (data.drugs[i].carcinogenicity === 'NC' || data.drugs[i].class_in_vivo === 'NGTX')) {
+                    color = 'green';
+                }
+                return color;
+            });
 
         const pathwayName = skeleton.append('g')
             .attr('class', 'pathwayName');
@@ -129,7 +141,7 @@ const HeatMap = (props) => {
         // Set the color for the start (0%)
         linearGradient.append('stop')
             .attr('offset', '0%')
-            .attr('stop-color', '#67a9cf');
+            .attr('stop-color', '#ef8a62');
 
         // Set the color for the start (50%)
         linearGradient.append('stop')
@@ -139,7 +151,7 @@ const HeatMap = (props) => {
         // Set the color for the end (100%)
         linearGradient.append('stop')
             .attr('offset', '100%')
-            .attr('stop-color', '#ef8a62');
+            .attr('stop-color', '#67a9cf');
 
         // Draw the rectangle and fill with gradient
         skeleton.append('rect')
