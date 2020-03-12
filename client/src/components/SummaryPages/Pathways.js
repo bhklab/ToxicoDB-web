@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
@@ -33,9 +34,10 @@ const StyleHeading = styled.div`
 `;
 
 const StyleHeatmap = styled.div`
-     width: 90vw;
+     width: 80vw;
      overflow-x: scroll;
      overflow-y: scroll;
+     margin: auto;
 `;
 
 const customStyles = {
@@ -120,6 +122,36 @@ const customStyles = {
 };
 
 
+// https://codesandbox.io/s/react-codesandboxer-example-tq9f2
+const groupStyles = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    color: `${colors.red_highlight}`,
+    fontSize: 14,
+    borderBottom: `1px solid ${colors.red_highlight}`,
+    padding: '4px',
+};
+const groupBadgeStyles = {
+    backgroundColor: '#EBECF0',
+    borderRadius: '2em',
+    color: `${colors.red_highlight}`,
+    display: 'inline-block',
+    fontSize: 12,
+    fontWeight: 'normal',
+    lineHeight: '1',
+    minWidth: 1,
+    padding: '0.2em 0.5em',
+    textAlign: 'center',
+};
+
+const formatGroupLabel = (data) => (
+    <div style={groupStyles}>
+        <span>{data.label}</span>
+        <span style={groupBadgeStyles}>{data.options.length}</span>
+    </div>
+);
+
 const datasetList = [
     { value: 'TGGATES Human', label: 'TGGATES Human' },
     { value: 'TGGATES Rat', label: 'TGGATES Rat' },
@@ -142,6 +174,8 @@ const Pathways = () => {
     const [pathwayList, setPathwayList] = useState(DefaultPathways.TGGATES_Human);
     const [pathways, setPathways] = useState([]);
     const [parsedDataset, setParsedDataset] = useState({});
+    const [drugGroup, setDrugGroups] = useState({});
+
 
     const parseData = (response) => {
         const { data } = response;
@@ -189,6 +223,55 @@ const Pathways = () => {
         }
     };
 
+    const createDrugGroups = (res) => {
+        // the grouping of drugs and setting the drugs for each type.
+        const groupDrug = {
+            Carcinogenic: [],
+            'Non-Carcinogenic': [],
+            Genotoxic: [],
+            'Non-Genotoxic': [],
+        };
+        res.data.forEach((val) => {
+            if (val.carcinogenicity === 'C') {
+                groupDrug.Carcinogenic.push(val.name);
+            } else if (val.carcinogenicity === 'NC') {
+                groupDrug['Non-Carcinogenic'].push(val.name);
+            }
+
+            if (val.class_in_vivo === 'GTX') {
+                groupDrug.Genotoxic.push(val.name);
+            } else if (val.class_in_vivo === 'NGTX') {
+                groupDrug['Non-Genotoxic'].push(val.name);
+            }
+        });
+
+        // setting the values for selection.
+        const drugs = res.data.map((val) => ({
+            value: val.name,
+            label: val.name,
+        }));
+
+        const groups = Object.keys(groupDrug).map((val) => ({
+            value: val,
+            label: val,
+        }));
+
+        const drugData = [
+            {
+                label: 'Groups',
+                options: groups,
+            },
+            {
+                label: 'Drugs',
+                options: drugs,
+            },
+        ];
+
+        // setting the states.
+        setDrugList(drugData);
+        setDrugGroups(groupDrug);
+    };
+
     useEffect(() => {
         if (pathwayList) {
             fetch('/api/v1/pathwaystats/dataset', {
@@ -206,24 +289,6 @@ const Pathways = () => {
         }
     }, []);
 
-
-    useEffect(() => {
-        if (drugs.length > 0 && dataset && ontology && pathways.length > 0) {
-            fetch('/api/v1/pathwaystats/dataset', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    datasetName: 'TGGATES Human', pathways, ontology, drugs,
-                }),
-            })
-                .then((response) => response.json())
-                .then((res) => parseData(res));
-        }
-    }, [pathways]);
-
     useEffect(() => {
         if (dataset) {
             fetch('/api/v1/pathway-drugs/dataset', {
@@ -235,16 +300,10 @@ const Pathways = () => {
                 body: JSON.stringify({ datasetName: dataset }),
             })
                 .then((response) => response.json())
-                .then((res) => {
-                    const drugData = res.data.map((val) => ({
-                        value: val.name,
-                        label: val.name,
-                    }));
-                        // drugs based on dataset.
-                    setDrugList(drugData);
-                });
+                .then((res) => createDrugGroups(res));
         }
     }, [dataset]);
+
 
     useEffect(() => {
         if (dataset && drugs.length > 0) {
@@ -268,12 +327,34 @@ const Pathways = () => {
         }
     }, [drugs]);
 
+
+    useEffect(() => {
+        if (drugs.length > 0 && dataset && ontology && pathways.length > 0) {
+            fetch('/api/v1/pathwaystats/dataset', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    datasetName: 'TGGATES Human', pathways, ontology, drugs,
+                }),
+            })
+                .then((response) => response.json())
+                .then((res) => parseData(res));
+        }
+    }, [pathways]);
+
+
     const handleDatasetChange = (selection) => {
         setDataset(selection.value);
     };
 
     const handleDrugChange = (selection) => {
-        const list = selection.map((row) => row.value);
+        let list = selection.map((row) => row.value);
+        if (list[0].match(/(Carcinogenic|Non-Carcinogenic|Genotoxic|Non-Genotoxic)/)) {
+            list = drugGroup[list[0]];
+        }
         setDrugs(list);
     };
 
@@ -310,6 +391,7 @@ const Pathways = () => {
                         styles={customStyles}
                         placeholder="Select the Drug (eg. Valproic acid)"
                         onChange={handleDrugChange}
+                        formatGroupLabel={formatGroupLabel}
                         isMulti
                         isSearchable
                         isClearable
