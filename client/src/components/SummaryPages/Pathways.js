@@ -25,7 +25,7 @@ const StyleHeading = styled.div`
         font-family: 'Raleway', sans-serif;
         font-size: calc(1em + 1vw);
         text-align:center;
-        margin-bottom:50px;
+        margin-bottom: 50px;
         margin-top: 165px;
     }
     a {
@@ -167,7 +167,7 @@ const ontologyList = [
 
 const Pathways = () => {
     // setting dataset and drug state.
-    const [dataset, setDataset] = useState('');
+    const [dataset, setDataset] = useState('TGGATES Human');
     const [drugList, setDrugList] = useState([]);
     const [drugs, setDrugs] = useState([]);
     const [ontology, setOntology] = useState('Reactome');
@@ -229,6 +229,7 @@ const Pathways = () => {
                 max,
                 mean,
                 isGroup,
+                dataset,
             });
         }
     };
@@ -450,9 +451,16 @@ const Pathways = () => {
                 </div>
             </StyleContainer>
             { isObjectEmpty(parsedDataset) ? null : (
-                <StyleHeatmap>
-                    <HeatMap data={parsedDataset} />
-                </StyleHeatmap>
+                <>
+                    <StyleHeading>
+                        <h1>
+                            {dataset}
+                        </h1>
+                    </StyleHeading>
+                    <StyleHeatmap>
+                        <HeatMap data={parsedDataset} />
+                    </StyleHeatmap>
+                </>
             )}
         </div>
     );
