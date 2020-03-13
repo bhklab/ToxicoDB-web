@@ -16,6 +16,8 @@ exports.up = function (knex, Promise) {
             .references('id')
             .inTable('datasets')
             .index();
+        table.string('drug_uid')
+            .notNullable();
     });
 };
 

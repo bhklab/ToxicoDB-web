@@ -77,7 +77,7 @@ class Drugs extends Component {
                 sortable: true,
                 minWidth: 200,
                 Cell: (row) => (<Link to={`/drugs/${row.original.id}`}>{row.value}</Link>),
-            }, 
+            },
             {
                 Header: 'PubChem CID',
                 accessor: 'pubchem',
@@ -87,12 +87,12 @@ class Drugs extends Component {
                         {Number(props.value) === 0 ? '' : Number(props.value)}
                     </a>
                 ),
-            }, 
+            },
             {
                 Header: 'Smiles',
                 accessor: 'smiles',
                 sortable: false,
-            }, 
+            },
             {
                 Header: 'InchiKey',
                 accessor: 'inchikey',
@@ -103,18 +103,18 @@ class Drugs extends Component {
                 accessor: 'carcinogenicity',
                 minWidth: 140,
                 sortable: true,
-            }, 
+            },
             {
                 Header: 'Class (in vitro)',
                 accessor: 'class_in_vitro',
                 sortable: true,
-            }, 
+            },
             {
                 Header: 'Class (in vivo)',
                 accessor: 'class_in_vivo',
                 sortable: true,
-            }, 
-           
+            },
+
         ];
 
         return (
@@ -130,14 +130,14 @@ class Drugs extends Component {
                         defaultPageSize={25}
                         defaultSorted={[
                             {
-                                id: "carcinogenicity",
-                                desc: true
-                            }, 
+                                id: 'carcinogenicity',
+                                desc: true,
+                            },
                             {
-                                id: "name",
-                                desc: false
-                            }
-                          ]}
+                                id: 'name',
+                                desc: false,
+                            },
+                        ]}
                         loading={loading}
                         LoadingComponent={LoadingComponent}
                     />

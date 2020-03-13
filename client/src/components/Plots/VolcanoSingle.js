@@ -93,15 +93,8 @@ const VolcanoSingle = (props) => {
         setState({
             ...state,
             options: {
-<<<<<<< HEAD
-                axisY: { title: '-log10(p value)', labelFontFamily: 'Arial', labelFontSize: 12 },
-                axisX: {
-                    title: '-log2(fold change)', labelFontFamily: 'Arial', labelFontSize: 12, zeroline: false,
-                },
-=======
                 axisY: { title: '-log10(p value)', labelFontFamily: 'Arial', labelFontSize: 12},
                 axisX: { title: 'log2(fold change)', labelFontFamily: 'Arial', labelFontSize: 12, zeroline: false },
->>>>>>> 10b283e2a1157c0d6249da338b1f090af79d3714
                 tooltip: {
                     content: '{name}',
                 },
@@ -138,8 +131,8 @@ const VolcanoSingle = (props) => {
     return (
         <StyledDiv className={state.class}>
             <h3>
-                {(datasetName === 'TGGATESHumanLDH') ? 'TGGATES Human (LDH)'
-                    : (datasetName === 'TGGATESRatLDH') ? 'TGGATES Rat (LDH)'
+                {(datasetName === 'TGGATESHuman') ? 'TGGATES Human'
+                    : (datasetName === 'TGGATESRat') ? 'TGGATES Rat'
                         : (datasetName === 'drugMatrix') ? 'DrugMatrix'
                             : datasetName}
 

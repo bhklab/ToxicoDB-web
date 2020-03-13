@@ -67,7 +67,7 @@ const drugAnalysis = {
             p_value: '0.00275455691716522',
             gene_id: 3935,
             gene_name: 'MSH3',
-            dataset_name: 'TGGATES Human LDH',
+            dataset_name: 'TGGATES Human',
         },
         {
             fdr: '0.0140665335551909',
@@ -75,7 +75,7 @@ const drugAnalysis = {
             p_value: '0.00276156045048297',
             gene_id: 3937,
             gene_name: 'GABRG2',
-            dataset_name: 'TGGATES Human LDH',
+            dataset_name: 'TGGATES Human',
         },
         {
             fdr: '0.0140665335551909',
@@ -83,7 +83,7 @@ const drugAnalysis = {
             p_value: '0.00276196694955832',
             gene_id: 3938,
             gene_name: 'CCNG1',
-            dataset_name: 'TGGATES Human LDH',
+            dataset_name: 'TGGATES Human',
         },
     ],
 };

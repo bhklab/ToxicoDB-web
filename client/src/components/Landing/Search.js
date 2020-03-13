@@ -270,11 +270,11 @@ class Search extends Component {
                 )}
                 <StyledExample>
                     Example Queries: &nbsp;&nbsp;
-                    <Link to="/drugs/32">Valproic acid</Link>
+                    <Link to="/drugs/7">Acetaminophen</Link>
                     {' '}
 &nbsp;&nbsp;|&nbsp;&nbsp;
                     {' '}
-                    <Link to="/genes/418,25039">GCLM</Link>
+                    <Link to="/genes/32,25700">CYP26B1</Link>
                     {' '}
 &nbsp;&nbsp;|&nbsp;&nbsp;
                     {' '}
