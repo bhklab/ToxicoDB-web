@@ -15,7 +15,7 @@ const StyleContainer = styled.div`
     .div-dataset, .div-drug , .div-ontology, .div-pathway{
         min-width: 18vw;
         margin: 0px 15px 15px 15px;
-        max-width: 19vw;
+        max-width: 20vw;
     }
 `;
 
@@ -175,6 +175,7 @@ const Pathways = () => {
     const [pathways, setPathways] = useState([]);
     const [parsedDataset, setParsedDataset] = useState({});
     const [drugGroup, setDrugGroups] = useState({});
+    const [isGroup, setIsGroup] = useState([]);
 
 
     const parseData = (response) => {
@@ -202,23 +203,32 @@ const Pathways = () => {
             parsedData[element.drug][element.pathway].fdr = element.fdr;
             parsedData[element.drug][element.pathway].p_value = element.p_value;
             parsedData[element.drug][element.pathway].stat_dis = element.stat_dis;
+            parsedData[element.drug][element.pathway].carcinogenicity = element.carcinogenicity;
+            parsedData[element.drug][element.pathway].class_in_vivo = element.class_in_vivo;
         });
 
         mean = totalMax / total;
 
         // setting the states for pathways, drugs and parsed data.
+        const finalDrugNameList = {};
         const drugNameList = [...Object.keys(parsedData)];
         const pathwayNameList = [...Object.keys(parsedData[drugNameList[0]])];
+        drugNameList.forEach((val) => {
+            finalDrugNameList[val] = {};
+            finalDrugNameList[val].carcinogenicity = parsedData[val][pathwayNameList[0]].carcinogenicity;
+            finalDrugNameList[val].class_in_vivo = parsedData[val][pathwayNameList[0]].class_in_vivo;
+        });
 
         // setting the state if we have drug list, pathway list and parsedData.
         if (parsedDataset && drugNameList && pathwayNameList) {
             setParsedDataset({
-                drugs: drugNameList,
+                drugs: finalDrugNameList,
                 pathways: pathwayNameList,
                 data: parsedData,
                 min,
                 max,
                 mean,
+                isGroup,
             });
         }
     };
@@ -356,6 +366,16 @@ const Pathways = () => {
 
     const handleDrugChange = (selection) => {
         const list = selection ? selection.map((row) => row.value) : [];
+        // setting group in order to change the color in heatmap.
+        const group = [];
+        list.forEach((val) => {
+            if (val.match(/Carcinogenic & Non-Carcinogenic/)) {
+                group.push('carcinogenicity');
+            } else if (val.match(/Genotoxic & Non-Genotoxic/)) {
+                group.push('class_in_vivo');
+            }
+        });
+        setIsGroup(group);
         if (list.length > 0 && list[0].match(/(Carcinogenic & Non-Carcinogenic|Genotoxic & Non-Genotoxic)/)) {
             // list of drugs based on grouping.
             const drugs = [];
@@ -378,7 +398,8 @@ const Pathways = () => {
         setPathways(list);
     };
 
-    const isObjectEmpty = (data) => Object.entries(data).length === 0 && data.constructor === Object;
+    // const isObjectEmpty = (data) => Object.entries(data).length === 0 && data.constructor === Object;
+    const isObjectEmpty = (data) => (Object.entries(data).length === 0 && data.constructor === Object);
 
     return (
         <div>

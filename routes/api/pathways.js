@@ -71,11 +71,12 @@ const getPathwayStatsPerDataset = function (request, response) {
     const { drugs } = request.body;
 
 
-    knex.select('stat_dis', 'p_value', 'fdr', 'drugs.name as drug', 'pathways.name as pathway')
+    knex.select('stat_dis', 'p_value', 'fdr', 'drugs.name as drug', 'pathways.name as pathway', 'drug_annotations.carcinogenicity', 'drug_annotations.class_in_vivo')
         .from('pathway_stats')
         .innerJoin('pathways_drugs', 'pathways_drugs.id', 'pathway_stats.id')
         .innerJoin('datasets', 'datasets.id', 'pathways_drugs.dataset_id')
         .innerJoin('drugs', 'drugs.id', 'pathways_drugs.drug_id')
+        .innerJoin('drug_annotations', 'drugs.id', 'drug_annotations.drug_id')
         .innerJoin('pathways', 'pathways.id', 'pathways_drugs.pathway_id')
         .where('datasets.name', datasetName)
         .andWhere('pathway_stats.ontology', ontology)
