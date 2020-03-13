@@ -21,12 +21,12 @@ const StyleContainer = styled.div`
 
 const StyleHeading = styled.div`
     h1 {
-        color: ${colors.red_highlight};
+        color: ${(props) => props.theme.color};
         font-family: 'Raleway', sans-serif;
         font-size: calc(1em + 1vw);
         text-align:center;
-        margin-bottom: 50px;
-        margin-top: 165px;
+        margin-bottom: ${(props) => props.theme.bottom};
+        margin-top: ${(props) => props.theme.top};
     }
     a {
     color: ${colors.blue_text}
@@ -404,7 +404,7 @@ const Pathways = () => {
 
     return (
         <div>
-            <StyleHeading>
+            <StyleHeading theme={{ bottom: '100px', top: '200px', color: `${colors.red_highlight}` }}>
                 <h1>
                 Pathways
                 </h1>
@@ -452,7 +452,7 @@ const Pathways = () => {
             </StyleContainer>
             { isObjectEmpty(parsedDataset) ? null : (
                 <>
-                    <StyleHeading>
+                    <StyleHeading theme={{ bottom: '10px', top: '100px', color: `${colors.blue_header}` }}>
                         <h1>
                             {dataset}
                         </h1>
