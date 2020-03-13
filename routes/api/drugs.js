@@ -57,7 +57,7 @@ const getDrugAnalysis = (request, response) => {
         return this.select()
             .from('datasets_samples')
             // just removes drugMatrix dataset
-            .whereNot({ dataset_id: 3 })
+            // .whereNot({ dataset_id: 3 })
             .as('ds');
     }
     knex.distinct('fdr', 'fold_change', 'p_value', 'genes.id AS gene_id', 'ga.symbol AS gene_name', 'datasets.name AS dataset_name')
