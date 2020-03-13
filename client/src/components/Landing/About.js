@@ -81,12 +81,9 @@ const About = () => {
             <StyledDescription>
                 <span style={{ fontWeight: 600, color: colors.red_highlight }}>ToxicoDB</span>
                 {' '}
-                is a database of curated toxicogenomics datasets that provides convenient
-                data summary and visualization to mine these complex data.
-                Users can find drug and gene annotations,
-                visualize gene expression within datasets as well
-                as differential gene expression for
-                drug of interest with the option to download the data.
+                is a database of curated toxicogenomics datasets that provides convenient data summary and visualization to 
+                mine these complex data. Users can find drug and gene annotations, visualize differential gene expression and 
+                enriched pathways within datasets for drug of interest.
             </StyledDescription>
             {/* put the plot here in a diff component */}
             <StyledChart>
