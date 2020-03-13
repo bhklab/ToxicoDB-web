@@ -21,12 +21,12 @@ const StyleContainer = styled.div`
 
 const StyleHeading = styled.div`
     h1 {
-        color: ${colors.red_highlight};
+        color: ${(props) => props.theme.color};
         font-family: 'Raleway', sans-serif;
         font-size: calc(1em + 1vw);
         text-align:center;
-        margin-bottom:50px;
-        margin-top: 165px;
+        margin-bottom: ${(props) => props.theme.bottom};
+        margin-top: ${(props) => props.theme.top};
     }
     a {
     color: ${colors.blue_text}
@@ -167,7 +167,7 @@ const ontologyList = [
 
 const Pathways = () => {
     // setting dataset and drug state.
-    const [dataset, setDataset] = useState('');
+    const [dataset, setDataset] = useState('TGGATES Human');
     const [drugList, setDrugList] = useState([]);
     const [drugs, setDrugs] = useState([]);
     const [ontology, setOntology] = useState('Reactome');
@@ -229,6 +229,7 @@ const Pathways = () => {
                 max,
                 mean,
                 isGroup,
+                dataset,
             });
         }
     };
@@ -403,7 +404,7 @@ const Pathways = () => {
 
     return (
         <div>
-            <StyleHeading>
+            <StyleHeading theme={{ bottom: '100px', top: '200px', color: `${colors.red_highlight}` }}>
                 <h1>
                 Pathways
                 </h1>
@@ -450,9 +451,16 @@ const Pathways = () => {
                 </div>
             </StyleContainer>
             { isObjectEmpty(parsedDataset) ? null : (
-                <StyleHeatmap>
-                    <HeatMap data={parsedDataset} />
-                </StyleHeatmap>
+                <>
+                    <StyleHeading theme={{ bottom: '10px', top: '100px', color: `${colors.blue_header}` }}>
+                        <h1>
+                            {dataset}
+                        </h1>
+                    </StyleHeading>
+                    <StyleHeatmap>
+                        <HeatMap data={parsedDataset} />
+                    </StyleHeatmap>
+                </>
             )}
         </div>
     );
