@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -73,7 +74,10 @@ const DrugPage = (props) => {
 
     // creates an object that contains all filter values
     const [filterValues, setFilterValues] = useState({});
-    const [{ filteredData, processedData }, setData] = useState({ filteredData: [], processedData: [] });
+    const [{ filteredData, processedData }, setData] = useState({
+        filteredData: [],
+        processedData: [],
+    });
 
     // apiData and annotationData are being updated together
     // so they can be handled under the same hook
@@ -81,7 +85,6 @@ const DrugPage = (props) => {
     // analysisData and loading are handled together => one hook
     const {
         analysisData,
-        loading,
     } = useFetchAnalysisData(`/api/v1/drugs/${params.id}/analysis`);
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
 
@@ -92,7 +95,8 @@ const DrugPage = (props) => {
             if (item.gene_name !== '') {
                 Object.entries(item).forEach((val) => {
                     if (typeof val[1] === 'string' && val[0] !== 'gene_name') {
-                        newItem[val[0]] = isNaN(parseFloat(val[1])) ? val[1] : parseFloat(val[1]).toExponential(1).toString();
+                        newItem[val[0]] = isNaN(parseFloat(val[1]))
+                            ? val[1] : parseFloat(val[1]).toExponential(1).toString();
                     } else if (val[0].match(/^(gene_id|gene_name)$/)) {
                         // eslint-disable-next-line prefer-destructuring
                         newItem[val[0]] = val[1];
@@ -193,7 +197,7 @@ const DrugPage = (props) => {
                         desc: true,
                     },
                 ]}
-                loading={loading}
+                loading={processedData.length === 0}
                 LoadingComponent={LoadingComponent}
                 onFilteredChange={(values) => {
                     const filterObj = {};
