@@ -195,13 +195,14 @@ const ontologyList = [
 const Pathways = () => {
     // setting dataset and drug state.
     const [dataset, setDataset] = useState('TGGATES Human');
-    const [drugList, setDrugList] = useState([]);
     const [drugs, setDrugs] = useState([]);
+    const [pathways, setPathways] = useState([]);
     const [ontology, setOntology] = useState('Reactome');
     const [pathwayList, setPathwayList] = useState(DefaultPathways.TGGATES_Human);
-    const [pathways, setPathways] = useState([]);
+    const [drugList, setDrugList] = useState([]);
+    const [drugGroupData, setDrugGroups] = useState({});
     const [parsedDataset, setParsedDataset] = useState({});
-    const [drugGroup, setDrugGroups] = useState({});
+    const [statData, setStatData] = useState({});
     const [isGroup, setIsGroup] = useState([]);
     const [isClicked, setButtonState] = useState(false);
     const [isInitialRender, setRender] = useState(false);
@@ -333,7 +334,6 @@ const Pathways = () => {
 
     // this will be triggerred on the dataset change.
     useEffect(() => {
-        console.log('here');
         if (dataset) {
             fetch('/api/v1/pathway-drugs/dataset', {
                 method: 'POST',
@@ -351,8 +351,7 @@ const Pathways = () => {
 
     // this will be triggerred on the drugs change.
     useEffect(() => {
-        console.log(drugs);
-        if (dataset && drugList.length > 0) {
+        if (dataset && drugs.length > 0) {
             fetch('/api/v1/pathways/dataset/drug', {
                 method: 'POST',
                 headers: {
@@ -371,12 +370,11 @@ const Pathways = () => {
                     setPathwayList(pathwayData);
                 });
         }
-    }, [drugs, drugList]);
+    }, [drugs]);
 
 
     // this will be triggerred on the pathways change.
     useEffect(() => {
-        console.log(pathways, drugs);
         if (drugs.length > 0 && dataset && ontology && pathways.length > 0) {
             fetch('/api/v1/pathwaystats/dataset', {
                 method: 'POST',
@@ -389,25 +387,16 @@ const Pathways = () => {
                 }),
             })
                 .then((response) => response.json())
-                .then((res) => parseData(res));
+                .then((res) => setStatData(res));
         }
     }, [drugs, pathways, dataset]);
 
-    const initialize = () => {
-        console.log('Heyy');
-        setParsedDataset({});
-        setRender(false);
-        setButtonState(false);
-    };
 
     const handleDatasetChange = (selection) => {
-        initialize();
         setDataset(selection.value);
     };
 
     const handleDrugChange = (selection) => {
-        console.log(selection);
-        setButtonState(false);
         const list = selection ? selection.map((row) => row.value) : [];
         // setting group in order to change the color in heatmap.
         const group = [];
@@ -424,8 +413,7 @@ const Pathways = () => {
             const drugs = [];
             const selectedList = [];
             list.forEach((val) => selectedList.push(...val.split('&')));
-            selectedList.forEach((val) => drugs.push(...drugGroup[val.replace(' ', '')]));
-            console.log(drugs);
+            selectedList.forEach((val) => drugs.push(...drugGroupData[val.replace(' ', '')]));
             // setting only the unique values.
             setDrugs([...new Set(drugs)]);
         } else {
@@ -434,24 +422,20 @@ const Pathways = () => {
     };
 
     const handleOntologyChange = (selection) => {
-        setButtonState(false);
         setOntology(selection.value);
     };
 
     const handlePathwayChange = (selection) => {
-        setButtonState(false);
         const list = selection ? selection.map((row) => row.value) : [];
         setPathways(list);
     };
 
     const handleButtonClickEvent = () => {
+        parseData(statData);
         setButtonState(true);
     };
 
-    const isObjectEmpty = (data) => {
-        console.log(data, isInitialRender);
-        return (Object.entries(data).length === 0 && data.constructor === Object);
-    };
+    const isObjectEmpty = (data) => (Object.entries(data).length === 0 && data.constructor === Object);
 
     return (
         <div>
