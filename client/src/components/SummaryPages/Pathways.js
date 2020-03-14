@@ -287,10 +287,12 @@ const Pathways = () => {
         });
 
         // setting the values for selection.
-        const drugs = res.data.map((val) => ({
+        let drugs = res.data.map((val) => ({
             value: val.name,
             label: val.name,
         }));
+
+        drugs = [{ value: 'All Drugs', label: 'All Drugs' }, ...drugs];
 
         const groups = ['Carcinogenic & Non-Carcinogenic', 'Genotoxic & Non-Genotoxic'].map((val) => ({
             value: val,
@@ -397,28 +399,27 @@ const Pathways = () => {
     };
 
     const handleDrugChange = (selection) => {
-        const list = selection ? selection.map((row) => row.value) : [];
+        // selected drugs.
+        const drugs = [];
         // setting group in order to change the color in heatmap.
         const group = [];
-        list.forEach((val) => {
-            if (val.match(/Carcinogenic & Non-Carcinogenic/)) {
-                group.push('carcinogenicity');
-            } else if (val.match(/Genotoxic & Non-Genotoxic/)) {
-                group.push('class_in_vivo');
-            }
-        });
-        setIsGroup(group);
-        if (list.length > 0 && list[0].match(/(Carcinogenic & Non-Carcinogenic|Genotoxic & Non-Genotoxic)/)) {
-            // list of drugs based on grouping.
-            const drugs = [];
-            const selectedList = [];
-            list.forEach((val) => selectedList.push(...val.split('&')));
-            selectedList.forEach((val) => drugs.push(...drugGroupData[val.replace(' ', '')]));
-            // setting only the unique values.
-            setDrugs([...new Set(drugs)]);
-        } else {
-            setDrugs(list);
+        if (selection) {
+            selection.forEach((row) => {
+                if (row.value.match(/Carcinogenic & Non-Carcinogenic/)) {
+                    drugs.push(...drugGroupData.Carcinogenic);
+                    drugs.push(...drugGroupData['Non-Carcinogenic']);
+                    group.push('carcinogenicity');
+                } else if (row.value.match(/Genotoxic & Non-Genotoxic/)) {
+                    drugs.push(...drugGroupData.Genotoxic);
+                    drugs.push(...drugGroupData['Non-Genotoxic']);
+                    group.push('class_in_vivo');
+                } else {
+                    drugs.push(row.value);
+                }
+            });
         }
+        setIsGroup(group);
+        setDrugs([...new Set(drugs)]);
     };
 
     const handleOntologyChange = (selection) => {
@@ -444,7 +445,11 @@ const Pathways = () => {
             }}
             >
                 <h1>
-                Pathways
+                    Pathways
+                    {' - '}
+                    (
+                    {dataset}
+                    )
                 </h1>
             </StyleHeading>
             <StyleContainer>
@@ -494,19 +499,9 @@ const Pathways = () => {
                 </div>
             </StyleContainer>
             { ((isClicked && !isInitialRender) || (isInitialRender && !isObjectEmpty(parsedDataset))) ? (
-                <>
-                    <StyleHeading theme={{
-                        bottom: '10px', top: '100px', color: `${colors.blue_header}`, 'font-size': '1vw',
-                    }}
-                    >
-                        <h1>
-                            {dataset}
-                        </h1>
-                    </StyleHeading>
-                    <StyleHeatmap>
-                        <HeatMap data={parsedDataset} />
-                    </StyleHeatmap>
-                </>
+                <StyleHeatmap>
+                    <HeatMap data={parsedDataset} />
+                </StyleHeatmap>
             ) : null}
         </div>
     );
