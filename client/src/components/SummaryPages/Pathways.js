@@ -23,13 +23,13 @@ const StyleHeading = styled.div`
     h1 {
         color: ${(props) => props.theme.color};
         font-family: 'Raleway', sans-serif;
-        font-size: calc(1em + 1vw);
+        font-size:  ${(props) => props.theme['font-size']};;
         text-align:center;
         margin-bottom: ${(props) => props.theme.bottom};
         margin-top: ${(props) => props.theme.top};
     }
     a {
-    color: ${colors.blue_text}
+        color: ${colors.blue_text}
     }
 `;
 
@@ -38,6 +38,33 @@ const StyleHeatmap = styled.div`
      overflow-x: scroll;
      overflow-y: scroll;
      margin: auto;
+`;
+
+
+const StyleButton = styled.button`
+    background-color: ${colors.blue_text};
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    font-family: 'Raleway', sans-serif;
+    font-weight:700;
+    margin: auto;
+    transition: .3s;
+    outline-style: none;
+    margin-top: 0px;
+    margin-left: 10px;
+    &:hover {
+        opacity: 1;
+        cursor: pointer;
+        color: ${colors.blue_text};
+        background-color: #ffffff;
+        border: 1px solid ${colors.blue_text};
+    }
 `;
 
 const customStyles = {
@@ -176,6 +203,8 @@ const Pathways = () => {
     const [parsedDataset, setParsedDataset] = useState({});
     const [drugGroup, setDrugGroups] = useState({});
     const [isGroup, setIsGroup] = useState([]);
+    const [isClicked, setButtonState] = useState(false);
+    const [isInitialRender, setRender] = useState(false);
 
 
     const parseData = (response) => {
@@ -297,12 +326,14 @@ const Pathways = () => {
                 }),
             })
                 .then((response) => response.json())
-                .then((res) => parseData(res));
+                .then((res) => parseData(res))
+                .then(() => setRender(true));
         }
     }, []);
 
     // this will be triggerred on the dataset change.
     useEffect(() => {
+        console.log('here');
         if (dataset) {
             fetch('/api/v1/pathway-drugs/dataset', {
                 method: 'POST',
@@ -320,7 +351,8 @@ const Pathways = () => {
 
     // this will be triggerred on the drugs change.
     useEffect(() => {
-        if (dataset && drugs.length > 0) {
+        console.log(drugs);
+        if (dataset && drugList.length > 0) {
             fetch('/api/v1/pathways/dataset/drug', {
                 method: 'POST',
                 headers: {
@@ -339,11 +371,12 @@ const Pathways = () => {
                     setPathwayList(pathwayData);
                 });
         }
-    }, [drugs]);
+    }, [drugs, drugList]);
 
 
     // this will be triggerred on the pathways change.
     useEffect(() => {
+        console.log(pathways, drugs);
         if (drugs.length > 0 && dataset && ontology && pathways.length > 0) {
             fetch('/api/v1/pathwaystats/dataset', {
                 method: 'POST',
@@ -358,14 +391,23 @@ const Pathways = () => {
                 .then((response) => response.json())
                 .then((res) => parseData(res));
         }
-    }, [pathways]);
+    }, [drugs, pathways, dataset]);
 
+    const initialize = () => {
+        console.log('Heyy');
+        setParsedDataset({});
+        setRender(false);
+        setButtonState(false);
+    };
 
     const handleDatasetChange = (selection) => {
+        initialize();
         setDataset(selection.value);
     };
 
     const handleDrugChange = (selection) => {
+        console.log(selection);
+        setButtonState(false);
         const list = selection ? selection.map((row) => row.value) : [];
         // setting group in order to change the color in heatmap.
         const group = [];
@@ -383,6 +425,7 @@ const Pathways = () => {
             const selectedList = [];
             list.forEach((val) => selectedList.push(...val.split('&')));
             selectedList.forEach((val) => drugs.push(...drugGroup[val.replace(' ', '')]));
+            console.log(drugs);
             // setting only the unique values.
             setDrugs([...new Set(drugs)]);
         } else {
@@ -391,20 +434,31 @@ const Pathways = () => {
     };
 
     const handleOntologyChange = (selection) => {
+        setButtonState(false);
         setOntology(selection.value);
     };
 
     const handlePathwayChange = (selection) => {
+        setButtonState(false);
         const list = selection ? selection.map((row) => row.value) : [];
         setPathways(list);
     };
 
-    // const isObjectEmpty = (data) => Object.entries(data).length === 0 && data.constructor === Object;
-    const isObjectEmpty = (data) => (Object.entries(data).length === 0 && data.constructor === Object);
+    const handleButtonClickEvent = () => {
+        setButtonState(true);
+    };
+
+    const isObjectEmpty = (data) => {
+        console.log(data, isInitialRender);
+        return (Object.entries(data).length === 0 && data.constructor === Object);
+    };
 
     return (
         <div>
-            <StyleHeading theme={{ bottom: '100px', top: '200px', color: `${colors.red_highlight}` }}>
+            <StyleHeading theme={{
+                bottom: '100px', top: '200px', color: `${colors.red_highlight}`, 'font-size': 'calc(1em + 1vw)',
+            }}
+            >
                 <h1>
                 Pathways
                 </h1>
@@ -449,10 +503,18 @@ const Pathways = () => {
                         isClearable
                     />
                 </div>
+                <div>
+                    <StyleButton onClick={handleButtonClickEvent}>
+                        Search
+                    </StyleButton>
+                </div>
             </StyleContainer>
-            { isObjectEmpty(parsedDataset) ? null : (
+            { ((isClicked && !isInitialRender) || (isInitialRender && !isObjectEmpty(parsedDataset))) ? (
                 <>
-                    <StyleHeading theme={{ bottom: '10px', top: '100px', color: `${colors.blue_header}` }}>
+                    <StyleHeading theme={{
+                        bottom: '10px', top: '100px', color: `${colors.blue_header}`, 'font-size': '1vw',
+                    }}
+                    >
                         <h1>
                             {dataset}
                         </h1>
@@ -461,7 +523,7 @@ const Pathways = () => {
                         <HeatMap data={parsedDataset} />
                     </StyleHeatmap>
                 </>
-            )}
+            ) : null}
         </div>
     );
 };
