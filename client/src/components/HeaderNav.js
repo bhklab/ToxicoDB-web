@@ -229,13 +229,13 @@ const HeaderNav = () => {
                         to="/pathways/"
                         onClick={() => setMenuOpen(false)}
                     >
-                      Datasets
+                     Pathways
                     </Link>
                     <Link
                         to="/contact/"
                         onClick={() => setMenuOpen(false)}
                     >
-                      Datasets
+                      Contact
                     </Link>
                 </Menu>
             </div>

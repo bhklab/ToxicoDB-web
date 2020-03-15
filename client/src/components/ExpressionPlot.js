@@ -77,16 +77,23 @@ class ExpressionPlot extends Component {
                                 })
                             }
                         })
-
                         // determining x/yrange to encompass control ranges as well
-                        const xRange = [
-                            Math.min(Math.min(...times) - 1, Math.min(...controlTimes)- 1),
-                            Math.min(Math.max(...times) + 1, Math.max(...controlTimes) + 1)
-                        ];
-                        const yRange = [
-                            Math.min(Math.min(...exps) - 1, Math.min(...controlExps) - 1),
-                            Math.max(Math.max(...exps) + 1, Math.max(...controlExps) + 1),
-                        ];
+                        let xRange;
+                        let yRange;
+                        if (controlTimes.length === 0) { // drugMatrix doesn't exist, don't include control
+                            xRange = [Math.min(...times) - 1, Math.max(...times) + 1];
+                            yRange = [Math.min(...exps) - 1, Math.max(...exps) + 1];
+                        } else {
+                            xRange = [
+                                Math.min(Math.min(...times) - 1, Math.min(...controlTimes) - 1),
+                                Math.min(Math.max(...times) + 1, Math.max(...controlTimes) + 1)
+                            ];
+                            yRange = [
+                                Math.min(Math.min(...exps) - 1, Math.min(...controlExps) - 1),
+                                Math.max(Math.max(...exps) + 1, Math.max(...controlExps) + 1),
+                            ];
+                        }
+                        
 
                         this.setState({
                             expressionData: expData,
