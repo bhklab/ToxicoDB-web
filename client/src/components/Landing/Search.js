@@ -274,7 +274,7 @@ class Search extends Component {
                     {' '}
 &nbsp;&nbsp;|&nbsp;&nbsp;
                     {' '}
-                    <Link to="/genes/32,25700">CYP26B1</Link>
+                    <Link to="/genes/7396,27541">CYP1A1</Link>
                     {' '}
 &nbsp;&nbsp;|&nbsp;&nbsp;
                     {' '}

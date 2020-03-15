@@ -191,7 +191,8 @@ const VolcanoSelect = (props) => {
         const options = datasetLabels.map((x, i) => ({ value: datasets[i], label: x }));
 
         // set selected to the first 1 or 2 datasets
-        const selected = (options.length > 1 ? options.slice(0, 2) : [options[0]]).map((x) => x.value);
+        // const selected = (options.length > 1 ? options.slice(0, 2) : [options[0]]).map((x) => x.value);
+        const selected = options.map((x) => x.value);
 
         // set loading to an object with a pair for each dataset
         const loading = {};
@@ -210,7 +211,7 @@ const VolcanoSelect = (props) => {
                 <>
                     <Select
                         isMulti
-                        defaultValue={state.options.length > 1 ? state.options.slice(0, 2) : [state.options[0]]}
+                        defaultValue={state.options}
                         filterOption={customFilterOption}
                         options={state.options}
                         components={{ Option: CustomOption }}
