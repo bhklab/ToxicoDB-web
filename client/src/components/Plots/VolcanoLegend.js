@@ -37,7 +37,7 @@ class VolcanoLegend extends React.Component {
                     .attr("fill", "black")
                     .style('font-family', 'Arial')
                     .style('font-size', 12)
-                    .text("fdr < 0.05 and |fold change| < 1")
+                    .text("FDR < 0.05 and |fold change| < 1")
 
             legend.append("rect")
                 .attr("x", 250)
@@ -52,7 +52,7 @@ class VolcanoLegend extends React.Component {
                     .style('font-family', 'Arial')
                     .style('font-size', 12)
                     .attr("fill", "black")
-                    .text("fdr < 0.05 and |fold change| >= 1")
+                    .text("FDR < 0.05 and |fold change| >= 1")
 
 
             // last time point etc
@@ -85,7 +85,7 @@ class VolcanoLegend extends React.Component {
             //             .style('font-family', 'Arial')
             //             .style('font-size', 12)
             //             .attr("fill", "black")
-            //             .text("fdr >= 0.05 and |fold change| < 1")
+            //             .text("FDR >= 0.05 and |fold change| < 1")
     
 
     }
