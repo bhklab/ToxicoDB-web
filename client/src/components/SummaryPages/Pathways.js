@@ -370,11 +370,14 @@ const Pathways = () => {
                         value: val.name,
                         label: val.name,
                     }));
+                    // parsing the list to select either Go or Reactome Pathways.
+                    const currentOntology = selectedOntology[0].value;
+                    const parsedPathwayData = pathwayData.filter((val) => val.value.split('_')[0] === currentOntology.toUpperCase());
                     // pathways based on drug and dataset.
-                    setPathwayList(pathwayData);
+                    setPathwayList(parsedPathwayData);
                 });
         }
-    }, [selectedDrugs]);
+    }, [selectedOntology]);
 
 
     // this will be triggerred on the pathways change.
