@@ -214,8 +214,9 @@ const VolcanoSingle = (props) => {
         };
        
         // determine if show x axis fold change lines or not
-        if (greenTrace.x.length !== 0) {
-            layout.shapes = [
+        layout.shapes = [];
+        if (minX < -1) {
+            layout.shapes.push(
                 // x: -1
                 {
                     type: 'line',
@@ -227,7 +228,12 @@ const VolcanoSingle = (props) => {
                         color: '#accffa',
                         width: 1
                     }
-                },
+                }
+            );
+        }
+               
+        if (maxX > 1) {
+            layout.shapes.push( 
                 // x: 1
                 {
                     type: 'line',
@@ -239,8 +245,7 @@ const VolcanoSingle = (props) => {
                         color: '#accffa',
                         width: 1
                     }
-                },
-            ];
+                })
         }
 
         // determine if plot the y axis pvalue line (max beyond 20)
