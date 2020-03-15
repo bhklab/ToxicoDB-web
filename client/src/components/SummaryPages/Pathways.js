@@ -390,7 +390,7 @@ const Pathways = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    datasetName: 'TGGATES Human', pathways, ontology, drugs,
+                    datasetName: selectedDataset, pathways, ontology, drugs,
                 }),
             })
                 .then((response) => response.json())
