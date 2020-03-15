@@ -194,11 +194,11 @@ const ontologyList = [
 
 const Pathways = () => {
     // setting dataset and drug state.
-    const [dataset, setDataset] = useState('TGGATES Human');
+    const [selectedDataset, setDataset] = useState('TGGATES Human');
     const [selectedDrugs, setDrugs] = useState([]);
-    const [pathways, setPathways] = useState([]);
-    const [ontology, setOntology] = useState('Reactome');
-    const [pathwayList, setPathwayList] = useState(DefaultPathways.TGGATES_Human);
+    const [selectedPathways, setPathways] = useState([]);
+    const [selectedOntology, setOntology] = useState('Reactome');
+    const [pathwayList, setPathwayList] = useState([]);
     const [drugList, setDrugList] = useState([]);
     const [drugGroupData, setDrugGroups] = useState({});
     const [parsedDataset, setParsedDataset] = useState({});
@@ -250,7 +250,7 @@ const Pathways = () => {
         });
 
         // setting the state if we have drug list, pathway list and parsedData.
-        if (parsedDataset && drugNameList && pathwayNameList) {
+        if (parsedData && drugNameList && pathwayNameList) {
             setParsedDataset({
                 drugs: finalDrugNameList,
                 pathways: pathwayNameList,
@@ -259,7 +259,7 @@ const Pathways = () => {
                 max,
                 mean,
                 isGroup,
-                dataset,
+                dataset: selectedDataset,
             });
         }
     };
@@ -317,6 +317,7 @@ const Pathways = () => {
 
     // similar to componentDidMount.
     useEffect(() => {
+        const pathways = DefaultPathways.TGGATES_Human;
         if (pathwayList) {
             fetch('/api/v1/pathwaystats/dataset', {
                 method: 'POST',
@@ -325,7 +326,7 @@ const Pathways = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    datasetName: 'TGGATES Human', pathways: pathwayList, ontology, drugs: selectedDrugs,
+                    datasetName: 'TGGATES Human', pathways, ontology: selectedOntology, drugs: selectedDrugs,
                 }),
             })
                 .then((response) => response.json())
@@ -336,24 +337,24 @@ const Pathways = () => {
 
     // this will be triggerred on the dataset change.
     useEffect(() => {
-        if (dataset) {
+        if (selectedDataset) {
             fetch('/api/v1/pathway-drugs/dataset', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ datasetName: dataset }),
+                body: JSON.stringify({ datasetName: selectedDataset }),
             })
                 .then((response) => response.json())
                 .then((res) => createDrugGroups(res));
         }
-    }, [dataset]);
+    }, [selectedDataset]);
 
 
     // this will be triggerred on the drugs change.
     useEffect(() => {
-        if (dataset && selectedDrugs && selectedDrugs.length > 0) {
+        if (selectedDataset && selectedDrugs && selectedDrugs.length > 0) {
             const drugs = selectedDrugs.map((val) => val.value);
             fetch('/api/v1/pathways/dataset/drug', {
                 method: 'POST',
@@ -361,7 +362,7 @@ const Pathways = () => {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ datasetName: dataset, drugName: drugs }),
+                body: JSON.stringify({ datasetName: selectedDataset, drugName: drugs }),
             })
                 .then((response) => response.json())
                 .then((res) => {
@@ -378,8 +379,10 @@ const Pathways = () => {
 
     // this will be triggerred on the pathways change.
     useEffect(() => {
-        if (selectedDrugs && selectedDrugs.length > 0 && dataset && ontology && pathways.length > 0) {
+        if (selectedDrugs && selectedDrugs.length > 0 && selectedDataset && selectedOntology && selectedPathways && selectedPathways.length > 0) {
             const drugs = selectedDrugs.map((val) => val.value);
+            const pathways = selectedPathways.map((val) => val.value);
+            const ontology = selectedOntology.map((val) => val.value);
             fetch('/api/v1/pathwaystats/dataset', {
                 method: 'POST',
                 headers: {
@@ -393,11 +396,13 @@ const Pathways = () => {
                 .then((response) => response.json())
                 .then((res) => setStatData(res));
         }
-    }, [selectedDrugs, pathways, dataset]);
+    }, [selectedDrugs, selectedPathways, selectedDataset]);
 
 
     const handleDatasetChange = (selection) => {
         setDrugs(null);
+        setOntology(null);
+        setPathways(null);
         setDataset(selection.value);
     };
 
@@ -427,12 +432,14 @@ const Pathways = () => {
     };
 
     const handleOntologyChange = (selection) => {
-        setOntology(selection.value);
+        const ontology = [{ value: selection.value, label: selection.label }];
+        setOntology(ontology);
     };
 
     const handlePathwayChange = (selection) => {
-        const list = selection ? selection.map((row) => row.value) : [];
-        setPathways(list);
+        // const list = selection ? selection.map((row) => row.value) : [];
+        const pathways = selection.map((val) => ({ value: val.value, label: val.value }));
+        setPathways(pathways);
     };
 
     const handleButtonClickEvent = () => {
@@ -452,7 +459,7 @@ const Pathways = () => {
                     Pathways
                     {' - '}
                     (
-                    {dataset}
+                    {selectedDataset}
                     )
                 </h1>
             </StyleHeading>
@@ -484,6 +491,7 @@ const Pathways = () => {
                         styles={customStyles}
                         placeholder="Select Ontology"
                         onChange={handleOntologyChange}
+                        value={selectedOntology}
                     />
                 </div>
                 <div className="div-pathway">
@@ -492,6 +500,7 @@ const Pathways = () => {
                         styles={customStyles}
                         placeholder="Select Pathway"
                         onChange={handlePathwayChange}
+                        value={selectedPathways}
                         isMulti
                         isSearchable
                         isClearable
