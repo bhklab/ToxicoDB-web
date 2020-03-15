@@ -14,7 +14,7 @@ const StyleContainer = styled.div`
     
     .div-dataset, .div-drug , .div-ontology, .div-pathway{
         min-width: 18vw;
-        margin: 0px 15px 15px 15px;
+        margin: 0px 15px 15px 0px;
         max-width: 20vw;
     }
 `;
@@ -195,7 +195,7 @@ const ontologyList = [
 const Pathways = () => {
     // setting dataset and drug state.
     const [dataset, setDataset] = useState('TGGATES Human');
-    const [drugs, setDrugs] = useState([]);
+    const [selectedDrugs, setDrugs] = useState([]);
     const [pathways, setPathways] = useState([]);
     const [ontology, setOntology] = useState('Reactome');
     const [pathwayList, setPathwayList] = useState(DefaultPathways.TGGATES_Human);
@@ -325,7 +325,7 @@ const Pathways = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    datasetName: 'TGGATES Human', pathways: pathwayList, ontology, drugs,
+                    datasetName: 'TGGATES Human', pathways: pathwayList, ontology, drugs: selectedDrugs,
                 }),
             })
                 .then((response) => response.json())
@@ -353,7 +353,8 @@ const Pathways = () => {
 
     // this will be triggerred on the drugs change.
     useEffect(() => {
-        if (dataset && drugs.length > 0) {
+        if (dataset && selectedDrugs && selectedDrugs.length > 0) {
+            const drugs = selectedDrugs.map((val) => val.value);
             fetch('/api/v1/pathways/dataset/drug', {
                 method: 'POST',
                 headers: {
@@ -372,12 +373,13 @@ const Pathways = () => {
                     setPathwayList(pathwayData);
                 });
         }
-    }, [drugs]);
+    }, [selectedDrugs]);
 
 
     // this will be triggerred on the pathways change.
     useEffect(() => {
-        if (drugs.length > 0 && dataset && ontology && pathways.length > 0) {
+        if (selectedDrugs && selectedDrugs.length > 0 && dataset && ontology && pathways.length > 0) {
+            const drugs = selectedDrugs.map((val) => val.value);
             fetch('/api/v1/pathwaystats/dataset', {
                 method: 'POST',
                 headers: {
@@ -391,16 +393,17 @@ const Pathways = () => {
                 .then((response) => response.json())
                 .then((res) => setStatData(res));
         }
-    }, [drugs, pathways, dataset]);
+    }, [selectedDrugs, pathways, dataset]);
 
 
     const handleDatasetChange = (selection) => {
+        setDrugs(null);
         setDataset(selection.value);
     };
 
     const handleDrugChange = (selection) => {
         // selected drugs.
-        const drugs = [];
+        let drugs = [];
         // setting group in order to change the color in heatmap.
         const group = [];
         if (selection) {
@@ -419,6 +422,7 @@ const Pathways = () => {
             });
         }
         setIsGroup(group);
+        drugs = [...new Set(drugs)].map((val) => ({ value: val, label: val }));
         setDrugs([...new Set(drugs)]);
     };
 
@@ -467,6 +471,7 @@ const Pathways = () => {
                         styles={customStyles}
                         placeholder="Select the Drug (eg. Valproic acid)"
                         onChange={handleDrugChange}
+                        value={selectedDrugs}
                         formatGroupLabel={formatGroupLabel}
                         isMulti
                         isSearchable
