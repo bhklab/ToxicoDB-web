@@ -480,7 +480,7 @@ const Pathways = () => {
                     <Select
                         options={drugList}
                         styles={customStyles}
-                        placeholder="Select the Drug (eg. Valproic acid)"
+                        placeholder="Select the Drug"
                         onChange={handleDrugChange}
                         value={selectedDrugs}
                         formatGroupLabel={formatGroupLabel}
