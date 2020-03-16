@@ -18,6 +18,7 @@ router.get('/v1/datasets/:id', datasets.getIndivDataset);
 
 router.get('/v1/drugs', drugs.getDrugs);
 router.get('/v1/drugs/:id', drugs.getIndivDrug);
+router.get('/v1/drugs/:id/synonyms', drugs.getDrugSynonyms);
 router.get('/v1/drugs/:id/analysis', drugs.getDrugAnalysis);
 router.post('/v1/drugs/dataset', drugs.getDrugsPerDataset);
 

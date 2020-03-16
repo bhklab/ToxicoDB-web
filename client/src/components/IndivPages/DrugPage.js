@@ -7,10 +7,12 @@ import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
 // import AnnotationCard from './AnnotationCard';
 import AnnotationCard from './GeneDrugCard';
+import SynonymCard from './SynonymCard';
 import VolcanoSelect from './VolcanoSelect';
 import 'react-table-6/react-table.css';
 // 2 custom hooks to get and process the data
 import useFetchAnnotation from './Hooks/useFetchAnnotation';
+import useFetchSynonyms from './Hooks/useFetchSynonyms';
 import useFetchAnalysisData from './Hooks/useFetchAnalysisData';
 
 import DownloadButton from '../Utils/DownloadButton';
@@ -82,6 +84,10 @@ const DrugPage = (props) => {
     // apiData and annotationData are being updated together
     // so they can be handled under the same hook
     const { apiData, annotationData } = useFetchAnnotation(`/api/v1/drugs/${params.id}`, 'drug');
+
+    // get synonyms separately for a separate table
+    const {synonymData} = useFetchSynonyms(`/api/v1/drugs/${params.id}/synonyms`);
+
     // analysisData and loading are handled together => one hook
     const {
         analysisData,
@@ -183,6 +189,12 @@ const DrugPage = (props) => {
                     <h2>Annotations</h2>
                     <AnnotationCard data={annotationData} type="drug" />
                 </div>
+            )}
+            {synonymData === undefined ? null : (
+               <div>
+                    <h2>Synonyms</h2>
+                    <SynonymCard data={synonymData}/>
+               </div>
             )}
             <ReactTable
                 data={processedData}
