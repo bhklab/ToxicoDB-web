@@ -7,7 +7,7 @@ class VolcanoLegend extends React.Component {
         const width = 800;
         const height = 20;
         const margin = {
-            top: 0,
+            top: 10,
             left: 0,
             bottom: 0,
             right: 0
@@ -24,40 +24,38 @@ class VolcanoLegend extends React.Component {
 
         let legend = svg.append("g")
 
-            legend.append("rect")
-                .attr("x", 0)
-                .attr("y", 0)
-                .attr("width", 12)
-                .attr("height",12)
+            legend.append("circle")
+                .attr("cx", 20)
+                .attr("cy", 6)
+                .attr("r", 5)
                 .attr("fill", '#e1f1fb')
 
                 legend.append("text")
-                    .attr("dx", 16)
+                    .attr("dx", 30)
                     .attr("y", 10)
                     .attr("fill", "black")
                     .style('font-family', 'Arial')
                     .style('font-size', 12)
-                    .text("FDR < 0.05 and |fold change| < 1")
+                    .text("FDR < 0.05 and |log2(fold change)| < 1")
 
-            legend.append("rect")
-                .attr("x", 250)
-                .attr("y", 0)
-                .attr("width", 12)
-                .attr("height",12)
-                .attr("fill", '#5cc33c')
+            legend.append("circle")
+                .attr("cx", 265)
+                .attr("cy", 6)
+                .attr("r", 5)
+                .attr("fill", '#5cc33c') //#5cc33c
 
                 legend.append("text")
-                    .attr("dx", 266)
+                    .attr("dx", 276)
                     .attr("y", 10)
                     .style('font-family', 'Arial')
                     .style('font-size', 12)
                     .attr("fill", "black")
-                    .text("FDR < 0.05 and |fold change| >= 1")
+                    .text("FDR < 0.05 and |log2(fold change)| >= 1")
 
 
             // last time point etc
             legend.append("text")
-                .attr("dx", 516)
+                .attr("dx", 526)
                 .attr("y", 10)
                 .style('font-family', 'Arial')
                 .style('font-size', 12)
@@ -65,14 +63,14 @@ class VolcanoLegend extends React.Component {
                 .text("Last time point: 24 hrs")
 
             legend.append("text")
-                .attr("dx", 700)
+                .attr("dx", 710)
                 .attr("y", 10)
                 .style('font-family', 'Arial')
                 .style('font-size', 12)
                 .attr("fill", "black")
                 .text("Max dose: High")
 
-            // legend.append("rect")
+            // legend.append("circle")
             //     .attr("x", 500)
             //     .attr("y", 0)
             //     .attr("width", 12)
