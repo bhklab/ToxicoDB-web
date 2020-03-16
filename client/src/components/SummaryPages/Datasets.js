@@ -35,10 +35,10 @@ class Datasets extends Component {
     componentDidMount() {
         const data = [
             {
-                id: 1, name: 'TGGATES Human', sample: 'Human', num_compounds: 146,
+                id: 1, name: 'TGGATEs Human', sample: 'Human', num_compounds: 146,
             },
             {
-                id: 2, name: 'TGGATES Rat', sample: 'Rat', num_compounds: 140,
+                id: 2, name: 'TGGATEs Rat', sample: 'Rat', num_compounds: 140,
             },
             {
                 id: 3, name: 'DrugMatrix Hepatocyte', sample: 'Hepatocyte', num_compounds: 125,

@@ -54,7 +54,7 @@ const geneAnalysis = {
             p_value: '0.0202808698017121',
             drug_id: 8,
             drug_name: 'Clofibrate',
-            dataset_name: 'TGGATES Human',
+            dataset_name: 'TGGATEs Human',
         },
         {
             fdr: '0.999977323448391',
@@ -62,7 +62,7 @@ const geneAnalysis = {
             p_value: '0.0312435168299573',
             drug_id: 9,
             drug_name: 'Carbon tetrachloride',
-            dataset_name: 'TGGATES Human',
+            dataset_name: 'TGGATEs Human',
         },
         {
             fdr: '2.24559485733538e-42',
@@ -70,7 +70,7 @@ const geneAnalysis = {
             p_value: '4.73617184210643e-44',
             drug_id: 10,
             drug_name: 'Phenobarbital',
-            dataset_name: 'TGGATES Human',
+            dataset_name: 'TGGATEs Human',
         },
     ],
 };

@@ -180,8 +180,8 @@ const formatGroupLabel = (data) => (
 );
 
 const datasetList = [
-    { value: 'TGGATES Human', label: 'TGGATES Human' },
-    { value: 'TGGATES Rat', label: 'TGGATES Rat' },
+    { value: 'TGGATEs Human', label: 'TGGATEs Human' },
+    { value: 'TGGATEs Rat', label: 'TGGATEs Rat' },
     { value: 'drugMatrix', label: 'drugMatrix' },
 ];
 
@@ -194,7 +194,7 @@ const ontologyList = [
 
 const Pathways = () => {
     // setting dataset and drug state.
-    const [selectedDataset, setDataset] = useState('TGGATES Human');
+    const [selectedDataset, setDataset] = useState('TGGATEs Human');
     const [selectedDrugs, setDrugs] = useState([]);
     const [selectedPathways, setPathways] = useState([]);
     const [selectedOntology, setOntology] = useState('Reactome');
@@ -317,7 +317,7 @@ const Pathways = () => {
 
     // similar to componentDidMount.
     useEffect(() => {
-        const pathways = DefaultPathways.TGGATES_Human;
+        const pathways = DefaultPathways.TGGATEs_Human;
         if (pathwayList) {
             fetch('/api/v1/pathwaystats/dataset', {
                 method: 'POST',
@@ -326,7 +326,7 @@ const Pathways = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    datasetName: 'TGGATES Human', pathways, ontology: selectedOntology, drugs: selectedDrugs,
+                    datasetName: 'TGGATEs Human', pathways, ontology: selectedOntology, drugs: selectedDrugs,
                 }),
             })
                 .then((response) => response.json())

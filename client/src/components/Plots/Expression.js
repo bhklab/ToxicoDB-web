@@ -244,7 +244,7 @@ class Expression extends React.Component {
                 .on("click", () => {
                     let active   = d.active ? false : true
         
-                    // only show tggates human first
+                    // only show TGGATEs human first
                     if (datasets[i] != datasets[0]) {
                         //to show that this dataset has been selected
                         if (active) {

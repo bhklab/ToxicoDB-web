@@ -6,11 +6,11 @@ const allDatasetData = {
     data: [
         {
             id: 1,
-            name: 'TGGATES Human',
+            name: 'TGGATEs Human',
         },
         {
             id: 2,
-            name: 'TGGATES Rat',
+            name: 'TGGATEs Rat',
         },
         {
             id: 3,

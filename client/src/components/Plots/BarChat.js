@@ -38,11 +38,11 @@ class BarChart extends React.Component {
                 value: 146,
             },
             {
-                name: 'TGGATES_Human_LDH',
+                name: 'TGGATEs_Human_LDH',
                 value: 140,
             },
             {
-                name: 'TGGATES_Rat_LDH',
+                name: 'TGGATEs_Rat_LDH',
                 value: 126,
             },
         ];
