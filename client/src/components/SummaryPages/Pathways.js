@@ -371,12 +371,19 @@ const Pathways = () => {
                         value: val.name,
                         label: val.name,
                     }));
-                    // parsing the list to select either Go or Reactome Pathways.
-                    const currentOntology = selectedOntology[0].value;
-                    const parsedPathwayData = pathwayData.filter((val) => val.value.split('_')[0] === currentOntology.toUpperCase());
-                    // pathways based on drug and dataset.
-                    setPathwayList(parsedPathwayData);
+                    setPathwayList(pathwayData);
                 });
+        }
+    }, [selectedDrugs]);
+
+
+    // parsing the list to select either Go or Reactome Pathways.
+    useEffect(() => {
+        if (selectedOntology) {
+            const currentOntology = selectedOntology[0].value;
+            const parsedPathwayData = pathwayList.filter((val) => val.value.split('_')[0] === currentOntology.toUpperCase());
+            // pathways based on drug and dataset.
+            setPathwayList(parsedPathwayData);
         }
     }, [selectedOntology]);
 
@@ -425,6 +432,12 @@ const Pathways = () => {
                     drugs.push(...drugGroupData.Genotoxic);
                     drugs.push(...drugGroupData['Non-Genotoxic']);
                     group.push('class_in_vivo');
+                } else if (row.value === 'All Drugs') {
+                    drugList[1].options.forEach((val) => {
+                        if (val.value !== 'All Drugs') {
+                            drugs.push(val.value);
+                        }
+                    });
                 } else {
                     drugs.push(row.value);
                 }
