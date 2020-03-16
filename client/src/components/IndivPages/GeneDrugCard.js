@@ -28,6 +28,7 @@ const StyledAnnotationCard = styled.div`
     .value {
     }
     .name-column {
+        width: 400px;
         font-weight: 600;
     }
 `;
