@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import colors from '../../styles/colors';
 import HeatMap from '../Plots/HeatMap';
 import DefaultPathways from '../Utils/PathwaysList';
-import Spinner from '../Utils/Spinner';
+import LoadingComponent from '../Utils/Loading';
 
 const StyleContainer = styled.div`
     display: flex;
@@ -520,7 +520,7 @@ const Pathways = () => {
                 <StyleHeatmap>
                     <HeatMap data={parsedDataset} />
                 </StyleHeatmap>
-            ) : <Spinner loading />}
+            ) : <LoadingComponent loading />}
         </div>
     );
 };

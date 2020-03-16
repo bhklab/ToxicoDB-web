@@ -5,6 +5,8 @@ import colors from '../../styles/colors';
 
 
 const LoadingContainer = styled.div`
+  margin-top: 100px;
+  
   &.-loading.-active {
     background-color: white;
     opacity: 1;
@@ -16,7 +18,7 @@ const LoadingContainer = styled.div`
       top: calc(50% - 150px);
     }
   }
-
+  
 `;
 
 
