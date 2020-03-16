@@ -1,6 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 
@@ -62,7 +61,6 @@ const generateLink = (obj, i, type) => {
     );
 };
 
-
 const GeneDrugCard = (props) => {
     const { data, type } = props;
     return (
@@ -70,16 +68,16 @@ const GeneDrugCard = (props) => {
             {data.length !== 0 && (
                 <table>
                     <tbody>
-                        {data.map((item, index) => (item.value ? (
+                        {data.map((item, index) => (item.value && item.value[0] ? (
                             <tr key={index}>
-                                { type !== 'gene' && !item.value[0] ? null : (
+                                {type !== 'gene' && !item.value[0] ? null : (
                                     <>
-                                        { item.name === "pubchem" ? (
+                                        {item.name === 'pubchem' ? (
                                             <td className="name-column">PUBCHEM CID</td>
                                         ) : (
                                             <td className="name-column">{item.name.replace(/_/g, ' ').toUpperCase()}</td>
                                         )}
-                                        { item.value.map((val, i) => generateLink(item, i, type))}
+                                        {item.value.map((val, i) => generateLink(item, i, type))}
                                     </>
                                 )}
                             </tr>
