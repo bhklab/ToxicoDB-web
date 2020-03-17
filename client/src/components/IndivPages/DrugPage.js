@@ -86,7 +86,7 @@ const DrugPage = (props) => {
     const { apiData, annotationData } = useFetchAnnotation(`/api/v1/drugs/${params.id}`, 'drug');
 
     // get synonyms separately for a separate table
-    const {synonymData} = useFetchSynonyms(`/api/v1/drugs/${params.id}/synonyms`);
+    const { synonymData } = useFetchSynonyms(`/api/v1/drugs/${params.id}/synonyms`);
 
     // analysisData and loading are handled together => one hook
     const {
@@ -191,10 +191,10 @@ const DrugPage = (props) => {
                 </div>
             )}
             {synonymData === undefined ? null : (
-               <div>
+                <div>
                     <h2>Synonyms</h2>
-                    <SynonymCard data={synonymData}/>
-               </div>
+                    <SynonymCard data={synonymData} />
+                </div>
             )}
             <ReactTable
                 data={processedData}
