@@ -3,10 +3,9 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 
-const HeatMapLegend = (props) => {
-    const dimension = { rectHeight: 14, rectWidth: 14 };
+const HeatMapLegend = () => {
     const margin = {
-        top: 0, right: 0, bottom: 0, left: 0,
+        top: 0, right: 0, bottom: 0, left: 10,
     };
     const height = 290;
     const width = 100;
