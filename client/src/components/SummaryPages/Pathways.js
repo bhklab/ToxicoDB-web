@@ -37,7 +37,7 @@ const StyleHeading = styled.div`
 `;
 
 const StyleHeatmap = styled.div`
-     max-width: 60vw;
+     max-width: 1200px;
      overflow-x: scroll;
      overflow-y: auto;
      margin: auto;
@@ -56,7 +56,11 @@ const StyledEntireHeatmap = styled.div`
     .heatmap-legend {
         position:absolute;
         margin-top: 214px;
-        margin-left:${(props) => 370 + 20 + Math.min(props.width,1152)}px;
+        margin-left: ${(props) => {
+            const temp = Math.min(props.width, 1200);
+            return `calc(370px + 20px + ${temp}px)`
+        }};
+        
     }
 `;
 
