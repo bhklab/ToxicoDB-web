@@ -565,7 +565,7 @@ const Pathways = () => {
                     <StyleHeatmap>
                         <HeatMap data={parsedDataset} />
                     </StyleHeatmap>
-                    <HeatMapLegend/>
+                    <HeatMapLegend />
                 </StyledEntireHeatmap>
             ) : <LoadingComponent loading />}
         </div>

@@ -28,7 +28,7 @@ const HeatMapLegend = (props) => {
     const margin = {
         top: 0, right: 0, bottom: 0, left: 370,
     };
-    const height = dimension.rectHeight * pathways.length;
+    const height = dimension.rectHeight * pathways.length + 2 * dimension.rectHeight;
     const width = 0;
     const { min } = data;
     const { max } = data;
@@ -39,7 +39,7 @@ const HeatMapLegend = (props) => {
         // make the SVG element.
         const svg = selection
             .append('svg')
-            .attr('id', 'heatmap-legend')
+            .attr('id', 'heatmap-legend-pathway')
             .attr('xmlns', 'http://wwww.w3.org/2000/svg')
             .attr('xmlns:xlink', 'http://wwww.w3.org/1999/xlink')
             .attr('height', height + margin.bottom + margin.top)
@@ -78,7 +78,7 @@ const HeatMapLegend = (props) => {
     const createHeatMap = () => {
         // selecting div class element heatmap.
         const selection = d3.select('.heatmap-legend-pathways');
-       
+
         // create svg component.
         const svg = createSvg(height, width, margin, selection);
 
@@ -88,6 +88,7 @@ const HeatMapLegend = (props) => {
 
     // on component mounting calling create heatmap.
     useEffect(() => {
+        d3.select('#heatmap-legend-pathway').remove();
         createHeatMap();
     }, [data]);
 

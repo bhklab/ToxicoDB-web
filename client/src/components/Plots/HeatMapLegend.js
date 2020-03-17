@@ -72,7 +72,7 @@ const HeatMapLegend = (props) => {
             .enter()
             .append('text')
             .attr('x', 30)
-            .attr('y', (d, i) => [20,80][i])
+            .attr('y', (d, i) => [20, 80][i])
             .text((d) => d)
             .attr('font-size', '14px')
             .style('text-anchor', 'start');
@@ -81,7 +81,7 @@ const HeatMapLegend = (props) => {
     const createHeatMap = () => {
         // selecting div class element heatmap.
         const selection = d3.select('.heatmap-legend');
-       
+
         // create svg component.
         const svg = createSvg(height, width, margin, selection);
 
