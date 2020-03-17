@@ -56,7 +56,7 @@ const StyledEntireHeatmap = styled.div`
     .heatmap-legend {
         position: absolute;
         margin-left: calc(370px + 60vw + 20px);
-        margin-top: 300px;
+        margin-top: 214px;
     }
 
 `;
