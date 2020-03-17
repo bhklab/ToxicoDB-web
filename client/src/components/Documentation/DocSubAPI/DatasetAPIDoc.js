@@ -14,7 +14,7 @@ const allDatasetData = {
         },
         {
             id: 3,
-            name: 'drugMatrix',
+            name: 'DrugMatrix',
         },
     ],
 };

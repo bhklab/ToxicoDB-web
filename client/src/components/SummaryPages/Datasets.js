@@ -52,7 +52,7 @@ class Datasets extends Component {
         //         const { data } = res;
         //         console.log(data);
         //         data.forEach((d) => {
-        //             if (d.name === 'drugMatrix') {
+        //             if (d.name === 'DrugMatrix') {
         //                 d.name = 'DrugMatrix Hepatocyte';
         //             }
         //         });
