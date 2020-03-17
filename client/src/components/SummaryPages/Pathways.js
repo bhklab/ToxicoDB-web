@@ -4,6 +4,8 @@ import Select from 'react-select';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
 import HeatMap from '../Plots/HeatMap';
+import HeatMapLegend from '../Plots/HeatMapLegend';
+import HeatMapLegendPathways from '../Plots/HeatMapLegendPathways';
 import DefaultPathways from '../Utils/PathwaysList';
 import LoadingComponent from '../Utils/Loading';
 
@@ -35,12 +37,29 @@ const StyleHeading = styled.div`
 `;
 
 const StyleHeatmap = styled.div`
-     width: 80vw;
+     width: 60vw;
      overflow-x: scroll;
-     overflow-y: scroll;
+     overflow-y: auto;
      margin: auto;
+     float: right;
+     position: absolute;
+     margin-left: 370px;
 `;
 
+const StyledEntireHeatmap = styled.div`
+    .heatmap-legend-pathways {
+        float:left;
+        width: 370px;
+        position:absolute;
+        margin-top: 200px;
+    }
+    .heatmap-legend {
+        position: absolute;
+        margin-left: calc(370px + 60vw + 20px);
+        margin-top: 300px;
+    }
+
+`;
 
 const StyleButton = styled.button`
     background-color: ${colors.blue_text};
@@ -517,9 +536,13 @@ const Pathways = () => {
                 </div>
             </StyleContainer>
             { ((isClicked && !isInitialRender) || (isInitialRender && !isObjectEmpty(parsedDataset))) ? (
-                <StyleHeatmap>
-                    <HeatMap data={parsedDataset} />
-                </StyleHeatmap>
+                <StyledEntireHeatmap>
+                    <HeatMapLegendPathways data={parsedDataset} />
+                    <StyleHeatmap>
+                        <HeatMap data={parsedDataset} />
+                    </StyleHeatmap>
+                    <HeatMapLegend/>
+                </StyledEntireHeatmap>
             ) : <LoadingComponent loading />}
         </div>
     );
