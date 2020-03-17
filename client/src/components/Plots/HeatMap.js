@@ -5,7 +5,7 @@ import * as d3 from 'd3';
 
 const HeatMap = (props) => {
     // destructuring data, pathways and drugs from props.
-    const { data } = props;
+    const { data, widthCallback } = props;
     const { pathways } = data;
     const { isGroup } = data;
     const { drugs: drugObject } = data;
@@ -33,7 +33,8 @@ const HeatMap = (props) => {
     const { min } = data;
     const { max } = data;
     const { mean } = data;
-
+    
+    widthCallback(width);
 
     const createSvg = (height, width, margin, selection) => {
         // make the SVG element.
@@ -221,7 +222,7 @@ const HeatMap = (props) => {
     }, [data]);
 
     return (
-        <div className="heatmap" style={{ textAlign: 'center' }} />
+        <div className="heatmap"/>
     );
 };
 

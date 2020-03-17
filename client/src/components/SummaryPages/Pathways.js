@@ -37,7 +37,7 @@ const StyleHeading = styled.div`
 `;
 
 const StyleHeatmap = styled.div`
-     width: 60vw;
+     max-width: 60vw;
      overflow-x: scroll;
      overflow-y: auto;
      margin: auto;
@@ -54,11 +54,10 @@ const StyledEntireHeatmap = styled.div`
         margin-top: 200px;
     }
     .heatmap-legend {
-        position: absolute;
-        margin-left: calc(370px + 60vw + 20px);
+        position:absolute;
         margin-top: 214px;
+        margin-left:${(props) => 370 + 20 + Math.min(props.width,1152)}px;
     }
-
 `;
 
 const StyleButton = styled.button`
@@ -228,6 +227,11 @@ const Pathways = () => {
     const [isClicked, setButtonState] = useState(false);
     const [isInitialRender, setRender] = useState(false);
 
+    // for setting width of heatmap for the legend margin
+    const [width, setWidth] = useState(0);
+    const widthCallback = (width) => {
+        setWidth(width);
+    }
 
     const parseData = (response) => {
         const { data } = response;
@@ -560,10 +564,10 @@ const Pathways = () => {
                 </div>
             </StyleContainer>
             { ((isClicked && !isInitialRender) || (isInitialRender && !isObjectEmpty(parsedDataset))) ? (
-                <StyledEntireHeatmap>
+                <StyledEntireHeatmap width={width}>
                     <HeatMapLegendPathways data={parsedDataset} />
                     <StyleHeatmap>
-                        <HeatMap data={parsedDataset} />
+                        <HeatMap data={parsedDataset} widthCallback={widthCallback} />
                     </StyleHeatmap>
                     <HeatMapLegend />
                 </StyledEntireHeatmap>
