@@ -1,5 +1,5 @@
 /* eslint-disable no-shadow */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
@@ -57,9 +57,10 @@ const StyledEntireHeatmap = styled.div`
         position:absolute;
         margin-top: 214px;
         margin-left: ${(props) => {
-            const temp = Math.min(props.width, 1200);
-            return `calc(370px + 20px + ${temp}px)`
-        }};
+        console.log(props);
+        const temp = Math.min(props.width, 60 * document.documentElement.clientWidth / 100);
+        return `calc(370px + 20px + ${temp}px)`;
+    }};
         
     }
 `;
@@ -214,6 +215,19 @@ const ontologyList = [
     { value: 'GO', label: 'GO' },
 ];
 
+function useWindowSize() {
+    const [width, setWidth] = useState(0);
+    useLayoutEffect(() => {
+        function updateSize() {
+            setWidth(window.innerWidth);
+        }
+        window.addEventListener('resize', updateSize);
+        updateSize();
+        return () => window.removeEventListener('resize', updateSize);
+    }, []);
+    return width;
+}
+
 
 const Pathways = () => {
     // setting dataset and drug state.
@@ -231,11 +245,16 @@ const Pathways = () => {
     const [isClicked, setButtonState] = useState(false);
     const [isInitialRender, setRender] = useState(false);
 
+    const resizeWidth = useWindowSize();
+    console.log(resizeWidth);
+
     // for setting width of heatmap for the legend margin
     const [width, setWidth] = useState(0);
     const widthCallback = (width) => {
         setWidth(width);
-    }
+    };
+    console.log('width', width);
+    console.log('resizeWidth is ', resizeWidth);
 
     const parseData = (response) => {
         const { data } = response;
@@ -568,10 +587,13 @@ const Pathways = () => {
                 </div>
             </StyleContainer>
             { ((isClicked && !isInitialRender) || (isInitialRender && !isObjectEmpty(parsedDataset))) ? (
-                <StyledEntireHeatmap width={width}>
+                <StyledEntireHeatmap width={resizeWidth}>
                     <HeatMapLegendPathways data={parsedDataset} />
                     <StyleHeatmap>
-                        <HeatMap data={parsedDataset} widthCallback={widthCallback} />
+                        <HeatMap
+                            data={parsedDataset}
+                            widthCallback={widthCallback}
+                        />
                     </StyleHeatmap>
                     <HeatMapLegend />
                 </StyledEntireHeatmap>

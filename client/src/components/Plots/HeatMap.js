@@ -33,7 +33,7 @@ const HeatMap = (props) => {
     const { min } = data;
     const { max } = data;
     const { mean } = data;
-    
+
     widthCallback(width);
 
     const createSvg = (height, width, margin, selection) => {
@@ -222,7 +222,7 @@ const HeatMap = (props) => {
     }, [data]);
 
     return (
-        <div className="heatmap"/>
+        <div className="heatmap" />
     );
 };
 
