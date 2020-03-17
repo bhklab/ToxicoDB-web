@@ -133,7 +133,7 @@ const VolcanoSingle = (props) => {
             <h3>
                 {(datasetName === 'TGGATEsHuman') ? 'TGGATEs Human'
                     : (datasetName === 'TGGATEsRat') ? 'TGGATEs Rat'
-                        : (datasetName === 'drugMatrix') ? 'DrugMatrix'
+                        : (datasetName === 'DrugMatrix') ? 'DrugMatrix'
                             : datasetName}
 
             </h3>

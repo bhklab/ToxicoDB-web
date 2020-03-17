@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-mixed-operators */
 /* eslint-disable no-shadow */
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import Select from 'react-select';
@@ -57,7 +59,6 @@ const StyledEntireHeatmap = styled.div`
         position:absolute;
         margin-top: 214px;
         margin-left: ${(props) => {
-        console.log(props);
         const temp = Math.min(props.width, 60 * document.documentElement.clientWidth / 100);
         return `calc(370px + 20px + ${temp}px)`;
     }};
@@ -231,14 +232,14 @@ function useWindowSize() {
 
 const Pathways = () => {
     // setting dataset and drug state.
-    const [selectedDataset, setDataset] = useState('TGGATEs Human');
+    const [selectedDataset, setDataset] = useState('');
     const [selectedDrugs, setDrugs] = useState([]);
     const [selectedPathways, setPathways] = useState([]);
     const [selectedOntology, setOntology] = useState('');
-    const [pathwayList, setPathwayList] = useState([]);
-    const [parsedPathwayList, setParsedPathwayList] = useState([]);
     const [drugList, setDrugList] = useState([]);
     const [drugGroupData, setDrugGroups] = useState({});
+    const [pathwayList, setPathwayList] = useState([]);
+    const [parsedPathwayList, setParsedPathwayList] = useState([]);
     const [parsedDataset, setParsedDataset] = useState({});
     const [statData, setStatData] = useState({});
     const [isGroup, setIsGroup] = useState([]);
@@ -246,15 +247,12 @@ const Pathways = () => {
     const [isInitialRender, setRender] = useState(false);
 
     const resizeWidth = useWindowSize();
-    console.log(resizeWidth);
 
     // for setting width of heatmap for the legend margin
     const [width, setWidth] = useState(0);
     const widthCallback = (width) => {
         setWidth(width);
     };
-    console.log('width', width);
-    console.log('resizeWidth is ', resizeWidth);
 
     const parseData = (response) => {
         const { data } = response;
@@ -418,7 +416,7 @@ const Pathways = () => {
                         value: val.name,
                         label: val.name,
                     }));
-                    pathwayData.unshift({ value: 'All Pathways', label: 'All Pathways' });
+                    // pathwayData.unshift({ value: 'All Pathways', label: 'All Pathways' });
                     setPathwayList(pathwayData);
                 });
         }
@@ -429,7 +427,8 @@ const Pathways = () => {
     useEffect(() => {
         if (selectedOntology) {
             const currentOntology = selectedOntology[0].value;
-            const parsedPathwayData = pathwayList.filter((val) => val.value.split('_')[0] === currentOntology.toUpperCase() || val.value === 'All Pathways');
+            // const parsedPathwayData = pathwayList.filter((val) => val.value.split('_')[0] === currentOntology.toUpperCase() || val.value === 'All Pathways');
+            const parsedPathwayData = pathwayList.filter((val) => val.value.split('_')[0] === currentOntology.toUpperCase());
             // pathways based on drug and dataset.
             setParsedPathwayList(parsedPathwayData);
         }
@@ -469,24 +468,28 @@ const Pathways = () => {
         // selected drugs.
         let drugs = [];
         // setting group in order to change the color in heatmap.
-        const group = [];
+        let group = [];
         if (selection) {
             selection.forEach((row) => {
                 if (row.value.match(/Carcinogenic & Non-Carcinogenic/)) {
+                    // setting drugs selected.
                     drugs.push(...drugGroupData.Carcinogenic);
                     drugs.push(...drugGroupData['Non-Carcinogenic']);
+                    // pushing to group array.
                     group.push('carcinogenicity');
                 } else if (row.value.match(/Genotoxic & Non-Genotoxic/)) {
                     drugs.push(...drugGroupData.Genotoxic);
                     drugs.push(...drugGroupData['Non-Genotoxic']);
                     group.push('class_in_vivo');
                 } else if (row.value === 'All Drugs') {
+                    group = [];
                     drugList[1].options.forEach((val) => {
                         if (val.value !== 'All Drugs') {
                             drugs.push(val.value);
                         }
                     });
                 } else {
+                    group = [];
                     drugs.push(row.value);
                 }
             });
@@ -497,19 +500,21 @@ const Pathways = () => {
     };
 
     const handleOntologyChange = (selection) => {
+        setPathways(null);
         const ontology = [{ value: selection.value, label: selection.label }];
         setOntology(ontology);
     };
 
     const handlePathwayChange = (selection) => {
         // const list = selection ? selection.map((row) => row.value) : [];
-        let pathways = [];
+        const pathways = [];
         selection.forEach((val) => {
-            if (val.value === 'All Pathways') {
-                pathways = parsedPathwayList.filter((val) => val.value !== 'All Pathways');
-            } else {
-                pathways.push({ value: val.value, label: val.value });
-            }
+            // if (val.value === 'All Pathways') {
+            //     pathways = parsedPathwayList.filter((val) => val.value !== 'All Pathways');
+            // } else {
+            //     pathways.push({ value: val.value, label: val.value });
+            // }
+            pathways.push({ value: val.value, label: val.value });
         });
         setPathways(pathways);
     };
@@ -533,7 +538,7 @@ const Pathways = () => {
                     Pathways
                     {' - '}
                     (
-                    {selectedDataset}
+                    {selectedDataset || 'TGGATEs Human'}
                     )
                 </h1>
             </StyleHeading>
