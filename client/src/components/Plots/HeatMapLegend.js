@@ -8,8 +8,8 @@ const HeatMapLegend = (props) => {
     const margin = {
         top: 0, right: 0, bottom: 0, left: 0,
     };
-    const height = 90;
-    const width = 70;
+    const height = 290;
+    const width = 100;
 
     const createSvg = (height, width, margin, selection) => {
         // make the SVG element.
@@ -42,6 +42,11 @@ const HeatMapLegend = (props) => {
         // Set the color for the start (0%)
         linearGradient.append('stop')
             .attr('offset', '0%')
+            .attr('stop-color', '#8a2904');
+
+        // Set the color for the start (10%)
+        linearGradient.append('stop')
+            .attr('offset', '25%')
             .attr('stop-color', '#ef8a62');
 
         // Set the color for the start (50%)
@@ -59,7 +64,7 @@ const HeatMapLegend = (props) => {
             .attr('x', 0)
             .attr('y', 0)
             .attr('width', 28)
-            .attr('height', 89)
+            .attr('height', 129)
             .style('fill', 'url(#linear-gradient)');
 
         // legend value.
@@ -72,7 +77,7 @@ const HeatMapLegend = (props) => {
             .enter()
             .append('text')
             .attr('x', 30)
-            .attr('y', (d, i) => [20, 80][i])
+            .attr('y', (d, i) => [15, 125][i])
             .text((d) => d)
             .attr('font-size', '14px')
             .style('text-anchor', 'start');
