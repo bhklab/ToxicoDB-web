@@ -198,8 +198,9 @@ const Pathways = () => {
     const [selectedDataset, setDataset] = useState('TGGATEs Human');
     const [selectedDrugs, setDrugs] = useState([]);
     const [selectedPathways, setPathways] = useState([]);
-    const [selectedOntology, setOntology] = useState('Reactome');
+    const [selectedOntology, setOntology] = useState('');
     const [pathwayList, setPathwayList] = useState([]);
+    const [parsedPathwayList, setParsedPathwayList] = useState([]);
     const [drugList, setDrugList] = useState([]);
     const [drugGroupData, setDrugGroups] = useState({});
     const [parsedDataset, setParsedDataset] = useState({});
@@ -327,7 +328,7 @@ const Pathways = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    datasetName: 'TGGATEs Human', pathways, ontology: selectedOntology, drugs: selectedDrugs,
+                    datasetName: 'TGGATEs Human', pathways, ontology: 'Reactome', drugs: selectedDrugs,
                 }),
             })
                 .then((response) => response.json())
@@ -371,6 +372,7 @@ const Pathways = () => {
                         value: val.name,
                         label: val.name,
                     }));
+                    pathwayData.unshift({ value: 'All Pathways', label: 'All Pathways' });
                     setPathwayList(pathwayData);
                 });
         }
@@ -381,9 +383,9 @@ const Pathways = () => {
     useEffect(() => {
         if (selectedOntology) {
             const currentOntology = selectedOntology[0].value;
-            const parsedPathwayData = pathwayList.filter((val) => val.value.split('_')[0] === currentOntology.toUpperCase());
+            const parsedPathwayData = pathwayList.filter((val) => val.value.split('_')[0] === currentOntology.toUpperCase() || val.value === 'All Pathways');
             // pathways based on drug and dataset.
-            setPathwayList(parsedPathwayData);
+            setParsedPathwayList(parsedPathwayData);
         }
     }, [selectedOntology]);
 
@@ -455,16 +457,25 @@ const Pathways = () => {
 
     const handlePathwayChange = (selection) => {
         // const list = selection ? selection.map((row) => row.value) : [];
-        const pathways = selection.map((val) => ({ value: val.value, label: val.value }));
+        let pathways = [];
+        selection.forEach((val) => {
+            if (val.value === 'All Pathways') {
+                pathways = parsedPathwayList.filter((val) => val.value !== 'All Pathways');
+            } else {
+                pathways.push({ value: val.value, label: val.value });
+            }
+        });
         setPathways(pathways);
     };
 
-    const handleButtonClickEvent = () => {
-        parseData(statData);
-        setButtonState(true);
-    };
-
     const isObjectEmpty = (data) => (Object.entries(data).length === 0 && data.constructor === Object);
+
+    const handleButtonClickEvent = () => {
+        if (!isObjectEmpty(statData)) {
+            parseData(statData);
+            setButtonState(true);
+        }
+    };
 
     return (
         <div>
@@ -513,7 +524,7 @@ const Pathways = () => {
                 </div>
                 <div className="div-pathway">
                     <Select
-                        options={pathwayList}
+                        options={parsedPathwayList}
                         styles={customStyles}
                         placeholder="Select Pathway"
                         onChange={handlePathwayChange}
