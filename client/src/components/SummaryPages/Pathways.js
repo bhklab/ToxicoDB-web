@@ -50,10 +50,7 @@ const StyleHeatmap = styled.div`
 
 const StyledEntireHeatmap = styled.div`
     max-width: calc(500px + 60vw);
-    width:  ${(props) => {
-        console.log(props.width);
-        return `calc(500px + ${props.width}px)`;
-    }};
+    width:  ${(props) => `calc(500px + ${props.width}px)`};
     height: 50px;
     .heatmap-legend-pathways {
         float:left;
@@ -250,14 +247,11 @@ const Pathways = () => {
     const [isClicked, setButtonState] = useState(false);
     const [isInitialRender, setRender] = useState(false);
 
-    const resizeWidth = useWindowSize();
-
     // for setting width of heatmap for the legend margin
     const [width, setWidth] = useState(0);
     const widthCallback = (width) => {
         setWidth(width);
     };
-    console.log("width", width)
 
     const parseData = (response) => {
         const { data } = response;

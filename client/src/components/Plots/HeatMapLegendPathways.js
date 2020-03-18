@@ -23,16 +23,13 @@ const HeatMapLegend = (props) => {
             drugs.push(val);
         }
     });
-    const { data: dataset } = data;
+    // const { data: dataset } = data;
     const dimension = { rectHeight: 14, rectWidth: 14 };
     const margin = {
         top: 0, right: 0, bottom: 0, left: 370,
     };
     const height = dimension.rectHeight * pathways.length + 2 * dimension.rectHeight;
     const width = 0;
-    const { min } = data;
-    const { max } = data;
-    const { mean } = data;
 
 
     const createSvg = (height, width, margin, selection) => {

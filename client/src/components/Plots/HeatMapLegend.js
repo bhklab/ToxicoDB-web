@@ -41,12 +41,12 @@ const HeatMapLegend = () => {
         // Set the color for the start (0%)
         linearGradient.append('stop')
             .attr('offset', '0%')
-            .attr('stop-color', '#8a2904');
+            .attr('stop-color', '#f46a33');
 
         // Set the color for the start (10%)
-        linearGradient.append('stop')
-            .attr('offset', '25%')
-            .attr('stop-color', '#ef8a62');
+        // linearGradient.append('stop')
+        //     .attr('offset', '25%')
+        //     .attr('stop-color', '#ef8a62');
 
         // Set the color for the start (50%)
         linearGradient.append('stop')

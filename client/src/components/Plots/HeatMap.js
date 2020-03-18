@@ -117,10 +117,16 @@ const HeatMap = (props) => {
 
 
     const createRectangle = (drugs, pathways, skeleton, width, height, data, min, max, mean) => {
+        console.log(min, mean, max);
         // color scaling for rectangles
+        // const linearColorScale = d3.scaleLinear()
+        //     .domain([min, 0, mean, max])
+        //     .range(['#67a9cf', '#f7f7f7', '#ef8a62', '#8a2904']);
+
         const linearColorScale = d3.scaleLinear()
-            .domain([min, 0, mean, max])
-            .range(['#67a9cf', '#f7f7f7', '#ef8a62', '#8a2904']);
+            .domain([min, 0, max])
+            .range(['#67a9cf', '#f7f7f7', '#f46a33']);
+
 
         // creating and coloring rectangles.
         for (let i = 0; i < drugs.length; i++) {
