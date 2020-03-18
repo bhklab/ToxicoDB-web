@@ -16,7 +16,7 @@ const SearchDoc = () => (
         </p>
         <p>
             <em>ToxicoDB</em>
-            ’s search bar takes three types of queries. The simplest is to query for a single gene; rat or human, (e.g., Cyp1a1 or CYP1A1) or drug (e.g., Carbon tetrachloride).
+            ’s search bar takes three types of queries. The simplest is to query for a single gene; rat or human, (e.g., CYP1A1) or drug (e.g., Acetaminophen ).
         </p>
         <Link to="/">
             <img className="doc-img" src={img1} alt="" />
