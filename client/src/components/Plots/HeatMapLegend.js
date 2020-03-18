@@ -78,7 +78,7 @@ const HeatMapLegend = () => {
             .attr('x', 30)
             .attr('y', (d, i) => [15, 125][i])
             .text((d) => d)
-            .attr('font-size', '14px')
+            .attr('font-size', '15px')
             .style('text-anchor', 'start');
     };
 
