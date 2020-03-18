@@ -58,6 +58,17 @@ const drugData = {
     ],
 };
 
+const drugSynonymData = {
+    status: 'success',
+    data: [{
+        name: 'TGGATEs Human',
+        drug_uid: 'chlorpropamide',
+    }, {
+        name: 'TGGATEs Rat',
+        drug_uid: 'ethambutol',
+    }],
+};
+
 const drugAnalysis = {
     status: 'success',
     data: [
@@ -123,6 +134,23 @@ const DrugApiDoc = () => (
             </p>
             <p>Output: </p>
             <div><pre className="output">{JSON.stringify(drugData, null, 2)}</pre></div>
+        </div>
+        <div className="api-section">
+            <h3>Get Drug Synonyms</h3>
+            <p>
+                Retrieves synonyms per dataset for a given drug. The API request requires
+                {' '}
+                <em>drug id</em>
+                {' '}
+                (integer)
+                {' '}
+                request paramater.
+            </p>
+            <p className="code">
+                <span>curl http://toxicodb.ca/api/v1/drugs/72/synonyms</span>
+            </p>
+            <p>Output: </p>
+            <div><pre className="output">{JSON.stringify(drugSynonymData, null, 2)}</pre></div>
         </div>
         <div className="api-section">
             <h3>Get Drug Analysis Data</h3>
