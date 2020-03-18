@@ -293,7 +293,6 @@ const Pathways = () => {
             finalDrugNameList[val].carcinogenicity = parsedData[val][pathwayNameList[0]].carcinogenicity;
             finalDrugNameList[val].class_in_vivo = parsedData[val][pathwayNameList[0]].class_in_vivo;
         });
-
         // setting the state if we have drug list, pathway list and parsedData.
         if (parsedData && drugNameList && pathwayNameList) {
             setParsedDataset({
@@ -469,6 +468,7 @@ const Pathways = () => {
         let drugs = [];
         // setting group in order to change the color in heatmap.
         let group = [];
+        let isDrugSelected = false;
         if (selection) {
             selection.forEach((row) => {
                 if (row.value.match(/Carcinogenic & Non-Carcinogenic/)) {
@@ -476,13 +476,16 @@ const Pathways = () => {
                     drugs.push(...drugGroupData.Carcinogenic);
                     drugs.push(...drugGroupData['Non-Carcinogenic']);
                     // pushing to group array.
-                    group.push('carcinogenicity');
+                    // eslint-disable-next-line no-unused-expressions
+                    !isDrugSelected && group.push('carcinogenicity');
                 } else if (row.value.match(/Genotoxic & Non-Genotoxic/)) {
                     drugs.push(...drugGroupData.Genotoxic);
                     drugs.push(...drugGroupData['Non-Genotoxic']);
-                    group.push('class_in_vivo');
+                    // eslint-disable-next-line no-unused-expressions
+                    !isDrugSelected && group.push('class_in_vivo');
                 } else if (row.value === 'All Drugs') {
                     group = [];
+                    isDrugSelected = true;
                     drugList[1].options.forEach((val) => {
                         if (val.value !== 'All Drugs') {
                             drugs.push(val.value);
@@ -490,6 +493,7 @@ const Pathways = () => {
                     });
                 } else {
                     group = [];
+                    isDrugSelected = true;
                     drugs.push(row.value);
                 }
             });

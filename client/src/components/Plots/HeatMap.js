@@ -11,13 +11,13 @@ const HeatMap = (props) => {
     const { drugs: drugObject } = data;
     const drugs = [];
     Object.keys(drugObject).forEach((val) => {
-        if (isGroup.length > 0 && drugObject[val].carcinogenicity === 'C' && isGroup.includes('carcinogenicity')) {
+        if (isGroup.length > 0 && drugObject[val].carcinogenicity === 'Carcinogenic' && isGroup.includes('carcinogenicity')) {
             drugs.push(val);
-        } else if (isGroup.length > 0 && drugObject[val].carcinogenicity === 'NC' && isGroup.includes('carcinogenicity')) {
+        } else if (isGroup.length > 0 && drugObject[val].carcinogenicity === 'Non-Carcinogenic' && isGroup.includes('carcinogenicity')) {
             drugs.unshift(val);
-        } else if (isGroup.length > 0 && drugObject[val].class_in_vivo === 'GTX' && isGroup.includes('class_in_vivo')) {
+        } else if (isGroup.length > 0 && drugObject[val].class_in_vivo === 'Genotoxic' && isGroup.includes('class_in_vivo')) {
             drugs.push(val);
-        } else if (isGroup.length > 0 && drugObject[val].class_in_vivo === 'NGTX' && isGroup.includes('class_in_vivo')) {
+        } else if (isGroup.length > 0 && drugObject[val].class_in_vivo === 'Non-Genotoxic' && isGroup.includes('class_in_vivo')) {
             drugs.unshift(val);
         } else {
             drugs.push(val);
@@ -88,13 +88,13 @@ const HeatMap = (props) => {
             .attr('color', (i) => {
                 let color = 'black';
 
-                if (isGroup.length > 0 && data.drugs[i].carcinogenicity === 'C' && isGroup.includes('carcinogenicity')) {
+                if (isGroup.length > 0 && data.drugs[i].carcinogenicity === 'Carcinogenic' && isGroup.includes('carcinogenicity')) {
                     color = 'red';
-                } else if (isGroup.length > 0 && data.drugs[i].carcinogenicity === 'NC' && isGroup.includes('carcinogenicity')) {
+                } else if (isGroup.length > 0 && data.drugs[i].carcinogenicity === 'Non-Carcinogenic' && isGroup.includes('carcinogenicity')) {
                     color = 'green';
-                } else if (isGroup.length > 0 && data.drugs[i].class_in_vivo === 'GTX' && isGroup.includes('class_in_vivo')) {
+                } else if (isGroup.length > 0 && data.drugs[i].class_in_vivo === 'Genotoxic' && isGroup.includes('class_in_vivo')) {
                     color = 'red';
-                } else if (isGroup.length > 0 && data.drugs[i].class_in_vivo === 'NGTX' && isGroup.includes('class_in_vivo')) {
+                } else if (isGroup.length > 0 && data.drugs[i].class_in_vivo === 'Non-Genotoxic' && isGroup.includes('class_in_vivo')) {
                     color = 'green';
                 } else {
                     color = 'black';
