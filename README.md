@@ -39,7 +39,8 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ## Servers
 
--Coming soon
+- Testing Server: [http://beta.toxicodb.ca](http://beta.toxicodb.ca)
+- Production Server: [http://toxicodb.ca](http://toxicodb.ca)
 
 ## Migrations
 
