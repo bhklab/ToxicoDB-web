@@ -60,7 +60,7 @@ const HeatMap = (props) => {
 
         const xScale = d3.scaleBand()
             .domain(drugs)
-            .rangeRound([0, drugs.length * width + 2]);
+            .rangeRound([4, drugs.length * width + 4]);
 
         // defining the x-axis for the main skeleton and
         // setting tick size to zero will remove the ticks.
@@ -79,7 +79,7 @@ const HeatMap = (props) => {
 
         drugName.attr('stroke-width', '0')
             .style('font-family', '\'Raleway\',sans-serif')
-            .style('font-size', '8px')
+            .style('font-size', '10px')
             .attr('font-weight', '500')
             .style('text-anchor', 'start')
             .call(xAxis)

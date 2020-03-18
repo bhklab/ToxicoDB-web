@@ -65,7 +65,7 @@ const HeatMapLegend = (props) => {
 
         pathwayName.attr('stroke-width', '0')
             .style('font-family', '\'Raleway\',sans-serif')
-            .style('font-size', '8px')
+            .style('font-size', '9px')
             .attr('font-weight', '500')
             .style('text-anchor', 'end')
             .call(yAxis)
