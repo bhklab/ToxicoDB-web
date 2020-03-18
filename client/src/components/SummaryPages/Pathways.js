@@ -217,18 +217,18 @@ const ontologyList = [
     { value: 'GO', label: 'GO' },
 ];
 
-function useWindowSize() {
-    const [width, setWidth] = useState(0);
-    useLayoutEffect(() => {
-        function updateSize() {
-            setWidth(window.innerWidth);
-        }
-        window.addEventListener('resize', updateSize);
-        updateSize();
-        return () => window.removeEventListener('resize', updateSize);
-    }, []);
-    return width;
-}
+// function useWindowSize() {
+//     const [width, setWidth] = useState(0);
+//     useLayoutEffect(() => {
+//         function updateSize() {
+//             setWidth(window.innerWidth);
+//         }
+//         window.addEventListener('resize', updateSize);
+//         updateSize();
+//         return () => window.removeEventListener('resize', updateSize);
+//     }, []);
+//     return width;
+// }
 
 
 const Pathways = () => {
@@ -310,6 +310,7 @@ const Pathways = () => {
     };
 
     const createDrugGroups = (res) => {
+        console.log(res);
         // the grouping of drugs and setting the drugs for each type.
         const groupDrug = {
             Carcinogenic: [],
@@ -318,15 +319,15 @@ const Pathways = () => {
             'Non-Genotoxic': [],
         };
         res.data.forEach((val) => {
-            if (val.carcinogenicity === 'C') {
+            if (val.carcinogenicity === 'Carcinogenic') {
                 groupDrug.Carcinogenic.push(val.name);
-            } else if (val.carcinogenicity === 'NC') {
+            } else if (val.carcinogenicity === 'Non-Carcinogenic') {
                 groupDrug['Non-Carcinogenic'].push(val.name);
             }
 
-            if (val.class_in_vivo === 'GTX') {
+            if (val.class_in_vivo === 'Genotoxic') {
                 groupDrug.Genotoxic.push(val.name);
-            } else if (val.class_in_vivo === 'NGTX') {
+            } else if (val.class_in_vivo === 'Non-Genotoxic') {
                 groupDrug['Non-Genotoxic'].push(val.name);
             }
         });

@@ -44,7 +44,7 @@ const HeatMap = (props) => {
             .attr('xmlns', 'http://wwww.w3.org/2000/svg')
             .attr('xmlns:xlink', 'http://wwww.w3.org/1999/xlink')
             .attr('height', height + margin.bottom + margin.top)
-            .attr('width', width + margin.left + margin.right)
+            .attr('width', width + margin.left + margin.right + 50)
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -60,7 +60,7 @@ const HeatMap = (props) => {
 
         const xScale = d3.scaleBand()
             .domain(drugs)
-            .rangeRound([0, drugs.length * width + 2]);
+            .rangeRound([4, drugs.length * width + 4]);
 
         // defining the x-axis for the main skeleton and
         // setting tick size to zero will remove the ticks.
@@ -79,12 +79,12 @@ const HeatMap = (props) => {
 
         drugName.attr('stroke-width', '0')
             .style('font-family', '\'Raleway\',sans-serif')
-            .style('font-size', '8px')
+            .style('font-size', '10px')
             .attr('font-weight', '500')
             .style('text-anchor', 'start')
             .call(xAxis)
             .selectAll('text')
-            .attr('transform', 'rotate(-90)')
+            .attr('transform', 'rotate(-75)')
             .attr('color', (i) => {
                 let color = 'black';
 
@@ -117,7 +117,6 @@ const HeatMap = (props) => {
 
 
     const createRectangle = (drugs, pathways, skeleton, width, height, data, min, max, mean) => {
-        console.log(min, mean, max);
         // color scaling for rectangles
         // const linearColorScale = d3.scaleLinear()
         //     .domain([min, 0, mean, max])

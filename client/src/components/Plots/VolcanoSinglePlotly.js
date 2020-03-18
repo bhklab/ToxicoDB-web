@@ -201,7 +201,7 @@ const VolcanoSingle = (props) => {
             xaxis: { title: 'log2(fold change)', zeroline: false },
             hovermode: 'closest',
             font: {
-                size: 12,
+                size: 14,
                 color: colors.nav_links,
                 family: 'Arial',
             },

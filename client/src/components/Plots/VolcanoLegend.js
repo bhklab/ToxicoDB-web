@@ -4,7 +4,7 @@ import React from 'react';
 class VolcanoLegend extends React.Component {
     componentDidMount() {
         const {plotId} = this.props;
-        const width = 800;
+        const width = 900;
         const height = 20;
         const margin = {
             top: 10,
@@ -22,71 +22,56 @@ class VolcanoLegend extends React.Component {
             .attr('transform',
                 `translate(${margin.left},${margin.top})`);
 
-        let legend = svg.append("g")
+        let legend = svg.append('g')
 
-            legend.append("circle")
-                .attr("cx", 20)
-                .attr("cy", 6)
-                .attr("r", 5)
-                .attr("fill", '#e1f1fb')
+        legend.append('circle')
+            .attr('cx', 20)
+            .attr('cy', 6)
+            .attr('r', 5)
+            .attr('fill', '#e1f1fb')
 
-                legend.append("text")
-                    .attr("dx", 30)
-                    .attr("y", 10)
-                    .attr("fill", "black")
-                    .style('font-family', 'Arial')
-                    .style('font-size', 12)
-                    .text("FDR < 0.05 and |log2(fold change)| < 1")
+        legend.append('text')
+            .attr('dx', 30)
+            .attr('y', 10)
+            .attr('fill', 'black')
+            .style('font-family', 'Arial')
+            .style('font-size', 14)
+            .text('FDR < 0.05 and |log2(fold change)| < 1')
 
-            legend.append("circle")
-                .attr("cx", 265)
-                .attr("cy", 6)
-                .attr("r", 5)
-                .attr("fill", '#5cc33c') //#5cc33c
+        legend.append('circle')
+            .attr('cx', 305)
+            .attr('cy', 6)
+            .attr('r', 5)
+            .attr('fill', '#5cc33c') //#5cc33c
 
-                legend.append("text")
-                    .attr("dx", 276)
-                    .attr("y", 10)
-                    .style('font-family', 'Arial')
-                    .style('font-size', 12)
-                    .attr("fill", "black")
-                    .text("FDR < 0.05 and |log2(fold change)| >= 1")
+        legend.append('text')
+            .attr('dx', 316)
+            .attr('y', 10)
+            .style('font-family', 'Arial')
+            .style('font-size', 14)
+            .attr('fill', 'black')
+            .text('FDR < 0.05 and |log2(fold change)| >= 1')
 
 
-            // last time point etc
-            legend.append("text")
-                .attr("dx", 526)
-                .attr("y", 10)
-                .style('font-family', 'Arial')
-                .style('font-size', 12)
-                .attr("fill", "black")
-                .text("Last time point: 24 hrs")
+        // last time point etc
+        legend.append('text')
+            .attr('dx', 606)
+            .attr('y', 10)
+            .style('font-family', 'Arial')
+            .style('font-size', 14)
+            .attr('fill', 'black')
+            .text('Last time point: 24 hrs')
 
-            legend.append("text")
-                .attr("dx", 710)
-                .attr("y", 10)
-                .style('font-family', 'Arial')
-                .style('font-size', 12)
-                .attr("fill", "black")
-                .text("Max dose: High")
-
-            // legend.append("circle")
-            //     .attr("x", 500)
-            //     .attr("y", 0)
-            //     .attr("width", 12)
-            //     .attr("height",12)
-            //     .attr("fill", 'lightgray')
-    
-            //         legend.append("text")
-            //             .attr("dx", 516)
-            //             .attr("y", 10)
-            //             .style('font-family', 'Arial')
-            //             .style('font-size', 12)
-            //             .attr("fill", "black")
-            //             .text("FDR >= 0.05 and |fold change| < 1")
-    
+        legend.append('text')
+            .attr('dx', 790)
+            .attr('y', 10)
+            .style('font-family', 'Arial')
+            .style('font-size', 14)
+            .attr('fill', 'black')
+            .text('Max dose: High')
 
     }
+
     render() {
         return <div id={this.props.plotId}/>;
     }
