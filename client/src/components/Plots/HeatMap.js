@@ -84,7 +84,7 @@ const HeatMap = (props) => {
             .style('text-anchor', 'start')
             .call(xAxis)
             .selectAll('text')
-            .attr('transform', 'rotate(-90)')
+            .attr('transform', 'rotate(-75)')
             .attr('color', (i) => {
                 let color = 'black';
 
