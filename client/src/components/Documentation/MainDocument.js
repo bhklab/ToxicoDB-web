@@ -12,6 +12,7 @@ import DrugDoc from './DocSubFunctionality/DrugDoc';
 import GeneDoc from './DocSubFunctionality/GeneDoc';
 import DrugGeneDoc from './DocSubFunctionality/DrugGeneDoc';
 import DatasetDoc from './DocSubFunctionality/DatasetDoc';
+import PathwayDoc from './DocSubFunctionality/PathwayDoc';
 // API subcomponents
 import DrugApiDoc from './DocSubAPI/DrugAPIDoc';
 import GeneApiDoc from './DocSubAPI/GeneAPIDoc';
@@ -176,6 +177,11 @@ const MainDocument = () => {
                         >
                             <button type="button" onClick={() => setDisplay('datasets')}>Datasets</button>
                         </li>
+                        <li
+                            className={display === 'pathways' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => setDisplay('pathways')}>Pathways</button>
+                        </li>
                     </ul>
                     <h3>API</h3>
                     <ul>
@@ -212,6 +218,7 @@ const MainDocument = () => {
                 {display === 'genes' ? <GeneDoc /> : null}
                 {display === 'drugvsgene' ? <DrugGeneDoc /> : null}
                 {display === 'datasets' ? <DatasetDoc /> : null}
+                {display === 'pathways' ? <PathwayDoc /> : null}
                 {display === 'drug-api' ? <DrugApiDoc /> : null}
                 {display === 'gene-api' ? <GeneApiDoc /> : null}
                 {display === 'experiment-api' ? <ExperimentApiDoc /> : null}
