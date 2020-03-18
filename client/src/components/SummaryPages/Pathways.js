@@ -39,7 +39,7 @@ const StyleHeading = styled.div`
 `;
 
 const StyleHeatmap = styled.div`
-     max-width: 1200px;
+     max-width: 60vw;
      overflow-x: scroll;
      overflow-y: auto;
      margin: auto;
@@ -49,6 +49,12 @@ const StyleHeatmap = styled.div`
 `;
 
 const StyledEntireHeatmap = styled.div`
+    max-width: calc(500px + 60vw);
+    width:  ${(props) => {
+        console.log(props.width);
+        return `calc(500px + ${props.width}px)`;
+    }};
+    height: 50px;
     .heatmap-legend-pathways {
         float:left;
         width: 370px;
@@ -56,11 +62,9 @@ const StyledEntireHeatmap = styled.div`
         margin-top: 200px;
     }
     .heatmap-legend {
-        position:absolute;
+        position:relative;
         margin-top: 214px;
-        margin-left: ${(props) => {
-        const temp = Math.min(props.width, 60 * document.documentElement.clientWidth / 100);
-        return `calc(370px + 20px + ${temp}px)`;
+        float:right;
     }};
         
     }
@@ -253,6 +257,7 @@ const Pathways = () => {
     const widthCallback = (width) => {
         setWidth(width);
     };
+    console.log("width", width)
 
     const parseData = (response) => {
         const { data } = response;
@@ -592,7 +597,7 @@ const Pathways = () => {
                 </div>
             </StyleContainer>
             { ((isClicked && !isInitialRender) || (isInitialRender && !isObjectEmpty(parsedDataset))) ? (
-                <StyledEntireHeatmap width={resizeWidth}>
+                <StyledEntireHeatmap width={width}>
                     <HeatMapLegendPathways data={parsedDataset} />
                     <StyleHeatmap>
                         <HeatMap
