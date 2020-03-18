@@ -44,7 +44,7 @@ const HeatMap = (props) => {
             .attr('xmlns', 'http://wwww.w3.org/2000/svg')
             .attr('xmlns:xlink', 'http://wwww.w3.org/1999/xlink')
             .attr('height', height + margin.bottom + margin.top)
-            .attr('width', width + margin.left + margin.right)
+            .attr('width', width + margin.left + margin.right + 50)
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`);
 
@@ -117,7 +117,6 @@ const HeatMap = (props) => {
 
 
     const createRectangle = (drugs, pathways, skeleton, width, height, data, min, max, mean) => {
-        console.log(min, mean, max);
         // color scaling for rectangles
         // const linearColorScale = d3.scaleLinear()
         //     .domain([min, 0, mean, max])
