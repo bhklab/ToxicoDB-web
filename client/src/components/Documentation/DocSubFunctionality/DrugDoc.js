@@ -25,11 +25,11 @@ const DrugDoc = () => (
             <img className="doc-img" src={img3} alt="" />
         </Link>
         <p>Upon entering the drug of choice, an exclusive web page for the drug shows annotations and links to PubChem, highlighted in pink.</p>
-        <Link to="/drugs/9">
+        <Link to="/drugs/7">
             <img className="doc-img" src={img4} alt="" />
         </Link>
-        <p>This is the tabular data of differentially expressed genes generated using limma package for the drug of choice. The dataset can be selected by typing the name in the Dataset column.</p>
-        <Link to="/drugs/9">
+        <p>This is the tabular data of differentially expressed genes generated using limma package for the drug of choice. The dataset can be selected by typing the name in the Dataset column. Additionaly, table data can be filtered and downloaded in csv format for future use.</p>
+        <Link to="/drugs/7">
             <img className="doc-img" src={img5} alt="" />
         </Link>
         <p>
@@ -39,7 +39,7 @@ const DrugDoc = () => (
             {' '}
             0.05). The name of the gene will be highlighted upon hovering on the dots as shown below.
         </p>
-        <Link to="/drugs/9">
+        <Link to="/drugs/7">
             <img className="doc-img last" src={img6} alt="" />
         </Link>
     </div>
