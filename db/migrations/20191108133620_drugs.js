@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('drugs', (table) => {
+    return knex.schema.createTable('compounds', (table) => {
         table.increments('id')
             .primary();
         table.string('name')
@@ -11,5 +11,5 @@ exports.up = function (knex, Promise) {
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTable('drugs');
+    return knex.schema.dropTable('compounds');
 };

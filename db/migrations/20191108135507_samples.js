@@ -5,11 +5,11 @@ exports.up = function (knex, Promise) {
     return knex.schema.createTable('samples', (table) => {
         table.increments('id')
             .primary();
-        table.integer('drug_id')
+        table.integer('compound_id')
             .notNullable()
             .unsigned()
             .references('id')
-            .inTable('drugs')
+            .inTable('compounds')
             .index();
         table.integer('cell_id')
             .notNullable()

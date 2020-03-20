@@ -7,7 +7,7 @@ exports.up = function (knex, Promise) {
             .notNullable()
             .unsigned()
             .references('id')
-            .inTable('pathways_drugs')
+            .inTable('pathways_compounds')
             .index();
         table.string('ontology')
             .notNullable();
