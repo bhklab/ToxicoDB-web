@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from '../images/toxicodb-logo.png';
+// import logo from '../images/toxicodb-logo.png';
 import colors from '../styles/colors';
 
 const StyledNav = styled.div`   
@@ -72,7 +72,7 @@ const FooterNav = () => (
         <div className="container">
             <div className="database links">
                 <h3>Database</h3>
-                <Link to="/drugs">Drugs</Link>
+                <Link to="/compounds">Compounds</Link>
                 <Link to="/genes">Genes</Link>
                 <Link to="/datasets">Datasets</Link>
             </div>

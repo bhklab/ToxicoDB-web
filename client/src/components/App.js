@@ -5,16 +5,16 @@ import { Normalize } from 'styled-normalize';
 import GlobalStyles from '../styles/GlobalStyles';
 import Landing from './Landing';
 import HeaderNav from './HeaderNav';
-import FooterNav from './FooterNav';
+// import FooterNav from './FooterNav';
 
 const Genes = lazy(() => import('./SummaryPages/Genes'));
-const Drugs = lazy(() => import('./SummaryPages/Drugs'));
+const Compounds = lazy(() => import('./SummaryPages/Compounds'));
 const Datasets = lazy(() => import('./SummaryPages/Datasets'));
 const Cells = lazy(() => import('./SummaryPages/Cells'));
 const Tissues = lazy(() => import('./SummaryPages/Tissues'));
 const Species = lazy(() => import('./SummaryPages/Species'));
 const Documentation = lazy(() => import('./Documentation/MainDocument'));
-const DrugCard = lazy(() => import('./IndivPages/DrugPage'));
+const CompoundCard = lazy(() => import('./IndivPages/CompoundPage'));
 const GeneCard = lazy(() => import('./IndivPages/GenePage'));
 const DatasetCard = lazy(() => import('./IndivPages/DatasetPage'));
 const ExpressionPlot = lazy(() => import('./ExpressionPlot'));
@@ -49,7 +49,7 @@ const App = () => (
                 <Suspense fallback={<div />}>
                     <Route exact path="/" component={Landing} />
                     <Route exact path="/genes/" component={Genes} />
-                    <Route exact path="/drugs/" component={Drugs} />
+                    <Route exact path="/compounds/" component={Compounds} />
                     <Route exact path="/datasets/" component={Datasets} />
                     <Route exact path="/cells/" component={Cells} />
                     <Route exact path="/species/" component={Species} />
@@ -57,12 +57,11 @@ const App = () => (
                     <Route exact path="/pathways" component={Pathways} />
                     <Route exact path="/contact/" component={Contact} />
                     <Route exact path="/documentation/" component={Documentation} />
-                    <Route path="/drugs/:id" component={DrugCard} />
+                    <Route path="/compounds/:id" component={CompoundCard} />
                     <Route path="/genes/:id" component={GeneCard} />
                     <Route path="/datasets/:id" component={DatasetCard} />
                     <Route path="/expression" component={ExpressionPlot} />
                     <Route path="/bar" component={BarChart} />
-
                 </Suspense>
             </Switch>
         </StyledApp>

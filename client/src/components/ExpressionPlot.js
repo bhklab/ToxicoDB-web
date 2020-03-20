@@ -40,8 +40,8 @@ class ExpressionPlot extends Component {
             expressionData: [],
             xRange: [],
             yRange: [],
-            drugName: '',
-            drugId: 0,
+            compoundName: '',
+            compoundId: 0,
             geneId: 0,
             geneName: '',
             datasets: [],
@@ -53,10 +53,10 @@ class ExpressionPlot extends Component {
         const { location } = this.props;
         const requestParams = queryString.parse(location.search);
         const {
-            drugId, geneId,
+            compoundId, geneId,
         } = requestParams;
-        this.setState({ drugId, geneId });
-        fetch(`/api/v1/experiments?drugId=${drugId}&geneId=${geneId}`)
+        this.setState({ compoundId, geneId });
+        fetch(`/api/v1/experiments?drugId=${compoundId}&geneId=${compoundId}`)
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
@@ -114,11 +114,11 @@ class ExpressionPlot extends Component {
                     });
             });
 
-        fetch(`/api/v1/drugs/${drugId}`)
+        fetch(`/api/v1/drugs/${compoundId}`)
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                this.setState({ drugName: data[0].name });
+                this.setState({ compoundName: data[0].name });
             });
 
         fetch(`/api/v1/genes/${geneId}`)
@@ -240,7 +240,7 @@ class ExpressionPlot extends Component {
 
     render() {
         const {
-            expressionData, drugName, geneName, drugId, geneId,
+            expressionData, compoundName, geneName, compoundId, geneId,
             xRange, yRange, datasets, loading,
         } = this.state;
         return (
@@ -254,7 +254,7 @@ class ExpressionPlot extends Component {
                         <h1>
                                 Effects of
                             {' '}
-                            <Link to={`/drugs/${drugId}`}>{drugName}</Link>
+                            <Link to={`/compounds/${compoundId}`}>{compoundName}</Link>
                             {' '}
                                 on
                             {' '}

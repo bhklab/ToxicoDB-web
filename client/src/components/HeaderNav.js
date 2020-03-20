@@ -181,7 +181,7 @@ const HeaderNav = () => {
                 </Link>
                 <nav className="links">
                     <Link to="/documentation/">Documentation</Link>
-                    <Link to="/drugs/">Drugs</Link>
+                    <Link to="/compounds/">Compounds</Link>
                     <Link to="/genes/">Genes</Link>
                     <Link to="/datasets/">Datasets</Link>
                     <Link to="/pathways/">Pathways</Link>
@@ -208,10 +208,10 @@ const HeaderNav = () => {
                       Documentation
                     </Link>
                     <Link
-                        to="/drugs/"
+                        to="/compounds/"
                         onClick={() => setMenuOpen(false)}
                     >
-                      Drugs
+                      Compounds
                     </Link>
                     <Link
                         to="/genes/"

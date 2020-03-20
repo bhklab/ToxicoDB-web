@@ -46,7 +46,7 @@ class Query extends Component {
 
         // getting the description from pubchem
         if (type === 'pair') {
-            this.setState({ queryDesc: 'drug-gene pair' });
+            this.setState({ queryDesc: 'compound-gene pair' });
         } else {
             this.setState({ queryDesc: '' });
         }

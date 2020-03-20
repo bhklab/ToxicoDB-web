@@ -125,7 +125,7 @@ class Search extends Component {
             searchData: [],
             options: [],
             selected: [],
-            placeholder: 'Enter a drug, gene, or gene-drug pair...',
+            placeholder: 'Enter a compound, gene, or gene-compound pair...',
             menuOpen: false,
         };
         this.handleChange = this.handleChange.bind(this);
@@ -140,14 +140,14 @@ class Search extends Component {
         fetch('/api/v1/drugs')
             .then((response) => response.json())
             .then((data) => {
-                const drugData = data.data.map((x) => ({
+                const compoundData = data.data.map((x) => ({
                     label: x.name.charAt(0).toUpperCase() + x.name.slice(1),
                     value: x.id,
                     type: 'drug',
                 }));
-                // adding drug data to searchData drug options
-                // searchData[0].options = drugData;
-                searchData = searchData.concat(drugData);
+                // adding compound data to searchData compound options
+                // searchData[0].options = compoundData;
+                searchData = searchData.concat(compoundData);
                 this.setState({ searchData });
             });
 
@@ -170,7 +170,7 @@ class Search extends Component {
                     value: x.value,
                     type: 'gene',
                 }));
-                // adding genes data to searchData drug options
+                // adding genes data to searchData compound options
                 // searchData[1].options = geneData;
                 searchData = searchData.concat(geneData);
                 this.setState({ searchData });
@@ -218,15 +218,15 @@ class Search extends Component {
                     this.setState({ placeholder: 'Please select an option.' });
                 } else if (selected.length === 1) { // one selected, go to indiv page
                     if (selected[0].type === 'drug') {
-                        queryParams = queryParams.concat(`drugs/${selected[0].value}`);
+                        queryParams = queryParams.concat(`compounds/${selected[0].value}`);
                     } else {
                         queryParams = queryParams.concat(`genes/${selected[0].value}`);
                     }
-                } else { // two selected, then it's a gene drug pair
+                } else { // two selected, then it's a gene compound pair
                     if (selected[0].type === 'drug') {
-                        queryParams = queryParams.concat(`expression?drugId=${selected[0].value}&geneId=${selected[1].value}`);
+                        queryParams = queryParams.concat(`expression?compoundId=${selected[0].value}&geneId=${selected[1].value}`);
                     } else {
-                        queryParams = queryParams.concat(`expression?drugId=${selected[1].value}&geneId=${selected[0].value}`);
+                        queryParams = queryParams.concat(`expression?compoundId=${selected[1].value}&geneId=${selected[0].value}`);
                     }
                 }
             }
@@ -259,7 +259,10 @@ class Search extends Component {
                         isMulti
                         filterOption={customFilterOption}
                         options={options}
-                        components={{ MenuList: (props) => (<MenuList {...props} />), Option: CustomOption }}
+                        components={{
+                            MenuList: (props) => (<MenuList {...props} />),
+                            Option: CustomOption,
+                        }}
                         placeholder={placeholder}
                         styles={customStyles}
                         onChange={handleChange}
@@ -270,7 +273,7 @@ class Search extends Component {
                 )}
                 <StyledExample>
                     Example Queries: &nbsp;&nbsp;
-                    <Link to="/drugs/7">Acetaminophen</Link>
+                    <Link to="/compounds/7">Acetaminophen</Link>
                     {' '}
 &nbsp;&nbsp;|&nbsp;&nbsp;
                     {' '}
@@ -278,7 +281,7 @@ class Search extends Component {
                     {' '}
 &nbsp;&nbsp;|&nbsp;&nbsp;
                     {' '}
-                    <Link to="/expression?drugId=9&geneId=7396,27541">CYP1A1 - carbon tetrachloride</Link>
+                    <Link to="/expression?compoundId=9&geneId=7396,27541">CYP1A1 - carbon tetrachloride</Link>
                 </StyledExample>
             </>
 
