@@ -129,7 +129,7 @@ class Bubble extends React.Component {
             .html((d) => {
                 let t;
                 let tt;
-                if (d.text === 'Drugs') {
+                if (d.text === 'Compounds') {
                     t = `<tspan text-anchor='middle' font-size=20 dx='0.4em' dy='-0.5em'>${d.count}</tspan>`;
                     tt = `<tspan text-anchor='middle' font-size=20 dx='-2.1em' dy=20>${d.text}</tspan>`;
                 } else if (d.text === 'Genes') {
@@ -138,7 +138,7 @@ class Bubble extends React.Component {
                 } else if (d.text === 'Tissues') {
                     t = `<tspan text-anchor='middle' font-size=20 dx='0.4em' dy='-0.5em'>${d.count}</tspan>`;
                     tt = `<tspan text-anchor='middle' font-size=17 dx='-1.7em' dy=20>${d.text}</tspan>`;
-                } else if (d.text === 'Cells'){
+                } else if (d.text === 'Cel ls') {
                     t = `<tspan text-anchor='middle' font-size=20  dx='10' dy='-0.5em'>${d.count}</tspan>`;
                     tt = `<tspan text-anchor='middle' font-size=18 dx='-1em' dy=20>${d.text}</tspan>`;
                 } else { // datasets, species

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
 // import AnnotationCard from './AnnotationCard';
-import AnnotationCard from './GeneDrugCard';
+import AnnotationCard from './GeneCompoundCard';
 import SynonymCard from './SynonymCard';
 import VolcanoSelect from './VolcanoSelect';
 import 'react-table-6/react-table.css';
@@ -19,7 +19,7 @@ import DownloadButton from '../Utils/DownloadButton';
 
 import LoadingComponent from '../Utils/Loading';
 
-const StyledDrugPage = styled.div`
+const StyledCompoundPage = styled.div`
     width: 80vw;
     max-width: 1200px;
     padding:140px 0px;
@@ -71,7 +71,7 @@ const filterCaseInsensitive = (filter, row) => {
 };
 
 
-const DrugPage = (props) => {
+const CompoundPage = (props) => {
     const { match: { params } } = props;
 
     // creates an object that contains all filter values
@@ -126,7 +126,7 @@ const DrugPage = (props) => {
         Header: 'Gene',
         accessor: 'gene_name',
         sortable: true,
-        Cell: (row) => (<Link to={`/expression?drugId=${apiData.id}&geneId=${row.original.gene_id}`}>{row.value}</Link>),
+        Cell: (row) => (<Link to={`/expression?compoundId=${apiData.id}&geneId=${row.original.gene_id}`}>{row.value}</Link>),
     }, {
         Header: 'log2(fold change)',
         accessor: 'fold_change',
@@ -182,7 +182,7 @@ const DrugPage = (props) => {
         { displayName: 'dataset', id: 'dataset_name' },
     ];
     return (
-        <StyledDrugPage>
+        <StyledCompoundPage>
             {apiData.length === 0 ? null : (
                 <div>
                     <h1>{apiData.name}</h1>
@@ -221,7 +221,7 @@ const DrugPage = (props) => {
             />
             <DownloadButton
                 data={filteredData}
-                filename={`${apiData.name}-drugsData`}
+                filename={`${apiData.name}-compoundsData`}
                 headers={headers}
             />
 
@@ -242,9 +242,9 @@ const DrugPage = (props) => {
                     />
                 </div>
             )}
-        </StyledDrugPage>
+        </StyledCompoundPage>
     );
 };
 
 
-export default DrugPage;
+export default CompoundPage;

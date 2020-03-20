@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 import React from 'react';
 
-const allDrugData = {
+const allCompoundData = {
     status: 'success',
     data: [
         {
@@ -37,7 +37,7 @@ const allDrugData = {
     ],
 };
 
-const drugData = {
+const compoundData = {
     status: 'success',
     data: [
         {
@@ -58,7 +58,7 @@ const drugData = {
     ],
 };
 
-const drugSynonymData = {
+const compoundSynonymData = {
     status: 'success',
     data: [{
         name: 'TGGATEs Human',
@@ -69,7 +69,7 @@ const drugSynonymData = {
     }],
 };
 
-const drugAnalysis = {
+const compoundAnalysis = {
     status: 'success',
     data: [
         {
@@ -100,7 +100,7 @@ const drugAnalysis = {
 };
 
 
-const DrugApiDoc = () => (
+const CompoundAPIDoc = () => (
     <div className="doc">
         <h1>API Documentation</h1>
         <p>
@@ -108,20 +108,20 @@ const DrugApiDoc = () => (
             {' '}
              supports RESTful API which allows users to directly query the database without having to use web app interface
         </p>
-        <h2>Drug API</h2>
+        <h2>Compound API</h2>
         <div className="api-section">
-            <h3>Get List of Drugs</h3>
-            <p>Retrieves data for all drugs that have been used in the analysis</p>
+            <h3>Get List of Compounds</h3>
+            <p>Retrieves data for all compounds that have been used in the analysis</p>
             <p className="code">
                 <span>curl http://toxicodb.ca/api/v1/drugs</span>
             </p>
             <p>Output: </p>
-            <div><pre className="output">{JSON.stringify(allDrugData, null, 2)}</pre></div>
+            <div><pre className="output">{JSON.stringify(allCompoundData, null, 2)}</pre></div>
         </div>
         <div className="api-section">
-            <h3>Get Specific Drug</h3>
+            <h3>Get Specific Compound</h3>
             <p>
-                Retrieves information for a given drug. The API request requires
+                Retrieves information for a given compound. The API request requires
                 {' '}
                 <em>drug id</em>
                 {' '}
@@ -133,12 +133,12 @@ const DrugApiDoc = () => (
                 <span>curl http://toxicodb.ca/api/v1/drugs/72</span>
             </p>
             <p>Output: </p>
-            <div><pre className="output">{JSON.stringify(drugData, null, 2)}</pre></div>
+            <div><pre className="output">{JSON.stringify(compoundData, null, 2)}</pre></div>
         </div>
         <div className="api-section">
-            <h3>Get Drug Synonyms</h3>
+            <h3>Get Compound Synonyms</h3>
             <p>
-                Retrieves synonyms per dataset for a given drug. The API request requires
+                Retrieves synonyms per dataset for a given compound. The API request requires
                 {' '}
                 <em>drug id</em>
                 {' '}
@@ -150,12 +150,12 @@ const DrugApiDoc = () => (
                 <span>curl http://toxicodb.ca/api/v1/drugs/72/synonyms</span>
             </p>
             <p>Output: </p>
-            <div><pre className="output">{JSON.stringify(drugSynonymData, null, 2)}</pre></div>
+            <div><pre className="output">{JSON.stringify(compoundSynonymData, null, 2)}</pre></div>
         </div>
         <div className="api-section">
-            <h3>Get Drug Analysis Data</h3>
+            <h3>Get Compound Analysis Data</h3>
             <p>
-                Retrieves analysis data for a given drug across all genes. The API requires
+                Retrieves analysis data for a given compound across all genes. The API requires
                 {' '}
                 <em>drug id</em>
                 {' '}
@@ -167,9 +167,9 @@ const DrugApiDoc = () => (
                 <span>curl http://toxicodb.ca/api/v1/drugs/1/analysis</span>
             </p>
             <p>Output: </p>
-            <div><pre className="output">{JSON.stringify(drugAnalysis, null, 2)}</pre></div>
+            <div><pre className="output">{JSON.stringify(compoundAnalysis, null, 2)}</pre></div>
         </div>
     </div>
 );
 
-export default DrugApiDoc;
+export default CompoundAPIDoc;

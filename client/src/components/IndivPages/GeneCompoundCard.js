@@ -44,7 +44,7 @@ const generateLink = (obj, i, type) => {
         }
         break;
     case 'symbol':
-        // handles edge case when both gene and drug have symbol value
+        // handles edge case when both gene and compound have symbol value
         content = type === 'gene' ? <a href={`http://www.genecards.org/cgi-bin/carddisp.pl?gene=${obj.value[i]}`} target="_blank" rel="noopener noreferrer">{obj.value[i]}</a> : obj.value[i];
         break;
     case 'entrez_gid':
@@ -61,7 +61,7 @@ const generateLink = (obj, i, type) => {
     );
 };
 
-const GeneDrugCard = (props) => {
+const GeneCompoundCard = (props) => {
     const { data, type } = props;
     return (
         <StyledAnnotationCard>
@@ -90,4 +90,4 @@ const GeneDrugCard = (props) => {
 };
 
 
-export default GeneDrugCard;
+export default GeneCompoundCard;

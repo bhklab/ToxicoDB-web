@@ -295,7 +295,6 @@ const Pathways = () => {
     };
 
     const createDrugGroups = (res) => {
-        console.log(res);
         // the grouping of drugs and setting the drugs for each type.
         const groupDrug = {
             Carcinogenic: [],
@@ -323,7 +322,7 @@ const Pathways = () => {
             label: val.name,
         }));
 
-        drugs = [{ value: 'All Drugs', label: 'All Drugs' }, ...drugs];
+        drugs = [{ value: 'All Drugs', label: 'All Compounds' }, ...drugs];
 
         const groups = ['Carcinogenic & Non-Carcinogenic', 'Genotoxic & Non-Genotoxic'].map((val) => ({
             value: val,
@@ -336,7 +335,7 @@ const Pathways = () => {
                 options: groups,
             },
             {
-                label: 'Drugs',
+                label: 'Compounds',
                 options: drugs,
             },
         ];
@@ -545,7 +544,7 @@ const Pathways = () => {
                     <Select
                         options={drugList}
                         styles={customStyles}
-                        placeholder="Select the Drug"
+                        placeholder="Select the Compound"
                         onChange={handleDrugChange}
                         value={selectedDrugs}
                         formatGroupLabel={formatGroupLabel}

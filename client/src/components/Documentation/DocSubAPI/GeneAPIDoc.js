@@ -114,7 +114,7 @@ const GeneApiDoc = () => (
         <div className="api-section">
             <h3>Get Gene Analysis Data</h3>
             <p>
-                Retrieves analysis data for a given gene or genes tested against multiple drugs. The API requires
+                Retrieves analysis data for a given gene or genes tested against multiple compounds. The API requires
                 Retrieves information for a given gene or genes.
                 {' '}
                 {' '}

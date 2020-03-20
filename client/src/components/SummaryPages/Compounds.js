@@ -8,7 +8,7 @@ import 'react-table-6/react-table.css';
 
 import LoadingComponent from '../Utils/Loading';
 
-const StyledDrugs = styled.div`
+const StyledCompounds = styled.div`
     width: 80vw;
     max-width: 1200px;
     padding:140px 0px;
@@ -46,11 +46,11 @@ const filterCaseInsensitive = (filter, row) => {
     }
 };
 
-class Drugs extends Component {
+class Compounds extends Component {
     constructor() {
         super();
         this.state = {
-            drugData: [],
+            compoundData: [],
             loading: true,
         };
     }
@@ -64,19 +64,19 @@ class Drugs extends Component {
                     row.class_in_vivo = row.class_in_vivo === '?' ? '' : row.class_in_vivo;
                     return row;
                 });
-                this.setState({ drugData: dataset, loading: false });
+                this.setState({ compoundData: dataset, loading: false });
             });
     }
 
     render() {
-        const { loading, drugData } = this.state;
+        const { loading, compoundData } = this.state;
         const columns = [
             {
                 Header: 'Name',
                 accessor: 'name',
                 sortable: true,
                 minWidth: 200,
-                Cell: (row) => (<Link to={`/drugs/${row.original.id}`}>{row.value}</Link>),
+                Cell: (row) => (<Link to={`/compounds/${row.original.id}`}>{row.value}</Link>),
             },
             {
                 Header: 'PubChem CID',
@@ -118,11 +118,11 @@ class Drugs extends Component {
         ];
 
         return (
-            <StyledDrugs>
+            <StyledCompounds>
                 <div className="wrapper">
-                    <h1>Drugs</h1>
+                    <h1>Compound</h1>
                     <ReactTable
-                        data={drugData}
+                        data={compoundData}
                         filterable
                         defaultFilterMethod={filterCaseInsensitive}
                         columns={columns}
@@ -142,10 +142,10 @@ class Drugs extends Component {
                         LoadingComponent={LoadingComponent}
                     />
                 </div>
-            </StyledDrugs>
+            </StyledCompounds>
         );
     }
 }
 
 
-export default Drugs;
+export default Compounds;

@@ -30,7 +30,7 @@ const cellDescription = {
     1: {
         Name: 'Primary hepatocytes',
         Description: `Primary hepatocytes, derived from isolated from liver tissue, 
-                        express typical hepatic functions and express drug metabolising enzymes. 
+                        express typical hepatic functions and express compound metabolising enzymes. 
                         Hence it serves as the closest model in vitro for toxicity studies.`,
     },
 };

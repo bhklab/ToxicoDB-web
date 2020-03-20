@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-console */
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -5,7 +7,7 @@ import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
 // import AnnotationCard from './AnnotationCard';
-import AnnotationCard from './GeneDrugCard';
+import AnnotationCard from './GeneCompoundCard';
 // import VolcanoPlotly from '../Plots/VolcanoPlotly';
 // import VolcanoSingle from '../Plots/VolcanoSingle';
 import VolcanoSelect from './VolcanoSelect';
@@ -76,6 +78,7 @@ const GenePage = (props) => {
 
     // apiData and annotationData are being updated together
     // so they can be handled under the same hook
+    // eslint-disable-next-line camelcase
     const { apiData, entrez_gid, annotationData } = useFetchAnnotation(`/api/v1/genes/${params.id}`, 'gene');
 
     // analysisData and loading are handled together => one hook
@@ -100,10 +103,10 @@ const GenePage = (props) => {
     }
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
     const columns = [{
-        Header: 'Drug',
+        Header: 'Compound',
         accessor: 'drug_name',
         sortable: true,
-        Cell: (row) => (<Link to={`/expression?drugId=${row.original.drug_id}&geneId=${params.id}`}>{row.value}</Link>),
+        Cell: (row) => (<Link to={`/expression?compoundId=${row.original.drug_id}&geneId=${params.id}`}>{row.value}</Link>),
     }, {
         Header: 'log2(fold change)',
         accessor: 'fold_change',
@@ -151,7 +154,7 @@ const GenePage = (props) => {
         ),
     }];
     const headers = [
-        { displayName: 'drug', id: 'drug_name' },
+        { displayName: 'compound', id: 'drug_name' },
         { displayName: 'p-value', id: 'p_value' },
         { displayName: 'FDR', id: 'fdr' },
         { displayName: 'fold-change', id: 'fold_change' },
@@ -184,7 +187,7 @@ const GenePage = (props) => {
             />
             <DownloadButton
                 data={analysisData}
-                filename={`${apiData.symbol && apiData.symbol.toUpperCase()}-drugsData`}
+                filename={`${apiData.symbol && apiData.symbol.toUpperCase()}-compoundsData`}
                 headers={headers}
             />
 

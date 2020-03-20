@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { useTable, useFilters, useGlobalFilter } from 'react-table';
-import Select from 'react-select';
+// import Select from 'react-select';
 import { Link } from 'react-router-dom';
 import { checkPropTypes } from 'prop-types';
 import matchSorter from 'match-sorter';
@@ -17,7 +17,8 @@ function DefaultColumnFilter({
         <input
             value={filterValue || ''}
             onChange={(e) => {
-                setFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+                // Set undefined to remove the filter entirely
+                setFilter(e.target.value || undefined);
             }}
             placeholder={`Search ${count} records...`}
         />
@@ -43,7 +44,8 @@ function GlobalFilter({
             <input
                 value={globalFilter || ''}
                 onChange={(e) => {
-                    setGlobalFilter(e.target.value || undefined); // Set undefined to remove the filter entirely
+                    // Set undefined to remove the filter entirely
+                    setGlobalFilter(e.target.value || undefined);
                 }}
                 placeholder={`${count} records...`}
                 style={{
@@ -221,13 +223,13 @@ function SelectColumnFilter({
 }
 
 
-function DrugTable(props) {
+function CompoundTable(props) {
     const columns = React.useMemo(
         () => [{
             Header: 'Gene',
             accessor: 'gene_name',
             sortable: true,
-            Cell: (row) => (<Link to={`/expression?drugId=${props.drugData.id}&geneId=${row.original.gene_id}`}>{row.value}</Link>),
+            Cell: (row) => (<Link to={`/expression?compoundId=${props.drugData.id}&geneId=${row.original.gene_id}`}>{row.value}</Link>),
         }, {
             Header: 'log2(fold change)',
             accessor: 'fold_change',
@@ -287,4 +289,4 @@ function DrugTable(props) {
         />
     );
 }
-export default DrugTable;
+export default CompoundTable;

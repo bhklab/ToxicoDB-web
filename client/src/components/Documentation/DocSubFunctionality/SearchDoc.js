@@ -16,12 +16,12 @@ const SearchDoc = () => (
         </p>
         <p>
             <em>ToxicoDB</em>
-            ’s search bar takes three types of queries. The simplest is to query for a single gene; rat or human, (e.g., CYP1A1) or drug (e.g., Acetaminophen ).
+            ’s search bar takes three types of queries. The simplest is to query for a single gene; rat or human, (e.g., CYP1A1) or compound (e.g., Acetaminophen ).
         </p>
         <Link to="/">
             <img className="doc-img" src={img1} alt="" />
         </Link>
-        <p>One can use the search to query for the association of a specific drug-gene pair (e.g., Carbon tetrachloride, CYP1A1), in a dataset. This query will direct you to a page plotting gene expression versus time plot.</p>
+        <p>One can use the search to query for the association of a specific compound-gene pair (e.g., Carbon tetrachloride, CYP1A1), in a dataset. This query will direct you to a page plotting gene expression versus time plot.</p>
         <Link to="/">
             <img className="doc-img last" src={img2} alt="" />
         </Link>

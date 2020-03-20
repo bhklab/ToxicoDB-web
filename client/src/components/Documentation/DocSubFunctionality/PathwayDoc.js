@@ -12,12 +12,12 @@ const PathwayDoc = () => (
         <Link to="/">
             <img className="doc-img" src={img1} alt="" />
         </Link>
-        <p>This displays a heatmap of the most most significant pathways and drugs from TGGATEs Human Dataset.</p>
+        <p>This displays a heatmap of the most most significant pathways and compounds from TGGATEs Human Dataset.</p>
         <Link to="/pathways">
             <img className="doc-img" src={img2} alt="" />
         </Link>
         <p>
-            The selection allows the user to chose the dataset, a single drug or list of drugs and one of the ontologies GO or Reactome.
+            The selection allows the user to chose the dataset, a single compound or list of compounds and one of the ontologies GO or Reactome.
             The pathways of interest  can be selected from drop-down or using keyword search like&nbsp;
             <q>Oxidation</q>
             .

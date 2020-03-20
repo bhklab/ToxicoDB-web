@@ -8,13 +8,13 @@ import transitions from '../../styles/transitions';
 // Funtionality subcomponents
 import OverviewDoc from './DocSubFunctionality/OverviewDoc';
 import SearchDoc from './DocSubFunctionality/SearchDoc';
-import DrugDoc from './DocSubFunctionality/DrugDoc';
+import CompoundDoc from './DocSubFunctionality/CompoundDoc';
 import GeneDoc from './DocSubFunctionality/GeneDoc';
-import DrugGeneDoc from './DocSubFunctionality/DrugGeneDoc';
+import CompoundGeneDoc from './DocSubFunctionality/CompoundGeneDoc';
 import DatasetDoc from './DocSubFunctionality/DatasetDoc';
 import PathwayDoc from './DocSubFunctionality/PathwayDoc';
 // API subcomponents
-import DrugApiDoc from './DocSubAPI/DrugAPIDoc';
+import CompoundAPIDoc from './DocSubAPI/CompoundAPIDoc';
 import GeneApiDoc from './DocSubAPI/GeneAPIDoc';
 import ExperimentApiDoc from './DocSubAPI/ExperimentAPIDoc';
 import DatasetApiDoc from './DocSubAPI/DatasetAPIDoc';
@@ -158,9 +158,9 @@ const MainDocument = () => {
                             <button type="button" onClick={() => setDisplay('search')}>Search</button>
                         </li>
                         <li
-                            className={display === 'drugs' ? 'selected' : null}
+                            className={display === 'compounds' ? 'selected' : null}
                         >
-                            <button type="button" onClick={() => setDisplay('drugs')}>Drugs</button>
+                            <button type="button" onClick={() => setDisplay('compounds')}>Compounds</button>
                         </li>
                         <li
                             className={display === 'genes' ? 'selected' : null}
@@ -168,9 +168,9 @@ const MainDocument = () => {
                             <button type="button" onClick={() => setDisplay('genes')}>Genes</button>
                         </li>
                         <li
-                            className={display === 'drugvsgene' ? 'selected' : null}
+                            className={display === 'compoundvsgene' ? 'selected' : null}
                         >
-                            <button type="button" onClick={() => setDisplay('drugvsgene')}>Drug vs Gene</button>
+                            <button type="button" onClick={() => setDisplay('compoundvsgene')}>Compound vs Gene</button>
                         </li>
                         <li
                             className={display === 'datasets' ? 'selected' : null}
@@ -186,9 +186,9 @@ const MainDocument = () => {
                     <h3>API</h3>
                     <ul>
                         <li
-                            className={display === 'drug-api' ? 'selected' : null}
+                            className={display === 'compound-api' ? 'selected' : null}
                         >
-                            <button type="button" onClick={() => setDisplay('drug-api')}>Drugs</button>
+                            <button type="button" onClick={() => setDisplay('compound-api')}>Compounds</button>
                         </li>
                         <li
                             className={display === 'gene-api' ? 'selected' : null}
@@ -198,7 +198,7 @@ const MainDocument = () => {
                         <li
                             className={display === 'experiment-api' ? 'selected' : null}
                         >
-                            <button type="button" onClick={() => setDisplay('experiment-api')}>Drug vs Gene</button>
+                            <button type="button" onClick={() => setDisplay('experiment-api')}>Compound vs Gene</button>
                         </li>
                         <li
                             className={display === 'dataset-api' ? 'selected' : null}
@@ -214,12 +214,12 @@ const MainDocument = () => {
                 </nav>
                 {display === 'overview' ? <OverviewDoc /> : null}
                 {display === 'search' ? <SearchDoc /> : null}
-                {display === 'drugs' ? <DrugDoc /> : null}
+                {display === 'compounds' ? <CompoundDoc /> : null}
                 {display === 'genes' ? <GeneDoc /> : null}
-                {display === 'drugvsgene' ? <DrugGeneDoc /> : null}
+                {display === 'compoundvsgene' ? <CompoundGeneDoc /> : null}
                 {display === 'datasets' ? <DatasetDoc /> : null}
                 {display === 'pathways' ? <PathwayDoc /> : null}
-                {display === 'drug-api' ? <DrugApiDoc /> : null}
+                {display === 'compound-api' ? <CompoundAPIDoc /> : null}
                 {display === 'gene-api' ? <GeneApiDoc /> : null}
                 {display === 'experiment-api' ? <ExperimentApiDoc /> : null}
                 {display === 'dataset-api' ? <DatasetApiDoc /> : null}

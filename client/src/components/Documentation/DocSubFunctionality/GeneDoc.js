@@ -40,12 +40,12 @@ const GeneDoc = () => (
         <Link to="/genes/7396,27541">
             <img className="doc-img" src={img4} alt="" />
         </Link>
-        <p>This is a table summarizing top drugs associated with the gene for dataset of choice. The dataset can be selected by typing the name in the Dataset column. Additionaly, table data can be filtered and downloaded in csv format for future use.</p>
+        <p>This is a table summarizing top compounds associated with the gene for dataset of choice. The dataset can be selected by typing the name in the Dataset column. Additionaly, table data can be filtered and downloaded in csv format for future use.</p>
         <Link to="/genes/7396,27541">
             <img className="doc-img" src={img5} alt="" />
         </Link>
         <p>
-            Lastly, a volcano plot to visualize top drugs associated with the gene. Green dots, if present, represent the top drugs with fold change
+            Lastly, a volcano plot to visualize top compounds associated with the gene. Green dots, if present, represent the top compounds with fold change
             {' '}
             {'>='}
             {' '}
@@ -53,7 +53,7 @@ const GeneDoc = () => (
             {' '}
             {'<'}
             {' '}
-            0.05. The name of the drug will be highlighted upon hovering on the dots as shown below.
+            0.05. The name of the compound will be highlighted upon hovering on the dots as shown below.
         </p>
         <Link to="/genes/7396,27541">
             <img className="doc-img last" src={img6} alt="" />

@@ -36,10 +36,10 @@ const ExperimentApiDoc = () => (
             {' '}
              supports RESTful API which allows users to directly query the database without having to use web app interface
         </p>
-        <h2>Drug vs Gene API</h2>
+        <h2>Compound vs Gene API</h2>
         <div className="api-section">
             <p>
-                Retrieves expression data for a given gene over time for different concentation of a given drug. The API request requires
+                Retrieves expression data for a given gene over time for different concentation of a given compound. The API request requires
                 {' '}
                 <em>gene id</em>
                 {' '}

@@ -47,11 +47,10 @@ class AnnotationCard extends Component {
     createCard() {
         const { data } = this.props;
         const table = [];
-        const isDrugData = data.filter((val) => val.name === 'pubchem');
+        const isCompoundData = data.filter((val) => val.name === 'pubchem');
 
         // this will create subelements for the table row with more than one variable.
         const createSubCard = (val) => {
-            console.log(val);
             const tablerow = [];
             if (val.name === 'DataType') {
                 Object.keys(val.value).forEach((id) => tablerow.push(
@@ -109,9 +108,8 @@ class AnnotationCard extends Component {
 
         // this returns table data.
         const createTableData = (data) => {
-            console.log(data.name)
             let tableData = '';
-            if (data.name.replace(/_/g, ' ') === 'symbol' && isDrugData.length === 0) {
+            if (data.name.replace(/_/g, ' ') === 'symbol' && isCompoundData.length === 0) {
                 tableData = 'Gene Cards';
             } else if (data.name.replace(/_/g, ' ') === 'name') {
                 tableData = 'ENSEMBL GID';
@@ -134,13 +132,11 @@ class AnnotationCard extends Component {
                         </td>
                         <td className="value" key={data[j].value}>
                             { (data[j].name === 'name' || data[j].name === 'ensembl_gid'
-                                    || data[j].name === 'entrez_gid' || data[j].name === 'pubchem' || (data[j].name === 'symbol' && isDrugData.length === 0))
+                                    || data[j].name === 'entrez_gid' || data[j].name === 'pubchem' || (data[j].name === 'symbol' && isCompoundData.length === 0))
                                 ? (
                                     createLink(data[j])
                                 )
                                 : (
-                                    // (Object.keys(data[j].value).forEach((val) => console.log(val, data[j].value[val])))
-                                    // {`${id}: ${val.value[id]}`}
                                     typeof (data[j].value) === 'object' ? (
                                         createSubCard(data[j])
                                     ) : data[j].value
