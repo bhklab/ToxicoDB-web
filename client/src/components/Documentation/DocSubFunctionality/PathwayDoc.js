@@ -16,7 +16,13 @@ const PathwayDoc = () => (
         <Link to="/pathways">
             <img className="doc-img" src={img2} alt="" />
         </Link>
-        <p>The selection allows the user to select the dataset then a list of drugs or a single drug, then choose one of the ontologies and a list of pathways which will display a heatmap of the data.</p>
+        <p>
+            The selection allows the user to chose the dataset, a single drug or list of drugs and one of the ontologies GO or Reactome.
+            The pathways of interest  can be selected from drop-down or using keyword search like&nbsp;
+            <q>Oxidation</q>
+            .
+            This displays a heatmap of the data highlighted by FDR significance.
+        </p>
         <Link to="/pathways">
             <img className="doc-img last" src={img3} alt="" />
         </Link>

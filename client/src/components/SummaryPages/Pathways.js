@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-mixed-operators */
 /* eslint-disable no-shadow */
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
 import colors from '../../styles/colors';
@@ -216,20 +216,6 @@ const ontologyList = [
     { value: 'Reactome', label: 'Reactome' },
     { value: 'GO', label: 'GO' },
 ];
-
-// function useWindowSize() {
-//     const [width, setWidth] = useState(0);
-//     useLayoutEffect(() => {
-//         function updateSize() {
-//             setWidth(window.innerWidth);
-//         }
-//         window.addEventListener('resize', updateSize);
-//         updateSize();
-//         return () => window.removeEventListener('resize', updateSize);
-//     }, []);
-//     return width;
-// }
-
 
 const Pathways = () => {
     // setting dataset and drug state.
