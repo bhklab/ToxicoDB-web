@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import ReactLoading from 'react-loading';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import colors from '../styles/colors';
 import Expression from './Plots/Expression';
 
-import Loading from './Utils/Loading';
-
 
 const StyledExpressionPlot = styled.div`
     width: 80vw;
     max-width: 1200px;
+    min-height: 800px;
     padding:140px 0px;
     color: ${colors.blue_text};
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     h1 {
         color: ${colors.blue_header};
         font-family: 'Raleway', sans-serif;
@@ -22,6 +25,10 @@ const StyledExpressionPlot = styled.div`
     }
     a {
       color: ${colors.red_highlight};
+    }
+    .loading-container {
+        margin: auto;
+        width: 150px;
     }
 `;
 
@@ -46,64 +53,65 @@ class ExpressionPlot extends Component {
         const { location } = this.props;
         const requestParams = queryString.parse(location.search);
         const {
-            drugId, geneId, 
+            drugId, geneId,
         } = requestParams;
         this.setState({ drugId, geneId });
         fetch(`/api/v1/experiments?drugId=${drugId}&geneId=${geneId}`)
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                fetch(`/api/v1/experiments/control`)
+                fetch('/api/v1/experiments/control')
                     .then((response) => response.json())
                     .then((controlRes) => {
                         const controlData = controlRes.data;
                         const expData = this.formatData(data, controlData);
 
-                        // find [min,max] time and expression for the axes, and summary stats for dose
+                        // find [min,max] time and expression for the axes,
+                        // and summary stats for dose
                         const times = data.map((x) => x.time);
                         const exps = data.map((x) => x.expression);
 
                         // find datasets for the legend
                         const datasets = [...new Set(data.map((x) => x.name))];
-                        
+
                         // getting control points for range
                         const controlTimes = [];
                         const controlExps = [];
                         expData.forEach((x) => {
-                            if (x.class === "DrugMatrix" && x.label === "Control replicate 1") {
+                            if (x.class === 'DrugMatrix' && x.label === 'Control replicate 1') {
                                 x.points.forEach((i) => {
                                     controlTimes.push(i.time);
                                     controlExps.push(i.exp);
-                                })
+                                });
                             }
-                        })
+                        });
                         // determining x/yrange to encompass control ranges as well
                         let xRange;
                         let yRange;
-                        if (controlTimes.length === 0) { // DrugMatrix doesn't exist, don't include control
+                        // DrugMatrix doesn't exist, don't include control
+                        if (controlTimes.length === 0) {
                             xRange = [Math.min(...times) - 1, Math.max(...times) + 1];
                             yRange = [Math.min(...exps) - 1, Math.max(...exps) + 1];
                         } else {
                             xRange = [
                                 Math.min(Math.min(...times) - 1, Math.min(...controlTimes) - 1),
-                                Math.min(Math.max(...times) + 1, Math.max(...controlTimes) + 1)
+                                Math.min(Math.max(...times) + 1, Math.max(...controlTimes) + 1),
                             ];
                             yRange = [
                                 Math.min(Math.min(...exps) - 1, Math.min(...controlExps) - 1),
                                 Math.max(Math.max(...exps) + 1, Math.max(...controlExps) + 1),
                             ];
                         }
-                        
+
 
                         this.setState({
                             expressionData: expData,
-                            xRange: xRange,
-                            yRange: yRange,
+                            xRange,
+                            yRange,
                             datasets,
                             loading: false,
                         });
-
-                    })
+                    });
             });
 
         fetch(`/api/v1/drugs/${drugId}`)
@@ -121,18 +129,17 @@ class ExpressionPlot extends Component {
             });
     }
 
+    // eslint-disable-next-line class-methods-use-this
     formatData(expData, controlData) {
-        console.log("expdata", expData, "controlData", controlData)
-
         /* Parsing the experiment data */
-        
+
         // different colours for each dose, same colours for each replicate
         const colorMap = {
-            'Control': '#18c61a',
-            'Low': '#9817ff',
-            'Middle': '#d31911',
-            'High': '#24b7f1'
-        }
+            Control: '#18c61a',
+            Low: '#9817ff',
+            Middle: '#d31911',
+            High: '#24b7f1',
+        };
         // const colours = ['#18c61a', '#9817ff', '#d31911', '#24b7f1', '#fa82ce', '#736c31'];
         const doses = ['Control', 'Low', 'Middle', 'High'];
 
@@ -141,7 +148,7 @@ class ExpressionPlot extends Component {
 
         const traces = {};
         // index for replicate (dash)
-        let rInd = -1;
+        // let rInd = -1;
 
         // check if DrugMatrix is in there - then use control
         let useControl = false;
@@ -150,78 +157,74 @@ class ExpressionPlot extends Component {
             if (dsetName === 'DrugMatrix') {
                 useControl = true;
             }
-            if (traces[dsetName] == undefined) {
+            if (traces[dsetName] === undefined) {
                 traces[dsetName] = {};
                 doses.forEach((dose) => {
-                    traces[dsetName][dose] = {}
-                })
-                rInd = -1; //reset replicate
+                    traces[dsetName][dose] = {};
+                });
+                // rInd = -1; // reset replicate
             }
             if (traces[dsetName][item.dose]['rep'.concat(item.replicate)] === undefined) { // if dose exists, but the replicate doesn't
                 traces[dsetName][item.dose]['rep'.concat(item.replicate)] = {};
-                rInd++;
+                // rInd++;
             }
             if (Object.keys(traces[dsetName][item.dose]['rep'.concat(item.replicate)]).length === 0) { // if no data in replicate
                 // if DrugMatrix, then must average points with more than one value
                 // make into {time: [expression]}
                 if (dsetName === 'DrugMatrix') {
-                    let temp = {};
+                    const temp = {};
                     temp[item.time] = [item.expression];
                     traces[dsetName][item.dose]['rep'.concat(item.replicate)].points = temp;
                 } else {
                     traces[dsetName][item.dose]['rep'.concat(item.replicate)].points = [{ time: item.time, exp: item.expression }];
                 }
-                traces[dsetName][item.dose]['rep'.concat(item.replicate)].mode = dashTypes[item.replicate-1]; // if solid, don't have dash-array
+                traces[dsetName][item.dose]['rep'.concat(item.replicate)].mode = dashTypes[item.replicate - 1]; // if solid, don't have dash-array
                 traces[dsetName][item.dose]['rep'.concat(item.replicate)].label = `${item.dose} replicate ${item.replicate}`; // legend label
                 traces[dsetName][item.dose]['rep'.concat(item.replicate)].color = colorMap[item.dose];
                 traces[dsetName][item.dose]['rep'.concat(item.replicate)].class = `${item.name.replaceAll(' ', '')}`; // has the dataset as class
-            } else {
-                if (dsetName === 'DrugMatrix') {
-                    // if time key doesn't exist
-                    if (traces[dsetName][item.dose]['rep'.concat(item.replicate)].points[item.time] === undefined) {
-                        traces[dsetName][item.dose]['rep'.concat(item.replicate)].points[item.time] = [item.expression];
-                    }
-                    else {
-                        traces[dsetName][item.dose]['rep'.concat(item.replicate)].points[item.time].push(item.expression)
-                    }
+            } else if (dsetName === 'DrugMatrix') {
+                // if time key doesn't exist
+                if (traces[dsetName][item.dose]['rep'.concat(item.replicate)].points[item.time] === undefined) {
+                    traces[dsetName][item.dose]['rep'.concat(item.replicate)].points[item.time] = [item.expression];
                 } else {
-                    traces[dsetName][item.dose]['rep'.concat(item.replicate)].points.push({ time: item.time, exp: item.expression });
+                    traces[dsetName][item.dose]['rep'.concat(item.replicate)].points[item.time].push(item.expression);
                 }
+            } else {
+                traces[dsetName][item.dose]['rep'.concat(item.replicate)].points.push({ time: item.time, exp: item.expression });
             }
         });
 
         // put in DrugMatrix controls
         if (useControl) {
-            let temp = {};
+            const temp = {};
             temp.points = [];
-            temp.mode = dashTypes[0];
+            [temp.mode] = dashTypes;
             temp.label = 'Control replicate 1';
-            temp.color = colorMap['Control'];
-            temp.class = 'DrugMatrix'
-            temp.points = { 16: [], 24: []};
+            temp.color = colorMap.Control;
+            temp.class = 'DrugMatrix';
+            temp.points = { 16: [], 24: [] };
             controlData.forEach((item) => {
                 temp.points[item.time].push(item.expression);
-            })
-            traces["DrugMatrix"]["Control"]["rep1"] = temp
+            });
+            traces.DrugMatrix.Control.rep1 = temp;
 
             // parse multiple timepoints into averages - specific to DrugMatrix
-            Object.keys(traces["DrugMatrix"]).forEach((dose) => {
-                Object.keys(traces["DrugMatrix"][dose]).forEach((rep) => {
-                    let temp = [];
-                    Object.keys(traces["DrugMatrix"][dose][rep].points).forEach((time) => {
-                        let tempObj = {};
-                        tempObj.time = parseInt(time);
-                        tempObj.exp = traces["DrugMatrix"][dose][rep].points[time].reduce((total, x) => total + x) / traces["DrugMatrix"][dose][rep].points[time].length;
+            Object.keys(traces.DrugMatrix).forEach((dose) => {
+                Object.keys(traces.DrugMatrix[dose]).forEach((rep) => {
+                    // eslint-disable-next-line no-shadow
+                    const temp = [];
+                    Object.keys(traces.DrugMatrix[dose][rep].points).forEach((time) => {
+                        const tempObj = {};
+                        tempObj.time = parseInt(time, 10);
+                        tempObj.exp = traces.DrugMatrix[dose][rep].points[time].reduce(
+                            (total, x) => total + x,
+                        ) / traces.DrugMatrix[dose][rep].points[time].length;
                         temp.push(tempObj);
-                    })
-                    traces["DrugMatrix"][dose][rep].points = temp;
-                })
-            })
+                    });
+                    traces.DrugMatrix[dose][rep].points = temp;
+                });
+            });
         }
-
-        
-
-        console.log("traces", traces)
 
         const data = [];
         Object.keys(traces).forEach((dset) => {
@@ -231,29 +234,29 @@ class ExpressionPlot extends Component {
                 });
             });
         });
-        console.log("final data", data)
         return data;
     }
 
 
     render() {
         const {
-            expressionData, drugName, geneName, drugId, geneId, xRange, yRange, summaryStats, datasets, loading,
+            expressionData, drugName, geneName, drugId, geneId,
+            xRange, yRange, datasets, loading,
         } = this.state;
         return (
             <StyledExpressionPlot>
-                {expressionData.length === 0 || drugName === '' || geneName === '' ? (
+                {loading ? (
                     <div className="loading-container">
-                        <Loading type="bubbles" width={150} height={150} color={colors.color_main_2} />
+                        <ReactLoading type="bubbles" width={150} height={150} color={colors.blue_header} />
                     </div>
                 ) : (
                     <>
                         <h1>
-Effects of
+                                Effects of
                             {' '}
                             <Link to={`/drugs/${drugId}`}>{drugName}</Link>
                             {' '}
-on
+                                on
                             {' '}
                             <Link to={`/genes/${geneId}`}>{geneName}</Link>
                         </h1>
