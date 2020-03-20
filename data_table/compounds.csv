@@ -1,0 +1,233 @@
+id,name
+1,1-Naphthyl isothiocyanate
+2,Phenylbutazone
+3,Rifampicin
+4,Indomethacin
+5,Chlorpromazine
+6,Isoniazid
+7,Acetaminophen
+8,Clofibrate
+9,Carbon tetrachloride
+10,Phenobarbital
+11,Methapyrilene
+12,Ethionine
+13,Carbamazepine
+14,Cimetidine
+15,Fluphenazine
+16,Pirinixic acid
+17,Aspirin
+18,Gemfibrozil
+19,Labetalol
+20,Hexachlorobenzene
+21,Amiodarone
+22,Allopurinol
+23,Benzbromarone
+24,Nitrofurantoin
+25,Diazepam
+26,Griseofulvin
+27,Sulfasalazine
+28,Bromobenzene
+29,Cyclophosphamide
+30,Omeprazole
+31,Allyl alcohol
+32,Valproic acid
+33,Diclofenac
+34,Propylthiouracil
+35,2H-1-Benzopyran-2-one
+36,Haloperidol
+37,Tetracycline
+38,Flutamide
+39,Glyburide
+40,Azathioprine
+41,Perhexiline
+42,Phenytoin
+43,Doxepin Hydrochloride
+44,Thioridazine
+45,Methyltestosterone
+46,Lomustine
+47,Thioacetamide
+48,Xolegel
+49,Ciprofloxacin
+50,Pemoline
+51,Chlormezanone
+52,Metformin
+53,Tamoxifen
+54,Ethinyl estradiol
+55,Methyldopa
+56,Methimazole
+57,Monocrotaline
+58,Retinol
+59,Quinidine
+60,Tacrine
+61,Moxisylyte
+62,Iproniazid
+63,Chloramphenicol
+64,Nitrofurazone
+65,Trimipramine
+66,Amitriptyline
+67,Hydroxyzine
+68,2-(4-Isobutylphenyl)propanoic acid
+69,Naproxen
+70,Furosemide
+71,Fenofibrate
+72,Chlorpropamide
+73,Nicotinic acid
+74,Erythromycin ethylsuccinate
+75,Ethambutol
+76,Mefenamic acid
+77,Pepcid
+78,Ranitidine
+79,Tannic acid
+80,Captopril
+81,Caffeine
+82,Papaverine
+83,Enalapril
+84,Theophylline
+85,Sulindac
+86,D-Penicillamine
+87,Disopyramide
+88,Mexiletine
+89,Acetazolamide
+90,Disulfiram
+91,Colchicine
+92,Nifedipine
+93,Diltiazem
+94,Chlorpheniramine
+95,Tolbutamide
+96,Acarbose
+97,Simvastatin
+98,Meloxicam
+99,Chlormadinone
+100,Benziodarone
+101,Ethionamide
+102,Nimesulide
+103,Ethanol
+104,Bucetin
+105,acetamidofluorene
+106,Ticlopidine
+107,Tiopronin
+108,Promethazine
+109,Sulpiride
+110,Dantrolene
+111,Clomipramine
+112,Terbinafine
+113,Lornoxicam
+114,Danazol
+115,Etoposide
+116,N-Phenylanthranilic acid
+117,Ajmalin
+118,Phenacetin
+119,N-Nitrosodiethylamine
+120,Alpidem
+121,Venlafaxine
+122,Clozapine
+123,Buspirone
+124,Nefazodone
+125,Triazolam
+126,Trimethadione
+127,2-Bromoethylamine
+128,Doxorubicin
+129,Cyclosporin A
+130,Cycloheximide
+131,Phorone
+132,Bendazac
+133,Buthionine sulfoximine
+134,D-Galactosamine
+135,Diethyl maleate
+136,Rotenone
+137,"N,N'-Diphenylmethylenediamine"
+138,butylated hydroxyanisole
+139,Fungizone
+140,"2,4-Dinitrophenol"
+141,Fluoxetine hydrochloride
+142,Dexamethasone
+143,2-Nitrofluorene
+144,N-Methyl-N-nitrosourea
+145,Acetamide
+146,N-Nitrosomorpholine
+147,Triamterene
+148,Carboplatinum
+149,Cisplatin
+150,puromycin aminonucleoside
+151,Cephalothin
+152,Gentamicin
+153,3-Methylcholanthrene
+154,Coralgil
+155,"4,4'-Methylenedianiline"
+156,Marcaptopurine
+157,Amantadine
+158,Amineptine
+159,Antimycin A
+160,Atorvastatin
+161,Estradiol
+162,Busulfan
+163,Cadmium Dichloride
+164,Carmustine
+165,Carvedilol
+166,Celecoxib
+167,N-Tetracosanoylphytosphingosine
+168,Cerivastatin
+169,Chlorambucil
+170,Chloroquine
+171,Citalopram
+172,Clotrimazole
+173,Cytochalasin B
+174,Daunorubicin
+175,Desloratadine
+176,Didanosine
+177,Diethylstilbestrol
+178,Diphenhydramine
+179,Zonalon
+180,Doxofylline
+181,Erlotinib
+182,Fluoxetine
+183,Gabapentin
+184,Gefitinib
+185,Idarubicin
+186,Ifosfamide
+187,Imatinib
+188,Isotretinoin
+189,Itraconazole
+190,Kanamycin
+191,Lansoprazole
+192,Buthionine sulfoxamine
+193,Lithocholic Acid
+194,Loratadine
+195,Marimastat
+196,Microcystin-LR
+197,Tandutinib
+198,"N,N-Dimethylformamide"
+199,Nevirapine
+200,Norethindrone
+201,Nortriptyline
+202,Olanzapine
+203,Pantoprazole
+204,Paraquat dichloride
+205,Paroxetine
+206,Phalloidin
+207,Prinomastat
+208,Progesterone
+209,Quetiapine
+210,Rabeprazole
+211,Ramipril
+212,Sirolimus
+213,Risperidone
+214,Rofecoxib
+215,Sertraline
+216,Sildenafil
+217,Sotalol
+218,Sparteine
+219,Sporidesmin
+220,Staurosporine
+221,Stavudine
+222,Streptozocin
+223,Sulconazole
+224,Tacrolimus
+225,Tenidap
+226,"TGF-Beta-1, human recombinant"
+227,Tretinoin
+228,Valdecoxib
+229,Valeric acid
+230,Vincaleukoblastine
+231,Zidovudine
+232,DMSO

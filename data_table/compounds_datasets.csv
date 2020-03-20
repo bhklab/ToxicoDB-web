@@ -1,0 +1,413 @@
+compound_id,dataset_id,compound_uid
+1,1,naphthyl isothiocyanate
+2,1,phenylbutazone
+3,1,rifampicin
+4,1,indomethacin
+5,1,chlorpromazine
+6,1,isoniazid
+7,1,acetaminophen
+8,1,clofibrate
+9,1,carbon tetrachloride
+10,1,phenobarbital
+11,1,methapyrilene
+12,1,ethionine
+13,1,carbamazepine
+14,1,cimetidine
+15,1,fluphenazine
+16,1,WY-14643
+17,1,aspirin
+18,1,gemfibrozil
+19,1,labetalol
+20,1,hexachlorobenzene
+21,1,amiodarone
+22,1,allopurinol
+23,1,benzbromarone
+24,1,nitrofurantoin
+25,1,diazepam
+26,1,griseofulvin
+27,1,sulfasalazine
+28,1,bromobenzene
+29,1,cyclophosphamide
+30,1,omeprazole
+31,1,allyl alcohol
+32,1,valproic acid
+33,1,diclofenac
+34,1,propylthiouracil
+35,1,coumarin
+36,1,haloperidol
+37,1,tetracycline
+38,1,flutamide
+39,1,glibenclamide
+40,1,azathioprine
+41,1,perhexiline
+42,1,phenytoin
+43,1,adapin
+44,1,thioridazine
+45,1,methyltestosterone
+46,1,lomustine
+47,1,thioacetamide
+48,1,ketoconazole
+49,1,ciprofloxacin
+50,1,pemoline
+51,1,chlormezanone
+52,1,metformin
+53,1,tamoxifen
+54,1,ethinylestradiol
+55,1,methyldopa
+56,1,methimazole
+57,1,monocrotaline
+58,1,vitamin A
+59,1,quinidine
+60,1,tacrine
+61,1,moxisylyte
+62,1,iproniazid
+63,1,chloramphenicol
+64,1,nitrofurazone
+65,1,imipramine
+66,1,amitriptyline
+67,1,hydroxyzine
+68,1,ibuprofen
+69,1,naproxen
+70,1,furosemide
+71,1,fenofibrate
+72,1,chlorpropamide
+73,1,nicotinic acid
+74,1,erythromycin ethylsuccinate
+75,1,ethambutol
+76,1,mefenamic acid
+77,1,famotidine
+78,1,ranitidine
+79,1,tannic acid
+80,1,captopril
+81,1,caffeine
+82,1,papaverine
+83,1,enalapril
+84,1,theophylline
+85,1,sulindac
+86,1,penicillamine
+87,1,disopyramide
+88,1,mexiletine
+89,1,acetazolamide
+90,1,disulfiram
+91,1,colchicine
+92,1,nifedipine
+93,1,diltiazem
+94,1,chlorpheniramine
+95,1,tolbutamide
+96,1,acarbose
+97,1,simvastatin
+98,1,meloxicam
+99,1,chlormadinone
+100,1,benziodarone
+101,1,ethionamide
+102,1,nimesulide
+103,1,ethanol
+104,1,bucetin
+105,1,acetamidofluorene
+106,1,ticlopidine
+107,1,tiopronin
+108,1,promethazine
+109,1,sulpiride
+110,1,dantrolene
+111,1,clomipramine
+112,1,terbinafine
+113,1,lornoxicam
+114,1,danazol
+115,1,etoposide
+116,1,phenylanthranilic acid
+117,1,ajmaline
+118,1,phenacetin
+119,1,nitrosodiethylamine
+120,1,alpidem
+121,1,venlafaxine
+122,1,clozapine
+123,1,buspirone
+124,1,nefazodone
+125,1,triazolam
+126,1,trimethadione
+127,1,bromoethylamine
+128,1,doxorubicin
+129,1,cyclosporine A
+130,1,cycloheximide
+131,1,phorone
+132,1,bendazac
+133,1,buthionine sulfoximine
+134,1,galactosamine
+135,1,diethyl maleate
+136,1,rotenone
+137,1,methylene dianiline
+138,1,butylated hydroxyanisole
+139,1,amphotericin B
+140,1,"2,4-dinitrophenol"
+141,1,fluoxetine hydrochloride
+142,1,dexamethasone
+143,1,2-nitrofluorene
+144,1,N-methyl-N-nitrosourea
+145,1,acetamide
+146,1,N-nitrosomorpholine
+6,2,isoniazid
+32,2,valproic acid
+8,2,clofibrate
+3,2,rifampicin
+1,2,naphthyl isothiocyanate
+31,2,allyl alcohol
+2,2,phenylbutazone
+30,2,omeprazole
+12,2,ethionine
+17,2,aspirin
+5,2,chlorpromazine
+4,2,indomethacin
+47,2,thioacetamide
+33,2,diclofenac
+13,2,carbamazepine
+29,2,cyclophosphamide
+20,2,hexachlorobenzene
+25,2,diazepam
+42,2,phenytoin
+11,2,methapyrilene
+35,2,coumarin
+22,2,allopurinol
+34,2,propylthiouracil
+21,2,amiodarone
+16,2,WY-14643
+18,2,gemfibrozil
+45,2,methyltestosterone
+26,2,griseofulvin
+28,2,bromobenzene
+44,2,thioridazine
+19,2,labetalol
+43,2,adapin
+27,2,sulfasalazine
+49,2,ciprofloxacin
+15,2,fluphenazine
+39,2,glibenclamide
+48,2,ketoconazole
+24,2,nitrofurantoin
+51,2,chlormezanone
+52,2,metformin
+50,2,pemoline
+36,2,haloperidol
+23,2,benzbromarone
+14,2,cimetidine
+38,2,flutamide
+54,2,ethinylestradiol
+40,2,azathioprine
+53,2,tamoxifen
+41,2,perhexiline
+37,2,tetracycline
+55,2,methyldopa
+57,2,monocrotaline
+58,2,vitamin A
+46,2,lomustine
+56,2,methimazole
+65,2,imipramine
+60,2,tacrine
+63,2,chloramphenicol
+67,2,hydroxyzine
+66,2,amitriptyline
+62,2,iproniazid
+61,2,moxisylyte
+69,2,naproxen
+72,2,chlorpropamide
+71,2,fenofibrate
+73,2,nicotinic acid
+77,2,famotidine
+78,2,ranitidine
+70,2,furosemide
+76,2,mefenamic acid
+87,2,disopyramide
+75,2,ethambutol
+74,2,erythromycin ethylsuccinate
+88,2,mexiletine
+82,2,papaverine
+59,2,quinidine
+64,2,nitrofurazone
+86,2,penicillamine
+68,2,ibuprofen
+92,2,nifedipine
+94,2,chlorpheniramine
+79,2,tannic acid
+85,2,sulindac
+83,2,enalapril
+147,2,triamterene
+93,2,diltiazem
+84,2,theophylline
+80,2,captopril
+107,2,tiopronin
+81,2,caffeine
+109,2,sulpiride
+108,2,promethazine
+90,2,disulfiram
+91,2,colchicine
+95,2,tolbutamide
+89,2,acetazolamide
+97,2,simvastatin
+96,2,acarbose
+126,2,trimethadione
+125,2,triazolam
+110,2,dantrolene
+117,2,ajmaline
+113,2,lornoxicam
+99,2,chlormadinone
+132,2,bendazac
+114,2,danazol
+98,2,meloxicam
+112,2,terbinafine
+129,2,cyclosporine A
+105,2,acetamidofluorene
+100,2,benziodarone
+115,2,etoposide
+148,2,carboplatin
+134,2,galactosamine
+111,2,clomipramine
+106,2,ticlopidine
+130,2,cycloheximide
+118,2,phenacetin
+127,2,bromoethylamine
+101,2,ethionamide
+133,2,buthionine sulfoximine
+131,2,phorone
+135,2,diethyl maleate
+149,2,cisplatin
+102,2,nimesulide
+128,2,doxorubicin
+150,2,puromycin aminonucleoside
+119,2,nitrosodiethylamine
+151,2,cephalothin
+116,2,phenylanthranilic acid
+103,2,ethanol
+104,2,bucetin
+152,2,gentamicin
+7,2,acetaminophen
+10,2,phenobarbital
+9,2,carbon tetrachloride
+120,2,alpidem
+123,2,buspirone
+121,2,venlafaxine
+122,2,clozapine
+1,3,1-naphthyl isothiocyanate
+153,3,3-methylcholanthrene
+154,3,coralgil
+155,3,"4,4'-diaminodiphenylmethane"
+156,3,mercaptopurine
+7,3,acetaminophen
+31,3,allyl alcohol
+157,3,amantadine
+158,3,amineptine
+21,3,amiodarone
+66,3,amitriptyline
+159,3,antimycin A
+160,3,atorvastatin
+40,3,azathioprine
+161,3,17beta-estradiol
+162,3,busulfan
+163,3,cadmium dichloride
+9,3,carbon tetrachloride
+164,3,carmustine
+165,3,carvedilol
+166,3,celecoxib
+167,3,ceramide-2 (phytosphingosine:N-C24:0)
+168,3,cerivastatin
+169,3,chlorambucil
+170,3,chloroquine
+5,3,chlorpromazine
+149,3,cisplatin
+171,3,citalopram
+8,3,clofibrate
+111,3,clomipramine
+172,3,clotrimazole
+122,3,clozapine
+91,3,colchicine
+29,3,cyclophosphamide
+129,3,cyclosporin A
+173,3,cytochalasin B
+114,3,danazol
+174,3,daunorubicin
+175,3,desloratadine
+142,3,dexamethasone
+134,3,D-galactosamine
+176,3,didanosine
+177,3,diethylstilbestrol
+178,3,diphenhydramine
+179,3,doxepin
+180,3,doxofylline
+128,3,doxorubicin
+181,3,erlotinib
+103,3,ethanol
+54,3,17a-ethynylestradiol
+115,3,etoposide
+71,3,fenofibrate
+182,3,fluoxetine
+15,3,fluphenazine
+183,3,gabapentin
+184,3,gefitinib
+18,3,gemfibrozil
+152,3,gentamycin
+26,3,griseofulvin
+36,3,haloperidol
+185,3,idarubicin
+186,3,ifosfamide
+187,3,imatinib
+188,3,isotretinoin
+189,3,itraconazole
+190,3,kanamycin A
+48,3,ketoconazole
+19,3,labetalol
+191,3,lansoprazole
+192,3,buthionine sulfoximine
+193,3,lithocholic acid
+46,3,lomustine
+194,3,loratadine
+195,3,marimastat
+11,3,methapyrilene
+196,3,microcystin-LR
+197,3,mln-518
+57,3,monocrotaline
+198,3,"N,N-dimethylformamide"
+199,3,nevirapine
+102,3,nimesulide
+119,3,N-nitrosodiethylamine
+200,3,norethindrone
+201,3,nortriptyline
+202,3,olanzapine
+30,3,omeprazole
+203,3,pantoprazole
+204,3,paraquat dichloride
+205,3,paroxetine
+50,3,pemoline
+41,3,perhexiline
+206,3,phalloidin
+207,3,prinomastat
+208,3,progesterone
+209,3,quetiapine
+210,3,rabeprazole
+211,3,ramipril
+212,3,sirolimus
+3,3,Rifampin
+213,3,risperidone
+214,3,rofecoxib
+215,3,sertraline
+216,3,sildenafil
+97,3,simvastatin
+217,3,sotalol
+218,3,sparteine
+219,3,sporidesmin a
+220,3,staurosporine
+221,3,stavudine
+222,3,Streptozotocin
+223,3,sulconazole
+85,3,sulindac
+109,3,sulpiride
+224,3,tacrolimus hydrate
+53,3,tamoxifen
+225,3,tenidap
+37,3,tetracycline
+226,3,"tgf beta-1, human recombinant"
+227,3,all-trans-retinoic acid
+228,3,valdecoxib
+229,3,valeric acid
+32,3,valproic acid
+121,3,venlafaxine
+230,3,Vinblastine
+231,3,zidovudine
+232,3,DMSO
