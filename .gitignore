@@ -24,3 +24,5 @@ yarn-error.log*
 
 # /data_table
 /scripts
+/data_table/analysis.csv
+/data_table/compound_gene_response.csv
