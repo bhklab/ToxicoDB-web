@@ -13,7 +13,7 @@ const OverviewDoc = () => (
         <p>
             <em>ToxicoDB</em>
             {' '}
-            enables researchers as well as non-academics to easily navigate these datasets, visualize time and dose-dependent drug response of genes implicated in toxin metabolism and build gene signatures based on grades of toxicity such as carcinogenicity and genotoxicity. The major features include chemical compound annotations, visualization of differential gene expression for the drug of choice along with the option to download the data and analyze the one-to-one relationship between drugs and genes.
+            enables researchers as well as non-academics to easily navigate these datasets, visualize time and dose-dependent drug response of genes implicated in toxin metabolism and build gene signatures based on grades of toxicity such as carcinogenicity and genotoxicity. The major features include chemical compound annotations, visualization of differential gene expression for the compound of choice along with the option to download the data and analyze the one-to-one relationship between compounds and genes.
         </p>
     </div>
 );

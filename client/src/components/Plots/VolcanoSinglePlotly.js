@@ -43,9 +43,9 @@ const d3Changes = (type) => {
 const click = (data, type, queryId) => {
     const id = parseInt(data.points[0].data.click_ids[data.points[0].pointIndex]);
     if (type === 'drug') {
-        document.location.href = `/expression?drugId=${queryId}&geneId=${id}`;
+        document.location.href = `/expression?compoundId=${queryId}&geneId=${id}`;
     } else {
-        document.location.href = `/expression?drugId=${id}&geneId=${queryId}`;
+        document.location.href = `/expression?compoundId=${id}&geneId=${queryId}`;
     }
 };
 
@@ -212,7 +212,7 @@ const VolcanoSingle = (props) => {
                 b: 40,
             },
         };
-       
+
         // determine if show x axis fold change lines or not
         layout.shapes = [];
         if (minX < -1) {
@@ -226,14 +226,14 @@ const VolcanoSingle = (props) => {
                     y1: maxY,
                     line: {
                         color: '#accffa',
-                        width: 1
-                    }
-                }
+                        width: 1,
+                    },
+                },
             );
         }
-               
+
         if (maxX > 1) {
-            layout.shapes.push( 
+            layout.shapes.push(
                 // x: 1
                 {
                     type: 'line',
@@ -243,9 +243,10 @@ const VolcanoSingle = (props) => {
                     y1: maxY,
                     line: {
                         color: '#accffa',
-                        width: 1
-                    }
-                })
+                        width: 1,
+                    },
+                },
+            );
         }
 
         // determine if plot the y axis pvalue line (max beyond 20)
@@ -258,15 +259,15 @@ const VolcanoSingle = (props) => {
                 y1: 20,
                 line: {
                     color: '#accffa',
-                    width: 1
-                }
-            })
+                    width: 1,
+                },
+            });
         }
 
         setState({
             ...state,
             data: [greenTrace, blueTrace],
-            layout: layout,
+            layout,
             class: className,
         });
     };
