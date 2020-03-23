@@ -120,7 +120,7 @@ class Compounds extends Component {
         return (
             <StyledCompounds>
                 <div className="wrapper">
-                    <h1>Compound</h1>
+                    <h1>Compounds</h1>
                     <ReactTable
                         data={compoundData}
                         filterable

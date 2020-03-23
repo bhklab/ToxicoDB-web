@@ -1,13 +1,8 @@
 /* eslint-disable class-methods-use-this */
 import * as d3 from 'd3';
 import React from 'react';
-import colors from '../../styles/colors';
 
 class Bubble extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         const {
             data, plotId,
