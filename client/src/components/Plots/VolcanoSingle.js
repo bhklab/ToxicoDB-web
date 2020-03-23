@@ -3,8 +3,8 @@ import React, {
     useState, useEffect,
 } from 'react';
 import styled from 'styled-components';
-import { Canvas } from 'react-canvas-js';
-import colors from '../../styles/colors';
+// import { Canvas } from 'react-canvas-js';
+// import colors from '../../styles/colors';
 import { CanvasJSChart } from '../../lib/canvasjs.react';
 
 
@@ -29,9 +29,9 @@ const StyledDiv = styled.div`
 const click = (e, type, queryId) => {
     const id = parseInt(e.dataPoints.id);
     if (type === 'drug') {
-        document.location.href = `/expression?drugId=${queryId}&geneId=${id}`;
+        document.location.href = `/expression?compoundId=${queryId}&geneId=${id}`;
     } else {
-        document.location.href = `/expression?drugId=${id}&geneId=${queryId}`;
+        document.location.href = `/expression?compoundId=${id}&geneId=${queryId}`;
     }
 };
 
@@ -93,8 +93,10 @@ const VolcanoSingle = (props) => {
         setState({
             ...state,
             options: {
-                axisY: { title: '-log10(p value)', labelFontFamily: 'Arial', labelFontSize: 12},
-                axisX: { title: 'log2(fold change)', labelFontFamily: 'Arial', labelFontSize: 12, zeroline: false },
+                axisY: { title: '-log10(p value)', labelFontFamily: 'Arial', labelFontSize: 12 },
+                axisX: {
+                    title: 'log2(fold change)', labelFontFamily: 'Arial', labelFontSize: 12, zeroline: false,
+                },
                 tooltip: {
                     content: '{name}',
                 },

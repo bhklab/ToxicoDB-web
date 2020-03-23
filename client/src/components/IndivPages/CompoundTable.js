@@ -224,12 +224,13 @@ function SelectColumnFilter({
 
 
 function CompoundTable(props) {
+    console.log(props);
     const columns = React.useMemo(
         () => [{
             Header: 'Gene',
             accessor: 'gene_name',
             sortable: true,
-            Cell: (row) => (<Link to={`/expression?compoundId=${props.drugData.id}&geneId=${row.original.gene_id}`}>{row.value}</Link>),
+            Cell: (row) => (<Link to={`/expression?compoundId=${props.compoundData.id}&geneId=${row.original.gene_id}`}>{row.value}</Link>),
         }, {
             Header: 'log2(fold change)',
             accessor: 'fold_change',

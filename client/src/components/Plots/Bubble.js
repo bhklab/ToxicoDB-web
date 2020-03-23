@@ -40,7 +40,8 @@ class Bubble extends React.Component {
             .force('y', d3.forceY().strength(forceStrength).y(centre.y))
             .force('collision', d3.forceCollide().radius((d) => d.radius + 1));
 
-        // force simulation starts up automatically, which we don't want as there aren't any nodes yet
+        // force simulation starts up automatically,
+        // which we don't want as there aren't any nodes yet
         simulation.stop();
 
         // set up colour scale
@@ -49,7 +50,8 @@ class Bubble extends React.Component {
             .range(['#ae022f', '#c64e6d', '#df9aac', '#177ab4', '#47a0d3', '#8cc4e4']);
 
         // callback function called after every tick of the force simulation
-        // here we do the actual repositioning of the circles based on current x and y value of their bound node data
+        // here we do the actual repositioning of the circles based
+        // on current x and y value of their bound node data
         // x and y values are modified by the force simulation
         function ticked() {
             bubbles
@@ -61,7 +63,8 @@ class Bubble extends React.Component {
                 .attr('y', (d) => d.y);
         }
 
-        // data manipulation function takes raw data from csv and converts it into an array of node objects
+        // data manipulation function takes raw data from csv
+        // and converts it into an array of node objects
         // each node will store data and visualisation values to draw a bubble
         // data is expected to be an array of data objects, read in d3.csv
         // function returns the new node array, with a node for each element in the data input
