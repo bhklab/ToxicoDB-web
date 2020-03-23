@@ -228,7 +228,6 @@ const Pathways = () => {
     const [pathwayList, setPathwayList] = useState([]);
     const [parsedPathwayList, setParsedPathwayList] = useState([]);
     const [parsedDataset, setParsedDataset] = useState({});
-    const [statData, setStatData] = useState({});
     const [isGroup, setIsGroup] = useState([]);
     const [isClicked, setButtonState] = useState(false);
     const [isInitialRender, setRender] = useState(false);
@@ -345,6 +344,26 @@ const Pathways = () => {
         setDrugGroups(groupDrug);
     };
 
+    const getStatData = () => {
+        if (selectedDrugs && selectedDrugs.length > 0 && selectedDataset && selectedOntology && selectedPathways && selectedPathways.length > 0) {
+            const drugs = selectedDrugs.map((val) => val.value);
+            const pathways = selectedPathways.map((val) => val.value);
+            const ontology = selectedOntology.map((val) => val.value);
+            fetch('/api/v1/pathwaystats/dataset', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    datasetName: selectedDataset, pathways, ontology, drugs,
+                }),
+            })
+                .then((response) => response.json())
+                .then((res) => parseData(res));
+        }
+    };
+
     // similar to componentDidMount.
     useEffect(() => {
         const pathways = DefaultPathways.TGGATEs_Human;
@@ -418,29 +437,6 @@ const Pathways = () => {
         }
     }, [selectedOntology]);
 
-
-    // this will be triggerred on the pathways change.
-    useEffect(() => {
-        if (selectedDrugs && selectedDrugs.length > 0 && selectedDataset && selectedOntology && selectedPathways && selectedPathways.length > 0) {
-            const drugs = selectedDrugs.map((val) => val.value);
-            const pathways = selectedPathways.map((val) => val.value);
-            const ontology = selectedOntology.map((val) => val.value);
-            fetch('/api/v1/pathwaystats/dataset', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    datasetName: selectedDataset, pathways, ontology, drugs,
-                }),
-            })
-                .then((response) => response.json())
-                .then((res) => setStatData(res));
-        }
-    }, [selectedDrugs, selectedPathways, selectedDataset]);
-
-
     const handleDatasetChange = (selection) => {
         setDrugs(null);
         setOntology(null);
@@ -508,14 +504,12 @@ const Pathways = () => {
         setPathways(pathways);
     };
 
-    const isObjectEmpty = (data) => (Object.entries(data).length === 0 && data.constructor === Object);
-
     const handleButtonClickEvent = () => {
-        if (!isObjectEmpty(statData)) {
-            parseData(statData);
-            setButtonState(true);
-        }
+        setButtonState(true);
+        getStatData();
     };
+
+    const isObjectEmpty = (data) => (Object.entries(data).length === 0 && data.constructor === Object);
 
     return (
         <div>
