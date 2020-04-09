@@ -10,8 +10,8 @@ class VolcanoLegend extends React.Component {
             top: 10,
             left: 0,
             bottom: 0,
-            right: 0
-        }
+            right: 0,
+        };
 
         const svg = d3.select(`#${plotId}`)
             .append('svg')
@@ -22,13 +22,13 @@ class VolcanoLegend extends React.Component {
             .attr('transform',
                 `translate(${margin.left},${margin.top})`);
 
-        let legend = svg.append('g')
+        let legend = svg.append('g');
 
         legend.append('circle')
             .attr('cx', 20)
             .attr('cy', 6)
             .attr('r', 5)
-            .attr('fill', '#e1f1fb')
+            .attr('fill', '#e1f1fb');
 
         legend.append('text')
             .attr('dx', 30)

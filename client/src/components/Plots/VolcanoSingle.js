@@ -134,13 +134,13 @@ const VolcanoSingle = (props) => {
     const computeDatasetName = (dataset) => {
         let name = '';
         switch (dataset) {
-        case 'Open TG-GATEsHuman':
-            name = 'Open TG-GATEsHuman';
+        case 'OpenTG-GATEsHuman':
+            name = 'Open TG-GATEs Human';
             break;
-        case 'Open TG-GATEsRat':
-            name = 'Open TG-GATEsRat';
+        case 'OpenTG-GATEsRat':
+            name = 'Open TG-GATEs Rat';
             break;
-        case 'DrugMatrix Rat':
+        case 'DrugMatrixRat':
             name = 'DrugMatrix Rat';
             break;
         default:
