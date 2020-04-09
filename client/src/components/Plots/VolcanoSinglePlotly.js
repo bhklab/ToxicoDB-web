@@ -294,15 +294,30 @@ const VolcanoSingle = (props) => {
         formatData(data);
     }, [selected]);
 
+    // compute dataset name.
+    const computeDatasetName = (dataset) => {
+        let name = '';
+        switch (dataset) {
+        case 'Open TG-GATEsHuman':
+            name = 'Open TG-GATEsHuman';
+            break;
+        case 'Open TG-GATEsRat':
+            name = 'Open TG-GATEsRat';
+            break;
+        case 'DrugMatrix Rat':
+            name = 'DrugMatrix Rat';
+            break;
+        default:
+            name = '';
+        }
+        return name;
+    };
+
 
     return (
         <StyledDiv className={state.class}>
             <h3>
-                {(datasetName === 'TGGATEsHuman') ? 'TGGATEs Human'
-                    : (datasetName === 'TGGATEsRat') ? 'TGGATEs Rat'
-                        : (datasetName === 'DrugMatrix') ? 'DrugMatrix'
-                            : datasetName}
-
+                { computeDatasetName(datasetName) }
             </h3>
             <Plot
                 data={state.data}
