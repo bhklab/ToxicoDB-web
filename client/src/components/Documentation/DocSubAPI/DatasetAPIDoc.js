@@ -6,15 +6,15 @@ const allDatasetData = {
     data: [
         {
             id: 1,
-            name: 'TGGATEs Human',
+            name: 'Open TG-GATEs Human',
         },
         {
             id: 2,
-            name: 'TGGATEs Rat',
+            name: 'Open TG-GATEs Rat',
         },
         {
             id: 3,
-            name: 'DrugMatrix',
+            name: 'DrugMatrix Rat',
         },
     ],
 };
@@ -23,7 +23,7 @@ const datasetData = {
     status: 'success',
     data: [{
         id: 1,
-        name: 'TGGATEs Human',
+        name: 'Open TG-GATEs Human',
     }],
 };
 
