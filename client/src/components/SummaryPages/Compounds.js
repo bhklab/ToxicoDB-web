@@ -94,7 +94,7 @@ class Compounds extends Component {
                 sortable: false,
             },
             {
-                Header: 'InchiKey',
+                Header: 'InChIKeys',
                 accessor: 'inchikey',
                 sortable: false,
             },
