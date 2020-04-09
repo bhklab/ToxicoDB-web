@@ -206,9 +206,9 @@ const formatGroupLabel = (data) => (
 );
 
 const datasetList = [
-    { value: 'TGGATEs Human', label: 'TGGATEs Human' },
-    { value: 'TGGATEs Rat', label: 'TGGATEs Rat' },
-    { value: 'drugMatrix', label: 'drugMatrix' },
+    { value: 'Open TG-GATEs Human', label: 'Open TG-GATEs Human' },
+    { value: 'Open TG-GATEs Rat', label: 'Open TG-GATEs Rat' },
+    { value: 'DrugMatrix Rat', label: 'DrugMatrix Rat' },
 ];
 
 
@@ -366,7 +366,7 @@ const Pathways = () => {
 
     // similar to componentDidMount.
     useEffect(() => {
-        const pathways = DefaultPathways.TGGATEs_Human;
+        const pathways = DefaultPathways.Open_TGGATEs_Human;
         if (pathwayList) {
             fetch('/api/v1/pathwaystats/dataset', {
                 method: 'POST',
@@ -375,7 +375,7 @@ const Pathways = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    datasetName: 'TGGATEs Human', pathways, ontology: 'Reactome', drugs: selectedDrugs,
+                    datasetName: 'Open TG-GATEs Human', pathways, ontology: 'Reactome', drugs: selectedDrugs,
                 }),
             })
                 .then((response) => response.json())
@@ -521,7 +521,7 @@ const Pathways = () => {
                     Pathways
                     {' - '}
                     (
-                    {selectedDataset || 'TGGATEs Human'}
+                    {selectedDataset || 'Open TG-GATEs Human'}
                     )
                 </h1>
             </StyleHeading>

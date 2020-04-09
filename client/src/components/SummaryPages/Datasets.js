@@ -35,13 +35,13 @@ class Datasets extends Component {
     componentDidMount() {
         const data = [
             {
-                id: 1, name: 'TGGATEs Human', sample: 'Human', num_compounds: 146,
+                id: 1, name: 'Open TG-GATEs Human', sample: 'Human', num_compounds: 146,
             },
             {
-                id: 2, name: 'TGGATEs Rat', sample: 'Rat', num_compounds: 140,
+                id: 2, name: 'Open TG-GATEs Rat', sample: 'Rat', num_compounds: 140,
             },
             {
-                id: 3, name: 'DrugMatrix Hepatocyte', sample: 'Hepatocyte', num_compounds: 125,
+                id: 3, name: 'DrugMatrix Rat Hepatocyte', sample: 'Hepatocyte', num_compounds: 125,
             },
         ];
 
@@ -52,8 +52,8 @@ class Datasets extends Component {
         //         const { data } = res;
         //         console.log(data);
         //         data.forEach((d) => {
-        //             if (d.name === 'DrugMatrix') {
-        //                 d.name = 'DrugMatrix Hepatocyte';
+        //             if (d.name === 'DrugMatrix Rat') {
+        //                 d.name = 'DrugMatrix Rat Hepatocyte';
         //             }
         //         });
         //         this.setState({ datasetData: data, loading: false });

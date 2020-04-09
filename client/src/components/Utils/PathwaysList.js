@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-const TGGATEs_Human = [
+const Open_TGGATEs_Human = [
     'REACTOME_XENOBIOTICS',
     'REACTOME_CYTOCHROME_P450_ARRANGED_BY_SUBSTRATE_TYPE',
     'REACTOME_BIOSYNTHESIS_OF_MARESIN_LIKE_SPMS',
@@ -42,7 +42,7 @@ const TGGATEs_Human = [
     'REACTOME_UNWINDING_OF_DNA',
 ];
 
-const TGGATEs_Rat = [
+const Open_TGGATEs_Rat = [
     'REACTOME_CHOLESTEROL_BIOSYNTHESIS',
     'REACTOME_ACTIVATION_OF_GENE_EXPRESSION_BY_SREBF_SREBP',
     'REACTOME_REGULATION_OF_CHOLESTEROL_BIOSYNTHESIS_BY_SREBP_SREBF',
@@ -86,6 +86,6 @@ const TGGATEs_Rat = [
 ];
 
 export default {
-    TGGATEs_Human,
-    TGGATEs_Rat,
+    Open_TGGATEs_Human,
+    Open_TGGATEs_Rat,
 };

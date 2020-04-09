@@ -71,7 +71,7 @@ const getDrugAnalysis = (request, response) => {
     function subqueryDatasets() {
         return this.select()
             .from('datasets_samples')
-            // just removes drugMatrix dataset
+            // just removes DrugMatrix Rat dataset
             // .whereNot({ dataset_id: 3 })
             .as('ds');
     }

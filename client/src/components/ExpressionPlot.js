@@ -78,7 +78,7 @@ class ExpressionPlot extends Component {
                         const controlTimes = [];
                         const controlExps = [];
                         expData.forEach((x) => {
-                            if (x.class === 'DrugMatrix' && x.label === 'Control replicate 1') {
+                            if (x.class === 'DrugMatrix Rat' && x.label === 'Control replicate 1') {
                                 x.points.forEach((i) => {
                                     controlTimes.push(i.time);
                                     controlExps.push(i.exp);
@@ -88,7 +88,7 @@ class ExpressionPlot extends Component {
                         // determining x/yrange to encompass control ranges as well
                         let xRange;
                         let yRange;
-                        // DrugMatrix doesn't exist, don't include control
+                        // DrugMatrix Rat doesn't exist, don't include control
                         if (controlTimes.length === 0) {
                             xRange = [Math.min(...times) - 1, Math.max(...times) + 1];
                             yRange = [Math.min(...exps) - 1, Math.max(...exps) + 1];
@@ -150,11 +150,11 @@ class ExpressionPlot extends Component {
         // index for replicate (dash)
         // let rInd = -1;
 
-        // check if DrugMatrix is in there - then use control
+        // check if DrugMatrix Rat is in there - then use control
         let useControl = false;
         expData.forEach((item) => {
             const dsetName = item.name.replaceAll(' ', '');
-            if (dsetName === 'DrugMatrix') {
+            if (dsetName === 'DrugMatrix Rat') {
                 useControl = true;
             }
             if (traces[dsetName] === undefined) {
@@ -169,9 +169,9 @@ class ExpressionPlot extends Component {
                 // rInd++;
             }
             if (Object.keys(traces[dsetName][item.dose]['rep'.concat(item.replicate)]).length === 0) { // if no data in replicate
-                // if DrugMatrix, then must average points with more than one value
+                // if DrugMatrix Rat, then must average points with more than one value
                 // make into {time: [expression]}
-                if (dsetName === 'DrugMatrix') {
+                if (dsetName === 'DrugMatrix Rat') {
                     const temp = {};
                     temp[item.time] = [item.expression];
                     traces[dsetName][item.dose]['rep'.concat(item.replicate)].points = temp;
@@ -182,7 +182,7 @@ class ExpressionPlot extends Component {
                 traces[dsetName][item.dose]['rep'.concat(item.replicate)].label = `${item.dose} replicate ${item.replicate}`; // legend label
                 traces[dsetName][item.dose]['rep'.concat(item.replicate)].color = colorMap[item.dose];
                 traces[dsetName][item.dose]['rep'.concat(item.replicate)].class = `${item.name.replaceAll(' ', '')}`; // has the dataset as class
-            } else if (dsetName === 'DrugMatrix') {
+            } else if (dsetName === 'DrugMatrix Rat') {
                 // if time key doesn't exist
                 if (traces[dsetName][item.dose]['rep'.concat(item.replicate)].points[item.time] === undefined) {
                     traces[dsetName][item.dose]['rep'.concat(item.replicate)].points[item.time] = [item.expression];
@@ -194,34 +194,34 @@ class ExpressionPlot extends Component {
             }
         });
 
-        // put in DrugMatrix controls
+        // put in DrugMatrix Rat controls
         if (useControl) {
             const temp = {};
             temp.points = [];
             [temp.mode] = dashTypes;
             temp.label = 'Control replicate 1';
             temp.color = colorMap.Control;
-            temp.class = 'DrugMatrix';
+            temp.class = 'DrugMatrix Rat';
             temp.points = { 16: [], 24: [] };
             controlData.forEach((item) => {
                 temp.points[item.time].push(item.expression);
             });
-            traces.DrugMatrix.Control.rep1 = temp;
+            traces['DrugMatrix Rat'].Control.rep1 = temp;
 
-            // parse multiple timepoints into averages - specific to DrugMatrix
-            Object.keys(traces.DrugMatrix).forEach((dose) => {
-                Object.keys(traces.DrugMatrix[dose]).forEach((rep) => {
+            // parse multiple timepoints into averages - specific to DrugMatrix Rat
+            Object.keys(traces['DrugMatrix Rat']).forEach((dose) => {
+                Object.keys(traces['DrugMatrix Rat'][dose]).forEach((rep) => {
                     // eslint-disable-next-line no-shadow
                     const temp = [];
-                    Object.keys(traces.DrugMatrix[dose][rep].points).forEach((time) => {
+                    Object.keys(traces['DrugMatrix Rat'][dose][rep].points).forEach((time) => {
                         const tempObj = {};
                         tempObj.time = parseInt(time, 10);
-                        tempObj.exp = traces.DrugMatrix[dose][rep].points[time].reduce(
+                        tempObj.exp = traces['DrugMatrix Rat'][dose][rep].points[time].reduce(
                             (total, x) => total + x,
-                        ) / traces.DrugMatrix[dose][rep].points[time].length;
+                        ) / traces['DrugMatrix Rat'][dose][rep].points[time].length;
                         temp.push(tempObj);
                     });
-                    traces.DrugMatrix[dose][rep].points = temp;
+                    traces['DrugMatrix Rat'][dose][rep].points = temp;
                 });
             });
         }

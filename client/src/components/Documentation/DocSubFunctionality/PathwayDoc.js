@@ -12,7 +12,7 @@ const PathwayDoc = () => (
         <Link to="/">
             <img className="doc-img" src={img1} alt="" />
         </Link>
-        <p>This displays a heatmap of the most most significant pathways and compounds from TGGATEs Human Dataset.</p>
+        <p>This displays a heatmap of the most most significant pathways and compounds from Open TG-GATEs Human Dataset.</p>
         <Link to="/pathways">
             <img className="doc-img" src={img2} alt="" />
         </Link>
