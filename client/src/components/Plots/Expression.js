@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import * as d3 from 'd3';
 import React from 'react';
 
@@ -7,10 +8,6 @@ String.prototype.replaceAll = function (search, replacement) {
 };
 
 class Expression extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
         const {
             data, plotId, xRange, yRange, datasets,
@@ -237,7 +234,7 @@ class Expression extends React.Component {
                 .on('click', () => {
                     const active = !d.active;
 
-                    // only show TGGATEs human first
+                    // only show Open TG-GATEs human first
                     if (datasets[i] != datasets[0]) {
                         // to show that this dataset has been selected
                         if (active) {
