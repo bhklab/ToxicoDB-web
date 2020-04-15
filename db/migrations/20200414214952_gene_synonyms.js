@@ -3,12 +3,14 @@
 /* eslint-disable no-unused-vars */
 
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('compound_synonyms', (table) => {
-        table.integer('compound_id')
+    return knex.schema.createTable('gene_synonyms', (table) => {
+        table.increments('id')
+            .primary();
+        table.integer('gene_id')
             .notNullable()
             .unsigned()
             .references('id')
-            .inTable('compounds')
+            .inTable('genes')
             .index();
         table.string('synonym')
             .notNullable();
@@ -16,5 +18,5 @@ exports.up = function (knex, Promise) {
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTable('compound_synonyms');
+    return knex.schema.dropTable('gene_synonyms');
 };
