@@ -114,10 +114,26 @@ const getDrugsPerDataset = (request, response) => {
 };
 
 
+const getDrugSynonymsList = (request, response) => {
+    knex.select()
+        .from('drug_synonyms')
+        .innerJoin('drugs', 'drugs.id', 'drug_synonyms.drug_id')
+        .then((drugs) => response.status(200).json({
+            status: 'success',
+            data: drugs,
+        }))
+        .catch((error) => response.status(500).json({
+            status: 'could not find data from drugs table, getDrugSynonymsList',
+            data: error,
+        }));
+};
+
+
 module.exports = {
     getDrugs,
     getIndivDrug,
     getUniqueDrugId,
     getDrugAnalysis,
     getDrugsPerDataset,
+    getDrugSynonymsList,
 };

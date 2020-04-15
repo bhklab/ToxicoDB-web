@@ -16,15 +16,22 @@ const species = require('./api/species');
 router.get('/v1/datasets', datasets.getDatasets);
 router.get('/v1/datasets/:id', datasets.getIndivDataset);
 
+
+// this route is not used anywhere.
+// we can change the rooute to '/v1/drugs/dataset/:id'
+// router.post('/v1/drugs/dataset', drugs.getDrugsPerDataset);
 router.get('/v1/drugs', drugs.getDrugs);
+router.get('/v1/drugs/synonyms', drugs.getDrugSynonymsList);
 router.get('/v1/drugs/:id', drugs.getIndivDrug);
 router.get('/v1/drugs/:id/synonyms', drugs.getUniqueDrugId);
 router.get('/v1/drugs/:id/analysis', drugs.getDrugAnalysis);
-router.post('/v1/drugs/dataset', drugs.getDrugsPerDataset);
+
 
 router.get('/v1/genes', genes.getGenes);
+router.get('/v1/genes/synonyms', genes.getGeneSynonymsList);
 router.get('/v1/genes/:id', genes.getIndivGene);
 router.get('/v1/genes/:id/analysis', genes.getGeneAnalysis);
+
 
 // router.get('/v1/pathways', pathways.getPathways);
 router.post('/v1/pathways/dataset/drug', pathways.getPathwaysPerDatasetBasedOnDrugs);

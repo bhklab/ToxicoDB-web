@@ -87,6 +87,24 @@ const getGeneAnalysis = (request, response) => {
 };
 
 
+const getGeneSynonymsList = (request, response) => {
+    knex.select()
+        .from('gene_synonyms')
+        .innerJoin('genes', 'genes.id', 'gene_synonyms.gene_id')
+        .then((genes) => response.status(200).json({
+            status: 'success',
+            data: genes,
+        }))
+        .catch((error) => response.status(500).json({
+            status: 'could not find data from genes table, getGeneSynonymsList',
+            data: error,
+        }));
+};
+
+
 module.exports = {
-    getGenes, getIndivGene, getGeneAnalysis,
+    getGenes,
+    getIndivGene,
+    getGeneAnalysis,
+    getGeneSynonymsList,
 };
