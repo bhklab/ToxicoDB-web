@@ -40,17 +40,18 @@ const getIndivDrug = (request, response) => {
         }));
 };
 
-const getDrugSynonyms = (request, response) => {
+const getUniqueDrugId = (request, response) => {
+    const { id } = request.params;
     knex.select('datasets.name AS name', 'drug_uid')
         .from('drugs_datasets')
         .innerJoin('datasets', 'dataset_id', 'datasets.id')
-        .where({ 'drug_id': request.params.id })
+        .where({ drug_id: id })
         .then((drug) => response.status(200).json({
             status: 'success',
             data: drug,
         }))
         .catch((error) => response.status(500).json({
-            status: 'could not find data from drugs table, getDrugSynonyms',
+            status: 'could not find data from drugs table, getUniqueDrugId',
             data: error,
         }));
 };
@@ -112,10 +113,11 @@ const getDrugsPerDataset = (request, response) => {
         }));
 };
 
+
 module.exports = {
     getDrugs,
     getIndivDrug,
-    getDrugSynonyms,
+    getUniqueDrugId,
     getDrugAnalysis,
     getDrugsPerDataset,
 };
