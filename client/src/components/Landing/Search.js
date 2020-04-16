@@ -136,13 +136,13 @@ class Search extends Component {
 
     async componentDidMount() {
         let searchData = [];
-        const getDrugs = fetch('/api/v1/drugs').then((response) => response.json());
+        const getCompounds = fetch('/api/v1/drugs').then((response) => response.json());
         const getGenes = fetch('/api/v1/genes').then((response) => response.json());
-        const getDrugSynonyms = fetch('api/v1/drugs/synonyms').then((response) => response.json());
+        const getCompoundSynonyms = fetch('api/v1/drugs/synonyms').then((response) => response.json());
         const getGeneSynonyms = fetch('api/v1/genes/synonyms').then((response) => response.json());
 
         // fetching the data from all the APIs.
-        const data = await Promise.all([getDrugs, getGenes, getDrugSynonyms, getGeneSynonyms]);
+        const data = await Promise.all([getCompounds, getGenes, getCompoundSynonyms, getGeneSynonyms]);
 
         // compound data.
         const compoundData = data[0].data.map((x) => ({
@@ -153,6 +153,22 @@ class Search extends Component {
         // adding compound data to searchData compound options
         // searchData[0].options = compoundData;
         searchData = searchData.concat(compoundData);
+
+        // compound synonyms.
+        const compoundSynonyms = data[2].data.map((x) => ({
+            label: x.synonym.charAt(0).toUpperCase() + x.synonym.slice(1),
+            value: x.drug_id,
+            type: 'drug',
+        }));
+        searchData = searchData.concat(compoundSynonyms);
+
+        // gene synonyms.
+        const geneSynonyms = data[2].data.map((x) => ({
+            label: x.synonym.charAt(0).toUpperCase() + x.synonym.slice(1),
+            value: x.drug_id,
+            type: 'drug',
+        }));
+        searchData = searchData.concat(geneSynonyms);
 
 
         // Generating an array of options fro react select where value section
