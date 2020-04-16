@@ -134,51 +134,51 @@ class Search extends Component {
         this.handleMenuClose = this.handleMenuClose.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         let searchData = [];
+        const getDrugs = fetch('/api/v1/drugs').then((response) => response.json());
+        const getGenes = fetch('/api/v1/genes').then((response) => response.json());
+        const getDrugSynonyms = fetch('api/v1/drugs/synonyms').then((response) => response.json());
+        const getGeneSynonyms = fetch('api/v1/genes/synonyms').then((response) => response.json());
 
-        fetch('/api/v1/drugs')
-            .then((response) => response.json())
-            .then((data) => {
-                const compoundData = data.data.map((x) => ({
-                    label: x.name.charAt(0).toUpperCase() + x.name.slice(1),
-                    value: x.id,
-                    type: 'drug',
-                }));
-                // adding compound data to searchData compound options
-                // searchData[0].options = compoundData;
-                searchData = searchData.concat(compoundData);
-                this.setState({ searchData });
-            });
+        // fetching the data from all the APIs.
+        const data = await Promise.all([getDrugs, getGenes, getDrugSynonyms, getGeneSynonyms]);
 
-        fetch('/api/v1/genes')
-            .then((response) => response.json())
-            .then((data) => {
-                // Generating an array of options fro react select where value section
-                // can store multiple ids
-                const geneObj = {};
-                data.data.forEach((item) => {
-                    const name = item.symbol.toUpperCase();
-                    if (!geneObj[name]) {
-                        geneObj[name] = { label: name, value: [item.id] };
-                    } else {
-                        geneObj[name].value.push(item.id);
-                    }
-                });
-                const geneData = Object.values(geneObj).map((x) => ({
-                    label: x.label,
-                    value: x.value,
-                    type: 'gene',
-                }));
-                // adding genes data to searchData compound options
-                // searchData[1].options = geneData;
-                searchData = searchData.concat(geneData);
-                this.setState({ searchData });
+        // compound data.
+        const compoundData = data[0].data.map((x) => ({
+            label: x.name.charAt(0).toUpperCase() + x.name.slice(1),
+            value: x.id,
+            type: 'drug',
+        }));
+        // adding compound data to searchData compound options
+        // searchData[0].options = compoundData;
+        searchData = searchData.concat(compoundData);
 
-                // having a separate options so i can filter out options
-                // but keep all the data in searchData so I don't have to make fetch statements
-                this.setState({ options: searchData });
-            });
+
+        // Generating an array of options fro react select where value section
+        // can store multiple ids
+        const geneObj = {};
+        data[1].data.forEach((item) => {
+            const name = item.symbol.toUpperCase();
+            if (!geneObj[name]) {
+                geneObj[name] = { label: name, value: [item.id] };
+            } else {
+                geneObj[name].value.push(item.id);
+            }
+        });
+        const geneData = Object.values(geneObj).map((x) => ({
+            label: x.label,
+            value: x.value,
+            type: 'gene',
+        }));
+        // adding genes data to searchData compound options
+        // searchData[1].options = geneData;
+        searchData = searchData.concat(geneData);
+        this.setState({ searchData });
+
+        // having a separate options so i can filter out options
+        // but keep all the data in searchData so I don't have to make fetch statements
+        this.setState({ options: searchData });
     }
 
     handleChange(event) {
@@ -254,23 +254,23 @@ class Search extends Component {
 
         return (
             <>
-                {searchData.length === 0 ? null : (
-                    <Select
-                        isMulti
-                        filterOption={customFilterOption}
-                        options={options}
-                        components={{
-                            MenuList: (props) => (<MenuList {...props} />),
-                            Option: CustomOption,
-                        }}
-                        placeholder={placeholder}
-                        styles={customStyles}
-                        onChange={handleChange}
-                        onKeyDown={handleKeyDown}
-                        onMenuOpen={handleMenuOpen}
-                        onMenuClose={handleMenuClose}
-                    />
-                )}
+                {/* {searchData.length === 0 ? null : ( */}
+                <Select
+                    isMulti
+                    filterOption={customFilterOption}
+                    options={options}
+                    components={{
+                        MenuList: (props) => (<MenuList {...props} />),
+                        Option: CustomOption,
+                    }}
+                    placeholder={placeholder}
+                    styles={customStyles}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
+                    onMenuOpen={handleMenuOpen}
+                    onMenuClose={handleMenuClose}
+                />
+                {/* )} */}
                 <StyledExample>
                     Example Queries: &nbsp;&nbsp;
                     <Link to="/compounds/7">Acetaminophen</Link>
