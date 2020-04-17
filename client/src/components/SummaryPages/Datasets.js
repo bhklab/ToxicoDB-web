@@ -38,7 +38,7 @@ class Datasets extends Component {
                 id: 1, name: 'Open TG-GATEs Human', species: 'Human', num_compounds: 146,
             },
             {
-                id: 2, name: 'Open TG-GATEs Rat', species: 'Rat', num_compounds: 140,
+                id: 2, name: 'Open TG-GATEs Rat', species: 'R.norvegicus', num_compounds: 140,
             },
             {
                 id: 3, name: 'DrugMatrix Rat', species: 'R.norvegicus', num_compounds: 125,
