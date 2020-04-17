@@ -163,10 +163,10 @@ class Search extends Component {
         searchData = searchData.concat(compoundSynonyms);
 
         // gene synonyms.
-        const geneSynonyms = data[2].data.map((x) => ({
-            label: x.synonym.charAt(0).toUpperCase() + x.synonym.slice(1),
-            value: x.drug_id,
-            type: 'drug',
+        const geneSynonyms = data[3].data.map((x) => ({
+            label: x.synonym,
+            value: x.gene_id,
+            type: 'gene',
         }));
         searchData = searchData.concat(geneSynonyms);
 
@@ -187,6 +187,7 @@ class Search extends Component {
             value: x.value,
             type: 'gene',
         }));
+
         // adding genes data to searchData compound options
         // searchData[1].options = geneData;
         searchData = searchData.concat(geneData);
