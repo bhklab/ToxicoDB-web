@@ -144,6 +144,8 @@ class Search extends Component {
         // fetching the data from all the APIs.
         const data = await Promise.all([getCompounds, getGenes, getCompoundSynonyms, getGeneSynonyms]);
 
+
+        // Todo: there is repetition of the code, we can improve by making functions.
         // compound data.
         const compoundData = data[0].data.map((x) => ({
             label: x.name.charAt(0).toUpperCase() + x.name.slice(1),
@@ -163,12 +165,24 @@ class Search extends Component {
         searchData = searchData.concat(compoundSynonyms);
 
         // gene synonyms.
-        const geneSynonyms = data[3].data.map((x) => ({
-            label: x.synonym,
-            value: x.gene_id,
+        const geneSynonymObj = {};
+        data[3].data.forEach((item) => {
+            if (item.synonym !== '-') {
+                const name = item.synonym.toUpperCase();
+                if (!geneSynonymObj[name]) {
+                    geneSynonymObj[name] = { label: name, value: [item.gene_id] };
+                } else {
+                    geneSynonymObj[name].value.push(item.gene_id);
+                }
+            }
+        });
+
+        const geneSynonymData = Object.values(geneSynonymObj).map((x) => ({
+            label: x.label,
+            value: x.value,
             type: 'gene',
         }));
-        searchData = searchData.concat(geneSynonyms);
+        searchData = searchData.concat(geneSynonymData);
 
 
         // Generating an array of options fro react select where value section
