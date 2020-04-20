@@ -4,7 +4,7 @@ const knex = require('../../db/knex');
 
 // get all the data from the drugs table.
 const getDrugs = (request, response) => {
-    knex.select('id', 'name', 'pubchem', 'chembl', 'drugbank', 'carcinogenicity', 'class_in_vitro', 'class_in_vivo', 'targets', 'class_name', 'smiles', 'inchikey')
+    knex.select('id', 'name', 'pubchem', 'ctd', 'chembl', 'drugbank', 'carcinogenicity', 'class_in_vitro', 'class_in_vivo', 'targets', 'class_name', 'smiles', 'inchikey')
         .from('drugs')
         .leftJoin(
             'drug_annotations',
@@ -22,7 +22,7 @@ const getDrugs = (request, response) => {
 };
 
 const getIndivDrug = (request, response) => {
-    knex.select('id', 'name', 'pubchem', 'chembl', 'drugbank', 'carcinogenicity', 'class_in_vitro', 'class_in_vivo', 'targets', 'class_name', 'smiles', 'inchikey')
+    knex.select('id', 'name', 'pubchem', 'ctd', 'chembl', 'drugbank', 'carcinogenicity', 'class_in_vitro', 'class_in_vivo', 'targets', 'class_name', 'smiles', 'inchikey')
         .from('drugs')
         .leftJoin(
             'drug_annotations',
