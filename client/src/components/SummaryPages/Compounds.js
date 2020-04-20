@@ -89,6 +89,16 @@ class Compounds extends Component {
                 ),
             },
             {
+                Header: 'CTD',
+                accessor: 'ctd',
+                sortable: true,
+                Cell: (props) => (
+                    <a className="hover" target="_blank" rel="noopener noreferrer" href={`http://ctdbase.org/detail.go?type=chem&acc=${props.value.split(':')[1]}`}>
+                        {props.value.split(':')[1]}
+                    </a>
+                ),
+            },
+            {
                 Header: 'SMILES',
                 accessor: 'smiles',
                 sortable: false,

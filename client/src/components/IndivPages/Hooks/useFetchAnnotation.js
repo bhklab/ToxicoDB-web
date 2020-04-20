@@ -23,7 +23,7 @@ const useFetchAnnotation = (url, type) => {
                             annotationObj[key].value.push(item[key]);
                         }
                     });
-                    gid.push(item.entrez_gid)
+                    gid.push(item.entrez_gid);
                 });
                 Object.values(annotationObj).forEach((x) => {
                     const { name } = x;

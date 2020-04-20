@@ -53,6 +53,9 @@ const generateLink = (obj, i, type) => {
     case 'pubchem':
         content = <a href={`https://pubchem.ncbi.nlm.nih.gov/compound/${obj.value[i]}`} target="_blank" rel="noopener noreferrer">{obj.value[i]}</a>;
         break;
+    case 'ctd':
+        content = <a target="_blank" rel="noopener noreferrer" href={`http://ctdbase.org/detail.go?type=chem&acc=${obj.value[i].split(':')[1]}`}>{obj.value[i].split(':')[1]}</a>;
+        break;
     default:
         content = obj.value[i];
     }

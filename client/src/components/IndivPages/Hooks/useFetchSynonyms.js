@@ -10,7 +10,7 @@ const useFetchSynonyms = (url, type) => {
             .then((response) => response.json())
             .then((res) => {
                 const { data } = res;
-                setSynonymData(data)
+                setSynonymData(data);
             });
     }, [url]);
 
