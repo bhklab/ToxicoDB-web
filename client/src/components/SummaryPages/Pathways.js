@@ -519,10 +519,10 @@ const Pathways = () => {
             >
                 <h1>
                     Pathways
-                    {' - '}
+                    {/* {' - '}
                     (
                     {selectedDataset || 'Open TG-GATEs Human'}
-                    )
+                    ) */}
                 </h1>
             </StyleHeading>
             <StyleContainer>
