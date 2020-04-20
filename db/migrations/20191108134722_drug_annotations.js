@@ -20,6 +20,7 @@ exports.up = function (knex, Promise) {
         table.string('class_name');
         table.string('smiles');
         table.string('inchikey');
+        table.string('ctd');
     });
 };
 
