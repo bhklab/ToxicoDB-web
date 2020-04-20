@@ -64,6 +64,17 @@ const generateLink = (obj, i, type) => {
     );
 };
 
+
+const tableData = (item) => {
+    if (item.name === 'pubchem') {
+        return <td className="name-column">PUBCHEM CID</td>;
+    }
+    if (item.name === 'ctd') {
+        return <td className="name-column">COMPARATIVE TOXICOGENOMICS DATABASE (CTD)</td>;
+    }
+    return <td className="name-column">{item.name.replace(/_/g, ' ').toUpperCase()}</td>;
+};
+
 const GeneCompoundCard = (props) => {
     const { data, type } = props;
     return (
@@ -75,11 +86,9 @@ const GeneCompoundCard = (props) => {
                             <tr key={index}>
                                 {type !== 'gene' && !item.value[0] ? null : (
                                     <>
-                                        {item.name === 'pubchem' ? (
-                                            <td className="name-column">PUBCHEM CID</td>
-                                        ) : (
-                                            <td className="name-column">{item.name.replace(/_/g, ' ').toUpperCase()}</td>
-                                        )}
+                                        {' '}
+                                        {tableData(item)}
+                                        {' '}
                                         {item.value.map((val, i) => generateLink(item, i, type))}
                                     </>
                                 )}
