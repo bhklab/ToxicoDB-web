@@ -89,7 +89,7 @@ class Compounds extends Component {
                 ),
             },
             {
-                Header: 'Smiles',
+                Header: 'SMILES',
                 accessor: 'smiles',
                 sortable: false,
             },
