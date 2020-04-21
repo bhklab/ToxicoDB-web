@@ -33,7 +33,7 @@ id,name
 32,Valproic acid
 33,Diclofenac
 34,Propylthiouracil
-35,2H-1-Benzopyran-2-one
+35,Coumarin
 36,Haloperidol
 37,Tetracycline
 38,Flutamide
@@ -66,14 +66,14 @@ id,name
 65,Trimipramine
 66,Amitriptyline
 67,Hydroxyzine
-68,2-(4-Isobutylphenyl)propanoic acid
+68,Ibuprofen
 69,Naproxen
 70,Furosemide
 71,Fenofibrate
 72,Chlorpropamide
 73,Nicotinic acid
 74,Erythromycin ethylsuccinate
-75,Ethambutol
+75,Ethambutol Hydrochloride
 76,Mefenamic acid
 77,Pepcid
 78,Ranitidine
@@ -84,7 +84,7 @@ id,name
 83,Enalapril
 84,Theophylline
 85,Sulindac
-86,D-Penicillamine
+86,Penicillamine
 87,Disopyramide
 88,Mexiletine
 89,Acetazolamide
@@ -148,7 +148,7 @@ id,name
 147,Triamterene
 148,Carboplatinum
 149,Cisplatin
-150,puromycin aminonucleoside
+150,Puromycin aminonucleoside
 151,Cephalothin
 152,Gentamicin
 153,3-Methylcholanthrene
@@ -161,7 +161,7 @@ id,name
 160,Atorvastatin
 161,Estradiol
 162,Busulfan
-163,Cadmium Dichloride
+163,Cadmium chloride
 164,Carmustine
 165,Carvedilol
 166,Celecoxib

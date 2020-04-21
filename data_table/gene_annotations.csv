@@ -1,4 +1,4 @@
-gene_id,Symbol,entrez_gid,transcript_name,ensembl_tid
+gene_id,symbol,entrez_gid,transcript_name,ensembl_tid
 1,TSPAN6,7105,TSPAN6-201,ENST00000373020
 2,TNMD,64102,TNMD-201,ENST00000373031
 3,DPM1,8813,DPM1-203,ENST00000371588
