@@ -2,15 +2,15 @@
 /* eslint-disable no-unused-vars */
 
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('pathways_compounds', (table) => {
+    return knex.schema.createTable('pathways_drugs', (table) => {
         table.integer('id')
             .unsigned()
             .primary();
-        table.integer('compound_id')
+        table.integer('drug_id')
             .notNullable()
             .unsigned()
             .references('id')
-            .inTable('compounds')
+            .inTable('drugs')
             .index();
         table.integer('pathway_id')
             .notNullable()
@@ -28,5 +28,5 @@ exports.up = function (knex, Promise) {
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTable('pathways_compounds');
+    return knex.schema.dropTable('pathways_drugs');
 };

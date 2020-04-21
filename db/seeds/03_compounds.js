@@ -13,8 +13,8 @@ const dataObj = csv.toObject(file);
 
 
 exports.seed = function (knex, Promise) {
-    return knex('compounds').del()
+    return knex('drugs').del()
         .then(function() {
-            return knex('compounds').insert(dataObj);
+            return knex('drugs').insert(dataObj);
         });
 };

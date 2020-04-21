@@ -2,13 +2,13 @@
 /* eslint-disable no-unused-vars */
 
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('compound_annotations', (table) => {
-        table.integer('compound_id')
+    return knex.schema.createTable('drug_annotations', (table) => {
+        table.integer('drug_id')
             .unsigned()
             .unique()
             .notNullable()
             .references('id')
-            .inTable('compounds')
+            .inTable('drugs')
             .index();
         table.integer('pubchem');
         table.string('chembl');
@@ -25,5 +25,5 @@ exports.up = function (knex, Promise) {
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTable('compound_annotations');
+    return knex.schema.dropTable('drug_annotations');
 };
