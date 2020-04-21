@@ -35,28 +35,29 @@ const StyledButton = styled.div`
 
 
 const DownloadButton = (props) => {
-  const { data, headers, filename } = props;
-  return (
-    <StyledButton>
-      <CsvDownloader
-        datas={data}
-        columns={headers}
-        filename={filename}
-      >
-        <button type="button">
-           Download Data
-          {'   '}
-          <img src={downloadIcon} alt="download icon" />
-        </button>
-      </CsvDownloader>
-    </StyledButton>
-  );
+    const { data, headers, filename } = props;
+    return (
+        <StyledButton>
+            <CsvDownloader
+                datas={data}
+                columns={headers}
+                filename={filename}
+                bom={false}
+            >
+                <button type="button">
+                    Download Data
+                    {'   '}
+                    <img src={downloadIcon} alt="download icon" />
+                </button>
+            </CsvDownloader>
+        </StyledButton>
+    );
 };
 
 export default DownloadButton;
 
 DownloadButton.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  headers: PropTypes.arrayOf(PropTypes.object).isRequired,
-  filename: PropTypes.string.isRequired,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    headers: PropTypes.arrayOf(PropTypes.object).isRequired,
+    filename: PropTypes.string.isRequired,
 };

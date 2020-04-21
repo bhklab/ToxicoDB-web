@@ -175,11 +175,11 @@ const CompoundPage = (props) => {
     }];
 
     const headers = [
-        { displayName: 'gene', id: 'gene_name' },
-        { displayName: 'fold-change', id: 'fold_change' },
+        { displayName: 'Gene', id: 'gene_name' },
+        { displayName: 'log2(fold change)', id: 'fold_change' },
         { displayName: 'p-value', id: 'p_value' },
         { displayName: 'FDR', id: 'fdr' },
-        { displayName: 'dataset', id: 'dataset_name' },
+        { displayName: 'Dataset', id: 'dataset_name' },
     ];
     return (
         <StyledCompoundPage>

@@ -163,11 +163,11 @@ const GenePage = (props) => {
         ),
     }];
     const headers = [
-        { displayName: 'compound', id: 'drug_name' },
-        { displayName: 'fold-change', id: 'fold_change' },
+        { displayName: 'Compound', id: 'drug_name' },
+        { displayName: 'log2(fold change)', id: 'fold_change' },
         { displayName: 'p-value', id: 'p_value' },
         { displayName: 'FDR', id: 'fdr' },
-        { displayName: 'dataset', id: 'dataset_name' },
+        { displayName: 'Dataset', id: 'dataset_name' },
     ];
     return (
         <StyledGenePage>
