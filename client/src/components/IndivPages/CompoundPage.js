@@ -5,18 +5,18 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
+
 // import AnnotationCard from './AnnotationCard';
 import AnnotationCard from './GeneCompoundCard';
 import SynonymCard from './SynonymCard';
 import VolcanoSelect from './VolcanoSelect';
 import 'react-table-6/react-table.css';
+
 // 2 custom hooks to get and process the data
 import useFetchAnnotation from './Hooks/useFetchAnnotation';
 import useFetchSynonyms from './Hooks/useFetchSynonyms';
 import useFetchAnalysisData from './Hooks/useFetchAnalysisData';
-
 import DownloadButton from '../Utils/DownloadButton';
-
 import LoadingComponent from '../Utils/Loading';
 
 const StyledCompoundPage = styled.div`
@@ -176,9 +176,9 @@ const CompoundPage = (props) => {
 
     const headers = [
         { displayName: 'gene', id: 'gene_name' },
+        { displayName: 'fold-change', id: 'fold_change' },
         { displayName: 'p-value', id: 'p_value' },
         { displayName: 'FDR', id: 'fdr' },
-        { displayName: 'fold-change', id: 'fold_change' },
         { displayName: 'dataset', id: 'dataset_name' },
     ];
     return (

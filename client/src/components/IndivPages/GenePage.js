@@ -86,6 +86,7 @@ const GenePage = (props) => {
         analysisData,
         loading,
     } = useFetchAnalysisData(`/api/v1/genes/${params.id}/analysis`);
+    console.log(analysisData);
 
     // get gene card description
     const { name } = useFetchGeneName(entrez_gid);
@@ -155,9 +156,9 @@ const GenePage = (props) => {
     }];
     const headers = [
         { displayName: 'compound', id: 'drug_name' },
+        { displayName: 'fold-change', id: 'fold_change' },
         { displayName: 'p-value', id: 'p_value' },
         { displayName: 'FDR', id: 'fdr' },
-        { displayName: 'fold-change', id: 'fold_change' },
         { displayName: 'dataset', id: 'dataset_name' },
     ];
     return (
