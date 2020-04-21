@@ -1,23 +1,23 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-console */
-import React from 'react';
+// import AnnotationCard from './AnnotationCard';
+// import VolcanoPlotly from '../Plots/VolcanoPlotly';
+// import VolcanoSingle from '../Plots/VolcanoSingle';
+
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
+import 'react-table-6/react-table.css';
+
 import colors from '../../styles/colors';
-// import AnnotationCard from './AnnotationCard';
 import AnnotationCard from './GeneCompoundCard';
-// import VolcanoPlotly from '../Plots/VolcanoPlotly';
-// import VolcanoSingle from '../Plots/VolcanoSingle';
 import VolcanoSelect from './VolcanoSelect';
 import DownloadButton from '../Utils/DownloadButton';
-import 'react-table-6/react-table.css';
-// 2 custom hooks to get and process the data
+import LoadingComponent from '../Utils/Loading';
+
 import useFetchAnnotation from './Hooks/useFetchAnnotation';
 import useFetchAnalysisData from './Hooks/useFetchAnalysisData';
-
-import LoadingComponent from '../Utils/Loading';
 import useFetchGeneName from './Hooks/useFetchGeneName';
 
 const StyledGenePage = styled.div`
@@ -73,6 +73,12 @@ const filterCaseInsensitive = (filter, row) => {
     }
 };
 
+const normalizeCSVData = (data) => data.map((row) => {
+    const csvRow = { ...row };
+    if (csvRow.drug_name && csvRow.drug_name.includes(',')) csvRow.drug_name = `"${csvRow.drug_name}"`;
+    return csvRow;
+});
+
 const GenePage = (props) => {
     const { match: { params } } = props;
 
@@ -86,7 +92,9 @@ const GenePage = (props) => {
         analysisData,
         loading,
     } = useFetchAnalysisData(`/api/v1/genes/${params.id}/analysis`);
-    console.log(analysisData);
+
+    // using memoization to prevent csvData recalculation on every render
+    const csvData = useMemo(() => normalizeCSVData(analysisData), [analysisData]);
 
     // get gene card description
     const { name } = useFetchGeneName(entrez_gid);
@@ -187,7 +195,7 @@ const GenePage = (props) => {
                 LoadingComponent={LoadingComponent}
             />
             <DownloadButton
-                data={analysisData}
+                data={csvData}
                 filename={`${apiData.symbol && apiData.symbol.toUpperCase()}-compoundsData`}
                 headers={headers}
             />

@@ -59,7 +59,6 @@ class ExpressionPlot extends Component {
         fetch(`/api/v1/experiments?drugId=${compoundId}&geneId=${geneId}`)
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
                 const { data } = res;
                 fetch('/api/v1/experiments/control')
                     .then((response) => response.json())
