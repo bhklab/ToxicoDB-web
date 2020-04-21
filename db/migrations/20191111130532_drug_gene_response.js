@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('compound_gene_response', (table) => {
+    return knex.schema.createTable('drug_gene_response', (table) => {
         table.increments('id')
             .primary();
         table.integer('sample_id')
@@ -27,5 +27,5 @@ exports.up = function (knex, Promise) {
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTable('compound_gene_response');
+    return knex.schema.dropTable('drug_gene_response');
 };

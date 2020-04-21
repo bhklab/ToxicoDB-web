@@ -1,4 +1,4 @@
-compound_id,dataset_id,compound_uid
+drug_id,dataset_id,drug_uid
 1,1,naphthyl isothiocyanate
 2,1,phenylbutazone
 3,1,rifampicin

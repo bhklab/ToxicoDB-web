@@ -3,12 +3,12 @@
 /* eslint-disable no-unused-vars */
 
 exports.up = function (knex, Promise) {
-    return knex.schema.createTable('compounds_datasets', (table) => {
-        table.integer('compound_id')
+    return knex.schema.createTable('drugs_datasets', (table) => {
+        table.integer('drug_id')
             .notNullable()
             .unsigned()
             .references('id')
-            .inTable('compounds')
+            .inTable('drugs')
             .index();
         table.integer('dataset_id')
             .notNullable()
@@ -16,11 +16,11 @@ exports.up = function (knex, Promise) {
             .references('id')
             .inTable('datasets')
             .index();
-        table.string('compound_uid')
+        table.string('drug_uid')
             .notNullable();
     });
 };
 
 exports.down = function (knex, Promise) {
-    return knex.schema.dropTable('compounds_datasets');
+    return knex.schema.dropTable('drugs_datasets');
 };
