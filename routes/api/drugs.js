@@ -93,6 +93,15 @@ const getDrugAnalysis = (request, response) => {
             data: error,
         }));
 };
+// for the analysis query
+// SELECT fdr, fold_change, p_value, genes.id AS gene_id, ga.symbol AS gene_name, datasets.name AS dataset_name
+// 	FROM ( SELECT id AS sample_id FROM samples WHERE drug_id = 7) AS S
+//     INNER JOIN drug_gene_response AS dgr ON S.sample_id = dgr.sample_id
+//     INNER JOIN (SELECT fdr, fold_change, p_value, id FROM analysis WHERE NOT id = 0) AS A ON A.id = dgr.analysis_id
+//     INNER JOIN genes ON dgr.gene_id = genes.id
+//     INNER JOIN gene_annotations AS ga ON genes.id = ga.gene_id
+//     INNER JOIN (SELECT * FROM datasets_samples) AS ds ON S.sample_id = ds.sample_id
+//     INNER JOIN datasets ON ds.dataset_id = datasets.id
 
 
 const getDrugsPerDataset = (request, response) => {

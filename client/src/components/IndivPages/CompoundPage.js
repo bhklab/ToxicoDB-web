@@ -234,14 +234,6 @@ const CompoundPage = (props) => {
 
             {analysisData.length === 0 ? null : (
                 <div className="volcanoWrapper">
-                    <center>
-                        <h2>
-                            Analysis -
-                            {' '}
-                            {apiData.name}
-                        </h2>
-
-                    </center>
                     <VolcanoSelect
                         data={analysisData}
                         queryId={params.id}
