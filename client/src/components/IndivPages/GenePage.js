@@ -179,6 +179,13 @@ const GenePage = (props) => {
                 </>
             )}
 
+            {apiData.length === 0 ? null : (
+                <h2>
+                    Compound Response on Gene -
+                    {' '}
+                    {apiData.symbol}
+                </h2>
+            )}
             <ReactTable
                 data={analysisData}
                 columns={columns}
@@ -200,41 +207,8 @@ const GenePage = (props) => {
                 filename={`${apiData.symbol && apiData.symbol.toUpperCase()}-compoundsData`}
                 headers={headers}
             />
-
-            {/* {analysisData.length === 0 ? null : (
-                    <div className="volcanoWrapper">
-                        <center>
-                            <h2>
-                            Analysis -
-                                {' '}
-                                {geneData.symbol}
-                            </h2>
-
-                        </center>
-                        <Volcano
-                            data={analysisData}
-                            queryId={params.id}
-                            plotId="volcanoPlot"
-                            type="gene"
-                        />
-                        <VolcanoPlotly
-                            data={analysisData}
-                            queryId={params.id}
-                            plotId="volcanoPlot"
-                            type="gene"
-                        />
-                    </div>
-                )} */}
             {analysisData.length === 0 ? null : (
                 <div className="volcanoWrapper">
-                    <center>
-                        <h2>
-                            Analysis -
-                            {' '}
-                            {apiData.symbol && apiData.symbol.toUpperCase()}
-                        </h2>
-
-                    </center>
                     <VolcanoSelect
                         data={analysisData}
                         queryId={params.id}
