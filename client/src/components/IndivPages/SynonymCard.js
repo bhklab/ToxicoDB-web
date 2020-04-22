@@ -12,7 +12,7 @@ const StyledSynonymCard = styled.div`
     
     table {
         width:100%;
-        
+        margin-bottom:50px;
     }
     td {
         padding: 10px;

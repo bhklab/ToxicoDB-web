@@ -44,7 +44,7 @@ const StyledCompoundPage = styled.div`
       color: ${colors.blue_text};
     }
     .table {
-        margin:60px 0px 30px 0px;
+        margin:20px 0px 30px 0px;
     }
 `;
 
@@ -192,9 +192,16 @@ const CompoundPage = (props) => {
             )}
             {synonymData === undefined ? null : (
                 <div>
-                    <h2>Synonyms</h2>
+                    <h2>Dataset Names</h2>
                     <SynonymCard data={synonymData} />
                 </div>
+            )}
+            {apiData.length === 0 ? null : (
+                <h2>
+                    Differential Gene Expression Analysis -
+                    {' '}
+                    {apiData.name}
+                </h2>
             )}
             <ReactTable
                 data={processedData}
