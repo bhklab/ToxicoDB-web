@@ -42,9 +42,9 @@ const StyledGenePage = styled.div`
     a {
       color: ${colors.blue_text};
     }
-    
+       
     .table {
-        margin:60px 0px 30px 0px;
+        margin:20px 0px 30px 0px;
     }
     .volcanoWrapper {
         margin-top: 100px;
@@ -178,6 +178,7 @@ const GenePage = (props) => {
                     <AnnotationCard data={annotationData} type="gene" />
                 </>
             )}
+
             <ReactTable
                 data={analysisData}
                 columns={columns}

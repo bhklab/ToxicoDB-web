@@ -141,7 +141,16 @@ class Expression extends React.Component {
                 .attr('cy', (d) => yrange(d.exp));
 
             // to make sure it only puts a legend once
-            if (t.class == datasets[0].replaceAll(' ', '')) {
+            if (t.class === datasets[0].replaceAll(' ', '')) {
+                // legend title
+                svg.append('text')
+                    .attr('text-anchor', 'middle')
+                    .attr('fill', 'black')
+                    .attr('font-family', 'Arial')
+                    .style('font-size', 15)
+                    .style('font-weight', 'bold')
+                    .attr('transform', `translate(${width + 72},${30})`)
+                    .text('Doses');
                 // legend
                 legend.append('line')
                     .attr('class', `${t.class} legLine`)
