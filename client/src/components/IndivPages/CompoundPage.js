@@ -118,7 +118,7 @@ const CompoundPage = (props) => {
 
     useEffect(() => {
         const updatedFilteredData = processedData.filter((item) => Object.entries(filterValues)
-            .every((val) => item[val[0]].includes(val[1])));
+            .every((val) => item[val[0]].toUpperCase().includes(val[1].toUpperCase())));
         setData({ filteredData: updatedFilteredData, processedData });
     }, [filterValues]);
 
