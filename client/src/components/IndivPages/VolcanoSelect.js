@@ -26,19 +26,36 @@ const StyledVolcanoSelect = styled.div`
 
 `;
 
+const StyledSelectContainer = styled.div`
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .datasets {
+        width: 70%;
+    }
+    .time, .dose {
+        width: 12%;
+    }
+`;
+
 const customStyles = {
+    // container: (provided) => ({
+    //     ...provided,
+    //     width: '30%',
+    // }),
     control: (provided) => ({
         ...provided,
         background: colors.lightblue_bg,
         borderRadius: '10px',
         marginBottom: '30px',
         // width:300,
-        height: 20,
+        // height: 20,
         fontFamily: '\'Raleway\', sans-serif',
         fontWeight: 600,
         color: colors.blue_header,
         marginTop: '80px',
-        padding: '0 0px',
+        padding: '0px 0px',
         border: `1px solid ${colors.blue_header}`,
         '&:hover': {
             cursor: 'text',
@@ -138,6 +155,10 @@ const VolcanoSelect = (props) => {
         datasets: [],
         datasetLabels: [],
         loading: null,
+        doseOptions: [],
+        timeOptions: [],
+        selectedDose: {},
+        selectedTime: {},
     });
 
     const { data, queryId, type } = props;
@@ -164,9 +185,17 @@ const VolcanoSelect = (props) => {
             datasets: [],
             datasetLabels: [],
             loading: null,
+            doseOptions: [],
+            timeOptions: [],
+            selectedDose: {},
+            selectedTime: {},
         });
+
         // refactoring data to be per dataset for the dataset selector
+        // also collecting time points and doses
         const newData = {};
+        const doses = [];
+        const times = [];
         data.forEach((x) => {
             const dname = x.dataset_name.replace(/ /g, '');
             // if the dataset name isn't a key in newData yet
@@ -174,15 +203,25 @@ const VolcanoSelect = (props) => {
                 newData[dname] = [];
             }
             newData[dname].push(x);
+
+            if (!doses.includes(x.dose) && x.dose !== 'Control') {
+                doses.push(x.dose);
+            }
+            if (!times.includes(x.time)) {
+                times.push(x.time);
+            }
         });
+        times.sort((a, b) => a - b);
 
         const datasets = Object.keys(newData);
 
+
+        /* Dataset selection */
         // nicer names for datasets
         const datasetLabels = [];
         datasets.forEach((x) => {
-            if (x === 'OpenTG-GATEsHuman') datasetLabels.push('Open TG-GATEs Human');
-            else if (x === 'OpenTG-GATEsRat') datasetLabels.push('Open TG-GATEs Rat');
+            if (x === 'OpenTG-GATEsHumanLDH') datasetLabels.push('Open TG-GATEs Human');
+            else if (x === 'OpenTG-GATEsRatLDH') datasetLabels.push('Open TG-GATEs Rat');
             else if (x === 'DrugMatrixRat') datasetLabels.push('DrugMatrix Rat');
             else datasetLabels.push(x);
         });
@@ -194,6 +233,10 @@ const VolcanoSelect = (props) => {
         // const selected = (options.length > 1 ? options.slice(0, 2) : [options[0]]).map((x) => x.value);
         const selected = options.map((x) => x.value);
 
+        /* Dose/time selection */
+        const doseOptions = doses.map((x) => ({ value: x, label: x }));
+        const timeOptions = times.map((x) => ({ value: x, label: x }));
+
         // set loading to an object with a pair for each dataset
         const loading = {};
         datasets.forEach((x) => {
@@ -201,23 +244,54 @@ const VolcanoSelect = (props) => {
         });
 
         setState({
-            loading, options, data: newData, selected, datasets, datasetLabels,
+            loading,
+            options,
+            data: newData,
+            selected,
+            datasets,
+            datasetLabels,
+            doseOptions,
+            timeOptions,
+            selectedDose: doseOptions[0],
+            selectedTime: timeOptions[0],
         });
     }, []);
 
     return (
         <>
+            {console.log(state.data)}
             {state.data.length === 0 && state.options.length === 0 && state.selected.length === 0 ? null : (
                 <>
-                    <Select
-                        isMulti
-                        defaultValue={state.options}
-                        filterOption={customFilterOption}
-                        options={state.options}
-                        components={{ Option: CustomOption }}
-                        styles={customStyles}
-                        onChange={handleChange}
-                    />
+                    <StyledSelectContainer>
+                        <Select
+                            className="datasets"
+                            isMulti
+                            defaultValue={state.options}
+                            filterOption={customFilterOption}
+                            options={state.options}
+                            components={{ Option: CustomOption }}
+                            styles={customStyles}
+                            onChange={handleChange}
+                        />
+                        <Select
+                            className="dose"
+                            defaultValue={state.selectedDose}
+                            // filterOption={customFilterOption}
+                            options={state.doseOptions}
+                            components={{ Option: CustomOption }}
+                            styles={customStyles}
+                            onChange={handleChange}
+                        />
+                        <Select
+                            className="time"
+                            defaultValue={state.selectedTime}
+                            // filterOption={customFilterOption}
+                            options={state.timeOptions}
+                            components={{ Option: CustomOption }}
+                            styles={customStyles}
+                            onChange={handleChange}
+                        />
+                    </StyledSelectContainer>
                     <VolcanoLegend plotId="legend" />
                     <StyledVolcanoSelect>
                         {state.datasets.map((x, i) => (
