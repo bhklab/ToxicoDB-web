@@ -69,6 +69,11 @@ class Genes extends Component {
         const { loading, geneData } = this.state;
         const columns = [{
             Header: 'Name',
+            accessor: 'full_name',
+            sortable: true,
+            Cell: (row) => (<Link to={`/genes/${row.original.id}`}>{row.value === 'NA' ? '' : row.value.toUpperCase()}</Link>),
+        }, {
+            Header: 'Symbol',
             accessor: 'symbol',
             sortable: true,
             Cell: (row) => (<Link to={`/genes/${row.original.id}`}>{row.value}</Link>),
