@@ -10,10 +10,11 @@ exports.up = function (knex, Promise) {
             .references('id')
             .inTable('genes')
             .index();
-        table.string('Symbol');
+        table.string('symbol');
         table.integer('entrez_gid');
         table.string('transcript_name');
         table.string('ensembl_tid');
+        table.string('full_name', 500);
     });
 };
 
