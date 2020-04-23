@@ -58,9 +58,9 @@ const getUniqueDrugId = (request, response) => {
 
 const getDrugAnalysis = (request, response) => {
     function subquerySamples() {
-        return this.select('id as sample_id')
+        return this.select('dose', 'time', 'id AS sample_id')
             .from('samples')
-            .where({ drug_id: request.params.id })
+            .where({ drug_id: request.params.id, replicate: 1 })
             .as('S');
     }
     function subqueryAnalysis() {
@@ -76,7 +76,7 @@ const getDrugAnalysis = (request, response) => {
             // .whereNot({ dataset_id: 3 })
             .as('ds');
     }
-    knex.distinct('fdr', 'fold_change', 'p_value', 'genes.id AS gene_id', 'ga.symbol AS gene_name', 'datasets.name AS dataset_name')
+    knex.distinct('dose', 'time', 'fdr', 'fold_change', 'p_value', 'genes.id AS gene_id', 'ga.symbol AS gene_name', 'datasets.name AS dataset_name')
         .from(subquerySamples)
         .innerJoin('drug_gene_response AS dgr', 'S.sample_id', 'dgr.sample_id')
         .innerJoin(subqueryAnalysis, 'A.id', 'dgr.analysis_id')
@@ -94,14 +94,14 @@ const getDrugAnalysis = (request, response) => {
         }));
 };
 // for the analysis query
-// SELECT fdr, fold_change, p_value, genes.id AS gene_id, ga.symbol AS gene_name, datasets.name AS dataset_name
-// 	FROM ( SELECT id AS sample_id FROM samples WHERE drug_id = 7) AS S
+// SELECT dose, time, fdr, fold_change, p_value, genes.id AS gene_id, ga.symbol AS gene_name, datasets.name AS dataset_name
+// 	FROM ( SELECT  dose, time, id AS sample_id FROM samples WHERE drug_id = 10) AS S
 //     INNER JOIN drug_gene_response AS dgr ON S.sample_id = dgr.sample_id
 //     INNER JOIN (SELECT fdr, fold_change, p_value, id FROM analysis WHERE NOT id = 0) AS A ON A.id = dgr.analysis_id
 //     INNER JOIN genes ON dgr.gene_id = genes.id
 //     INNER JOIN gene_annotations AS ga ON genes.id = ga.gene_id
 //     INNER JOIN (SELECT * FROM datasets_samples) AS ds ON S.sample_id = ds.sample_id
-//     INNER JOIN datasets ON ds.dataset_id = datasets.id
+//     INNER JOIN datasets ON ds.dataset_id = datasets.id;
 
 
 const getDrugsPerDataset = (request, response) => {

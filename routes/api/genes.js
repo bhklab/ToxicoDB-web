@@ -68,7 +68,7 @@ const getGeneAnalysis = (request, response) => {
             .as('A');
     }
 
-    knex.distinct('fdr', 'fold_change', 'p_value', 'drugs.id AS drug_id', 'drugs.name AS drug_name', 'datasets.name AS dataset_name')
+    knex.distinct('dose', 'time', 'fdr', 'fold_change', 'p_value', 'drugs.id AS drug_id', 'drugs.name AS drug_name', 'datasets.name AS dataset_name')
         .from(subqueryAnalysis)
         .innerJoin('drug_gene_response AS dgr', 'A.id', 'dgr.analysis_id')
         .innerJoin('samples', 'samples.id', 'dgr.sample_id')

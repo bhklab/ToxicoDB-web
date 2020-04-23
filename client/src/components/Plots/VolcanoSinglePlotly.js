@@ -72,11 +72,13 @@ const VolcanoSingle = (props) => {
         // loading: false,
     });
 
+    let plotData = [];
     const {
         data, type, queryId, datasetName, plotId, selected,
     } = props;
 
     const formatData = (data) => {
+        console.log(data);
         // setting up the traces; can't really deep copy
         const greenTrace = {
             showlegend: false,
@@ -128,8 +130,18 @@ const VolcanoSingle = (props) => {
         // };
 
         // calculate lowest pvalue that isn't 0, -log10 it, and set all 0s to the cutoff
-        const cutoff = -Math.log10(Math.min(...data.map((x) => (parseFloat(x.p_value) === 0 ? null : parseFloat(x.p_value))).filter((x) => x !== null)));
-
+        // const cutoff = -Math.log10(Math.max(...data.map((x) => (parseFloat(x.p_value) === 0 ? null : parseFloat(x.p_value))).filter((x) => x !== null)));
+        // BEWARE! Math.max exceeds call stack at a certain point. I have resorted to
+        // sorting the array by ascending and taking the last element.
+        const cut1 = data.map((x) => {
+            if (parseFloat(x.p_value) === 0) {
+                return null;
+            }
+            return parseFloat(x.p_value);
+        });
+        const cut2 = cut1.filter((x) => x !== null);
+        cut2.sort((a, b) => a - b);
+        const cutoff = -Math.log10(cut2[cut2.length - 1]);
         // putting data in
         data.forEach((d) => {
             if (parseFloat(d.p_value) <= 0.05) {
@@ -178,101 +190,108 @@ const VolcanoSingle = (props) => {
             //         trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
             // }
         });
-
-        // if dataset is not selected, give class hidden to hide
-        const className = selected.includes(datasetName) ? 'plot' : 'plot hidden';
-
-        // calculating highest y value for plotting lines for fold change
-        const maxY = d3.max([d3.max(greenTrace.y), d3.max(blueTrace.y)]);
-        const minY = d3.min([d3.min(greenTrace.y), d3.min(blueTrace.y)]);
-
-        // calculating highest x value for plotting the pvalue at 20
-        const maxX = d3.max([d3.max(greenTrace.x), d3.max(blueTrace.x)]);
-        const minX = d3.min([d3.min(greenTrace.x), d3.min(blueTrace.x)]);
-
-        const layout = {
-            height: 600,
-            autosize: true,
-            // width: 800,
-            paper_bgcolor: 'white',
-            plot_bgcolor: 'white',
-            orientation: 'v',
-            yaxis: { ticklen: 0, title: '-log10(p value)' },
-            xaxis: { title: 'log2(fold change)', zeroline: false },
-            hovermode: 'closest',
-            font: {
-                size: 14,
-                color: colors.nav_links,
-                family: 'Arial',
-            },
-            margin: {
-                l: 45,
-                r: 0,
-                t: 0,
-                b: 40,
-            },
-        };
-
-        // determine if show x axis fold change lines or not
-        layout.shapes = [];
-        if (minX < -1) {
-            layout.shapes.push(
-                // x: -1
-                {
-                    type: 'line',
-                    x0: -1,
-                    y0: minY,
-                    x1: -1,
-                    y1: maxY,
-                    line: {
-                        color: '#accffa',
-                        width: 1,
-                    },
-                },
-            );
-        }
-
-        if (maxX > 1) {
-            layout.shapes.push(
-                // x: 1
-                {
-                    type: 'line',
-                    x0: 1,
-                    y0: minY,
-                    x1: 1,
-                    y1: maxY,
-                    line: {
-                        color: '#accffa',
-                        width: 1,
-                    },
-                },
-            );
-        }
-
-        // determine if plot the y axis pvalue line (max beyond 20)
-        if (maxY > 20) {
-            layout.shapes.push({
-                type: 'line',
-                x0: minX,
-                y0: 20,
-                x1: maxX,
-                y1: 20,
-                line: {
-                    color: '#accffa',
-                    width: 1,
-                },
-            });
-        }
-
-        setState({
-            ...state,
-            data: [greenTrace, blueTrace],
-            layout,
-            class: className,
-        });
+        console.log(greenTrace, blueTrace);
+        return [greenTrace, blueTrace];
     };
 
-    // initial render - like a componentdidmount, only runs once
+    const formatLayout = (retData) => {
+        if (retData !== null) {
+            const greenTrace = retData[0];
+            const blueTrace = retData[1];
+            // if dataset is not selected, give class hidden to hide
+            const className = selected.includes(datasetName) ? 'plot' : 'plot hidden';
+
+            // calculating highest y value for plotting lines for fold change
+            const maxY = d3.max([d3.max(greenTrace.y), d3.max(blueTrace.y)]);
+            const minY = d3.min([d3.min(greenTrace.y), d3.min(blueTrace.y)]);
+
+            // calculating highest x value for plotting the pvalue at 20
+            const maxX = d3.max([d3.max(greenTrace.x), d3.max(blueTrace.x)]);
+            const minX = d3.min([d3.min(greenTrace.x), d3.min(blueTrace.x)]);
+
+            const layout = {
+                height: 600,
+                autosize: true,
+                // width: 800,
+                paper_bgcolor: 'white',
+                plot_bgcolor: 'white',
+                orientation: 'v',
+                yaxis: { ticklen: 0, title: '-log10(p value)' },
+                xaxis: { title: 'log2(fold change)', zeroline: false },
+                hovermode: 'closest',
+                font: {
+                    size: 14,
+                    color: colors.nav_links,
+                    family: 'Arial',
+                },
+                margin: {
+                    l: 45,
+                    r: 0,
+                    t: 0,
+                    b: 40,
+                },
+            };
+
+            // determine if show x axis fold change lines or not
+            layout.shapes = [];
+            if (minX < -1) {
+                layout.shapes.push(
+                    // x: -1
+                    {
+                        type: 'line',
+                        x0: -1,
+                        y0: minY,
+                        x1: -1,
+                        y1: maxY,
+                        line: {
+                            color: '#accffa',
+                            width: 1,
+                        },
+                    },
+                );
+            }
+
+            if (maxX > 1) {
+                layout.shapes.push(
+                    // x: 1
+                    {
+                        type: 'line',
+                        x0: 1,
+                        y0: minY,
+                        x1: 1,
+                        y1: maxY,
+                        line: {
+                            color: '#accffa',
+                            width: 1,
+                        },
+                    },
+                );
+            }
+
+            // determine if plot the y axis pvalue line (max beyond 20)
+            if (maxY > 20) {
+                layout.shapes.push({
+                    type: 'line',
+                    x0: minX,
+                    y0: 20,
+                    x1: maxX,
+                    y1: 20,
+                    line: {
+                        color: '#accffa',
+                        width: 1,
+                    },
+                });
+            }
+
+            setState({
+                ...state,
+                data: retData,
+                layout,
+                class: className,
+            });
+        }
+    };
+
     useEffect(() => {
         setState({
             ...state,
@@ -280,7 +299,8 @@ const VolcanoSingle = (props) => {
             data: null,
             class: null,
         });
-        formatData(data);
+        plotData = formatData(data);
+        formatLayout(plotData);
     }, []);
 
     // determining if selected changes
@@ -288,10 +308,9 @@ const VolcanoSingle = (props) => {
         setState({
             ...state,
             layout: null,
-            data: null,
             class: null,
         });
-        formatData(data);
+        formatLayout(plotData);
     }, [selected]);
 
     // compute dataset name.
@@ -319,19 +338,20 @@ const VolcanoSingle = (props) => {
             <h3>
                 { computeDatasetName(datasetName) }
             </h3>
-            <Plot
-                data={state.data}
-                layout={state.layout}
-                graphDiv={plotId}
-                config={{
-                    responsive: true,
-                    displayModeBar: false,
-                }}
-                onClick={(d) => click(d, type, queryId)}
-                onHover={() => hover()}
-                onUnhover={() => unhover()}
-                // onAfterPlot={() => afterPlot()}
-            />
+            {state.data === null ? null : (
+                <Plot
+                    data={state.data}
+                    layout={state.layout}
+                    graphDiv={plotId}
+                    config={{
+                        responsive: true,
+                        displayModeBar: false,
+                    }}
+                    onClick={(d) => click(d, type, queryId)}
+                    onHover={() => hover()}
+                    onUnhover={() => unhover()}
+                />
+            )}
         </StyledDiv>
     );
 };
