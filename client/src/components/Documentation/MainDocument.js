@@ -107,7 +107,7 @@ const StyledDiv = styled.div`
         }
     }
     .doc-section {
-        margin: 10px 0;
+        margin: 20px 0;
         width: 100%;
         max-width: 100%;
         border-bottom: 2px solid ${colors.blue_header};
