@@ -15,7 +15,6 @@ const StyledVolcanoSelect = styled.div`
     display:flex;
     flex-direction: row;
     flex-wrap: wrap;
-
     .plot {
         width: 50%;
         flex-grow: 1;
@@ -26,6 +25,11 @@ const StyledVolcanoSelect = styled.div`
 
 `;
 
+const StyledAlert = styled.div`
+    color: ${colors.red_highlight};
+    font-size: 1em;
+`;
+
 const StyledSelectContainer = styled.div`
     display:flex;
     flex-direction: row;
@@ -33,6 +37,7 @@ const StyledSelectContainer = styled.div`
 
     .datasets {
         width: 70%;
+        height: 
     }
     .time, .dose {
         width: 12%;
@@ -54,7 +59,6 @@ const customStyles = {
         fontFamily: '\'Raleway\', sans-serif',
         fontWeight: 600,
         color: colors.blue_header,
-        marginTop: '80px',
         padding: '0px 0px',
         border: `1px solid ${colors.blue_header}`,
         '&:hover': {
@@ -78,10 +82,6 @@ const customStyles = {
     clearIndicator: (provided) => ({
         ...provided,
         color: `${colors.blue_header}`,
-        '&:hover': {
-            color: `${colors.blue_header}`,
-            cursor: 'pointer',
-        },
     }),
     dropdownIndicator: (provided) => ({
         ...provided,
@@ -161,6 +161,8 @@ const VolcanoSelect = (props) => {
         selectedTime: 0,
     });
 
+    const [alert, setAlert] = useState('');
+
     const { data, queryId, type } = props;
 
     const handleChange = (event) => {
@@ -175,7 +177,6 @@ const VolcanoSelect = (props) => {
         }
     };
     const handleDoseChange = (event) => {
-        const selected = [];
         // no options selected
         if (event === null || event.length === 0) {
             // can't map an empty event, so separate condition here
@@ -184,11 +185,18 @@ const VolcanoSelect = (props) => {
         }
     };
     const handleTimeChange = (event) => {
-        const selected = [];
         // no options selected
         if (event === null || event.length === 0) {
             // can't map an empty event, so separate condition here
         } else {
+            console.log(state.selected);
+            if (state.selected.includes('DrugMatrixRat') && (event.value === 2 || event.value === 8)) {
+                setAlert('DrugMatrix Rat is only available for times 16 and 24.');
+            } else if ((state.selected.includes('OpenTG-GATEsHuman') || state.selected.includes('OpenTG-GATEsRat')) && event.value === 16) {
+                setAlert('Open TG-GATEs Human or Rat is only available for times 2, 8, and 24.');
+            } else {
+                setAlert('');
+            }
             setState({ ...state, selectedTime: event.value });
         }
     };
@@ -274,35 +282,44 @@ const VolcanoSelect = (props) => {
             {Object.keys(state.data).length === 0 && state.options.length === 0 && state.selected.length === 0 ? null : (
                 <>
                     <StyledSelectContainer>
-                        <Select
-                            className="datasets"
-                            isMulti
-                            defaultValue={state.options}
-                            filterOption={customFilterOption}
-                            options={state.options}
-                            components={{ Option: CustomOption }}
-                            styles={customStyles}
-                            onChange={handleChange}
-                        />
-                        <Select
-                            className="dose"
-                            defaultValue={{ value: state.selectedDose, label: state.selectedDose }}
-                            // filterOption={customFilterOption}
-                            options={state.doseOptions}
-                            components={{ Option: CustomOption }}
-                            styles={customStyles}
-                            onChange={handleDoseChange}
-                        />
-                        <Select
-                            className="time"
-                            defaultValue={{ value: state.selectedTime, label: state.selectedTime }}
-                            // filterOption={customFilterOption}
-                            options={state.timeOptions}
-                            components={{ Option: CustomOption }}
-                            styles={customStyles}
-                            onChange={handleTimeChange}
-                        />
+                        <div className="datasets">
+                            <h3>Select Dataset </h3>
+                            <Select
+                                isMulti
+                                defaultValue={state.options}
+                                filterOption={customFilterOption}
+                                options={state.options}
+                                components={{ Option: CustomOption }}
+                                styles={customStyles}
+                                onChange={handleChange}
+                            />
+                        </div>
+                        <div className="dose">
+                            <h3>Select Dose </h3>
+                            <Select
+                                defaultValue={{ value: state.selectedDose, label: state.selectedDose }}
+                                // filterOption={customFilterOption}
+                                options={state.doseOptions}
+                                components={{ Option: CustomOption }}
+                                styles={customStyles}
+                                onChange={handleDoseChange}
+                            />
+                        </div>
+                        <div className="time">
+                            <h3>Select Time </h3>
+                            <Select
+                                defaultValue={{ value: state.selectedTime, label: state.selectedTime }}
+                                // filterOption={customFilterOption}
+                                options={state.timeOptions}
+                                components={{ Option: CustomOption }}
+                                styles={customStyles}
+                                onChange={handleTimeChange}
+                            />
+                        </div>
                     </StyledSelectContainer>
+                    <StyledAlert>
+                        {alert}
+                    </StyledAlert>
                     <VolcanoLegend plotId="legend" />
                     <StyledVolcanoSelect>
                         {state.datasets.map((x, i) => (

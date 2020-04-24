@@ -251,13 +251,6 @@ const VolcanoSingle = (props) => {
                 }
                 layoutData[x] = layout;
             });
-            // setState({
-            //     ...state,
-            //     allData: retData,
-            //     allLayout: layoutData,
-            //     selectedData: retData[`${selectedDose}${selectedTime}`],
-            //     selectedLayout: layoutData[`${selectedDose}${selectedTime}`],
-            // });
             return { retData, layoutData };
         }
     };
