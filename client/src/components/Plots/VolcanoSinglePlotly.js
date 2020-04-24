@@ -73,9 +73,11 @@ const VolcanoSingle = (props) => {
     });
     const [className, setClassName] = useState('plot');
     const [hide, setHide] = useState(false);
+    const [doses, setDoses] = useState([]);
+    const [times, setTimes] = useState([]);
 
     const {
-        data, type, queryId, datasetName, plotId, selected, selectedTime, selectedDose,
+        data, type, queryId, datasetName, plotId, selected, selectedTime, selectedDose, alertCallback,
     } = props;
     const formatData = (data) => {
         // for each key, calculate traces => TGGATES: {2Low: [greenTrace, blueTrace], 2Mid: ...}
@@ -265,12 +267,27 @@ const VolcanoSingle = (props) => {
     useEffect(() => {
         const plotData = formatData(data);
         const { retData, layoutData } = formatLayout(plotData);
+
+        // getting available doses and times
+        const tempDoses = [];
+        const tempTimes = [];
+        Object.keys(retData).forEach((x) => {
+            const ind = x.indexOf('+');
+            const dose = x.slice(0, ind);
+            const time = x.slice(ind + 1, x.length);
+            tempDoses.push(dose);
+            tempTimes.push(time);
+        });
+        setDoses([...new Set(tempDoses)]);
+        setTimes([...new Set(tempTimes)]);
+
+        // set all data and layout
         setState({
             ...state,
             allData: retData,
             allLayout: layoutData,
-            selectedData: retData[`${selectedDose}${selectedTime}`],
-            selectedLayout: layoutData[`${selectedDose}${selectedTime}`],
+            selectedData: retData[`${selectedDose}+${selectedTime}`],
+            selectedLayout: layoutData[`${selectedDose}+${selectedTime}`],
         });
         changePlotClass();
     }, []);
@@ -279,20 +296,29 @@ const VolcanoSingle = (props) => {
     useEffect(() => {
         if (state.allData !== null) {
             // if dataset is DrugMatrix, and anything other than 16 or 24 is selected, hide
-            if (datasetName === 'DrugMatrixRat' && (selectedTime === 2 || selectedTime === 8)) {
+            // if (datasetName === 'DrugMatrixRat' && (selectedTime === 2 || selectedTime === 8)) {
+            //     setClassName('plot hidden');
+            //     setHide(true);
+            // } else if (datasetName !== 'DrugMatrixRat' && selectedTime === 16) { // tggates and time 16
+            //     setClassName('plot hidden');
+            //     setHide(true);
+            // } else { // default
+            //     changePlotClass();
+            //     setHide(false);
+            // }
+            // if plot not available, hide
+            if (!times.includes(selectedTime.toString()) || !doses.includes(selectedDose)) {
                 setClassName('plot hidden');
                 setHide(true);
-            } else if (datasetName !== 'DrugMatrixRat' && selectedTime === 16) { // tggates and time 16
-                setClassName('plot hidden');
-                setHide(true);
+                alertCallback(datasetName);
             } else { // default
                 changePlotClass();
                 setHide(false);
             }
             setState({
                 ...state,
-                selectedData: state.allData[`${selectedDose}${selectedTime}`],
-                selectedLayout: state.allLayout[`${selectedDose}${selectedTime}`],
+                selectedData: state.allData[`${selectedDose}+${selectedTime}`],
+                selectedLayout: state.allLayout[`${selectedDose}+${selectedTime}`],
             });
         }
     }, [selected, selectedTime, selectedDose, hide]);

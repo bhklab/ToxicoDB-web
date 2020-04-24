@@ -162,7 +162,7 @@ const VolcanoSelect = (props) => {
     });
 
     const [alert, setAlert] = useState('');
-
+    let alertDatasets = [];
     const { data, queryId, type } = props;
 
     const handleChange = (event) => {
@@ -182,6 +182,8 @@ const VolcanoSelect = (props) => {
             // can't map an empty event, so separate condition here
         } else {
             setState({ ...state, selectedDose: event.value });
+            alertDatasets = [];
+            setAlert('');
         }
     };
     const handleTimeChange = (event) => {
@@ -189,16 +191,22 @@ const VolcanoSelect = (props) => {
         if (event === null || event.length === 0) {
             // can't map an empty event, so separate condition here
         } else {
-            console.log(state.selected);
-            if (state.selected.includes('DrugMatrixRat') && (event.value === 2 || event.value === 8)) {
-                setAlert('DrugMatrix Rat is only available for times 16 and 24.');
-            } else if ((state.selected.includes('OpenTG-GATEsHuman') || state.selected.includes('OpenTG-GATEsRat')) && event.value === 16) {
-                setAlert('Open TG-GATEs Human or Rat is only available for times 2, 8, and 24.');
-            } else {
-                setAlert('');
-            }
+            // if (state.selected.includes('DrugMatrixRat') && (event.value === 2 || event.value === 8)) {
+            //     setAlert('DrugMatrix Rat is only available for times 16 and 24.');
+            // } else if ((state.selected.includes('OpenTG-GATEsHuman') || state.selected.includes('OpenTG-GATEsRat')) && event.value === 16) {
+            //     setAlert('Open TG-GATEs Human or Rat is only available for times 2, 8, and 24.');
+            // } else {
+            //     setAlert('');
+            // }
             setState({ ...state, selectedTime: event.value });
+            alertDatasets = [];
+            setAlert('');
         }
+    };
+
+    const alertCallback = (alert) => {
+        alertDatasets.push(alert);
+        setAlert(`${alertDatasets.join(', ')} not available for this selection.`);
     };
 
     // initial rendering
@@ -224,7 +232,7 @@ const VolcanoSelect = (props) => {
             }
 
             // check if dose and time key are already in the object
-            const key = `${x.dose}${x.time}`;
+            const key = `${x.dose}+${x.time}`;
             if (Object.keys(newData[dname]).includes(key)) {
                 newData[dname][key].push(x);
             } else {
@@ -333,6 +341,7 @@ const VolcanoSelect = (props) => {
                                 selected={state.selected}
                                 selectedTime={state.selectedTime}
                                 selectedDose={state.selectedDose}
+                                alertCallback={alertCallback}
                             />
                         ))}
 
