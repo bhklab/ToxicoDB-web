@@ -285,6 +285,7 @@ const VolcanoSelect = (props) => {
 
     return (
         <>
+            {console.log(state.data)}
             {state.data.length === 0 && state.options.length === 0 && state.selected.length === 0 ? null : (
                 <>
                     <StyledSelectContainer>

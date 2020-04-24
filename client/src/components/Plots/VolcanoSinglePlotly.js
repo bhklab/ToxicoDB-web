@@ -78,7 +78,6 @@ const VolcanoSingle = (props) => {
     } = props;
 
     const formatData = (data) => {
-        console.log('yes');
         // setting up the traces; can't really deep copy
         const greenTrace = {
             showlegend: false,
@@ -298,7 +297,6 @@ const VolcanoSingle = (props) => {
             data: null,
             class: null,
         });
-        console.log('sfirst useffect');
         plotData = formatData(data);
         formatLayout(plotData);
     }, []);
@@ -310,7 +308,6 @@ const VolcanoSingle = (props) => {
             layout: null,
             class: null,
         });
-        console.log('second useffect');
         formatLayout(state.data);
     }, [selected, selectedTime, selectedDose]);
 
