@@ -3,7 +3,7 @@ import React from 'react';
 
 class VolcanoLegend extends React.Component {
     componentDidMount() {
-        const {plotId} = this.props;
+        const { plotId } = this.props;
         const width = 900;
         const height = 20;
         const margin = {
@@ -22,7 +22,7 @@ class VolcanoLegend extends React.Component {
             .attr('transform',
                 `translate(${margin.left},${margin.top})`);
 
-        let legend = svg.append('g');
+        const legend = svg.append('g');
 
         legend.append('circle')
             .attr('cx', 20)
@@ -36,13 +36,13 @@ class VolcanoLegend extends React.Component {
             .attr('fill', 'black')
             .style('font-family', 'Arial')
             .style('font-size', 14)
-            .text('FDR < 0.05 and |log2(fold change)| < 1')
+            .text('FDR < 0.05 and |log2(fold change)| < 1');
 
         legend.append('circle')
             .attr('cx', 305)
             .attr('cy', 6)
             .attr('r', 5)
-            .attr('fill', '#5cc33c') //#5cc33c
+            .attr('fill', '#5cc33c'); // #5cc33c
 
         legend.append('text')
             .attr('dx', 316)
@@ -50,30 +50,11 @@ class VolcanoLegend extends React.Component {
             .style('font-family', 'Arial')
             .style('font-size', 14)
             .attr('fill', 'black')
-            .text('FDR < 0.05 and |log2(fold change)| >= 1')
-
-
-        // last time point etc
-        legend.append('text')
-            .attr('dx', 606)
-            .attr('y', 10)
-            .style('font-family', 'Arial')
-            .style('font-size', 14)
-            .attr('fill', 'black')
-            .text('Last time point: 24 hrs')
-
-        legend.append('text')
-            .attr('dx', 790)
-            .attr('y', 10)
-            .style('font-family', 'Arial')
-            .style('font-size', 14)
-            .attr('fill', 'black')
-            .text('Max dose: High')
-
+            .text('FDR < 0.05 and |log2(fold change)| >= 1');
     }
 
     render() {
-        return <div id={this.props.plotId}/>;
+        return <div id={this.props.plotId} />;
     }
 }
 
