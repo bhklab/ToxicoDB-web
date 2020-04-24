@@ -287,21 +287,20 @@ const VolcanoSingle = (props) => {
         if (state.allData !== null) {
             // if dataset is DrugMatrix, and anything other than 16 or 24 is selected, hide
             if (datasetName === 'DrugMatrixRat' && (selectedTime === 2 || selectedTime === 8)) {
-                setHide(true);
                 setClassName('plot hidden');
+                setHide(true);
             } else if (datasetName !== 'DrugMatrixRat' && selectedTime === 16) { // tggates and time 16
-                setHide(true);
                 setClassName('plot hidden');
+                setHide(true);
             } else { // default
+                changePlotClass();
                 setHide(false);
-                setClassName('plot');
             }
             setState({
                 ...state,
                 selectedData: state.allData[`${selectedDose}${selectedTime}`],
                 selectedLayout: state.allLayout[`${selectedDose}${selectedTime}`],
             });
-            changePlotClass();
         }
     }, [selected, selectedTime, selectedDose, hide]);
 
