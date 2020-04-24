@@ -195,20 +195,6 @@ const VolcanoSelect = (props) => {
 
     // initial rendering
     useEffect(() => {
-        setState({
-            ...state,
-            data: [],
-            options: [],
-            selected: [],
-            datasets: [],
-            datasetLabels: [],
-            loading: null,
-            doseOptions: [],
-            timeOptions: [],
-            selectedDose: 'High',
-            selectedTime: 24,
-        });
-
         // refactoring data to be per dataset for the dataset selector
         // also collecting time points and doses
         const newData = {};

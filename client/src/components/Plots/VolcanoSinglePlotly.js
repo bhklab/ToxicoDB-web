@@ -72,8 +72,8 @@ const VolcanoSingle = (props) => {
         selectedLayout: {},
     });
     const [className, setClassName] = useState('plot');
-    // if selected is not available for that dataset
     const [hide, setHide] = useState(false);
+
     const {
         data, type, queryId, datasetName, plotId, selected, selectedTime, selectedDose,
     } = props;
@@ -262,15 +262,10 @@ const VolcanoSingle = (props) => {
         }
     };
 
-    // determines if hide plot
+    // determines if hide plot based on selected array of datasets
     const changePlotClass = () => {
         // if dataset is not selected, give class hidden to hide
-        let name = selected.includes(datasetName) ? 'plot' : 'plot hidden';
-
-        // if dataset is DrugMatrix, and anything other than 16 or 24 is selected, hide
-        if (selected.includes('DrugMatrix') && (selectedTime !== 16 || selectedTime !== 24)) {
-            name = 'plot hidden';
-        }
+        const name = selected.includes(datasetName) ? 'plot' : 'plot hidden';
         setClassName(name);
     };
 
@@ -289,15 +284,26 @@ const VolcanoSingle = (props) => {
 
     // determining if selected changes
     useEffect(() => {
-        changePlotClass();
         if (state.allData !== null) {
+            // if dataset is DrugMatrix, and anything other than 16 or 24 is selected, hide
+            if (datasetName === 'DrugMatrixRat' && (selectedTime === 2 || selectedTime === 8)) {
+                setHide(true);
+                setClassName('plot hidden');
+            } else if (datasetName !== 'DrugMatrixRat' && selectedTime === 16) { // tggates and time 16
+                setHide(true);
+                setClassName('plot hidden');
+            } else { // default
+                setHide(false);
+                setClassName('plot');
+            }
             setState({
                 ...state,
                 selectedData: state.allData[`${selectedDose}${selectedTime}`],
                 selectedLayout: state.allLayout[`${selectedDose}${selectedTime}`],
             });
+            changePlotClass();
         }
-    }, [selected, selectedTime, selectedDose]);
+    }, [selected, selectedTime, selectedDose, hide]);
 
     // compute dataset name.
     const computeDatasetName = (dataset) => {
@@ -321,24 +327,29 @@ const VolcanoSingle = (props) => {
 
     return (
         <StyledDiv className={className}>
-            <h3>
-                { computeDatasetName(datasetName) }
-            </h3>
-            {state.selectedData.length === 0 || hide ? null : (
-                <Plot
-                    data={state.selectedData}
-                    layout={state.selectedLayout}
-                    graphDiv={plotId}
-                    config={{
-                        responsive: true,
-                        displayModeBar: false,
-                    }}
-                    onClick={(d) => click(d, type, queryId)}
-                    onHover={() => hover()}
-                    onUnhover={() => unhover()}
-                />
+            {hide ? null : (
+                <>
+                    <h3>
+                        { computeDatasetName(datasetName) }
+                    </h3>
+                    {state.selectedData.length === 0 ? null : (
+                        <Plot
+                            data={state.selectedData}
+                            layout={state.selectedLayout}
+                            graphDiv={plotId}
+                            config={{
+                                responsive: true,
+                                displayModeBar: false,
+                            }}
+                            onClick={(d) => click(d, type, queryId)}
+                            onHover={() => hover()}
+                            onUnhover={() => unhover()}
+                        />
 
+                    )}
+                </>
             )}
+
         </StyledDiv>
     );
 };
