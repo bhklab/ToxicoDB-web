@@ -205,8 +205,8 @@ const VolcanoSelect = (props) => {
             loading: null,
             doseOptions: [],
             timeOptions: [],
-            selectedDose: '',
-            selectedTime: 0,
+            selectedDose: 'High',
+            selectedTime: 24,
         });
 
         // refactoring data to be per dataset for the dataset selector
@@ -218,9 +218,9 @@ const VolcanoSelect = (props) => {
             const dname = x.dataset_name.replace(/ /g, '');
             // if the dataset name isn't a key in newData yet
             if (newData[dname] === undefined) {
-                newData[dname] = []; // {}
+                newData[dname] = {};
             }
-            newData[dname].push(x);
+
             // for dropdown options
             if (!doses.includes(x.dose) && x.dose !== 'Control') {
                 doses.push(x.dose);
@@ -230,12 +230,12 @@ const VolcanoSelect = (props) => {
             }
 
             // check if dose and time key are already in the object
-            // const key = `${x.dose}${x.time}`;
-            // if (Object.keys(newData[dname]).includes(key)) {
-            //     newData[dname][key].push(x);
-            // } else {
-            //     newData[dname][key] = [x];
-            // }
+            const key = `${x.dose}${x.time}`;
+            if (Object.keys(newData[dname]).includes(key)) {
+                newData[dname][key].push(x);
+            } else {
+                newData[dname][key] = [x];
+            }
         });
         times.sort((a, b) => a - b);
 
@@ -278,15 +278,14 @@ const VolcanoSelect = (props) => {
             datasetLabels,
             doseOptions,
             timeOptions,
-            selectedDose: doseOptions[0].value,
-            selectedTime: timeOptions[0].value,
+            selectedDose: 'High',
+            selectedTime: 24,
         });
     }, []);
 
     return (
         <>
-            {console.log(state.data)}
-            {state.data.length === 0 && state.options.length === 0 && state.selected.length === 0 ? null : (
+            {Object.keys(state.data).length === 0 && state.options.length === 0 && state.selected.length === 0 ? null : (
                 <>
                     <StyledSelectContainer>
                         <Select
@@ -301,7 +300,7 @@ const VolcanoSelect = (props) => {
                         />
                         <Select
                             className="dose"
-                            defaultValue={state.doseOptions[0]}
+                            defaultValue={{ value: state.selectedDose, label: state.selectedDose }}
                             // filterOption={customFilterOption}
                             options={state.doseOptions}
                             components={{ Option: CustomOption }}
@@ -310,7 +309,7 @@ const VolcanoSelect = (props) => {
                         />
                         <Select
                             className="time"
-                            defaultValue={state.timeOptions[0]}
+                            defaultValue={{ value: state.selectedTime, label: state.selectedTime }}
                             // filterOption={customFilterOption}
                             options={state.timeOptions}
                             components={{ Option: CustomOption }}
