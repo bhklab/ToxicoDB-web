@@ -66,252 +66,237 @@ const unhover = () => {
 
 const VolcanoSingle = (props) => {
     const [state, setState] = useState({
-        layout: null,
-        data: null,
-        class: null,
-        // loading: false,
+        allLayout: null,
+        allData: null,
+        selectedData: [],
+        selectedLayout: {},
     });
-
-    let plotData = [];
+    const [className, setClassName] = useState('plot');
+    // if selected is not available for that dataset
+    const [hide, setHide] = useState(false);
     const {
         data, type, queryId, datasetName, plotId, selected, selectedTime, selectedDose,
     } = props;
-
     const formatData = (data) => {
-        console.log('yes');
-        // setting up the traces; can't really deep copy
-        const greenTrace = {
-            showlegend: false,
-            type: 'scatter',
-            mode: 'markers',
-            x: [],
-            y: [],
-            click_ids: [],
-            hoverinfo: 'text',
-            hovertext: [],
-            marker: {
-                color: '#5cc33c',
-                size: 8,
-            },
-            name: 'green',
-        };
+        // for each key, calculate traces => TGGATES: {2Low: [greenTrace, blueTrace], 2Mid: ...}
+        const retData = {};
+        Object.keys(data).forEach((x) => {
+            const curData = data[x];
+            // setting up the traces; can't really deep copy
+            const greenTrace = {
+                showlegend: false,
+                type: 'scatter',
+                mode: 'markers',
+                x: [],
+                y: [],
+                click_ids: [],
+                hoverinfo: 'text',
+                hovertext: [],
+                marker: {
+                    color: '#5cc33c',
+                    size: 8,
+                },
+                name: 'green',
+            };
 
-        const blueTrace = {
-            showlegend: false,
-            type: 'scatter',
-            mode: 'markers',
-            x: [],
-            y: [],
-            click_ids: [],
-            // hoverinfo: 'text',
-            // hovertext: [],
-            hoverinfo: 'none',
-            marker: {
-                color: '#e1f1fb',
-                size: 8,
-            },
-            name: 'blue',
-        };
+            const blueTrace = {
+                showlegend: false,
+                type: 'scatter',
+                mode: 'markers',
+                x: [],
+                y: [],
+                click_ids: [],
+                // hoverinfo: 'text',
+                // hovertext: [],
+                hoverinfo: 'none',
+                marker: {
+                    color: '#e1f1fb',
+                    size: 8,
+                },
+                name: 'blue',
+            };
 
-        // const grayTrace = {
-        //     showlegend: false,
-        //     type: 'scatter',
-        //     mode: 'markers',
-        //     x: [],
-        //     y: [],
-        //     click_ids: [],
-        //     hoverinfo: 'text',
-        //     hovertext: [],
-        //     marker: {
-        //         color: 'lightgray',
-        //         size: 8,
-        //     },
-        //     name: 'gray',
-        // };
-
-        // calculate lowest pvalue that isn't 0, -log10 it, and set all 0s to the cutoff
-        // const cutoff = -Math.log10(Math.max(...data.map((x) => (parseFloat(x.p_value) === 0 ? null : parseFloat(x.p_value))).filter((x) => x !== null)));
-        // BEWARE! Math.max exceeds call stack at a certain point. I have resorted to
-        // sorting the array by ascending and taking the last element.
-        const cut1 = data.map((x) => {
-            if (parseFloat(x.p_value) === 0) {
-                return null;
-            }
-            return parseFloat(x.p_value);
-        });
-        const cut2 = cut1.filter((x) => x !== null);
-        cut2.sort((a, b) => a - b);
-        const cutoff = -Math.log10(cut2[cut2.length - 1]);
-        // putting data in
-        data.forEach((d) => {
-            if (parseFloat(d.p_value) <= 0.05) {
-                if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) >= 1) {
-                    const trace = greenTrace;
-                    trace.x.push(d.fold_change);
-                    trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
-                    if (type === 'drug') {
-                        trace.click_ids.push(d.gene_id);
-                    } else {
-                        trace.click_ids.push(d.drug_id);
-                    }
-                    trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
-                } else if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) < 1) {
-                    const trace = blueTrace;
-                    trace.x.push(d.fold_change);
-                    trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
-                    if (type === 'drug') {
-                        trace.click_ids.push(d.gene_id);
-                    } else {
-                        trace.click_ids.push(d.drug_id);
-                    }
-                    // trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
+            // calculate lowest pvalue that isn't 0, -log10 it, and set all 0s to the cutoff
+            // const cutoff = -Math.log10(Math.max(...data.map((x) => (parseFloat(x.p_value) === 0 ? null : parseFloat(x.p_value))).filter((x) => x !== null)));
+            // BEWARE! Math.max exceeds call stack at a certain point. I have resorted to
+            // sorting the array by ascending and taking the last element.
+            const cut1 = curData.map((x) => {
+                if (parseFloat(x.p_value) === 0) {
+                    return null;
                 }
-                // else if (parseFloat(d.fdr) >= 0.05 && Math.abs(d.fold_change) < 1) {
-                //     const trace = grayTrace
-                //     trace.x.push(d.fold_change);
-                //     trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
-                //     if (type == 'drug') {
-                //         trace.click_ids.push(d.gene_id);
-                //     } else {
-                //         trace.click_ids.push(d.drug_id);
-                //     }
-                //     trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
-                // }
-            }
-            // else {
-            //     const trace = grayTrace
-            //         trace.x.push(d.fold_change);
-            //         trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
-            //         if (type == 'drug') {
-            //             trace.click_ids.push(d.gene_id);
-            //         } else {
-            //             trace.click_ids.push(d.drug_id);
-            //         }
-            //         trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
-            // }
+                return parseFloat(x.p_value);
+            });
+            const cut2 = cut1.filter((x) => x !== null);
+            cut2.sort((a, b) => a - b);
+            const cutoff = -Math.log10(cut2[cut2.length - 1]);
+            // putting data in
+            curData.forEach((d) => {
+                if (parseFloat(d.p_value) <= 0.05) {
+                    if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) >= 1) {
+                        const trace = greenTrace;
+                        trace.x.push(d.fold_change);
+                        trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
+                        if (type === 'drug') {
+                            trace.click_ids.push(d.gene_id);
+                        } else {
+                            trace.click_ids.push(d.drug_id);
+                        }
+                        trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
+                    } else if (parseFloat(d.fdr) < 0.05 && Math.abs(d.fold_change) < 1) {
+                        const trace = blueTrace;
+                        trace.x.push(d.fold_change);
+                        trace.y.push(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value));
+                        if (type === 'drug') {
+                            trace.click_ids.push(d.gene_id);
+                        } else {
+                            trace.click_ids.push(d.drug_id);
+                        }
+                    // trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
+                    }
+                }
+            });
+            retData[x] = [greenTrace, blueTrace];
         });
-        return [greenTrace, blueTrace];
+        return retData;
     };
 
     const formatLayout = (retData) => {
-        if (retData !== null && retData.length !== 0) {
-            const greenTrace = retData[0];
-            const blueTrace = retData[1];
-            // if dataset is not selected, give class hidden to hide
-            const className = selected.includes(datasetName) ? 'plot' : 'plot hidden';
+        if (retData !== undefined) {
+            // for each key, calculate traces => TGGATES: {2Low: {}, 2Mid: ...}
+            const layoutData = {};
+            Object.keys(retData).forEach((x) => {
+                const greenTrace = retData[x][0];
+                const blueTrace = retData[x][1];
 
-            // calculating highest y value for plotting lines for fold change
-            const maxY = d3.max([d3.max(greenTrace.y), d3.max(blueTrace.y)]);
-            const minY = d3.min([d3.min(greenTrace.y), d3.min(blueTrace.y)]);
+                // calculating highest y value for plotting lines for fold change
+                const maxY = d3.max([d3.max(greenTrace.y), d3.max(blueTrace.y)]);
+                const minY = d3.min([d3.min(greenTrace.y), d3.min(blueTrace.y)]);
 
-            // calculating highest x value for plotting the pvalue at 20
-            const maxX = d3.max([d3.max(greenTrace.x), d3.max(blueTrace.x)]);
-            const minX = d3.min([d3.min(greenTrace.x), d3.min(blueTrace.x)]);
+                // calculating highest x value for plotting the pvalue at 20
+                const maxX = d3.max([d3.max(greenTrace.x), d3.max(blueTrace.x)]);
+                const minX = d3.min([d3.min(greenTrace.x), d3.min(blueTrace.x)]);
 
-            const layout = {
-                height: 600,
-                autosize: true,
-                // width: 800,
-                paper_bgcolor: 'white',
-                plot_bgcolor: 'white',
-                orientation: 'v',
-                yaxis: { ticklen: 0, title: '-log10(p value)' },
-                xaxis: { title: 'log2(fold change)', zeroline: false },
-                hovermode: 'closest',
-                font: {
-                    size: 14,
-                    color: colors.nav_links,
-                    family: 'Arial',
-                },
-                margin: {
-                    l: 45,
-                    r: 0,
-                    t: 0,
-                    b: 40,
-                },
-            };
+                const layout = {
+                    height: 600,
+                    autosize: true,
+                    // width: 800,
+                    paper_bgcolor: 'white',
+                    plot_bgcolor: 'white',
+                    orientation: 'v',
+                    yaxis: { ticklen: 0, title: '-log10(p value)' },
+                    xaxis: { title: 'log2(fold change)', zeroline: false },
+                    hovermode: 'closest',
+                    font: {
+                        size: 14,
+                        color: colors.nav_links,
+                        family: 'Arial',
+                    },
+                    margin: {
+                        l: 45,
+                        r: 0,
+                        t: 0,
+                        b: 40,
+                    },
+                };
 
-            // determine if show x axis fold change lines or not
-            layout.shapes = [];
-            if (minX < -1) {
-                layout.shapes.push(
+                // determine if show x axis fold change lines or not
+                layout.shapes = [];
+                if (minX < -1) {
+                    layout.shapes.push(
                     // x: -1
-                    {
-                        type: 'line',
-                        x0: -1,
-                        y0: minY,
-                        x1: -1,
-                        y1: maxY,
-                        line: {
-                            color: '#accffa',
-                            width: 1,
+                        {
+                            type: 'line',
+                            x0: -1,
+                            y0: minY,
+                            x1: -1,
+                            y1: maxY,
+                            line: {
+                                color: '#accffa',
+                                width: 1,
+                            },
                         },
-                    },
-                );
-            }
+                    );
+                }
 
-            if (maxX > 1) {
-                layout.shapes.push(
+                if (maxX > 1) {
+                    layout.shapes.push(
                     // x: 1
-                    {
+                        {
+                            type: 'line',
+                            x0: 1,
+                            y0: minY,
+                            x1: 1,
+                            y1: maxY,
+                            line: {
+                                color: '#accffa',
+                                width: 1,
+                            },
+                        },
+                    );
+                }
+
+                // determine if plot the y axis pvalue line (max beyond 20)
+                if (maxY > 20) {
+                    layout.shapes.push({
                         type: 'line',
-                        x0: 1,
-                        y0: minY,
-                        x1: 1,
-                        y1: maxY,
+                        x0: minX,
+                        y0: 20,
+                        x1: maxX,
+                        y1: 20,
                         line: {
                             color: '#accffa',
                             width: 1,
                         },
-                    },
-                );
-            }
-
-            // determine if plot the y axis pvalue line (max beyond 20)
-            if (maxY > 20) {
-                layout.shapes.push({
-                    type: 'line',
-                    x0: minX,
-                    y0: 20,
-                    x1: maxX,
-                    y1: 20,
-                    line: {
-                        color: '#accffa',
-                        width: 1,
-                    },
-                });
-            }
-
-            setState({
-                ...state,
-                data: retData,
-                layout,
-                class: className,
+                    });
+                }
+                layoutData[x] = layout;
             });
+            // setState({
+            //     ...state,
+            //     allData: retData,
+            //     allLayout: layoutData,
+            //     selectedData: retData[`${selectedDose}${selectedTime}`],
+            //     selectedLayout: layoutData[`${selectedDose}${selectedTime}`],
+            // });
+            return { retData, layoutData };
         }
     };
 
+    // determines if hide plot
+    const changePlotClass = () => {
+        // if dataset is not selected, give class hidden to hide
+        let name = selected.includes(datasetName) ? 'plot' : 'plot hidden';
+
+        // if dataset is DrugMatrix, and anything other than 16 or 24 is selected, hide
+        if (selected.includes('DrugMatrix') && (selectedTime !== 16 || selectedTime !== 24)) {
+            name = 'plot hidden';
+        }
+        setClassName(name);
+    };
+
     useEffect(() => {
+        const plotData = formatData(data);
+        const { retData, layoutData } = formatLayout(plotData);
         setState({
             ...state,
-            layout: null,
-            data: null,
-            class: null,
+            allData: retData,
+            allLayout: layoutData,
+            selectedData: retData[`${selectedDose}${selectedTime}`],
+            selectedLayout: layoutData[`${selectedDose}${selectedTime}`],
         });
-        console.log('sfirst useffect');
-        plotData = formatData(data);
-        formatLayout(plotData);
+        changePlotClass();
     }, []);
 
     // determining if selected changes
     useEffect(() => {
-        setState({
-            ...state,
-            layout: null,
-            class: null,
-        });
-        console.log('second useffect');
-        formatLayout(state.data);
+        changePlotClass();
+        if (state.allData !== null) {
+            setState({
+                ...state,
+                selectedData: state.allData[`${selectedDose}${selectedTime}`],
+                selectedLayout: state.allLayout[`${selectedDose}${selectedTime}`],
+            });
+        }
     }, [selected, selectedTime, selectedDose]);
 
     // compute dataset name.
@@ -335,14 +320,14 @@ const VolcanoSingle = (props) => {
 
 
     return (
-        <StyledDiv className={state.class}>
+        <StyledDiv className={className}>
             <h3>
                 { computeDatasetName(datasetName) }
             </h3>
-            {state.data === null ? null : (
+            {state.selectedData.length === 0 || hide ? null : (
                 <Plot
-                    data={state.data}
-                    layout={state.layout}
+                    data={state.selectedData}
+                    layout={state.selectedLayout}
                     graphDiv={plotId}
                     config={{
                         responsive: true,
@@ -352,6 +337,7 @@ const VolcanoSingle = (props) => {
                     onHover={() => hover()}
                     onUnhover={() => unhover()}
                 />
+
             )}
         </StyledDiv>
     );
