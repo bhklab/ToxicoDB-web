@@ -315,6 +315,10 @@ const VolcanoSingle = (props) => {
                 changePlotClass();
                 setHide(false);
             }
+            // if (className === 'plot hidden') {
+            //     console.log(datasetName);
+
+            // }
             setState({
                 ...state,
                 selectedData: state.allData[`${selectedDose}+${selectedTime}`],

@@ -204,8 +204,8 @@ const VolcanoSelect = (props) => {
         }
     };
 
-    const alertCallback = (alert) => {
-        alertDatasets.push(alert);
+    const alertCallback = (dataset) => {
+        alertDatasets.push(dataset);
         setAlert(`${alertDatasets.join(', ')} not available for this selection.`);
     };
 
