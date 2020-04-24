@@ -25,7 +25,7 @@ const StyledCompoundPage = styled.div`
     padding:140px 0px;
     color: ${colors.blue_text};
     .volcanoWrapper {
-        margin-top: 100px;
+        margin-top: 80px;
     }
     h1 {
         color: ${colors.red_highlight};
