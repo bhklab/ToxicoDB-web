@@ -56,6 +56,9 @@ const StyledDiv = styled.div`
                 color: #fff;
                 margin: 0;
             }
+            img {
+                max-width: 100%;
+            }
         }
         nav {
             margin-top: 25px;
@@ -103,6 +106,16 @@ const StyledDiv = styled.div`
             color: ${colors.red_highlight};
         }
     }
+    .doc-section {
+        margin: 10px 0;
+        width: 100%;
+        max-width: 100%;
+        border-bottom: 2px solid ${colors.blue_header};
+
+        &.last {
+            border-bottom: none;
+        }
+    }
 
     .doc-img {
         margin: 10px 0;
@@ -110,7 +123,7 @@ const StyledDiv = styled.div`
         max-width: 100%;
         dipslay: block;
         padding-bottom: 100px;
-        border-bottom: 2px solid ${colors.blue_header}
+        border-bottom: 2px solid ${colors.blue_header};
 
         &.last {
             border-bottom: none;
