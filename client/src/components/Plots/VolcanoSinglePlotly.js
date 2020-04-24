@@ -74,11 +74,11 @@ const VolcanoSingle = (props) => {
 
     let plotData = [];
     const {
-        data, type, queryId, datasetName, plotId, selected,
+        data, type, queryId, datasetName, plotId, selected, selectedTime, selectedDose,
     } = props;
 
     const formatData = (data) => {
-        console.log(data);
+        console.log('yes');
         // setting up the traces; can't really deep copy
         const greenTrace = {
             showlegend: false,
@@ -190,12 +190,11 @@ const VolcanoSingle = (props) => {
             //         trace.hovertext.push(`(${parseFloat(d.fold_change).toFixed(1)}, ${(parseFloat(d.p_value) === 0 ? cutoff : -Math.log10(d.p_value)).toFixed(1)}) ${d.drug_name || d.gene_name}`);
             // }
         });
-        console.log(greenTrace, blueTrace);
         return [greenTrace, blueTrace];
     };
 
     const formatLayout = (retData) => {
-        if (retData !== null) {
+        if (retData !== null && retData.length !== 0) {
             const greenTrace = retData[0];
             const blueTrace = retData[1];
             // if dataset is not selected, give class hidden to hide
@@ -299,6 +298,7 @@ const VolcanoSingle = (props) => {
             data: null,
             class: null,
         });
+        console.log('sfirst useffect');
         plotData = formatData(data);
         formatLayout(plotData);
     }, []);
@@ -310,8 +310,9 @@ const VolcanoSingle = (props) => {
             layout: null,
             class: null,
         });
-        formatLayout(plotData);
-    }, [selected]);
+        console.log('second useffect');
+        formatLayout(state.data);
+    }, [selected, selectedTime, selectedDose]);
 
     // compute dataset name.
     const computeDatasetName = (dataset) => {
