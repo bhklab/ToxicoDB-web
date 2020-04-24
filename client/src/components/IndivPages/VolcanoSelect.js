@@ -248,8 +248,8 @@ const VolcanoSelect = (props) => {
         // nicer names for datasets
         const datasetLabels = [];
         datasets.forEach((x) => {
-            if (x === 'OpenTG-GATEsHumanLDH') datasetLabels.push('Open TG-GATEs Human');
-            else if (x === 'OpenTG-GATEsRatLDH') datasetLabels.push('Open TG-GATEs Rat');
+            if (x === 'OpenTG-GATEsHuman') datasetLabels.push('Open TG-GATEs Human');
+            else if (x === 'OpenTG-GATEsRat') datasetLabels.push('Open TG-GATEs Rat');
             else if (x === 'DrugMatrixRat') datasetLabels.push('DrugMatrix Rat');
             else datasetLabels.push(x);
         });
