@@ -87,9 +87,7 @@ const GeneCompoundCard = (props) => {
                             <tr key={index}>
                                 {type !== 'gene' && !item.value[0] ? null : (
                                     <>
-                                        {' '}
                                         {tableData(item)}
-                                        {' '}
                                         {item.value.map((val, i) => generateLink(item, i, type))}
                                     </>
                                 )}
