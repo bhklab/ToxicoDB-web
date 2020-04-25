@@ -4,11 +4,12 @@
 // import VolcanoPlotly from '../Plots/VolcanoPlotly';
 // import VolcanoSingle from '../Plots/VolcanoSingle';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
+import Select, { components } from 'react-select';
 
 import colors from '../../styles/colors';
 import AnnotationCard from './GeneCompoundCard';
@@ -50,6 +51,17 @@ const StyledGenePage = styled.div`
     }
 `;
 
+const StyledSelectContainer = styled.div`
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 33%;
+
+    .time, .dose {
+        width: 45%;
+    }
+`;
+
 const filterCaseInsensitive = (filter, row) => {
     const id = filter.pivotId || filter.id;
     switch (typeof row[id]) {
@@ -78,6 +90,100 @@ const normalizeCSVData = (data) => data.map((row) => {
     return csvRow;
 });
 
+const customStyles = {
+    // container: (provided) => ({
+    //     ...provided,
+    //     width: '30%',
+    // }),
+    control: (provided) => ({
+        ...provided,
+        background: colors.lightblue_bg,
+        borderRadius: '10px',
+        marginBottom: '30px',
+        // width:300,
+        // height: 20,
+        fontFamily: '\'Raleway\', sans-serif',
+        fontWeight: 600,
+        color: colors.blue_header,
+        padding: '0px 0px',
+        border: `1px solid ${colors.blue_header}`,
+        '&:hover': {
+            cursor: 'text',
+        },
+        '&:focus': {
+            outline: 'none',
+            border: 'none',
+            boxShadow: 'none',
+        },
+    }),
+    input: (provided) => ({
+        ...provided,
+        padding: '0 0px',
+        color: colors.blue_header,
+    }),
+    placeholder: (provided) => ({
+        ...provided,
+        color: `${colors.blue_header}`,
+    }),
+    clearIndicator: (provided) => ({
+        ...provided,
+        color: `${colors.blue_header}`,
+    }),
+    dropdownIndicator: (provided) => ({
+        ...provided,
+        color: `${colors.blue_header}`,
+        '&:hover': {
+            color: `${colors.blue_header}`,
+            cursor: 'pointer',
+        },
+    }),
+    indicatorSeparator: (provided) => ({
+        ...provided,
+        background: `${colors.blue_header}`,
+        '&:hover': {
+            background: `${colors.blue_header}`,
+        },
+    }),
+    singleValue: (provided) => ({
+        ...provided,
+        color: `${colors.blue_header}`,
+    }),
+    multiValue: (provided) => ({
+        ...provided,
+        color: `${colors.blue_header}`,
+        background: '#fff',
+        marginRight: '10px',
+    }),
+    multiValueLabel: (provided) => ({
+        ...provided,
+        color: `${colors.blue_header}`,
+    }),
+    option: (provided, state) => ({
+        ...provided,
+        textAlign: 'left',
+        fontWeight: '400',
+        background: 'white',
+        color: colors.blue_header,
+    }),
+};
+
+const CustomOption = (innerProps) => (
+    <components.Option {...innerProps}>
+        <div
+            style={{
+                backgroundColor: innerProps.isFocused ? colors.lightblue_bg : 'inherit',
+                height: 30,
+                padding: '13px 20px',
+                '&:hover': {
+                    background: colors.lightblue_bg,
+                },
+            }}
+        >
+            <span>{innerProps.label}</span>
+        </div>
+    </components.Option>
+);
+
 const GenePage = (props) => {
     const { match: { params } } = props;
 
@@ -89,8 +195,58 @@ const GenePage = (props) => {
     // analysisData and loading are handled together => one hook
     const {
         analysisData,
-        loading,
     } = useFetchAnalysisData(`/api/v1/genes/${params.id}/analysis`);
+
+    const [selectedTableData, setSelectedTableData] = useState([]);
+    const [state, setState] = useState({
+        tableData: {},
+        doseOptions: [],
+        timeOptions: [],
+        selectedDose: '',
+        selectedTime: 0,
+        loading: true,
+    });
+
+    // for dropdowns
+    useEffect(() => {
+        if (analysisData.length !== 0) {
+            const newData = {};
+            const doses = [];
+            const times = [];
+            analysisData.forEach((x) => {
+                // for dropdown options
+                if (!doses.includes(x.dose) && x.dose !== 'Control') {
+                    doses.push(x.dose);
+                }
+                if (!times.includes(x.time)) {
+                    times.push(x.time);
+                }
+
+                // check if dose and time key are already in the object
+                const key = `${x.dose}+${x.time}`;
+                if (Object.keys(newData).includes(key)) {
+                    newData[key].push(x);
+                } else {
+                    newData[key] = [x];
+                }
+            });
+            times.sort((a, b) => a - b);
+
+            /* Dose/time selection */
+            const doseOptions = doses.map((x) => ({ value: x, label: x }));
+            const timeOptions = times.map((x) => ({ value: x, label: x }));
+
+            setState({
+                tableData: newData,
+                doseOptions,
+                timeOptions,
+                selectedDose: 'High',
+                selectedTime: 24,
+                loading: false,
+            });
+            setSelectedTableData(newData['High+24']);
+        }
+    }, [analysisData]);
 
     // using memoization to prevent csvData recalculation on every render
     const csvData = useMemo(() => normalizeCSVData(analysisData), [analysisData]);
@@ -104,6 +260,26 @@ const GenePage = (props) => {
             }
         });
     }
+
+    // // handlers for dropdowns
+    const handleDoseChange = (event) => {
+        // no options selected
+        if (event === null || event.length === 0) {
+            // can't map an empty event, so separate condition here
+        } else {
+            setState({ ...state, selectedDose: event.value });
+            setSelectedTableData(state.tableData[`${event.value}+${state.selectedTime}`]);
+        }
+    };
+    const handleTimeChange = (event) => {
+        // no options selected
+        if (event === null || event.length === 0) {
+            // can't map an empty event, so separate condition here
+        } else {
+            setState({ ...state, selectedTime: event.value });
+            setSelectedTableData(state.tableData[`${state.selectedDose}+${event.value}`]);
+        }
+    };
 
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
     const columns = [{
@@ -181,22 +357,48 @@ const GenePage = (props) => {
                     {apiData.symbol}
                 </h2>
             )}
-            <ReactTable
-                data={analysisData}
-                columns={columns}
-                filterable
-                defaultFilterMethod={filterCaseInsensitive}
-                className="table -highlight"
-                defaultPageSize={10}
-                defaultSorted={[
-                    {
-                        id: 'fold_change',
-                        desc: true,
-                    },
-                ]}
-                loading={loading}
-                LoadingComponent={LoadingComponent}
-            />
+            {selectedTableData.length === 0 ? null : (
+                <>
+                    <StyledSelectContainer>
+                        <div className="dose">
+                            <h3>Select Dose </h3>
+                            <Select
+                                defaultValue={{ value: state.selectedDose, label: state.selectedDose }}
+                                options={state.doseOptions}
+                                components={{ Option: CustomOption }}
+                                styles={customStyles}
+                                onChange={handleDoseChange}
+                            />
+                        </div>
+                        <div className="time">
+                            <h3>Select Time </h3>
+                            <Select
+                                defaultValue={{ value: state.selectedTime, label: state.selectedTime }}
+                                options={state.timeOptions}
+                                components={{ Option: CustomOption }}
+                                styles={customStyles}
+                                onChange={handleTimeChange}
+                            />
+                        </div>
+                    </StyledSelectContainer>
+                    <ReactTable
+                        data={selectedTableData}
+                        columns={columns}
+                        filterable
+                        defaultFilterMethod={filterCaseInsensitive}
+                        className="table -highlight"
+                        defaultPageSize={10}
+                        defaultSorted={[
+                            {
+                                id: 'fold_change',
+                                desc: true,
+                            },
+                        ]}
+                        loading={state.loading}
+                        LoadingComponent={LoadingComponent}
+                    />
+                </>
+            )}
             <DownloadButton
                 data={csvData}
                 filename={`${apiData.symbol && apiData.symbol.toUpperCase()}-compoundsData`}
