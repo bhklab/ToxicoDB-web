@@ -28,6 +28,7 @@ const StyledVolcanoSelect = styled.div`
 const StyledAlert = styled.div`
     color: ${colors.red_highlight};
     font-size: 1em;
+    float:right;
 `;
 
 const StyledSelectContainer = styled.div`
