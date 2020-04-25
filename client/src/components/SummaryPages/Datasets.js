@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
 import 'react-table-6/react-table.css';
+import transitions from '../../styles/transitions';
 
 import LoadingComponent from '../Utils/Loading';
 
@@ -11,6 +12,7 @@ const StyledDatasets = styled.div`
     width: 80vw;
     max-width: 1200px;
     padding: 140px 0px;
+    
     h1 {
         color: ${colors.red_highlight};
         font-family: 'Raleway', sans-serif;
@@ -19,9 +21,29 @@ const StyledDatasets = styled.div`
         margin-bottom:50px;
     }
     a {
-      color: ${colors.blue_text}
+        color: ${colors.blue_text}
     }
+
+    button {
+        margin-left: 10px;
+        color: #fff !important;
+        background: ${colors.blue_header};
+        
+        padding: 8px;
+        border: 0;
+        font-size: 13px;
+        transition: ${transitions.main_trans}
+        img {
+            display: inline-block;
+            height: 13px;
+            width: auto;
+        }
+        &:hover {
+            background-color: ${colors.pagination_dark};
+        }
+  }
 `;
+
 
 class Datasets extends Component {
     constructor() {
@@ -35,29 +57,17 @@ class Datasets extends Component {
     componentDidMount() {
         const data = [
             {
-                id: 1, name: 'Open TG-GATEs Human', species: 'Human', num_compounds: 146,
+                id: 1, name: 'Open TG-GATEs Human', species: 'Human', num_compounds: 146, link: '',
             },
             {
-                id: 2, name: 'Open TG-GATEs Rat', species: 'R.norvegicus', num_compounds: 140,
+                id: 2, name: 'Open TG-GATEs Rat', species: 'R.norvegicus', num_compounds: 140, link: '',
             },
             {
-                id: 3, name: 'DrugMatrix Rat', species: 'R.norvegicus', num_compounds: 125,
+                id: 3, name: 'DrugMatrix Rat', species: 'R.norvegicus', num_compounds: 125, link: '',
             },
         ];
 
         this.setState({ datasetData: data, loading: false });
-        // fetch('/api/v1/datasets')
-        //     .then((response) => response.json())
-        //     .then((res) => {
-        //         const { data } = res;
-        //         console.log(data);
-        //         data.forEach((d) => {
-        //             if (d.name === 'DrugMatrix Rat') {
-        //                 d.name = 'DrugMatrix Rat';
-        //             }
-        //         });
-        //         this.setState({ datasetData: data, loading: false });
-        //     });
     }
 
     render() {
