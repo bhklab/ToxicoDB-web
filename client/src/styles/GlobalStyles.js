@@ -21,10 +21,34 @@ const GlobalStyles = createGlobalStyle`
         padding: 0;
         list-style: none;
     }
+    ol {
+        list-style: none;
+        counter-reset: my-awesome-counter;
+    }
     li {
         text-decoration: none;
     }
 
+    li::before {
+        color: red
+    }
+    // ol {
+    //     list-style: none;
+    //     counter-reset: my-awesome-counter;
+    // }
+        ol li {
+        counter-increment: my-awesome-counter;
+        position: relative;
+        &::before {
+            content: counter(my-awesome-counter) "";
+            position: absolute;
+            top: 0;
+            left: -20px;
+            color: ${colors.red_highlight};
+            font-weight: bold;
+        }
+    }
+    
     .ReactTable {
         text-align: left;
         margin: 10px 20px;

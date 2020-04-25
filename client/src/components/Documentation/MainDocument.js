@@ -13,6 +13,7 @@ import GeneDoc from './DocSubFunctionality/GeneDoc';
 import CompoundGeneDoc from './DocSubFunctionality/CompoundGeneDoc';
 import DatasetDoc from './DocSubFunctionality/DatasetDoc';
 import PathwayDoc from './DocSubFunctionality/PathwayDoc';
+import RoadmapDoc from './DocSubFunctionality/RoadmapDoc';
 // API subcomponents
 import CompoundAPIDoc from './DocSubAPI/CompoundAPIDoc';
 import GeneApiDoc from './DocSubAPI/GeneAPIDoc';
@@ -195,6 +196,11 @@ const MainDocument = () => {
                         >
                             <button type="button" onClick={() => setDisplay('pathways')}>Pathways</button>
                         </li>
+                        <li
+                            className={display === 'roadmap' ? 'selected' : null}
+                        >
+                            <button type="button" onClick={() => setDisplay('roadmap')}>Roadmap</button>
+                        </li>
                     </ul>
                     <h3>API</h3>
                     <ul>
@@ -232,6 +238,7 @@ const MainDocument = () => {
                 {display === 'compoundvsgene' ? <CompoundGeneDoc /> : null}
                 {display === 'datasets' ? <DatasetDoc /> : null}
                 {display === 'pathways' ? <PathwayDoc /> : null}
+                {display === 'roadmap' ? <RoadmapDoc /> : null}
                 {display === 'compound-api' ? <CompoundAPIDoc /> : null}
                 {display === 'gene-api' ? <GeneApiDoc /> : null}
                 {display === 'experiment-api' ? <ExperimentApiDoc /> : null}
