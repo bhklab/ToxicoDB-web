@@ -163,7 +163,7 @@ const customStyles = {
         ...provided,
         color: `${colors.blue_header}`,
     }),
-    option: (provided, state) => ({
+    option: (provided) => ({
         ...provided,
         textAlign: 'left',
         fontWeight: '400',
@@ -177,7 +177,7 @@ const CustomOption = (innerProps) => (
         <div
             style={{
                 backgroundColor: innerProps.isFocused ? colors.lightblue_bg : 'inherit',
-                height: 30,
+                height: 40,
                 padding: '13px 20px',
                 '&:hover': {
                     background: colors.lightblue_bg,

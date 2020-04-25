@@ -169,7 +169,7 @@ const CustomOption = (innerProps) => (
         <div
             style={{
                 backgroundColor: innerProps.isFocused ? colors.lightblue_bg : 'inherit',
-                height: 30,
+                height: 40,
                 padding: '13px 20px',
                 '&:hover': {
                     background: colors.lightblue_bg,
@@ -424,7 +424,6 @@ const CompoundPage = (props) => {
                     </StyledSelectContainer>
                 </>
             )}
-            {console.log(state.tableData)}
             <StyledAlert>
                 {alert}
             </StyledAlert>
