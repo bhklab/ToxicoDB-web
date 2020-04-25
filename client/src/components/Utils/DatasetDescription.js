@@ -24,6 +24,7 @@ export const DatasetDescription = {
             Microarray_Platform: 'Affymetrix human U133 Plus',
             DataType: 'mRNA expression & Cell viability',
         },
+        link: 'https://bhkstaticfiles.blob.core.windows.net/toxicodb/TG-GATEs-Human.csv.zip',
     },
 
 
@@ -51,6 +52,7 @@ export const DatasetDescription = {
             Microarray_Platform: 'Rat Genome 230 2.0',
             DataType: 'mRNA expression & Cell viability',
         },
+        link: 'https://bhkstaticfiles.blob.core.windows.net/toxicodb/TG-GATEs-Human.csv.zip',
     },
 
     3: {
@@ -75,6 +77,7 @@ export const DatasetDescription = {
             Microarray_Platform: 'Rat Genome 230 2.0',
             DataType: 'mRNA expression & Cell viability',
         },
+        link: 'https://bhkstaticfiles.blob.core.windows.net/toxicodb/TG-GATEs-Human.csv.zip',
     },
 
 };

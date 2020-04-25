@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { DatasetDescription } from '../Utils/DatasetDescription';
 import colors from '../../styles/colors';
+import transitions from '../../styles/transitions';
 import 'react-table-6/react-table.css';
+import downloadIcon from '../../images/download.svg';
 
 const StyledDatasetPage = styled.div`
     width: 80vw;
@@ -28,6 +30,27 @@ const StyledDatasetPage = styled.div`
         margin: 20px 0;
         font-weight:600;
     }
+
+    button {
+        color: #fff;
+        background: ${colors.blue_text};
+    
+        padding: 8px;
+        border: 0;
+        font-size: 13px;
+        transition: ${transitions.main_trans}
+        
+        img {
+            display: inline-block;
+            height: 13px;
+            width: auto;
+            margin-left: 5px;
+        }
+
+        &:hover {
+            background-color: ${colors.red_highlight};
+        }
+  }
 `;
 
 const StyledTable = styled.div`
@@ -37,7 +60,7 @@ const StyledTable = styled.div`
 
     table {
         max-width: 100%;
-        margin:60px 0px 30px 0px;
+        margin:60px 0px 10px 0px;
     }
     .name {
         font-weight: 600;
@@ -94,6 +117,7 @@ class DatasetPage extends Component {
         this.state = {
             datasetName: '',
             annotationData: [],
+            link: null,
         };
     }
 
@@ -102,12 +126,13 @@ class DatasetPage extends Component {
 
         // grabbing the data according to the param id.
         const data = DatasetDescription[params.id];
+        const { link } = data;
 
         // annotations
         const annotationData = [];
         let datasetName = '';
         Object.keys(data).forEach((element) => {
-            if (!(element === 'Dataset')) {
+            if (!(element === 'Dataset' || element === 'link')) {
                 const temp = {
                     name: element,
                     value: data[element],
@@ -117,12 +142,12 @@ class DatasetPage extends Component {
                 datasetName = data[element];
             }
         });
-        this.setState({ annotationData, datasetName });
+        this.setState({ annotationData, datasetName, link });
     }
 
     render() {
         const {
-            datasetName, annotationData,
+            datasetName, annotationData, link,
         } = this.state;
         return (
             <StyledDatasetPage>
@@ -136,6 +161,13 @@ class DatasetPage extends Component {
                                 </tbody>
                             </table>
                         </StyledTable>
+                        <button type="button">
+                            <a style={{ color: 'white' }} href={link} download>
+                                Download Molecular Data
+                                {'   '}
+                                <img src={downloadIcon} alt="download icon" />
+                            </a>
+                        </button>
                     </div>
                 )}
             </StyledDatasetPage>
