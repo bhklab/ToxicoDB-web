@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { DatasetDescription } from '../Utils/DatasetDescription';
 import colors from '../../styles/colors';
@@ -111,69 +111,52 @@ const generateRow = (el, i) => (
     </tr>
 );
 
-class DatasetPage extends Component {
-    constructor() {
-        super();
-        this.state = {
-            datasetName: '',
-            annotationData: [],
-            link: null,
-        };
-    }
+const DatasetPage = (props) => {
+    const { match: { params } } = props;
+    // grabbing the data according to the param id.
+    const data = DatasetDescription[params.id];
+    const { link } = data;
 
-    componentDidMount() {
-        const { match: { params } } = this.props;
+    // annotations
+    const annotationData = [];
+    let datasetName;
 
-        // grabbing the data according to the param id.
-        const data = DatasetDescription[params.id];
-        const { link } = data;
+    Object.keys(data).forEach((element) => {
+        if (!(element === 'Dataset' || element === 'link')) {
+            const temp = {
+                name: element,
+                value: data[element],
+            };
+            annotationData.push(temp);
+        } else if (element === 'Dataset') {
+            datasetName = data[element];
+        }
+    });
 
-        // annotations
-        const annotationData = [];
-        let datasetName = '';
-        Object.keys(data).forEach((element) => {
-            if (!(element === 'Dataset' || element === 'link')) {
-                const temp = {
-                    name: element,
-                    value: data[element],
-                };
-                annotationData.push(temp);
-            } else if (element === 'Dataset') {
-                datasetName = data[element];
-            }
-        });
-        this.setState({ annotationData, datasetName, link });
-    }
-
-    render() {
-        const {
-            datasetName, annotationData, link,
-        } = this.state;
-        return (
-            <StyledDatasetPage>
-                {annotationData.length === 0 ? null : (
-                    <div>
-                        <h1>{datasetName}</h1>
-                        <StyledTable>
-                            <table>
-                                <tbody>
-                                    {annotationData.map((el, i) => generateRow(el, i))}
-                                </tbody>
-                            </table>
-                        </StyledTable>
-                        <button type="button">
-                            <a style={{ color: 'white' }} href={link} download>
-                                Download Molecular Data
-                                {'   '}
-                                <img src={downloadIcon} alt="download icon" />
-                            </a>
-                        </button>
-                    </div>
-                )}
-            </StyledDatasetPage>
-        );
-    }
-}
+    return (
+        <StyledDatasetPage>
+            {annotationData.length === 0 ? null : (
+                <div>
+                    <h1>{datasetName}</h1>
+                    <StyledTable>
+                        <table>
+                            <tbody>
+                                {annotationData.map((el, i) => generateRow(el, i))}
+                            </tbody>
+                        </table>
+                    </StyledTable>
+                    <button type="button">
+                        <a style={{ color: 'white' }} href={link} download>
+                            Download Molecular Data
+                            {'   '}
+                            <img src={downloadIcon} alt="download icon" />
+                        </a>
+                    </button>
+                </div>
+            )}
+        </StyledDatasetPage>
+    );
+};
 
 
 export default DatasetPage;
