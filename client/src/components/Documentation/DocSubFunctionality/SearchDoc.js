@@ -42,6 +42,7 @@ const SearchDoc = () => (
         <div className="doc-section">
             <p>
                 The compound and gene synonyms can also be queried in the Search bar which would direct to the corresponding page in
+                {' '}
                 <em>ToxicoDB</em>
                 .
             </p>
