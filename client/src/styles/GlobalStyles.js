@@ -21,22 +21,17 @@ const GlobalStyles = createGlobalStyle`
         padding: 0;
         list-style: none;
     }
+
     ol {
         list-style: none;
         counter-reset: my-awesome-counter;
     }
+    
     li {
         text-decoration: none;
     }
 
-    li::before {
-        color: red
-    }
-    // ol {
-    //     list-style: none;
-    //     counter-reset: my-awesome-counter;
-    // }
-        ol li {
+    ol li {
         counter-increment: my-awesome-counter;
         position: relative;
         &::before {
