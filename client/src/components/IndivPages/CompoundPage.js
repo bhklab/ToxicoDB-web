@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
+import Select, { components } from 'react-select';
 import colors from '../../styles/colors';
 
 // import AnnotationCard from './AnnotationCard';
@@ -48,6 +49,17 @@ const StyledCompoundPage = styled.div`
     }
 `;
 
+const StyledSelectContainer = styled.div`
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 33%;
+
+    .time, .dose {
+        width: 45%;
+    }
+`;
+
 const filterCaseInsensitive = (filter, row) => {
     const id = filter.pivotId || filter.id;
     switch (typeof row[id]) {
@@ -70,6 +82,99 @@ const filterCaseInsensitive = (filter, row) => {
     }
 };
 
+const customStyles = {
+    // container: (provided) => ({
+    //     ...provided,
+    //     width: '30%',
+    // }),
+    control: (provided) => ({
+        ...provided,
+        background: colors.lightblue_bg,
+        borderRadius: '10px',
+        marginBottom: '30px',
+        // width:300,
+        // height: 20,
+        fontFamily: '\'Raleway\', sans-serif',
+        fontWeight: 600,
+        color: colors.blue_header,
+        padding: '0px 0px',
+        border: `1px solid ${colors.blue_header}`,
+        '&:hover': {
+            cursor: 'text',
+        },
+        '&:focus': {
+            outline: 'none',
+            border: 'none',
+            boxShadow: 'none',
+        },
+    }),
+    input: (provided) => ({
+        ...provided,
+        padding: '0 0px',
+        color: colors.blue_header,
+    }),
+    placeholder: (provided) => ({
+        ...provided,
+        color: `${colors.blue_header}`,
+    }),
+    clearIndicator: (provided) => ({
+        ...provided,
+        color: `${colors.blue_header}`,
+    }),
+    dropdownIndicator: (provided) => ({
+        ...provided,
+        color: `${colors.blue_header}`,
+        '&:hover': {
+            color: `${colors.blue_header}`,
+            cursor: 'pointer',
+        },
+    }),
+    indicatorSeparator: (provided) => ({
+        ...provided,
+        background: `${colors.blue_header}`,
+        '&:hover': {
+            background: `${colors.blue_header}`,
+        },
+    }),
+    singleValue: (provided) => ({
+        ...provided,
+        color: `${colors.blue_header}`,
+    }),
+    multiValue: (provided) => ({
+        ...provided,
+        color: `${colors.blue_header}`,
+        background: '#fff',
+        marginRight: '10px',
+    }),
+    multiValueLabel: (provided) => ({
+        ...provided,
+        color: `${colors.blue_header}`,
+    }),
+    option: (provided, state) => ({
+        ...provided,
+        textAlign: 'left',
+        fontWeight: '400',
+        background: 'white',
+        color: colors.blue_header,
+    }),
+};
+
+const CustomOption = (innerProps) => (
+    <components.Option {...innerProps}>
+        <div
+            style={{
+                backgroundColor: innerProps.isFocused ? colors.lightblue_bg : 'inherit',
+                height: 30,
+                padding: '13px 20px',
+                '&:hover': {
+                    background: colors.lightblue_bg,
+                },
+            }}
+        >
+            <span>{innerProps.label}</span>
+        </div>
+    </components.Option>
+);
 
 const CompoundPage = (props) => {
     const { match: { params } } = props;
@@ -94,26 +199,76 @@ const CompoundPage = (props) => {
     } = useFetchAnalysisData(`/api/v1/drugs/${params.id}/analysis`);
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
 
+    const [selectedTableData, setSelectedTableData] = useState([]);
+    const [state, setState] = useState({
+        tableData: {},
+        doseOptions: [],
+        timeOptions: [],
+        selectedDose: '',
+        selectedTime: 0,
+        loading: true,
+    });
+
     useEffect(() => {
-        const data = [];
-        [...analysisData].forEach((item) => {
-            const newItem = {};
-            if (item.gene_name !== '') {
-                Object.entries(item).forEach((val) => {
-                    if (typeof val[1] === 'string' && val[0] !== 'gene_name') {
-                        newItem[val[0]] = isNaN(parseFloat(val[1]))
-                            ? val[1] : parseFloat(val[1]).toExponential(1).toString();
-                    } else if (val[0].match(/^(gene_id|gene_name)$/)) {
-                        // eslint-disable-next-line prefer-destructuring
-                        newItem[val[0]] = val[1];
-                    } else {
-                        newItem[val[0]] = val[1].toFixed(1).toString();
+        if (analysisData.length !== 0) {
+            const data = [];
+            const tabData = {};
+            const doses = [];
+            const times = [];
+            analysisData.forEach((item) => {
+                const newItem = {};
+                if (item.gene_name !== '') {
+                    Object.entries(item).forEach((val) => {
+                        if (typeof val[1] === 'string' && val[0] !== 'gene_name') {
+                            newItem[val[0]] = isNaN(parseFloat(val[1]))
+                                ? val[1] : parseFloat(val[1]).toExponential(1).toString();
+                        } else if (val[0].match(/^(gene_id|gene_name)$/)) {
+                            // eslint-disable-next-line prefer-destructuring
+                            newItem[val[0]] = val[1];
+                        } else {
+                            newItem[val[0]] = val[1].toFixed(1).toString();
+                        }
+                    });
+
+                    // for dropdown options
+                    if (!doses.includes(item.dose) && item.dose !== 'Control') {
+                        doses.push(item.dose);
                     }
-                });
-                data.push(newItem);
-            }
-        });
-        setData({ processedData: data, filteredData: data });
+                    if (!times.includes(item.time)) {
+                        times.push(item.time);
+                    }
+
+                    // check if dose and time key are already in the object
+                    const key = `${item.dose}+${item.time}`;
+                    if (Object.keys(tabData).includes(key)) {
+                        tabData[key].push(item);
+                    } else {
+                        tabData[key] = [item];
+                    }
+
+                    // for csv data
+                    data.push(newItem);
+                }
+            });
+
+            setData({ processedData: data, filteredData: data });
+
+            // for dropdowns
+            times.sort((a, b) => a - b);
+
+            /* Dose/time selection */
+            const doseOptions = doses.map((x) => ({ value: x, label: x }));
+            const timeOptions = times.map((x) => ({ value: x, label: x }));
+            setState({
+                tableData: tabData,
+                doseOptions,
+                timeOptions,
+                selectedDose: 'High',
+                selectedTime: 24,
+                loading: false,
+            });
+            setSelectedTableData(tabData['High+24']);
+        }
     }, [analysisData]);
 
     useEffect(() => {
@@ -121,6 +276,28 @@ const CompoundPage = (props) => {
             .every((val) => item[val[0]].toUpperCase().includes(val[1].toUpperCase())));
         setData({ filteredData: updatedFilteredData, processedData });
     }, [filterValues]);
+
+    // handlers for dropdowns
+    const handleDoseChange = (event) => {
+        // no options selected
+        if (event === null || event.length === 0) {
+            // can't map an empty event, so separate condition here
+        } else {
+            setState({ ...state, selectedDose: event.value });
+            console.log(`${event.value}+${state.selectedTime}`);
+            setSelectedTableData(state.tableData[`${event.value}+${state.selectedTime}`]);
+        }
+    };
+    const handleTimeChange = (event) => {
+        // no options selected
+        if (event === null || event.length === 0) {
+            // can't map an empty event, so separate condition here
+        } else {
+            setState({ ...state, selectedTime: event.value });
+            console.log(`${event.value}+${state.selectedTime}`);
+            setSelectedTableData(state.tableData[`${state.selectedDose}+${event.value}`]);
+        }
+    };
 
     const columns = [{
         Header: 'Gene',
@@ -203,8 +380,36 @@ const CompoundPage = (props) => {
                     {apiData.name}
                 </h2>
             )}
+
+            {selectedTableData.length === 0 ? null : (
+                <>
+                    <StyledSelectContainer>
+                        <div className="dose">
+                            <h3>Select Dose </h3>
+                            <Select
+                                defaultValue={{ value: state.selectedDose, label: state.selectedDose }}
+                                options={state.doseOptions}
+                                components={{ Option: CustomOption }}
+                                styles={customStyles}
+                                onChange={handleDoseChange}
+                            />
+                        </div>
+                        <div className="time">
+                            <h3>Select Time </h3>
+                            <Select
+                                defaultValue={{ value: state.selectedTime, label: state.selectedTime }}
+                                options={state.timeOptions}
+                                components={{ Option: CustomOption }}
+                                styles={customStyles}
+                                onChange={handleTimeChange}
+                            />
+                        </div>
+                    </StyledSelectContainer>
+                </>
+            )}
+            {console.log(state.tableData)}
             <ReactTable
-                data={processedData}
+                data={selectedTableData}
                 columns={columns}
                 filterable
                 defaultFilterMethod={filterCaseInsensitive}
@@ -216,7 +421,7 @@ const CompoundPage = (props) => {
                         desc: true,
                     },
                 ]}
-                loading={processedData.length === 0}
+                loading={state.loading}
                 LoadingComponent={LoadingComponent}
                 onFilteredChange={(values) => {
                     const filterObj = {};

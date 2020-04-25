@@ -261,7 +261,7 @@ const GenePage = (props) => {
         });
     }
 
-    // // handlers for dropdowns
+    // handlers for dropdowns
     const handleDoseChange = (event) => {
         // no options selected
         if (event === null || event.length === 0) {
