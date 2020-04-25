@@ -374,6 +374,8 @@ const CompoundPage = (props) => {
         { displayName: 'p-value', id: 'p_value' },
         { displayName: 'FDR', id: 'fdr' },
         { displayName: 'Dataset', id: 'dataset_name' },
+        { displayName: 'Dose', id: 'dose' },
+        { displayName: 'Time', id: 'time' },
     ];
     return (
         <StyledCompoundPage>
