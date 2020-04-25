@@ -381,24 +381,26 @@ const GenePage = (props) => {
                             />
                         </div>
                     </StyledSelectContainer>
-                    <ReactTable
-                        data={selectedTableData}
-                        columns={columns}
-                        filterable
-                        defaultFilterMethod={filterCaseInsensitive}
-                        className="table -highlight"
-                        defaultPageSize={10}
-                        defaultSorted={[
-                            {
-                                id: 'fold_change',
-                                desc: true,
-                            },
-                        ]}
-                        loading={state.loading}
-                        LoadingComponent={LoadingComponent}
-                    />
                 </>
             )}
+            <ReactTable
+                data={selectedTableData}
+                columns={columns}
+                filterable
+                defaultFilterMethod={filterCaseInsensitive}
+                className="table -highlight"
+                defaultPageSize={10}
+                defaultSorted={[
+                    {
+                        id: 'fold_change',
+                        desc: true,
+                    },
+                ]}
+                loading={state.loading}
+                LoadingComponent={LoadingComponent}
+            />
+
+
             <DownloadButton
                 data={csvData}
                 filename={`${apiData.symbol && apiData.symbol.toUpperCase()}-compoundsData`}
