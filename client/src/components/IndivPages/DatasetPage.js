@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { DatasetDescription } from '../Utils/DatasetDescription';
@@ -54,24 +55,24 @@ const StyledTable = styled.div`
     }
 `;
 
-const generateRow = (el) => (
-    <tr>
+const generateRow = (el, i) => (
+    <tr key={i}>
         <td className="name">{el.name.toUpperCase()}</td>
         {typeof el.value === 'string'
             ? (<td className="value">{el.value}</td>)
             : (
                 <td>
                     {Object.entries(el.value).map(
-                        (item) => {
+                        (item, index) => {
                             if (el.name === 'Resources' || el.name === 'Publications') {
                                 return (
-                                    <div>
-                                        <a href={item[1]}>{item[0]}</a>
+                                    <div key={index}>
+                                        <a href={item[1]} target="_blank" rel="noopener noreferrer">{item[0]}</a>
                                     </div>
                                 );
                             }
                             return (
-                                <div>
+                                <div key={index}>
                                     <span style={{ fontWeight: 500 }}>
                                         {item[0]}
                                         :
@@ -131,7 +132,7 @@ class DatasetPage extends Component {
                         <StyledTable>
                             <table>
                                 <tbody>
-                                    {annotationData.map((el) => generateRow(el))}
+                                    {annotationData.map((el, i) => generateRow(el, i))}
                                 </tbody>
                             </table>
                         </StyledTable>
