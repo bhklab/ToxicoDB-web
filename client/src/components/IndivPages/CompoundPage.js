@@ -60,6 +60,11 @@ const StyledSelectContainer = styled.div`
     }
 `;
 
+const StyledAlert = styled.div`
+    color: ${colors.red_highlight};
+    font-size: 1em;
+`;
+
 const filterCaseInsensitive = (filter, row) => {
     const id = filter.pivotId || filter.id;
     switch (typeof row[id]) {
@@ -199,6 +204,7 @@ const CompoundPage = (props) => {
     } = useFetchAnalysisData(`/api/v1/drugs/${params.id}/analysis`);
     const datasetOptions = [...new Set(analysisData.map((item) => item.dataset_name))];
 
+    // for dropdowns
     const [selectedTableData, setSelectedTableData] = useState([]);
     const [state, setState] = useState({
         tableData: {},
@@ -208,6 +214,9 @@ const CompoundPage = (props) => {
         selectedTime: 0,
         loading: true,
     });
+
+    // alert if not available
+    const [alert, setAlert] = useState('');
 
     useEffect(() => {
         if (analysisData.length !== 0) {
@@ -284,8 +293,12 @@ const CompoundPage = (props) => {
             // can't map an empty event, so separate condition here
         } else {
             setState({ ...state, selectedDose: event.value });
-            console.log(`${event.value}+${state.selectedTime}`);
-            setSelectedTableData(state.tableData[`${event.value}+${state.selectedTime}`]);
+            if (Object.keys(state.tableData).includes(`${event.value}+${state.selectedTime}`)) {
+                setAlert('');
+                setSelectedTableData(state.tableData[`${event.value}+${state.selectedTime}`]);
+            } else {
+                setAlert('This dose-time combination is not available.');
+            }
         }
     };
     const handleTimeChange = (event) => {
@@ -294,8 +307,12 @@ const CompoundPage = (props) => {
             // can't map an empty event, so separate condition here
         } else {
             setState({ ...state, selectedTime: event.value });
-            console.log(`${event.value}+${state.selectedTime}`);
-            setSelectedTableData(state.tableData[`${state.selectedDose}+${event.value}`]);
+            if (Object.keys(state.tableData).includes(`${state.selectedDose}+${event.value}`)) {
+                setAlert('');
+                setSelectedTableData(state.tableData[`${state.selectedDose}+${event.value}`]);
+            } else {
+                setAlert('This dose-time combination is not available.');
+            }
         }
     };
 
@@ -408,6 +425,9 @@ const CompoundPage = (props) => {
                 </>
             )}
             {console.log(state.tableData)}
+            <StyledAlert>
+                {alert}
+            </StyledAlert>
             <ReactTable
                 data={selectedTableData}
                 columns={columns}

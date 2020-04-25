@@ -51,6 +51,11 @@ const StyledGenePage = styled.div`
     }
 `;
 
+const StyledAlert = styled.div`
+    color: ${colors.red_highlight};
+    font-size: 1em;
+`;
+
 const StyledSelectContainer = styled.div`
     display:flex;
     flex-direction: row;
@@ -207,6 +212,9 @@ const GenePage = (props) => {
         loading: true,
     });
 
+    // alert if not available
+    const [alert, setAlert] = useState('');
+
     // for dropdowns
     useEffect(() => {
         if (analysisData.length !== 0) {
@@ -268,7 +276,12 @@ const GenePage = (props) => {
             // can't map an empty event, so separate condition here
         } else {
             setState({ ...state, selectedDose: event.value });
-            setSelectedTableData(state.tableData[`${event.value}+${state.selectedTime}`]);
+            if (Object.keys(state.tableData).includes(`${event.value}+${state.selectedTime}`)) {
+                setAlert('');
+                setSelectedTableData(state.tableData[`${event.value}+${state.selectedTime}`]);
+            } else {
+                setAlert('This dose-time combination is not available.');
+            }
         }
     };
     const handleTimeChange = (event) => {
@@ -277,7 +290,12 @@ const GenePage = (props) => {
             // can't map an empty event, so separate condition here
         } else {
             setState({ ...state, selectedTime: event.value });
-            setSelectedTableData(state.tableData[`${state.selectedDose}+${event.value}`]);
+            if (Object.keys(state.tableData).includes(`${state.selectedDose}+${event.value}`)) {
+                setAlert('');
+                setSelectedTableData(state.tableData[`${state.selectedDose}+${event.value}`]);
+            } else {
+                setAlert('This dose-time combination is not available.');
+            }
         }
     };
 
@@ -383,6 +401,9 @@ const GenePage = (props) => {
                     </StyledSelectContainer>
                 </>
             )}
+            <StyledAlert>
+                {alert}
+            </StyledAlert>
             <ReactTable
                 data={selectedTableData}
                 columns={columns}
