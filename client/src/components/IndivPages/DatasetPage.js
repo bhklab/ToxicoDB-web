@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { DatasetDescription } from '../Utils/DatasetDescription';
 import colors from '../../styles/colors';
-import AnnotationCard from './AnnotationCard';
 import 'react-table-6/react-table.css';
 
 const StyledDatasetPage = styled.div`
@@ -28,15 +27,65 @@ const StyledDatasetPage = styled.div`
         margin: 20px 0;
         font-weight:600;
     }
+`;
 
-    a {
-      color: ${colors.blue_text};
-    }
-    
-    .table {
+const StyledTable = styled.div`
+    width: 100%;
+    background: #e2f6fd;
+    color: ${colors.blue_text};
+
+    table {
+        max-width: 100%;
         margin:60px 0px 30px 0px;
     }
+    .name {
+        font-weight: 600;
+    }
+    td {
+        padding: 10px;
+        border: 3px solid white;
+
+        div {
+            padding: 3px;
+        }
+        a {
+            color: ${colors.red_highlight}
+        }
+    }
 `;
+
+const generateRow = (el) => (
+    <tr>
+        <td className="name">{el.name.toUpperCase()}</td>
+        {typeof el.value === 'string'
+            ? (<td className="value">{el.value}</td>)
+            : (
+                <td>
+                    {Object.entries(el.value).map(
+                        (item) => {
+                            if (el.name === 'Resources' || el.name === 'Publications') {
+                                return (
+                                    <div>
+                                        <a href={item[1]}>{item[0]}</a>
+                                    </div>
+                                );
+                            }
+                            return (
+                                <div>
+                                    <span style={{ fontWeight: 500 }}>
+                                        {item[0]}
+                                        :
+                                    </span>
+                                    {' '}
+                                    <span>{item[1]}</span>
+                                </div>
+                            );
+                        },
+                    )}
+                </td>
+            )}
+    </tr>
+);
 
 class DatasetPage extends Component {
     constructor() {
@@ -79,7 +128,13 @@ class DatasetPage extends Component {
                 {annotationData.length === 0 ? null : (
                     <div>
                         <h1>{datasetName}</h1>
-                        <AnnotationCard data={annotationData} />
+                        <StyledTable>
+                            <table>
+                                <tbody>
+                                    {annotationData.map((el) => generateRow(el))}
+                                </tbody>
+                            </table>
+                        </StyledTable>
                     </div>
                 )}
             </StyledDatasetPage>

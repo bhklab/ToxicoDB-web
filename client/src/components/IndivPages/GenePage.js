@@ -1,6 +1,5 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-param-reassign */
-// import AnnotationCard from './AnnotationCard';
 // import VolcanoPlotly from '../Plots/VolcanoPlotly';
 // import VolcanoSingle from '../Plots/VolcanoSingle';
 

@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import colors from '../../styles/colors';
 
-// import AnnotationCard from './AnnotationCard';
 import AnnotationCard from './GeneCompoundCard';
 import SynonymCard from './SynonymCard';
 import VolcanoSelect from './VolcanoSelect';

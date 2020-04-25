@@ -7,7 +7,6 @@ import 'react-table-6/react-table.css';
 import transitions from '../../styles/transitions';
 
 import LoadingComponent from '../Utils/Loading';
-import downloadIcon from '../../images/download.svg';
 
 const StyledDatasets = styled.div`
     width: 80vw;
@@ -69,18 +68,6 @@ class Datasets extends Component {
         ];
 
         this.setState({ datasetData: data, loading: false });
-        // fetch('/api/v1/datasets')
-        //     .then((response) => response.json())
-        //     .then((res) => {
-        //         const { data } = res;
-        //         console.log(data);
-        //         data.forEach((d) => {
-        //             if (d.name === 'DrugMatrix Rat') {
-        //                 d.name = 'DrugMatrix Rat';
-        //             }
-        //         });
-        //         this.setState({ datasetData: data, loading: false });
-        //     });
     }
 
     render() {
@@ -104,24 +91,6 @@ class Datasets extends Component {
                 accessor: 'num_compounds',
                 sortable: true,
                 minWidth: 200,
-            },
-            {
-                Header: 'Molecular Profiles',
-                accessor: 'link',
-                sortable: 'false',
-                minWidth: 200,
-                Cell: (row) => {
-                    console.log(row);
-                    return (
-                        <button type="button">
-                            <Link style={{ color: 'white' }} to="/expression_datafiles/" target="_blank" download>
-                                Download
-                                {' '}
-                                <img src={downloadIcon} alt="download icon" />
-                            </Link>
-                        </button>
-                    );
-                },
             },
         ];
 
