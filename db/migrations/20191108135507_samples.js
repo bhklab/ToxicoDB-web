@@ -25,6 +25,8 @@ exports.up = function (knex, Promise) {
             .notNullable();
         table.integer('replicate')
             .notNullable();
+        table.integer('concentration')
+            .notNullable();
     });
 };
 
