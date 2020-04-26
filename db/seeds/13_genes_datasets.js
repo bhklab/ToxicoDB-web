@@ -9,7 +9,13 @@ const path = require('path');
 const fileLocation = path.join(__dirname, '../../data_table/genes_datasets.csv');
 
 const file = fs.readFileSync(fileLocation, 'utf8');
-const dataObj = csv.toObject(file);
+
+const options = {
+    delimiter: ',', // optional
+    quote: '"', // optional
+};
+
+const dataObj = csv.toObject(file, options);
 
 
 exports.seed = function (knex, Promise) {
