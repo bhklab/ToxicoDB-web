@@ -1,4 +1,4 @@
-"gene_id","symbol","entrez_gid","transcript_name","ensembl_tid","full_name"
+gene_id,symbol,entrez_gid,transcript_name,ensembl_tid,full_name
 "1","TSPAN6","7105","TSPAN6-201","ENST00000373020","tetraspanin 6"
 "2","TNMD","64102","TNMD-201","ENST00000373031","tenomodulin"
 "3","DPM1","8813","DPM1-203","ENST00000371588","dolichyl-phosphate mannosyltransferase subunit 1, catalytic"
