@@ -229,12 +229,12 @@ const CompoundPage = (props) => {
                     Object.entries(item).forEach((val) => {
                         if (typeof val[1] === 'string' && val[0] !== 'gene_name') {
                             newItem[val[0]] = isNaN(parseFloat(val[1]))
-                                ? val[1] : parseFloat(val[1]).toExponential(1).toString();
+                                ? val[1] : parseFloat(val[1]).toString();
                         } else if (val[0].match(/^(gene_id|gene_name)$/)) {
                             // eslint-disable-next-line prefer-destructuring
                             newItem[val[0]] = val[1];
                         } else {
-                            newItem[val[0]] = val[1].toFixed(1).toString();
+                            newItem[val[0]] = val[1].toString();
                         }
                     });
 
