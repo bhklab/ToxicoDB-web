@@ -354,60 +354,59 @@ drug_id,dataset_id,drug_uid
 48,3,ketoconazole
 19,3,labetalol
 191,3,lansoprazole
-192,3,buthionine sulfoximine
-193,3,lithocholic acid
+192,3,lithocholic acid
 46,3,lomustine
-194,3,loratadine
-195,3,marimastat
+193,3,loratadine
+194,3,marimastat
 11,3,methapyrilene
-196,3,microcystin-LR
-197,3,mln-518
+195,3,microcystin-LR
+196,3,mln-518
 57,3,monocrotaline
-198,3,"N,N-dimethylformamide"
-199,3,nevirapine
+197,3,"N,N-dimethylformamide"
+198,3,nevirapine
 102,3,nimesulide
 119,3,N-nitrosodiethylamine
-200,3,norethindrone
-201,3,nortriptyline
-202,3,olanzapine
+199,3,norethindrone
+200,3,nortriptyline
+201,3,olanzapine
 30,3,omeprazole
-203,3,pantoprazole
-204,3,paraquat dichloride
-205,3,paroxetine
+202,3,pantoprazole
+203,3,paraquat dichloride
+204,3,paroxetine
 50,3,pemoline
 41,3,perhexiline
-206,3,phalloidin
-207,3,prinomastat
-208,3,progesterone
-209,3,quetiapine
-210,3,rabeprazole
-211,3,ramipril
-212,3,sirolimus
+205,3,phalloidin
+206,3,prinomastat
+207,3,progesterone
+208,3,quetiapine
+209,3,rabeprazole
+210,3,ramipril
+211,3,sirolimus
 3,3,Rifampin
-213,3,risperidone
-214,3,rofecoxib
-215,3,sertraline
-216,3,sildenafil
+212,3,risperidone
+213,3,rofecoxib
+214,3,sertraline
+215,3,sildenafil
 97,3,simvastatin
-217,3,sotalol
-218,3,sparteine
-219,3,sporidesmin a
-220,3,staurosporine
-221,3,stavudine
-222,3,Streptozotocin
-223,3,sulconazole
+216,3,sotalol
+217,3,sparteine
+218,3,sporidesmin a
+219,3,staurosporine
+220,3,stavudine
+221,3,Streptozotocin
+222,3,sulconazole
 85,3,sulindac
 109,3,sulpiride
-224,3,tacrolimus hydrate
+223,3,tacrolimus hydrate
 53,3,tamoxifen
-225,3,tenidap
+224,3,tenidap
 37,3,tetracycline
-226,3,"tgf beta-1, human recombinant"
-227,3,all-trans-retinoic acid
-228,3,valdecoxib
-229,3,valeric acid
+225,3,"tgf beta-1, human recombinant"
+226,3,all-trans-retinoic acid
+227,3,valdecoxib
+228,3,valeric acid
 32,3,valproic acid
 121,3,venlafaxine
-230,3,Vinblastine
-231,3,zidovudine
-232,3,DMSO
+229,3,Vinblastine
+230,3,zidovudine
+231,3,DMSO
