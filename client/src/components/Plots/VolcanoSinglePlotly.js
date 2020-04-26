@@ -363,7 +363,7 @@ const VolcanoSingle = (props) => {
                             graphDiv={plotId}
                             config={{
                                 responsive: true,
-                                // displayModeBar: false,
+                                displayModeBar: false,
                             }}
                             onClick={(d) => click(d, type, queryId)}
                             onHover={() => hover()}

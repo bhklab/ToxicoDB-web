@@ -325,19 +325,19 @@ const CompoundPage = (props) => {
         accessor: 'fold_change',
         sortable: true,
         sortMethod(a, b) { return b - a; },
-        // Cell: (row) => parseFloat(row.value).toFixed(1),
+        Cell: (row) => parseFloat(row.value).toFixed(2),
     }, {
         Header: 'p-value',
         accessor: 'p_value',
         sortable: true,
         sortMethod(a, b) { return b - a; },
-        // Cell: (row) => parseFloat(row.value).toExponential(1),
+        Cell: (row) => parseFloat(row.value).toExponential(2),
     }, {
         Header: 'FDR',
         accessor: 'fdr',
         sortable: true,
         sortMethod(a, b) { return b - a; },
-        // Cell: (row) => parseFloat(row.value).toExponential(1),
+        Cell: (row) => parseFloat(row.value).toExponential(2),
     }, {
         Header: 'Dataset',
         accessor: 'dataset_name',
