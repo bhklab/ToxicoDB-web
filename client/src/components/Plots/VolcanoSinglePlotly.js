@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import * as d3 from 'd3';
 import colors from '../../styles/colors';
 
+// const Plotly = require('plotly.js/lib/core');
+
 const StyledDiv = styled.div`
     min-height: 600px;    
     width: 100%;    
@@ -361,11 +363,14 @@ const VolcanoSingle = (props) => {
                             graphDiv={plotId}
                             config={{
                                 responsive: true,
-                                displayModeBar: false,
+                                // displayModeBar: false,
                             }}
                             onClick={(d) => click(d, type, queryId)}
                             onHover={() => hover()}
                             onUnhover={() => unhover()}
+                            // onInitialized={(fg, gd) => Plotly.downloadImage(gd, {
+                            //     format: 'svg', width: 800, height: 900, filename: 'yes',
+                            // })}
                         />
 
                     )}

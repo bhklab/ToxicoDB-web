@@ -267,6 +267,7 @@ class ExpressionPlot extends Component {
                             yRange={yRange}
                             datasets={datasets}
                         />
+                        {/* <button><a id="downloadExpression" href="#">Download SVG</a></button> */}
                     </>
 
                 )}
