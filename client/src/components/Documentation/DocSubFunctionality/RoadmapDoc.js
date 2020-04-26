@@ -39,9 +39,17 @@ const RoadmapDoc = () => (
                 <a target="_blank" rel="noopener noreferrer" href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE58235">GSE58235</a>
             </li>
             <p>
-                More datasets -
+                More in vitro datasets -
             </p>
             <a target="_blank" rel="noopener noreferrer" href="https://gitlab.com/bayjan/openrisknet_meta_analysis_data/-/blob/master/meta_analysis_data_info_table.tsv">https://gitlab.com/bayjan/openrisknet_meta_analysis_data/-/blob/master/meta_analysis_data_info_table.tsv</a>
+            <p>
+                In vivo datasets -
+                {' '}
+            </p>
+            <p>
+                Open TG-GATEs  liver -
+                <a target="_blank" rel="noopener noreferrer" href="https://toxico.nibiohn.go.jp/english/datalist.html"> https://toxico.nibiohn.go.jp/english/datalist.html</a>
+            </p>
         </ol>
     </div>
 );

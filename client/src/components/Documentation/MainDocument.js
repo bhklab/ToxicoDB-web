@@ -149,6 +149,15 @@ const StyledDiv = styled.div`
         border-bottom: none;
         }
     }
+    .btn {
+        font-weight: 700;
+        border: none;
+        background: none;
+        padding: 0;
+        transition: ${transitions.main_trans};
+        outline: none;
+        cursor: pointer;
+    }
 `;
 
 const MainDocument = () => {
@@ -159,7 +168,14 @@ const MainDocument = () => {
         <StyledDiv>
             <main className="documentation">
                 <nav>
-                    <h3>Functionality</h3>
+                    <button className="btn" type="button" onClick={() => setDisplay('roadmap')}>
+                        <h3 style={{ color: display === 'roadmap' ? colors.red_highlight : colors.blue_text }}>Roadmap</h3>
+                    </button>
+                    <button className="btn" type="button" onClick={() => setDisplay('overview')}>
+                        <h3 style={{ color: display === 'overview' || display === 'search' || display === 'compounds' || display === 'genes' || display === 'compoundsvsgene' || display === 'datasets' || display === 'pathways' ? colors.red_highlight : colors.blue_text }}>
+                        Functionality
+                        </h3>
+                    </button>
                     <ul>
                         <li
                             className={display === 'overview' ? 'selected' : null}
@@ -196,13 +212,12 @@ const MainDocument = () => {
                         >
                             <button type="button" onClick={() => setDisplay('pathways')}>Pathways</button>
                         </li>
-                        <li
-                            className={display === 'roadmap' ? 'selected' : null}
-                        >
-                            <button type="button" onClick={() => setDisplay('roadmap')}>Roadmap</button>
-                        </li>
                     </ul>
-                    <h3>API</h3>
+                    <button className="btn" type="button" onClick={() => setDisplay('compound-api')}>
+                        <h3 style={{ color: display === 'compound-api' || display === 'gene-api' || display === 'experiment-api' || display === 'dataset-api' || display === 'sample-api' ? colors.red_highlight : colors.blue_text }}>
+API
+                        </h3>
+                    </button>
                     <ul>
                         <li
                             className={display === 'compound-api' ? 'selected' : null}
