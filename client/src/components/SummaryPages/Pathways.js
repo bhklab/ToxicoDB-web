@@ -586,6 +586,8 @@ const Pathways = () => {
                     <HeatMapLegend />
                 </StyledEntireHeatmap>
             ) : <LoadingComponent loading />}
+
+            {/* <button><a id="downloadPathways" href="#">Download SVG</a></button> */}
         </div>
     );
 };

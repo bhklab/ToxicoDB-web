@@ -122,7 +122,7 @@ class AnnotationCard extends Component {
         };
 
         for (let j = 0; j < data.length; j++) {
-            if (data[j].value || data[j].name === 'class_in_vitro' || data[j].name === 'class_in_vivo' || data[j].name === 'carcinogenicity') {
+            if (data[j].value || data[j].name.match(/(class_in_vitro|class_in_vivo|carcinogenicity)/)) {
                 table.push(
                     <tr key={j}>
                         <td className="name" key={data[j].name} style={{ fontWeight: '600' }}>
@@ -131,16 +131,17 @@ class AnnotationCard extends Component {
                             }
                         </td>
                         <td className="value" key={data[j].value}>
-                            { (data[j].name === 'name' || data[j].name === 'ensembl_gid'
-                                    || data[j].name === 'entrez_gid' || data[j].name === 'pubchem' || (data[j].name === 'symbol' && isCompoundData.length === 0))
-                                ? (
-                                    createLink(data[j])
-                                )
-                                : (
-                                    typeof (data[j].value) === 'object' ? (
-                                        createSubCard(data[j])
-                                    ) : data[j].value
-                                ) }
+                            {
+                                (data[j].name.match(/(name|ensembl_gid|entrez_gid|pubchem)/) || (data[j].name === 'symbol' && isCompoundData.length === 0))
+                                    ? (
+                                        createLink(data[j])
+                                    )
+                                    : (
+                                        typeof (data[j].value) === 'object' ? (
+                                            createSubCard(data[j])
+                                        ) : data[j].value
+                                    )
+                            }
                         </td>
                     </tr>,
                 );

@@ -35,6 +35,8 @@ class Expression extends React.Component {
             .attr('fill', 'white')
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom)
+            .attr('xmlns', 'http://www.w3.org/2000/svg')
+            .attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
             .append('g')
             .attr('transform',
                 `translate(${margin.left},${margin.top})`);
@@ -269,6 +271,12 @@ class Expression extends React.Component {
                 })
                 .text(datasets[i]);
         });
+
+        // d3.select('#downloadExpression').on('click', () => {
+        //     d3.select('#downloadExpression')
+        //         .attr('href', `data:application/octet-stream;base64,${btoa(d3.select(`#${plotId}`).html())}`)
+        //         .attr('download', 'plot.svg');
+        // });
     }
 
 

@@ -45,7 +45,7 @@ const DownloadButton = (props) => {
                 bom={false}
             >
                 <button type="button">
-                    Download Data
+                    Download All Data
                     {'   '}
                     <img src={downloadIcon} alt="download icon" />
                 </button>

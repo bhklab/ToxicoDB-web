@@ -309,19 +309,19 @@ const GenePage = (props) => {
         accessor: 'fold_change',
         sortable: true,
         sortMethod(a, b) { return b - a; },
-        Cell: (row) => parseFloat(row.value).toFixed(1),
+        Cell: (row) => parseFloat(row.value).toFixed(2),
     }, {
         Header: 'p-value',
         accessor: 'p_value',
         sortable: true,
         sortMethod(a, b) { return b - a; },
-        Cell: (row) => parseFloat(row.value).toExponential(1),
+        Cell: (row) => parseFloat(row.value).toExponential(2),
     }, {
         Header: 'FDR',
         accessor: 'fdr',
         sortable: true,
         sortMethod(a, b) { return b - a; },
-        Cell: (row) => parseFloat(row.value).toExponential(1),
+        Cell: (row) => parseFloat(row.value).toExponential(2),
     }, {
         Header: 'Dataset',
         accessor: 'dataset_name',
@@ -356,6 +356,8 @@ const GenePage = (props) => {
         { displayName: 'p-value', id: 'p_value' },
         { displayName: 'FDR', id: 'fdr' },
         { displayName: 'Dataset', id: 'dataset_name' },
+        { displayName: 'Dose', id: 'dose' },
+        { displayName: 'Time', id: 'time' },
     ];
     return (
         <StyledGenePage>
@@ -369,7 +371,7 @@ const GenePage = (props) => {
 
             {apiData.length === 0 ? null : (
                 <h2>
-                    Compound Response on Gene -
+                    Compound Response on
                     {' '}
                     {apiData.symbol}
                 </h2>

@@ -41,8 +41,8 @@ const HeatMap = (props) => {
         const svg = selection
             .append('svg')
             .attr('id', 'heatmap-pathways')
-            .attr('xmlns', 'http://wwww.w3.org/2000/svg')
-            .attr('xmlns:xlink', 'http://wwww.w3.org/1999/xlink')
+            .attr('xmlns', 'http://www.w3.org/2000/svg')
+            .attr('xmlns:xlink', 'http://www.w3.org/1999/xlink')
             .attr('height', height + margin.bottom + margin.top)
             .attr('width', width + margin.left + margin.right + 50)
             .append('g')
@@ -218,6 +218,12 @@ const HeatMap = (props) => {
         createRectangle(drugs, pathways, skeleton, dimension.rectWidth, dimension.rectHeight, dataset, min, max, mean);
         // create legend.
         // createLegend(skeleton, height, width);
+
+        // d3.select('#downloadPathways').on('click', () => {
+        //     d3.select('#downloadPathways')
+        //         .attr('href', `data:application/octet-stream;base64,${btoa(d3.select('.heatmap').html())}`)
+        //         .attr('download', 'plot.svg');
+        // });
     };
 
     // on component mounting calling create heatmap.
